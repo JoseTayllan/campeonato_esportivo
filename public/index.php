@@ -40,7 +40,7 @@ session_start();
 
                 <td><a href="views/cadastro_time.php" class="btn btn-secondary w-100">Cadastro de Time</a></td>
                 
-                <td><a href="views/cadastro_jogador.php" class="btn btn-secondary w-100">adastro de Jogador</a></td>
+                <td><a href="views/cadastro_jogador.php" class="btn btn-secondary w-100">Cadastro de Jogador</a></td>
                 
 
             </tr>
