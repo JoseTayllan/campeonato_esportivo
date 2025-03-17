@@ -1,14 +1,14 @@
-<?php 
+<?php
 $host = 'localhost';
-$database = 'campeonato_esportivo';
-$user = 'root';
-$pass = ''; 
+$dbname = 'campeonato_esportivo';
+$user = 'root'; 
+$pass = '';
 
-try {
-    $pdo = new PDO("mysql:host=$host;dbname=$dbname;charset=utf8", $username, $password);
-    $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-} catch (PDOException $e) {
-    die("Erro na conexão com o banco de dados: " . $e->getMessage());
+// Criar conexão
+$conn = new mysqli($host, $user, $pass, $dbname);
+
+// Verificar conexão
+if ($conn->connect_error) {
+    die("Falha na conexão: " . $conn->connect_error);
 }
-
 ?>
