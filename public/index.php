@@ -70,6 +70,7 @@ session_start();
             </div>
         </div>
     </div>
+    <?php include 'views/cabecalho/footer.php'; ?>
 
     <script src="../assets/js/bootstrap.bundle.min.js"></script>
 </body>
