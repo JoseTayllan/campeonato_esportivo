@@ -34,13 +34,13 @@ session_start();
     <table class="table table-bordered table-sm text-center mb-0">
         <tbody>
             <tr>
-            <td><a href="views/cadastro_usuario.php" class="btn btn-secondary w-100">Cadastro de Usuário</a></td>
+            <td><a href="views/cadastro/cadastro_usuario.php" class="btn btn-secondary w-100">Cadastro de Usuário</a></td>
                 
-                <td><a href="views/cadastro_campeonato.php" class="btn btn-secondary w-100">Cadastro de Campeonato</a></td>
+                <td><a href="views/cadastro/cadastro_campeonato.php" class="btn btn-secondary w-100">Cadastro de Campeonato</a></td>
 
-                <td><a href="views/cadastro_time.php" class="btn btn-secondary w-100">Cadastro de Time</a></td>
+                <td><a href="views/cadastro/cadastro_time.php" class="btn btn-secondary w-100">Cadastro de Time</a></td>
                 
-                <td><a href="views/cadastro_jogador.php" class="btn btn-secondary w-100">Cadastro de Jogador</a></td>
+                <td><a href="views/cadastro/cadastro_jogador.php" class="btn btn-secondary w-100">Cadastro de Jogador</a></td>
                 
 
             </tr>
@@ -58,7 +58,7 @@ session_start();
         <div class="row justify-content-center">
             <!-- Card de Cadastro de Usuário -->
             <div class="col-md-6 col-lg-3 mb-4">
-                <a href="views/cadastro_usuario.php" class="text-decoration-none">
+                <a href="views/cadastro/cadastro_usuario.php" class="text-decoration-none">
                     <div class="card card-custom text-center p-4 bg-primary text-white">
                         <h4>Cadastro de Usuário</h4>
                     </div>
@@ -67,7 +67,7 @@ session_start();
 
             <!-- Card de Cadastro de Campeonato -->
             <div class="col-md-6 col-lg-3 mb-4">
-                <a href="views/cadastro_campeonato.php" class="text-decoration-none">
+                <a href="views/cadastro/cadastro_campeonato.php" class="text-decoration-none">
                     <div class="card card-custom text-center p-4 bg-success text-white">
                         <h4>Cadastro de Campeonato</h4>
                     </div>
@@ -76,7 +76,7 @@ session_start();
 
             <!-- Card de Cadastro de Time -->
             <div class="col-md-6 col-lg-3 mb-4">
-                <a href="views/cadastro_time.php" class="text-decoration-none">
+                <a href="views/cadastro/cadastro_time.php" class="text-decoration-none">
                     <div class="card card-custom text-center p-4 bg-warning text-dark">
                         <h4>Cadastro de Time</h4>
                     </div>
@@ -85,7 +85,7 @@ session_start();
 
             <!-- Card de Cadastro de Jogador -->
             <div class="col-md-6 col-lg-3 mb-4">
-                <a href="views/cadastro_jogador.php" class="text-decoration-none">
+                <a href="views/cadastro/cadastro_jogador.php" class="text-decoration-none">
                     <div class="card card-custom text-center p-4 bg-danger text-white">
                         <h4>Cadastro de Jogador</h4>
                     </div>

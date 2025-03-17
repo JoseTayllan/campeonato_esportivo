@@ -1,15 +1,15 @@
 <?php 
 session_start();
 ?>
-<?php include 'cabecalho/header.php'; ?>
-<?php include 'cabecalho/tabela.php'; ?>
+<?php include '../cabecalho/header.php'; ?>
+<?php include '../cabecalho/tabela.php'; ?>
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Cadastro de Campeonato</title>
-    <link href="../../assets/css/bootstrap.min.css" rel="stylesheet">
+    <link href="../../../assets/css/bootstrap.min.css" rel="stylesheet">
 </head>
 <body>
 <!-- Link do Bootstrap JS (caso necessário) -->
@@ -18,7 +18,7 @@ session_start();
     <div class="container mt-4">
         <h2 class="mb-4">Cadastro de Campeonato</h2>
         
-        <?php include 'partials/mensagens.php'; ?>
+        <?php include '../partials/mensagens.php'; ?>
 
         <form action="../controllers/CampeonatoController.php" method="POST">
             <div class="mb-3">
@@ -48,7 +48,7 @@ session_start();
             <button type="submit" class="btn btn-primary">Cadastrar</button>
         </form>
     </div>
-    <?php include 'cabecalho/footer.php'; ?>
-    <script src="../../assets/js/bootstrap.bundle.min.js"></script>
+    <?php include '../cabecalho/footer.php'; ?>
+    <script src="../../../assets/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
