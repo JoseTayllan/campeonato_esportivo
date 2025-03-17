@@ -1,7 +1,7 @@
 <?php 
 session_start();
 ?>
-
+<?php include 'cabecalho/header.php'; ?>
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
