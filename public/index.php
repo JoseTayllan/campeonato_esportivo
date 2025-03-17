@@ -28,6 +28,29 @@ session_start();
     </style>
 </head>
 <body>
+    
+<!-- Linha de botões diretamente abaixo do header -->
+<div class="container-fluid p-0">
+    <table class="table table-bordered table-sm text-center mb-0">
+        <tbody>
+            <tr>
+            <td><a href="views/cadastro_usuario.php" class="btn btn-secondary w-100">Cadastro de Usuário</a></td>
+                
+                <td><a href="views/cadastro_campeonato.php" class="btn btn-secondary w-100">Cadastro de Campeonato</a></td>
+
+                <td><a href="views/cadastro_time.php" class="btn btn-secondary w-100">Cadastro de Time</a></td>
+                
+                <td><a href="views/cadastro_jogador.php" class="btn btn-secondary w-100">adastro de Jogador</a></td>
+                
+
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+<!-- Link do Bootstrap JS (caso necessário) -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
 
     <div class="container text-center">
         <h1 class="mb-4">Sistema de Gerenciamento de Campeonatos</h1>

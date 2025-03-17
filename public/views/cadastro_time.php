@@ -1,7 +1,7 @@
 <?php 
 session_start();
 ?>
-
+<?php include 'cabecalho/header.php'; ?>
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
@@ -11,6 +11,28 @@ session_start();
     <link href="../../assets/css/bootstrap.min.css" rel="stylesheet">
 </head>
 <body>
+    <!-- Linha de botões diretamente abaixo do header -->
+<div class="container-fluid p-0">
+    <table class="table table-bordered table-sm text-center mb-0">
+        <tbody>
+            <tr>
+            <td><a href="cadastro_usuario.php" class="btn btn-secondary w-100">Cadastro de Usuário</a></td>
+                
+                <td><a href="cadastro_campeonato.php" class="btn btn-secondary w-100">Cadastro de Campeonato</a></td>
+
+                <td><a href="cadastro_time.php" class="btn btn-secondary w-100">Cadastro de Time</a></td>
+                
+                <td><a href="cadastro_jogador.php" class="btn btn-secondary w-100">adastro de Jogador</a></td>
+                
+
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+<!-- Link do Bootstrap JS (caso necessário) -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
     <div class="container mt-4">
         <h2 class="mb-4">Cadastro de Time</h2>
         
@@ -36,6 +58,7 @@ session_start();
             <button type="submit" class="btn btn-primary">Cadastrar</button>
         </form>
     </div>
+    <?php include 'cabecalho/footer.php'; ?>
     <script src="../../assets/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>

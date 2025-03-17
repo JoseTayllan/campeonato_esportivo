@@ -30,20 +30,7 @@
                 <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse" id="navbarNav">
-                <ul class="navbar-nav ms-auto">
-                    <li class="nav-item">
-                        <a class="nav-link" href="../views/cadastro_usuario.php">Usuários</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="../views/cadastro_campeonato.php">Campeonatos</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="../views/cadastro_time.php">Times</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="../views/cadastro_jogador.php">Jogadores</a>
-                    </li>
-                </ul>
+                
             </div>
         </div>
     </nav>
