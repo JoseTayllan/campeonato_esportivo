@@ -1,26 +1,29 @@
 <?php 
 session_start();
+
 ?>
 <?php include '../cabecalho/header.php'; ?>
 <?php include '../cabecalho/tabela.php'; ?>
 <!DOCTYPE html>
 <html lang="pt-br">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Cadastro de Usuário</title>
     <link href="../../../assets/css/bootstrap.min.css" rel="stylesheet">
 </head>
+
 <body>
-<!-- Link do Bootstrap JS (caso necessário) -->
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- Link do Bootstrap JS (caso necessário) -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 
     <div class="container mt-4">
         <h2 class="mb-4">Cadastro de Usuário</h2>
-        
+
         <?php include '../partials/mensagens.php'; ?>
 
-        <form action="../controllers/UsuarioController.php" method="POST">
+        <form action="../../../app/controllers/UserController.php" method="POST">
             <div class="mb-3">
                 <label for="nome" class="form-label">Nome Completo</label>
                 <input type="text" class="form-control" name="nome" required>
@@ -50,4 +53,5 @@ session_start();
     <?php include '../cabecalho/footer.php'; ?>
     <script src="../../../assets/js/bootstrap.bundle.min.js"></script>
 </body>
+
 </html>
