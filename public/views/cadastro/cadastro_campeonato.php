@@ -22,7 +22,8 @@ session_start();
 
         <?php include '../partials/mensagens.php'; ?>
 
-        <form action="/campeonato_esportivo/app/controllers/ChampionshipController" method="POST">
+        <form action="../../../routes/championships.php" method="POST">
+
             <div class="mb-3">
                 <label for="nome" class="form-label">Nome do Campeonato</label>
                 <input type="text" class="form-control" name="nome" required>
@@ -35,14 +36,18 @@ session_start();
                 <label for="temporada" class="form-label">Temporada</label>
                 <input type="number" class="form-control" name="temporada" required>
             </div>
+
+            <!-- Formato corrigido -->
             <div class="mb-3">
                 <label for="formato" class="form-label">Formato</label>
                 <select class="form-control" name="formato" required>
-                    <option value="pontos_corridos">Pontos Corridos</option>
-                    <option value="mata_mata">Mata-Mata</option>
-                    <option value="grupos_mata_mata">Grupos + Mata-Mata</option>
+                    <option value="">Selecione um formato</option>
+                    <option value="Pontos Corridos">Pontos Corridos</option>
+                    <option value="Mata-Mata">Mata-Mata</option>
+                    <option value="Fase de Grupos">Fase de Grupos</option>
                 </select>
             </div>
+
             <div class="mb-3">
                 <label for="regulamento" class="form-label">Regulamento</label>
                 <textarea class="form-control" name="regulamento" required></textarea>
