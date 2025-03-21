@@ -14,7 +14,6 @@ session_start();
 </head>
 
 <body>
-    <!-- Link do Bootstrap JS (caso necessário) -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 
     <div class="container mt-4">
@@ -26,18 +25,19 @@ session_start();
 
             <div class="mb-3">
                 <label for="nome" class="form-label">Nome do Campeonato</label>
-                <input type="text" class="form-control" name="nome" required>
-            </div>
-            <div class="mb-3">
-                <label for="descricao" class="form-label">Descrição</label>
-                <textarea class="form-control" name="descricao" required></textarea>
-            </div>
-            <div class="mb-3">
-                <label for="temporada" class="form-label">Temporada</label>
-                <input type="number" class="form-control" name="temporada" required>
+                <input type="text" class="form-control" name="nome" placeholder="Ex: Copa Estudantil 2025" required>
             </div>
 
-            <!-- Formato corrigido -->
+            <div class="mb-3">
+                <label for="descricao" class="form-label">Descrição</label>
+                <textarea class="form-control" name="descricao" placeholder="Breve descrição sobre o campeonato" required></textarea>
+            </div>
+
+            <div class="mb-3">
+                <label for="temporada" class="form-label">Temporada</label>
+                <input type="number" class="form-control" name="temporada" min="1900" max="2100" placeholder="Ex: 2025" required>
+            </div>
+
             <div class="mb-3">
                 <label for="formato" class="form-label">Formato</label>
                 <select class="form-control" name="formato" required>
@@ -46,15 +46,19 @@ session_start();
                     <option value="Mata-Mata">Mata-Mata</option>
                     <option value="Fase de Grupos">Fase de Grupos</option>
                 </select>
+                <small class="form-text text-muted">Ex: Pontos Corridos, Mata-Mata...</small>
             </div>
 
             <div class="mb-3">
                 <label for="regulamento" class="form-label">Regulamento</label>
-                <textarea class="form-control" name="regulamento" required></textarea>
+                <textarea class="form-control" name="regulamento" placeholder="Informe as regras, critérios de desempate etc." required></textarea>
             </div>
+
             <button type="submit" class="btn btn-primary">Cadastrar</button>
         </form>
     </div>
+    <div class="row mt-4">
+
     <?php include '../cabecalho/footer.php'; ?>
     <script src="../../../assets/js/bootstrap.bundle.min.js"></script>
 </body>

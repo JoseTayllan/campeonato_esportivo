@@ -16,7 +16,6 @@ require_once __DIR__ . '/../../../config/database.php'; // Conexão com o banco
 </head>
 <body>
 
-<!-- Link do Bootstrap JS -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 
 <div class="container mt-4">
@@ -27,28 +26,32 @@ require_once __DIR__ . '/../../../config/database.php'; // Conexão com o banco
     <form action="../../../routes/players.php" method="POST">
         <div class="mb-3">
             <label for="nome" class="form-label">Nome do Jogador</label>
-            <input type="text" class="form-control" name="nome" required>
+            <input type="text" class="form-control" name="nome" placeholder="Ex: João da Silva" required>
         </div>
+
         <div class="mb-3">
             <label for="idade" class="form-label">Idade</label>
-            <input type="number" class="form-control" name="idade" required>
+            <input type="number" class="form-control" name="idade" min="10" max="60" placeholder="Ex: 22" required>
         </div>
+
         <div class="mb-3">
             <label for="nacionalidade" class="form-label">Nacionalidade</label>
-            <input type="text" class="form-control" name="nacionalidade">
+            <input type="text" class="form-control" name="nacionalidade" placeholder="Ex: Brasileiro">
         </div>
+
         <div class="mb-3">
             <label for="posicao" class="form-label">Posição</label>
             <select class="form-control" name="posicao" required>
+                <option value="">Selecione a posição</option>
                 <option value="Goleiro">Goleiro</option>
                 <option value="Zagueiro">Zagueiro</option>
                 <option value="Lateral">Lateral</option>
                 <option value="Meia">Meia</option>
                 <option value="Atacante">Atacante</option>
             </select>
+            <small class="form-text text-muted">Ex: Zagueiro, Meia, Atacante...</small>
         </div>
 
-        <!-- Seleção de Times -->
         <div class="mb-3">
             <label for="time_id" class="form-label">Time</label>
             <select class="form-control" name="time_id" required>
@@ -61,12 +64,13 @@ require_once __DIR__ . '/../../../config/database.php'; // Conexão com o banco
                 }
                 ?>
             </select>
+            <small class="form-text text-muted">Selecione o time atual do jogador</small>
         </div>
 
         <button type="submit" class="btn btn-primary">Cadastrar</button>
     </form>
 </div>
-
+<div class="row mt-4">
 <?php include '../cabecalho/footer.php'; ?>
 <script src="../../../assets/js/bootstrap.bundle.min.js"></script>
 </body>
