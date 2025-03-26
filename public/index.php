@@ -31,26 +31,25 @@
 
 <body>
 
-    <!-- Linha de botões diretamente abaixo do header -->
-    <div class="container-fluid p-0">
+     <!-- Linha de botões diretamente abaixo do header -->
+<div class="container-fluid p-0">
+    <div class="table-responsive">
         <table class="table table-bordered table-sm text-center mb-0">
             <tbody>
                 <tr>
-                    <td><a href="views/cadastro/cadastro_usuario.php" class="btn btn-secondary w-100">Cadastro de
-                            Usuário</a></td>
-
-                    <td><a href="views/cadastro/cadastro_campeonato.php" class="btn btn-secondary w-100">Cadastro de
-                            Campeonato</a></td>
-
-                    <td><a href="views/cadastro/cadastro_time.php" class="btn btn-secondary w-100">Cadastro de Time</a>
-                    </td>
-
-                    <td><a href="views/cadastro/cadastro_jogador.php" class="btn btn-secondary w-100">Cadastro de
-                            Jogador</a></td>
+                    <td class="p-2"><a href="views/cadastro/cadastro_usuario.php" class="btn btn-secondary w-100 btn-lg">Cadastro de Usuário</a></td>
+                    <td class="p-2"><a href="views/cadastro/cadastro_campeonato.php" class="btn btn-secondary w-100 btn-lg">Cadastro de Campeonato</a></td>
+                    <td class="p-2"><a href="views/cadastro/cadastro_time.php" class="btn btn-secondary w-100 btn-lg">Cadastro de Time</a></td>
+                    <td class="p-2"><a href="views/cadastro/cadastro_jogador.php" class="btn btn-secondary w-100 btn-lg">Cadastro de Jogador</a></td>
+                    <td class="p-2"><a href="views/login/login.php" class="btn btn-secondary w-100 btn-lg">Login</a></td>
+                    <td class="p-2"><a href="views/avaliacao/avaliar_jogador.php" class="btn btn-secondary w-100 btn-lg">Avaliar Jogador</a></td>
+                    <td class="p-2"><a href="views/avaliacao/visualizar_avaliacoes.php" class="btn btn-secondary w-100 btn-lg">Visualizar Avaliações</a></td>
                 </tr>
             </tbody>
         </table>
     </div>
+</div>
+
 
     <!-- Link do Bootstrap JS (caso necessário) -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
