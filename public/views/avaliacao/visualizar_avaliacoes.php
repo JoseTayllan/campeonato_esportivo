@@ -3,6 +3,8 @@ session_start();
 require_once __DIR__ . '/../../../config/database.php'; // Conexão com o banco
 ?>
 
+<?php include '../cabecalho/header.php'; ?>
+<?php include '../cabecalho/tabela.php'; ?>
 
 <!DOCTYPE html>
 <html lang="pt-br">
@@ -92,6 +94,7 @@ require_once __DIR__ . '/../../../config/database.php'; // Conexão com o banco
     </div>
 </div>
 
+<?php include '../cabecalho/footer.php'; ?>
 
 <script src="../../../assets/js/bootstrap.bundle.min.js"></script>
 </body>
