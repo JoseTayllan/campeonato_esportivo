@@ -15,7 +15,7 @@
 
                 <td><a href="../avaliacao/avaliar_jogador.php" class="btn btn-secondary w-100">Avaliar Jogador</a></td>
 
-                <td><a href="../avaliacao/vizualizar_jogador.php" class="btn btn-secondary w-100">Vizualizar Avaliações</a></td>
+                <td><a href="../avaliacao/vizualizar_avaliacoes.php" class="btn btn-secondary w-100">Vizualizar Avaliações</a></td>
             </tr>
         </tbody>
     </table>
