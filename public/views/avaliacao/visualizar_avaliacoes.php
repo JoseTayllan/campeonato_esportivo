@@ -13,23 +13,6 @@ require_once __DIR__ . '/../../../config/database.php'; // Conexão com o banco
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Visualização de Avaliações</title>
     <link href="../../../assets/css/bootstrap.min.css" rel="stylesheet">
-    <style>
-        /* Ajustes para evitar espaços extras no footer */
-        .content {
-            min-height: 32vh; /* Garante que o conteúdo ocupe pelo menos 70% da tela */
-            display: flex;
-            flex-direction: column;
-        }
-        .content {
-            flex-grow: 1;
-        }
-        footer {
-            position: relative;
-            bottom: 0;
-            width: 100%;
-            padding: 10px 0;
-        }
-    </style>
 </head>
 <body>
 
@@ -39,6 +22,12 @@ require_once __DIR__ . '/../../../config/database.php'; // Conexão com o banco
     <h2 class="mb-4">Avaliações dos Jogadores</h2>
 
     <?php include '../partials/mensagens.php'; ?>
+
+    <!-- Botões de Exportação -->
+    <div class="d-flex justify-content-end mb-3">
+        <a href="../../../routes/exportar_dados.php?tipo=csv&dados=avaliacoes" class="btn btn-success me-2">📂 Exportar CSV</a>
+        <a href="../../../routes/exportar_dados.php?tipo=pdf&dados=avaliacoes" class="btn btn-danger">📄 Exportar PDF</a>
+    </div>
 
     <div class="content">
         <div class="table-responsive">
