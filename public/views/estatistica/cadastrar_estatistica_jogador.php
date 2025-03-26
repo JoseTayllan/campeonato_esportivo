@@ -62,49 +62,51 @@ require_once __DIR__ . '/../../../config/database.php'; // Conexão com o banco
         <div class="mb-3">
             <label for="gols" class="form-label">Gols</label>
             <input type="number" class="form-control" name="gols" min="0" placeholder="Ex: 2">
-            <small class="form-text text-muted">Informe quantos gols o jogador marcou.</small>
         </div>
 
         <div class="mb-3">
             <label for="assistencias" class="form-label">Assistências</label>
             <input type="number" class="form-control" name="assistencias" min="0" placeholder="Ex: 1">
-            <small class="form-text text-muted">Informe quantas assistências o jogador deu.</small>
         </div>
 
         <div class="mb-3">
             <label for="passes_completos" class="form-label">Passes Completos</label>
             <input type="number" class="form-control" name="passes_completos" min="0" placeholder="Ex: 30">
-            <small class="form-text text-muted">Informe a quantidade de passes completos.</small>
         </div>
 
         <div class="mb-3">
             <label for="finalizacoes" class="form-label">Finalizações</label>
             <input type="number" class="form-control" name="finalizacoes" min="0" placeholder="Ex: 5">
-            <small class="form-text text-muted">Informe quantas finalizações o jogador realizou.</small>
         </div>
 
         <div class="mb-3">
             <label for="faltas_cometidas" class="form-label">Faltas Cometidas</label>
             <input type="number" class="form-control" name="faltas_cometidas" min="0" placeholder="Ex: 2">
-            <small class="form-text text-muted">Informe quantas faltas o jogador cometeu.</small>
         </div>
 
         <div class="mb-3">
             <label for="cartoes_amarelos" class="form-label">Cartões Amarelos</label>
             <input type="number" class="form-control" name="cartoes_amarelos" min="0" placeholder="Ex: 1">
-            <small class="form-text text-muted">Informe quantos cartões amarelos o jogador recebeu.</small>
         </div>
 
         <div class="mb-3">
             <label for="cartoes_vermelhos" class="form-label">Cartões Vermelhos</label>
             <input type="number" class="form-control" name="cartoes_vermelhos" min="0" placeholder="Ex: 0">
-            <small class="form-text text-muted">Informe quantos cartões vermelhos o jogador recebeu.</small>
         </div>
 
         <div class="mb-3">
             <label for="minutos_jogados" class="form-label">Minutos Jogados</label>
             <input type="number" class="form-control" name="minutos_jogados" min="0" max="90" placeholder="Ex: 75">
-            <small class="form-text text-muted">Informe quantos minutos o jogador esteve em campo.</small>
+        </div>
+
+        <!-- Substituições (Apenas 0 ou 1) -->
+        <div class="mb-3">
+            <label for="substituicoes" class="form-label">Substituições</label>
+            <select class="form-control" name="substituicoes" required>
+                <option value="0">Não foi substituído (0)</option>
+                <option value="1">Foi substituído (1)</option>
+            </select>
+            <small class="form-text text-muted">Indique se o jogador foi substituído durante a partida.</small>
         </div>
 
         <button type="submit" class="btn btn-primary">Salvar Estatística</button>
