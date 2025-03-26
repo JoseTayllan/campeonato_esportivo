@@ -13,7 +13,9 @@
                 
                 <td><a href="../login/login_usuario.php" class="btn btn-secondary w-100">Login De  Usuário</a></td>
 
+                <td><a href="../avaliacao/avaliar_jogador.php" class="btn btn-secondary w-100">Avaliar Jogador</a></td>
 
+                <td><a href="../avaliacao/vizualizar_jogador.php" class="btn btn-secondary w-100">Vizualizar Avaliações</a></td>
             </tr>
         </tbody>
     </table>

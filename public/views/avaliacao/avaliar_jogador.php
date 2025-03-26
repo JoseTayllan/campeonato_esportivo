@@ -4,6 +4,7 @@ require_once __DIR__ . '/../../../config/database.php'; // Conexão com o banco
 ?>
 
 <?php include '../cabecalho/header.php'; ?>
+<?php include '../cabecalho/tabela.php'; ?>
 
 <!DOCTYPE html>
 <html lang="pt-br">
@@ -20,7 +21,6 @@ require_once __DIR__ . '/../../../config/database.php'; // Conexão com o banco
 <div class="container mt-4">
     <h2 class="mb-4">Avaliação de Jogador</h2>
 
-    <!-- Exibir mensagens de feedback -->
     <?php include '../partials/mensagens.php'; ?>
 
     <form action="../../../routes/avaliacoes.php" method="POST">
@@ -39,28 +39,28 @@ require_once __DIR__ . '/../../../config/database.php'; // Conexão com o banco
         </div>
 
         <div class="mb-3">
-            <label for="forca" class="form-label">Força (0 a 10)</label>
-            <input type="number" class="form-control" name="forca" min="0" max="10" required>
+            <label for="forca" class="form-label">Força (0 a 10) - Opcional</label>
+            <input type="number" class="form-control" name="forca" min="0" max="10">
         </div>
 
         <div class="mb-3">
-            <label for="velocidade" class="form-label">Velocidade (0 a 10)</label>
-            <input type="number" class="form-control" name="velocidade" min="0" max="10" required>
+            <label for="velocidade" class="form-label">Velocidade (0 a 10) - Opcional</label>
+            <input type="number" class="form-control" name="velocidade" min="0" max="10">
         </div>
 
         <div class="mb-3">
-            <label for="drible" class="form-label">Drible (0 a 10)</label>
-            <input type="number" class="form-control" name="drible" min="0" max="10" required>
+            <label for="drible" class="form-label">Drible (0 a 10) - Opcional</label>
+            <input type="number" class="form-control" name="drible" min="0" max="10">
         </div>
 
         <div class="mb-3">
-            <label for="finalizacao" class="form-label">Finalização (0 a 10)</label>
-            <input type="number" class="form-control" name="finalizacao" min="0" max="10" required>
+            <label for="finalizacao" class="form-label">Finalização (0 a 10) - Opcional</label>
+            <input type="number" class="form-control" name="finalizacao" min="0" max="10">
         </div>
 
         <div class="mb-3">
-            <label for="nota_geral" class="form-label">Nota Geral (0 a 10)</label>
-            <input type="number" class="form-control" name="nota_geral" min="0" max="10" step="0.1" required>
+            <label for="nota_geral" class="form-label">Nota Geral (0 a 10) - Opcional</label>
+            <input type="number" class="form-control" name="nota_geral" min="0" max="10" step="0.1">
         </div>
 
         <div class="mb-3">
@@ -71,7 +71,7 @@ require_once __DIR__ . '/../../../config/database.php'; // Conexão com o banco
         <button type="submit" class="btn btn-primary">Salvar Avaliação</button>
     </form>
 </div>
-<div class="row mt-4">
+
 <?php include '../cabecalho/footer.php'; ?>
 <script src="../../../assets/js/bootstrap.bundle.min.js"></script>
 </body>
