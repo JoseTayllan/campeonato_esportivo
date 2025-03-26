@@ -44,6 +44,7 @@
                     <td class="p-2"><a href="views/login/login.php" class="btn btn-secondary w-100 btn-lg">Login</a></td>
                     <td class="p-2"><a href="views/avaliacao/avaliar_jogador.php" class="btn btn-secondary w-100 btn-lg">Avaliar Jogador</a></td>
                     <td class="p-2"><a href="views/avaliacao/visualizar_avaliacoes.php" class="btn btn-secondary w-100 btn-lg">Visualizar Avaliações</a></td>
+                    <td class="p-2"><a href="views/estatistica/cadastrar_estatistica_jogador.php" class="btn btn-secondary w-100 btn-lg">Cadastro Estatistica Por Partida de Jogador </a></td>
                 </tr>
             </tbody>
         </table>
