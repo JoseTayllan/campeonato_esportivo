@@ -38,6 +38,21 @@ require_once __DIR__ . '/../../../config/database.php'; // Conexão com o banco
             </select>
         </div>
 
+        <!-- Novo Campo: Selecionar Olheiro -->
+        <div class="mb-3">
+            <label for="olheiro_id" class="form-label">Olheiro Responsável</label>
+            <select class="form-control" name="olheiro_id" required>
+                <option value="">Selecione um olheiro</option>
+                <?php
+                $queryOlheiros = "SELECT id, nome FROM usuarios WHERE tipo = 'Olheiro'";
+                $resultOlheiros = $conn->query($queryOlheiros);
+                while ($row = $resultOlheiros->fetch_assoc()) {
+                    echo "<option value='{$row['id']}'>{$row['nome']}</option>";
+                }
+                ?>
+            </select>
+        </div>
+
         <div class="mb-3">
             <label for="forca" class="form-label">Força (0 a 10) - Opcional</label>
             <input type="number" class="form-control" name="forca" min="0" max="10">
