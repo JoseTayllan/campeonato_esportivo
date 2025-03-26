@@ -1,6 +1,25 @@
 <?php 
 session_start();
+require_once __DIR__ . '/../../../config/database.php'; // Conexão com o banco
+
+// Consultas para obter os dados reais do banco
+$queryCampeonatos = "SELECT COUNT(*) AS total FROM campeonatos";
+$queryTimes = "SELECT COUNT(*) AS total FROM times";
+$queryJogadores = "SELECT COUNT(*) AS total FROM jogadores";
+
+// Executa as consultas
+$resultCampeonatos = $conn->query($queryCampeonatos);
+$resultTimes = $conn->query($queryTimes);
+$resultJogadores = $conn->query($queryJogadores);
+
+// Obtém os resultados
+$totalCampeonatos = ($resultCampeonatos->fetch_assoc())['total'] ?? 0;
+$totalTimes = ($resultTimes->fetch_assoc())['total'] ?? 0;
+$totalJogadores = ($resultJogadores->fetch_assoc())['total'] ?? 0;
 ?>
+
+<?php include '../cabecalho/header.php'; ?>
+<?php include '../cabecalho/tabela_administrativa.php'; ?>
 
 <!DOCTYPE html>
 <html lang="pt-br">
@@ -9,106 +28,63 @@ session_start();
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dashboard - Sistema de Campeonatos</title>
     <link href="../../../assets/css/bootstrap.min.css" rel="stylesheet">
-    <style>
-        body {
-            background-color: #f8f9fa;
-        }
-        .dashboard-container {
-            max-width: 1100px;
-            margin: 50px auto;
-            padding: 20px;
-            background: white;
-            border-radius: 8px;
-            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
-        }
-        .dashboard-title {
-            text-align: center;
-            margin-bottom: 20px;
-        }
-        .card-summary {
-            padding: 20px;
-            border-radius: 10px;
-            text-align: center;
-            color: white;
-        }
-        .card-summary h3 {
-            font-size: 24px;
-            margin-bottom: 5px;
-        }
-        .card-summary p {
-            font-size: 16px;
-        }
-    </style>
 </head>
 <body>
 
-    <?php include '../cabecalho/header.php'; ?>
-    <?php include '../cabecalho/tabela_administrativa.php'; ?>
+<div class="container mt-4">
+    <h2 class="text-center">Painel Administrativo</h2>
 
-    <div class="container dashboard-container">
-        <h2 class="dashboard-title">Painel Administrativo</h2>
-
-        <!-- Estatísticas do Sistema -->
-        <div class="row">
-            <div class="col-md-4 mb-4">
-                <div class="card-summary bg-primary">
-                    <h3>12</h3>
-                    <p>Campeonatos Cadastrados</p>
-                </div>
-            </div>
-            <div class="col-md-4 mb-4">
-                <div class="card-summary bg-success">
-                    <h3>24</h3>
-                    <p>Times Registrados</p>
-                </div>
-            </div>
-            <div class="col-md-4 mb-4">
-                <div class="card-summary bg-warning text-dark">
-                    <h3>132</h3>
-                    <p>Jogadores Ativos</p>
-                </div>
+    <!-- Estatísticas do Sistema -->
+    <div class="row text-center">
+        <div class="col-md-4 mb-4">
+            <div class="card bg-primary text-white p-4">
+                <h3><?= $totalCampeonatos ?></h3>
+                <p>Campeonatos Cadastrados</p>
             </div>
         </div>
-
-        <!-- Acesso Rápido -->
-        <div class="row">
-            <div class="col-md-6 col-lg-4 mb-4">
-                <a href="../campeonatos/index.php" class="text-decoration-none">
-                    <div class="card card-custom text-center p-4 bg-info text-white">
-                        <h4>Gerenciar Campeonatos</h4>
-                    </div>
-                </a>
-            </div>
-
-            <div class="col-md-6 col-lg-4 mb-4">
-                <a href="../cadastro/cadastro_time.php" class="text-decoration-none">
-                    <div class="card card-custom text-center p-4 bg-secondary text-white">
-                        <h4>Gerenciar Times</h4>
-                    </div>
-                </a>
-            </div>
-
-            <div class="col-md-6 col-lg-4 mb-4">
-                <a href="../cadastro/cadastro_jogador.php" class="text-decoration-none">
-                    <div class="card card-custom text-center p-4 bg-danger text-white">
-                        <h4>Gerenciar Jogadores</h4>
-                    </div>
-                </a>
+        <div class="col-md-4 mb-4">
+            <div class="card bg-success text-white p-4">
+                <h3><?= $totalTimes ?></h3>
+                <p>Times Registrados</p>
             </div>
         </div>
-
-        <!-- Espaço para Gráficos e Estatísticas Futuras -->
-        <div class="row mt-4">
-            <div class="col-md-12">
-                <div class="card p-4">
-                    <h4>Gráficos e Estatísticas (Em Desenvolvimento)</h4>
-                    <p>Aqui serão adicionados gráficos sobre campeonatos, desempenho dos times e estatísticas dos jogadores.</p>
-                </div>
+        <div class="col-md-4 mb-4">
+            <div class="card bg-warning text-dark p-4">
+                <h3><?= $totalJogadores ?></h3>
+                <p>Jogadores Ativos</p>
             </div>
         </div>
-
     </div>
-    <?php include '../cabecalho/footer.php'; ?>
-    <script src="../../../assets/js/bootstrap.bundle.min.js"></script>
+
+    <!-- Acesso Rápido -->
+    <div class="row text-center">
+        <div class="col-md-4 mb-4">
+            <a href="../campeonatos/index.php" class="btn btn-info w-100 p-3">Gerenciar Campeonatos</a>
+        </div>
+        <div class="col-md-4 mb-4">
+            <a href="../cadastro/cadastro_time.php" class="btn btn-secondary w-100 p-3">Gerenciar Times</a>
+        </div>
+        <div class="col-md-4 mb-4">
+            <a href="../cadastro/cadastro_jogador.php" class="btn btn-danger w-100 p-3">Gerenciar Jogadores</a>
+        </div>
+    </div>
+
+    <!-- Espaço para Gráficos e Estatísticas Futuras -->
+    <div class="row mt-4">
+        <div class="col-md-12">
+            <div class="card p-4">
+                <h4>Gráficos e Estatísticas (Em Desenvolvimento)</h4>
+                <p>Aqui serão adicionados gráficos sobre campeonatos, desempenho dos times e estatísticas dos jogadores.</p>
+            </div>
+        </div>
+    </div>
+
+
+
+</div>
+<div class="row mt-4">
+
+<?php include '../cabecalho/footer.php'; ?>
+<script src="../../../assets/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>

@@ -1,56 +1,59 @@
-<?php 
-session_start();
-?>
 <?php include 'views/cabecalho/header.php'; ?>
 <!DOCTYPE html>
 <html lang="pt-br">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Gerenciamento de Campeonatos</title>
     <link href="../assets/css/bootstrap.min.css" rel="stylesheet">
     <style>
-        body {
-            background-color: #f8f9fa;
-        }
-        .container {
-            margin-top: 50px;
-        }
-        .card-custom {
-            transition: 0.3s;
-            border-radius: 10px;
-            cursor: pointer;
-        }
-        .card-custom:hover {
-            transform: scale(1.05);
-            box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.2);
-        }
+    body {
+        background-color: #f8f9fa;
+    }
+
+    .container {
+        margin-top: 50px;
+    }
+
+    .card-custom {
+        transition: 0.3s;
+        border-radius: 10px;
+        cursor: pointer;
+    }
+
+    .card-custom:hover {
+        transform: scale(1.05);
+        box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.2);
+    }
     </style>
 </head>
+
 <body>
-    
-<!-- Linha de botões diretamente abaixo do header -->
-<div class="container-fluid p-0">
-    <table class="table table-bordered table-sm text-center mb-0">
-        <tbody>
-            <tr>
-            <td><a href="views/cadastro/cadastro_usuario.php" class="btn btn-secondary w-100">Cadastro de Usuário</a></td>
-                
-                <td><a href="views/cadastro/cadastro_campeonato.php" class="btn btn-secondary w-100">Cadastro de Campeonato</a></td>
 
-                <td><a href="views/cadastro/cadastro_time.php" class="btn btn-secondary w-100">Cadastro de Time</a></td>
-                
-                <td><a href="views/cadastro/cadastro_jogador.php" class="btn btn-secondary w-100">Cadastro de Jogador</a></td>
-                
+    <!-- Linha de botões diretamente abaixo do header -->
+    <div class="container-fluid p-0">
+        <table class="table table-bordered table-sm text-center mb-0">
+            <tbody>
+                <tr>
+                    <td><a href="views/cadastro/cadastro_usuario.php" class="btn btn-secondary w-100">Cadastro de
+                            Usuário</a></td>
 
-            </tr>
-        </tbody>
-    </table>
-</div>
+                    <td><a href="views/cadastro/cadastro_campeonato.php" class="btn btn-secondary w-100">Cadastro de
+                            Campeonato</a></td>
 
-<!-- Link do Bootstrap JS (caso necessário) -->
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+                    <td><a href="views/cadastro/cadastro_time.php" class="btn btn-secondary w-100">Cadastro de Time</a>
+                    </td>
 
+                    <td><a href="views/cadastro/cadastro_jogador.php" class="btn btn-secondary w-100">Cadastro de
+                            Jogador</a></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <!-- Link do Bootstrap JS (caso necessário) -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 
     <div class="container text-center">
         <h1 class="mb-4">Sistema de Gerenciamento de Campeonatos</h1>
@@ -97,4 +100,5 @@ session_start();
 
     <script src="../assets/js/bootstrap.bundle.min.js"></script>
 </body>
+
 </html>

@@ -1,5 +1,5 @@
 <?php 
-class Campeonato {
+class Championship {
     private $conn;
     public function __construct($db) {
         $this->conn = $db;
