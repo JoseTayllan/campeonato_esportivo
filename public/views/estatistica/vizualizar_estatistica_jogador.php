@@ -4,7 +4,7 @@ require_once __DIR__ . '/../../../config/database.php'; // Conexão com o banco
 ?>
 
 <?php include '../cabecalho/header.php'; ?>
-
+<?php include '../cabecalho/tabela.php'; ?>
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
