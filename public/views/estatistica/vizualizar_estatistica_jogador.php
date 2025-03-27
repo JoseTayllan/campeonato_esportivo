@@ -160,21 +160,32 @@ require_once __DIR__ . '/../../../config/database.php'; // Conexão com o banco
 
     <?php include '../cabecalho/footer.php'; ?>
 
-    <script>
-    $(document).ready(function() {
-        $("#selecionar_jogador").on("change", function() {
-            var jogadorId = $(this).val();
-            if (jogadorId) {
-                $("#exportar_csv").removeClass("disabled").attr("href",
-                    "../../../routes/export.php?tipo=csv&jogador_id=" + jogadorId);
-                $("#exportar_pdf").removeClass("disabled").attr("href",
-                    "../../../routes/export.php?tipo=pdf&jogador_id=" + jogadorId);
-            } else {
-                $("#exportar_csv, #exportar_pdf").addClass("disabled").attr("href", "#");
-            }
+    <<<<<<< HEAD <script>
+        ======= aaa
+        <script>
+        >>> >>> > e259df3e2782e4ddb43cb4a25804f87f39403dfb
+        $(document).ready(function() {
+            $("#selecionar_jogador").on("change", function() {
+                var jogadorId = $(this).val();
+                if (jogadorId) {
+                    $("#exportar_csv").removeClass("disabled").attr("href",
+                        "../../../routes/export.php?tipo=csv&jogador_id=" + jogadorId);
+                    $("#exportar_pdf").removeClass("disabled").attr("href",
+                        "../../../routes/export.php?tipo=pdf&jogador_id=" + jogadorId);
+                } else {
+                    $("#exportar_csv, #exportar_pdf").addClass("disabled").attr("href", "#");
+                }
+            });
         });
-    });
-    </script>
+
+        <<
+        <<
+        <<
+        < HEAD
+        </script>
+        =======
+        </script>
+        >>>>>>> e259df3e2782e4ddb43cb4a25804f87f39403dfb
 
 </body>
 
