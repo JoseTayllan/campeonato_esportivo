@@ -13,6 +13,7 @@ require_once __DIR__ . '/../../../config/database.php'; // Conexão com o banco
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Estatísticas dos Jogadores</title>
     <link href="../../../assets/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 </head>
 <body>
 
@@ -27,10 +28,10 @@ require_once __DIR__ . '/../../../config/database.php'; // Conexão com o banco
     <div class="card mb-4">
         <div class="card-header">Selecione um Jogador para Exportar Todos os Dados</div>
         <div class="card-body">
-            <form method="POST" action="../../../routes/export.php" class="row">
-                <div class="col-md-8 mb-2">
-                    <label for="jogador_id" class="form-label">Jogador</label>
-                    <select class="form-control" name="jogador_id" required>
+            <div class="row">
+                <div class="col-md-8">
+                    <label for="selecionar_jogador" class="form-label">Jogador</label>
+                    <select class="form-control" id="selecionar_jogador">
                         <option value="">Selecione um jogador</option>
                         <?php
                         $queryJogadores = "SELECT id, nome FROM jogadores ORDER BY nome ASC";
@@ -41,11 +42,11 @@ require_once __DIR__ . '/../../../config/database.php'; // Conexão com o banco
                         ?>
                     </select>
                 </div>
-                <div class="col-md-4 d-flex align-items-end gap-2">
-                    <button type="submit" name="tipo" value="csv" class="btn btn-success w-50">📂 CSV</button>
-                    <button type="submit" name="tipo" value="pdf" class="btn btn-danger w-50">📄 PDF</button>
+                <div class="col-md-4 d-flex align-items-end">
+                    <a id="exportar_csv" href="#" class="btn btn-success me-2 disabled">📂 Exportar CSV</a>
+                    <a id="exportar_pdf" href="#" class="btn btn-danger disabled">📄 Exportar PDF</a>
                 </div>
-            </form>
+            </div>
         </div>
     </div>
 
@@ -109,13 +110,14 @@ require_once __DIR__ . '/../../../config/database.php'; // Conexão com o banco
                 </thead>
                 <tbody>
                     <?php
-                    $query = "SELECT e.partida_id, j.nome AS jogador_nome, e.gols, e.assistencias, 
+                    $query = "SELECT e.partida_id, j.id AS jogador_id, j.nome AS jogador_nome, e.gols, e.assistencias, 
                                      e.passes_completos, e.finalizacoes, e.faltas_cometidas, 
                                      e.cartoes_amarelos, e.cartoes_vermelhos, e.minutos_jogados, e.substituicoes
                               FROM estatisticas_partida e
                               JOIN jogadores j ON e.jogador_id = j.id
                               WHERE 1";
 
+                    // Adiciona filtros se forem preenchidos
                     if (!empty($_GET['partida_id'])) {
                         $query .= " AND e.partida_id = " . intval($_GET['partida_id']);
                     }
@@ -154,6 +156,22 @@ require_once __DIR__ . '/../../../config/database.php'; // Conexão com o banco
 </div>
 
 <?php include '../cabecalho/footer.php'; ?>
-<script src="../../../assets/js/bootstrap.bundle.min.js"></script>
+
+<script>
+    $(document).ready(function() {
+        $("#selecionar_jogador").on("change", function() {
+            var jogadorId = $(this).val();
+            if (jogadorId) {
+                $("#exportar_csv").removeClass("disabled").attr("href",
+                    "../../../routes/export.php?tipo=csv&jogador_id=" + jogadorId);
+                $("#exportar_pdf").removeClass("disabled").attr("href",
+                    "../../../routes/export.php?tipo=pdf&jogador_id=" + jogadorId);
+            } else {
+                $("#exportar_csv, #exportar_pdf").addClass("disabled").attr("href", "#");
+            }
+        });
+    });
+</script>
+
 </body>
 </html>
