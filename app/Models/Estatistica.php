@@ -24,5 +24,39 @@ class Estatistica {
         
         return $stmt->execute();
     }
+
+    public function listarTodos() {
+        $query = "SELECT e.*, j.nome AS jogador_nome 
+                  FROM estatisticas_partida e
+                  JOIN jogadores j ON e.jogador_id = j.id";
+
+        $result = $this->conn->query($query);
+
+        $estatisticas = [];
+        while ($row = $result->fetch_assoc()) {
+            $estatisticas[] = $row;
+        }
+
+        return $estatisticas;
+    }
+
+    public function listarPorJogador($jogador_id) {
+        $query = "SELECT e.*, j.nome AS jogador_nome 
+                  FROM estatisticas_partida e
+                  JOIN jogadores j ON e.jogador_id = j.id
+                  WHERE e.jogador_id = ?";
+
+        $stmt = $this->conn->prepare($query);
+        $stmt->bind_param("i", $jogador_id);
+        $stmt->execute();
+        $result = $stmt->get_result();
+
+        $estatisticas = [];
+        while ($row = $result->fetch_assoc()) {
+            $estatisticas[] = $row;
+        }
+
+        return $estatisticas;
+    }
 }
 ?>
