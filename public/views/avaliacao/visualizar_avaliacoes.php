@@ -39,6 +39,8 @@ require_once __DIR__ . '/../../../config/database.php'; // Conexão com o banco
                         ?>
                     </select>
                 </div>
+
+
                 <div class="col-md-6 d-flex justify-content-end align-items-center">
                     <a id="exportar_csv" href="#" class="btn btn-success me-2 disabled">📂 Exportar CSV</a>
                     <a id="exportar_pdf" href="#" class="btn btn-danger disabled">📄 Exportar PDF</a>

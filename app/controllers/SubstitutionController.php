@@ -2,7 +2,8 @@
 require_once __DIR__ . '/../../config/database.php';
 require_once __DIR__ . '/../Models/Substituicao.php';
 
-class SubstituicaoController {
+class SubstitutionController {
+
     private $substituicaoModel;
 
     public function __construct($conn) {

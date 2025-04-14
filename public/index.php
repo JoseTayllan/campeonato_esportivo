@@ -57,6 +57,8 @@ include 'views/cabecalho/header.php';
                     <td class="p-2 flex-shrink-0"><a href="views/avaliacao/visualizar_avaliacoes.php" class="btn btn-secondary btn-lg">Visualizar Avaliações</a></td>
                     <td class="p-2 flex-shrink-0"><a href="views/estatistica/cadastrar_estatistica_jogador.php" class="btn btn-secondary btn-lg">Cadastro Estatística Por Partida de Jogador</a></td>
                     <td class="p-2 flex-shrink-0"><a href="views/estatistica/vizualizar_estatistica_jogador.php" class="btn btn-secondary btn-lg">Estatística do Jogador</a></td>
+                    <td class="p-2 flex-shrink-0"><a href="views/substituicao/cadastrar_substituicao.php" class="btn btn-secondary btn-lg">Cadastrar Substituição</a></td>
+                    <td class="p-2 flex-shrink-0"><a href="views/substituicao/listar_substituicOES.php" class="btn btn-secondary btn-lg">Visualizar Substituição</a></td>
                 </tr>
             </tbody>
         </table>
