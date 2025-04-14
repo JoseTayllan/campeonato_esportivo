@@ -21,7 +21,7 @@ require_once __DIR__ . '/../../../config/database.php'; // Conexão com o banco
 
     <div class="row justify-content-center">
         <div class="col-md-4">
-            <div class="card">
+            <div class="card shadow">
                 <div class="card-header text-center bg-dark text-white">
                     <h4>Login</h4>
                 </div>
@@ -32,12 +32,12 @@ require_once __DIR__ . '/../../../config/database.php'; // Conexão com o banco
                     <form action="../../../routes/login.php" method="POST">
                         <div class="mb-3">
                             <label for="email" class="form-label">E-mail</label>
-                            <input type="email" class="form-control" name="email" required>
+                            <input type="email" class="form-control" name="email" required placeholder="Digite seu e-mail">
                         </div>
 
                         <div class="mb-3">
                             <label for="senha" class="form-label">Senha</label>
-                            <input type="password" class="form-control" name="senha" required>
+                            <input type="password" class="form-control" name="senha" required placeholder="Digite sua senha">
                         </div>
 
                         <button type="submit" class="btn btn-primary w-100">Entrar</button>
