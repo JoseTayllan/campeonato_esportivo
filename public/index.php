@@ -41,7 +41,16 @@ include 'views/cabecalho/header_index.php';
             <tbody>
                 <tr class="d-flex">
                     <td class="p-2 flex-shrink-0"><a href="views/cadastro/cadastro_usuario.php" class="btn btn-secondary btn-lg">Cadastro de Usuário</a></td>
+                    <td class="p-2 flex-shrink-0"><a href="views/cadastro/cadastro_campeonato.php" class="btn btn-secondary btn-lg">Cadastro de Campeonato</a></td>
+                    <td class="p-2 flex-shrink-0"><a href="views/cadastro/cadastro_time.php" class="btn btn-secondary btn-lg">Cadastro de Time</a></td>
+                    <td class="p-2 flex-shrink-0"><a href="views/cadastro/cadastro_jogador.php" class="btn btn-secondary btn-lg">Cadastro de Jogador</a></td>
                     <td class="p-2 flex-shrink-0"><a href="views/login/login.php" class="btn btn-secondary btn-lg">Login</a></td>
+                    <td class="p-2 flex-shrink-0"><a href="views/avaliacao/avaliar_jogador.php" class="btn btn-secondary btn-lg">Avaliar Jogador</a></td>
+                    <td class="p-2 flex-shrink-0"><a href="views/avaliacao/visualizar_avaliacoes.php" class="btn btn-secondary btn-lg">Visualizar Avaliações</a></td>
+                    <td class="p-2 flex-shrink-0"><a href="views/estatistica/cadastrar_estatistica_jogador.php" class="btn btn-secondary btn-lg">Cadastro Estatística Por Partida de Jogador</a></td>
+                    <td class="p-2 flex-shrink-0"><a href="views/estatistica/vizualizar_estatistica_jogador.php" class="btn btn-secondary btn-lg">Estatística do Jogador</a></td>
+                    <td class="p-2 flex-shrink-0"><a href="views/substituicao/cadastrar_substituicao.php" class="btn btn-secondary btn-lg">Cadastrar Substituição</a></td>
+                    <td class="p-2 flex-shrink-0"><a href="views/substituicao/listar_substituicOES.php" class="btn btn-secondary btn-lg">Visualizar Substituição</a></td>
                 </tr>
             </tbody>
         </table>
