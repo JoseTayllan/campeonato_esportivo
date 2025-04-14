@@ -33,14 +33,6 @@ include 'views/cabecalho/header_index.php';
 </head>
 <body>
 
-<!-- Sessão ativa: mostrar nome e botão de logout -->
-<?php if (isset($_SESSION['usuario_nome'])): ?>
-    <div class="bg-light py-2 px-3 border-bottom mb-2 d-flex justify-content-between align-items-center">
-        <span class="fw-bold">Bem-vindo, <?= htmlspecialchars($_SESSION['usuario_nome']) ?>!</span>
-        <!-- 🔔 AVISO PARA O DEV 2: implementar lógica de logout em routes/logout.php -->
-        <a href="routes/logout.php" class="btn btn-sm btn-outline-danger">Sair</a>
-    </div>
-<?php endif; ?>
 
 <!-- Linha de botões diretamente abaixo do header -->
 <div class="container-fluid p-0">
