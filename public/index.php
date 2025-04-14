@@ -1,6 +1,6 @@
 <?php 
 session_start();
-include 'views/cabecalho/header.php'; 
+include 'views/cabecalho/header_index.php'; 
 ?>
 
 <!DOCTYPE html>
