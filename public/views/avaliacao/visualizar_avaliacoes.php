@@ -1,5 +1,6 @@
 <?php 
 session_start();
+require_once __DIR__ . '/../../../app/middleware/verifica_sessao.php';
 require_once __DIR__ . '/../../../config/database.php'; // Conexão com o banco
 ?>
 
@@ -8,59 +9,62 @@ require_once __DIR__ . '/../../../config/database.php'; // Conexão com o banco
 
 <!DOCTYPE html>
 <html lang="pt-br">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Visualização de Avaliações</title>
     <link href="../../../assets/css/bootstrap.min.css" rel="stylesheet">
 </head>
+
 <body>
 
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 
-<div class="container mt-4">
-    <h2 class="mb-4">Exportação de Avaliações do Jogador</h2>
+    <div class="container mt-4">
+        <h2 class="mb-4">Exportação de Avaliações do Jogador</h2>
 
-    <!-- Seção de Exportação de Avaliações -->
-    <div class="card mb-4">
-        <div class="card-header">📥 Selecione um Jogador para Exportar Todas as Avaliações</div>
-        <div class="card-body">
-            <div class="row align-items-center">
-                <div class="col-md-6">
-                    <label for="selecionar_jogador" class="form-label">Jogador</label>
-                    <select id="selecionar_jogador" class="form-control">
-                        <option value="">Selecione um jogador</option>
-                        <?php
+        <!-- Seção de Exportação de Avaliações -->
+        <div class="card mb-4">
+            <div class="card-header">📥 Selecione um Jogador para Exportar Todas as Avaliações</div>
+            <div class="card-body">
+                <div class="row align-items-center">
+                    <div class="col-md-6">
+                        <label for="selecionar_jogador" class="form-label">Jogador</label>
+                        <select id="selecionar_jogador" class="form-control">
+                            <option value="">Selecione um jogador</option>
+                            <?php
                         $jogadorQuery = "SELECT id, nome FROM jogadores ORDER BY nome ASC";
                         $jogadorResult = $conn->query($jogadorQuery);
                         while ($jogador = $jogadorResult->fetch_assoc()) {
                             echo "<option value='{$jogador['id']}'>{$jogador['nome']}</option>";
                         }
                         ?>
-                    </select>
-                </div>
+                        </select>
+                    </div>
 
 
-                <div class="col-md-6 d-flex justify-content-end align-items-center">
-                    <a id="exportar_csv" href="#" class="btn btn-success me-2 disabled">📂 Exportar CSV</a>
-                    <a id="exportar_pdf" href="#" class="btn btn-danger disabled">📄 Exportar PDF</a>
+                    <div class="col-md-6 d-flex justify-content-end align-items-center">
+                        <a id="exportar_csv" href="#" class="btn btn-success me-2 disabled">📂 Exportar CSV</a>
+                        <a id="exportar_pdf" href="#" class="btn btn-danger disabled">📄 Exportar PDF</a>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
 
-    <h2 class="mb-4">Avaliações dos Jogadores</h2>
+        <h2 class="mb-4">Avaliações dos Jogadores</h2>
 
-    <!-- Filtros -->
-    <form method="GET" class="mb-3">
-        <div class="row">
-            <div class="col-md-6 mb-2">
-                <input type="text" name="jogador" class="form-control" placeholder="Filtrar por jogador" value="<?= isset($_GET['jogador']) ? htmlspecialchars($_GET['jogador']) : '' ?>">
-            </div>
-            <div class="col-md-4 mb-2">
-                <select name="olheiro" class="form-control">
-                    <option value="">Todos os Olheiros</option>
-                    <?php
+        <!-- Filtros -->
+        <form method="GET" class="mb-3">
+            <div class="row">
+                <div class="col-md-6 mb-2">
+                    <input type="text" name="jogador" class="form-control" placeholder="Filtrar por jogador"
+                        value="<?= isset($_GET['jogador']) ? htmlspecialchars($_GET['jogador']) : '' ?>">
+                </div>
+                <div class="col-md-4 mb-2">
+                    <select name="olheiro" class="form-control">
+                        <option value="">Todos os Olheiros</option>
+                        <?php
                     $olheiroQuery = "SELECT id, nome FROM usuarios WHERE tipo = 'Olheiro'";
                     $olheiroResult = $conn->query($olheiroQuery);
                     while ($olheiro = $olheiroResult->fetch_assoc()) {
@@ -68,35 +72,35 @@ require_once __DIR__ . '/../../../config/database.php'; // Conexão com o banco
                         echo "<option value='{$olheiro['id']}' $selected>{$olheiro['nome']}</option>";
                     }
                     ?>
-                </select>
+                    </select>
+                </div>
+                <div class="col-md-2">
+                    <button type="submit" class="btn btn-primary w-100">🔍 Filtrar</button>
+                </div>
             </div>
-            <div class="col-md-2">
-                <button type="submit" class="btn btn-primary w-100">🔍 Filtrar</button>
-            </div>
-        </div>
-    </form>
+        </form>
 
-    <div class="content">
-        <div class="table-responsive">
-            <div class="alert alert-warning text-center d-block d-md-none" role="alert">
-                📢 Arraste para o lado para visualizar toda a tabela!
-            </div>
+        <div class="content">
+            <div class="table-responsive">
+                <div class="alert alert-warning text-center d-block d-md-none" role="alert">
+                    📢 Arraste para o lado para visualizar toda a tabela!
+                </div>
 
-            <table class="table table-striped table-bordered text-center align-middle">
-                <thead class="table-dark">
-                    <tr>
-                        <th class="text-nowrap">Jogador</th>
-                        <th class="text-nowrap">Olheiro</th>
-                        <th class="text-nowrap">Força</th>
-                        <th class="text-nowrap">Velocidade</th>
-                        <th class="text-nowrap">Drible</th>
-                        <th class="text-nowrap">Finalização</th>
-                        <th class="text-nowrap">Nota Geral</th>
-                        <th class="text-nowrap">Observações</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <?php
+                <table class="table table-striped table-bordered text-center align-middle">
+                    <thead class="table-dark">
+                        <tr>
+                            <th class="text-nowrap">Jogador</th>
+                            <th class="text-nowrap">Olheiro</th>
+                            <th class="text-nowrap">Força</th>
+                            <th class="text-nowrap">Velocidade</th>
+                            <th class="text-nowrap">Drible</th>
+                            <th class="text-nowrap">Finalização</th>
+                            <th class="text-nowrap">Nota Geral</th>
+                            <th class="text-nowrap">Observações</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <?php
                     $whereClauses = [];
                     if (!empty($_GET['jogador'])) {
                         $jogador = $conn->real_escape_string($_GET['jogador']);
@@ -136,23 +140,25 @@ require_once __DIR__ . '/../../../config/database.php'; // Conexão com o banco
                         echo "<tr><td colspan='8' class='text-center p-4'>Nenhuma avaliação encontrada.</td></tr>";
                     }
                     ?>
-                </tbody>
-            </table>
+                    </tbody>
+                </table>
+            </div>
         </div>
     </div>
-</div>
 
-<?php include '../cabecalho/footer.php'; ?>
+    <?php include '../cabecalho/footer.php'; ?>
 
-<script src="../../../assets/js/bootstrap.bundle.min.js"></script>
-<script>
-    document.getElementById("selecionar_jogador").addEventListener("change", function () {
+    <script src="../../../assets/js/bootstrap.bundle.min.js"></script>
+    <script>
+    document.getElementById("selecionar_jogador").addEventListener("change", function() {
         let jogadorId = this.value;
         if (jogadorId) {
             document.getElementById("exportar_csv").classList.remove("disabled");
             document.getElementById("exportar_pdf").classList.remove("disabled");
-            document.getElementById("exportar_csv").href = "../../../routes/exportar_dados.php?tipo=csv&jogador_id=" + jogadorId;
-            document.getElementById("exportar_pdf").href = "../../../routes/exportar_dados.php?tipo=pdf&jogador_id=" + jogadorId;
+            document.getElementById("exportar_csv").href =
+                "../../../routes/exportar_dados.php?tipo=csv&jogador_id=" + jogadorId;
+            document.getElementById("exportar_pdf").href =
+                "../../../routes/exportar_dados.php?tipo=pdf&jogador_id=" + jogadorId;
         } else {
             document.getElementById("exportar_csv").classList.add("disabled");
             document.getElementById("exportar_pdf").classList.add("disabled");
@@ -160,6 +166,7 @@ require_once __DIR__ . '/../../../config/database.php'; // Conexão com o banco
             document.getElementById("exportar_pdf").href = "#";
         }
     });
-</script>
+    </script>
 </body>
+
 </html>

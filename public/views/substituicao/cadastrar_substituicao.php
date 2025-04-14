@@ -1,5 +1,6 @@
 <?php
 session_start();
+require_once __DIR__ . '/../../../app/middleware/verifica_sessao.php';
 require_once __DIR__ . '/../../../config/database.php';
 
 // Buscar partidas
@@ -23,9 +24,9 @@ $jogadores = $conn->query("SELECT id, nome FROM jogadores ORDER BY nome ASC");
             <select name="partida_id" id="partida" class="form-select" required>
                 <option value="">Selecione uma partida</option>
                 <?php while ($row = $partidas->fetch_assoc()): ?>
-                    <option value="<?= $row['id'] ?>">
-                        Partida #<?= $row['id'] ?> - <?= date('d/m/Y', strtotime($row['data'])) ?> - <?= $row['local'] ?>
-                    </option>
+                <option value="<?= $row['id'] ?>">
+                    Partida #<?= $row['id'] ?> - <?= date('d/m/Y', strtotime($row['data'])) ?> - <?= $row['local'] ?>
+                </option>
                 <?php endwhile; ?>
             </select>
         </div>
@@ -35,7 +36,7 @@ $jogadores = $conn->query("SELECT id, nome FROM jogadores ORDER BY nome ASC");
             <select name="jogador_saiu" id="jogador_saiu" class="form-select" required>
                 <option value="">Selecione o jogador</option>
                 <?php mysqli_data_seek($jogadores, 0); while ($row = $jogadores->fetch_assoc()): ?>
-                    <option value="<?= $row['id'] ?>"><?= $row['nome'] ?></option>
+                <option value="<?= $row['id'] ?>"><?= $row['nome'] ?></option>
                 <?php endwhile; ?>
             </select>
         </div>
@@ -45,14 +46,15 @@ $jogadores = $conn->query("SELECT id, nome FROM jogadores ORDER BY nome ASC");
             <select name="jogador_entrou" id="jogador_entrou" class="form-select" required>
                 <option value="">Selecione o jogador</option>
                 <?php mysqli_data_seek($jogadores, 0); while ($row = $jogadores->fetch_assoc()): ?>
-                    <option value="<?= $row['id'] ?>"><?= $row['nome'] ?></option>
+                <option value="<?= $row['id'] ?>"><?= $row['nome'] ?></option>
                 <?php endwhile; ?>
             </select>
         </div>
 
         <div class="mb-3">
             <label for="minuto_substituicao" class="form-label">Minuto da substituição</label>
-            <input type="number" name="minuto_substituicao" id="minuto_substituicao" class="form-control" min="0" max="120" required>
+            <input type="number" name="minuto_substituicao" id="minuto_substituicao" class="form-control" min="0"
+                max="120" required>
         </div>
 
         <button type="submit" class="btn btn-primary">💾 Registrar Substituição</button>

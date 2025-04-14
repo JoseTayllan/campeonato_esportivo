@@ -1,5 +1,6 @@
 <?php
 session_start();
+require_once __DIR__ . '/../../../app/middleware/verifica_sessao.php';
 require_once __DIR__ . '/../../../config/database.php';
 
 $query = "SELECT s.id, s.minuto_substituicao, 
@@ -38,27 +39,30 @@ $result = $conn->query($query);
             </thead>
             <tbody>
                 <?php if ($result->num_rows > 0): ?>
-                    <?php while ($row = $result->fetch_assoc()): ?>
-                        <tr>
-                            <td>#<?= $row['partida_id'] ?></td>
-                            <td><?= date('d/m/Y', strtotime($row['data'])) ?></td>
-                            <td><?= htmlspecialchars($row['local']) ?></td>
-                            <td><?= $row['minuto_substituicao'] ?>'</td>
-                            <td><?= htmlspecialchars($row['jogador_saiu']) ?></td>
-                            <td><?= htmlspecialchars($row['jogador_entrou']) ?></td>
+                <?php while ($row = $result->fetch_assoc()): ?>
+                <tr>
+                    <td>#<?= $row['partida_id'] ?></td>
+                    <td><?= date('d/m/Y', strtotime($row['data'])) ?></td>
+                    <td><?= htmlspecialchars($row['local']) ?></td>
+                    <td><?= $row['minuto_substituicao'] ?>'</td>
+                    <td><?= htmlspecialchars($row['jogador_saiu']) ?></td>
+                    <td><?= htmlspecialchars($row['jogador_entrou']) ?></td>
 
-                            <td>
-                            <a href="editar_substituicao.php?id=<?= $row['id'] ?>" class="btn btn-sm btn-warning me-1">✏️</a>
-                            <a href="../../../routes/substituicao_delete.php?id=<?= $row['id'] ?>" 
-                                class="btn btn-sm btn-danger" 
-                                onclick="return confirm('Tem certeza que deseja excluir esta substituição?')">🗑️</a>
-                            </td>
+                    <td>
+                        <a href="editar_substituicao.php?id=<?= $row['id'] ?>"
+                            class="btn btn-sm btn-warning me-1">✏️</a>
+                        <a href="../../../routes/substituicao_delete.php?id=<?= $row['id'] ?>"
+                            class="btn btn-sm btn-danger"
+                            onclick="return confirm('Tem certeza que deseja excluir esta substituição?')">🗑️</a>
+                    </td>
 
 
-                        </tr>
-                    <?php endwhile; ?>
+                </tr>
+                <?php endwhile; ?>
                 <?php else: ?>
-                    <tr><td colspan="6">Nenhuma substituição registrada.</td></tr>
+                <tr>
+                    <td colspan="6">Nenhuma substituição registrada.</td>
+                </tr>
                 <?php endif; ?>
             </tbody>
         </table>
