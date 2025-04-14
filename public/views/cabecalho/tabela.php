@@ -13,8 +13,8 @@
                     <td class="p-2 flex-shrink-0"><a href="../avaliacao/visualizar_avaliacoes.php" class="btn btn-secondary btn-lg">Visualizar Avaliações</a></td>
                     <td class="p-2 flex-shrink-0"><a href="../estatistica/cadastrar_estatistica_jogador.php" class="btn btn-secondary btn-lg">Cadastro Estatística Por Partida de Jogador</a></td>
                     <td class="p-2 flex-shrink-0"><a href="../estatistica/vizualizar_estatistica_jogador.php" class="btn btn-secondary btn-lg">Estatística do Jogador</a></td>
-                    <td class="p-2 flex-shrink-0"><a href="views/substituicao/cadastrar_substituicao.php" class="btn btn-secondary btn-lg">Cadastrar Substituição</a></td>
-                    <td class="p-2 flex-shrink-0"><a href="views/substituicao/listar_substituicOES.php" class="btn btn-secondary btn-lg">Visualizar Substituição</a></td>
+                    <td class="p-2 flex-shrink-0"><a href="../substituicao/cadastrar_substituicao.php" class="btn btn-secondary btn-lg">Cadastrar Substituição</a></td>
+                    <td class="p-2 flex-shrink-0"><a href="../substituicao/listar_substituicOES.php" class="btn btn-secondary btn-lg">Visualizar Substituição</a></td>
                 </tr>
             </tbody>
         </table>
