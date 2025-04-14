@@ -4,16 +4,16 @@
         <table class="table table-borderless table-sm text-center mb-0">
             <tbody>
                 <tr class="d-flex">
-                    <td class="p-2 flex-shrink-0">
-                        <a href="../dashboard/dashboard_administrador.php" class="btn btn-secondary btn-lg">
-                            Dashboard do Administrador
-                        </a>
-                    </td>
-                    <td class="p-2 flex-shrink-0">
-                        <a href="../campeonatos/index.php" class="btn btn-secondary btn-lg">
-                            Gerenciamento de Campeonato
-                        </a>
-                    </td>
+                    <td class="p-2 flex-shrink-0"><a href="../cadastro/cadastro_usuario.php" class="btn btn-secondary btn-lg">Cadastro de Usuário</a></td>
+                    <td class="p-2 flex-shrink-0"><a href="../cadastro/cadastro_campeonato.php" class="btn btn-secondary btn-lg">Cadastro de Campeonato</a></td>
+                    <td class="p-2 flex-shrink-0"><a href="../cadastro/cadastro_time.php" class="btn btn-secondary btn-lg">Cadastro de Time</a></td>
+                    <td class="p-2 flex-shrink-0"><a href="../cadastro/cadastro_jogador.php" class="btn btn-secondary btn-lg">Cadastro de Jogador</a></td>
+                    <td class="p-2 flex-shrink-0"><a href="../avaliacao/avaliar_jogador.php" class="btn btn-secondary btn-lg">Avaliar Jogador</a></td>
+                    <td class="p-2 flex-shrink-0"><a href="../avaliacao/visualizar_avaliacoes.php" class="btn btn-secondary btn-lg">Visualizar Avaliações</a></td>
+                    <td class="p-2 flex-shrink-0"><a href="../estatistica/cadastrar_estatistica_jogador.php" class="btn btn-secondary btn-lg">Cadastro Estatística Por Partida de Jogador</a></td>
+                    <td class="p-2 flex-shrink-0"><a href="../estatistica/vizualizar_estatistica_jogador.php" class="btn btn-secondary btn-lg">Estatística do Jogador</a></td>
+                    <td class="p-2 flex-shrink-0"><a href="../substituicao/cadastrar_substituicao.php" class="btn btn-secondary btn-lg">Cadastrar Substituição</a></td>
+                    <td class="p-2 flex-shrink-0"><a href="../substituicao/listar_substituicOES.php" class="btn btn-secondary btn-lg">Visualizar Substituição</a></td>
                 </tr>
             </tbody>
         </table>
