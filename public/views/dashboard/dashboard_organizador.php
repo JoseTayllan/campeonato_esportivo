@@ -1,5 +1,6 @@
 <?php
 session_start();
+$restrito_para = ['Organizador'];
 require_once __DIR__ . '/../../../app/middleware/verifica_sessao.php';
 ?>
 
@@ -8,52 +9,55 @@ require_once __DIR__ . '/../../../app/middleware/verifica_sessao.php';
 
 <!DOCTYPE html>
 <html lang="pt-br">
+
 <head>
     <meta charset="UTF-8">
     <title>Painel do Organizador</title>
     <link href="../../../assets/css/bootstrap.min.css" rel="stylesheet">
 </head>
 <!-- min-vh-100 garante altura completa e d-flex + flex-column permite usar mt-auto no footer -->
+
 <body class="d-flex flex-column min-vh-100">
 
-<div class="container my-5">
-    <h2 class="mb-4 text-center">Painel do Organizador</h2>
+    <div class="container my-5">
+        <h2 class="mb-4 text-center">Painel do Organizador</h2>
 
-    <div class="row justify-content-center">
-        <div class="col-md-4 mb-3">
-            <a href="../campeonatos/index.php" class="text-decoration-none">
-                <div class="card text-white bg-primary p-4 text-center">
-                    <h5 class="card-title">Gerenciar Campeonatos</h5>
-                    <p class="card-text">Acesse todos os campeonatos cadastrados e organize seus torneios.</p>
-                </div>
-            </a>
-        </div>
+        <div class="row justify-content-center">
+            <div class="col-md-4 mb-3">
+                <a href="../campeonatos/index.php" class="text-decoration-none">
+                    <div class="card text-white bg-primary p-4 text-center">
+                        <h5 class="card-title">Gerenciar Campeonatos</h5>
+                        <p class="card-text">Acesse todos os campeonatos cadastrados e organize seus torneios.</p>
+                    </div>
+                </a>
+            </div>
 
-        <div class="col-md-4 mb-3">
-            <a href="../cadastro/cadastro_time.php" class="text-decoration-none">
-                <div class="card text-white bg-success p-4 text-center">
-                    <h5 class="card-title">Cadastrar Times</h5>
-                    <p class="card-text">Adicione novos times aos seus campeonatos.</p>
-                </div>
-            </a>
-        </div>
+            <div class="col-md-4 mb-3">
+                <a href="../cadastro/cadastro_time.php" class="text-decoration-none">
+                    <div class="card text-white bg-success p-4 text-center">
+                        <h5 class="card-title">Cadastrar Times</h5>
+                        <p class="card-text">Adicione novos times aos seus campeonatos.</p>
+                    </div>
+                </a>
+            </div>
 
-        <div class="col-md-4 mb-3">
-            <a href="../cadastro/cadastro_jogador.php" class="text-decoration-none">
-                <div class="card text-white bg-danger p-4 text-center">
-                    <h5 class="card-title">Cadastrar Jogadores</h5>
-                    <p class="card-text">Inclua jogadores para formação dos times participantes.</p>
-                </div>
-            </a>
+            <div class="col-md-4 mb-3">
+                <a href="../cadastro/cadastro_jogador.php" class="text-decoration-none">
+                    <div class="card text-white bg-danger p-4 text-center">
+                        <h5 class="card-title">Cadastrar Jogadores</h5>
+                        <p class="card-text">Inclua jogadores para formação dos times participantes.</p>
+                    </div>
+                </a>
+            </div>
         </div>
     </div>
-</div>
 
-<!-- Footer fixado ao fim da tela -->
-<div class="mt-auto">
-    <?php include '../cabecalho/footer.php'; ?>
-</div>
+    <!-- Footer fixado ao fim da tela -->
+    <div class="mt-auto">
+        <?php include '../cabecalho/footer.php'; ?>
+    </div>
 
-<script src="../../../assets/js/bootstrap.bundle.min.js"></script>
+    <script src="../../../assets/js/bootstrap.bundle.min.js"></script>
 </body>
+
 </html>

@@ -1,5 +1,6 @@
 <?php
 session_start();
+$restrito_para = ['Jogador'];
 require_once __DIR__ . '/../../../config/database.php';
 require_once __DIR__ . '/../../../app/middleware/verifica_sessao.php';
 include '../cabecalho/header.php';
@@ -8,21 +9,23 @@ include '../cabecalho/tabela_jogador.php';
 
 <!DOCTYPE html>
 <html lang="pt-br">
+
 <head>
     <meta charset="UTF-8">
     <title>Dashboard do Jogador</title>
     <link href="../../../assets/css/bootstrap.min.css" rel="stylesheet">
 </head>
-<body>
-<div class="container mt-4 mb-5">
-    <h2 class="mb-4">Painel do Jogador</h2>
 
-    <!-- Dropdown de seleção de jogador -->
-    <form method="GET" class="mb-4">
-        <div class="input-group">
-            <select class="form-select" name="jogador" required>
-                <option value="">🔍 Selecione seu nome</option>
-                <?php
+<body>
+    <div class="container mt-4 mb-5">
+        <h2 class="mb-4">Painel do Jogador</h2>
+
+        <!-- Dropdown de seleção de jogador -->
+        <form method="GET" class="mb-4">
+            <div class="input-group">
+                <select class="form-select" name="jogador" required>
+                    <option value="">🔍 Selecione seu nome</option>
+                    <?php
                 $query = "SELECT nome FROM jogadores ORDER BY nome ASC";
                 $res = $conn->query($query);
                 while ($row = $res->fetch_assoc()) {
@@ -30,40 +33,40 @@ include '../cabecalho/tabela_jogador.php';
                     echo "<option value='{$row['nome']}' $selected>{$row['nome']}</option>";
                 }
                 ?>
-            </select>
-            <button class="btn btn-primary">Buscar</button>
-        </div>
-    </form>
+                </select>
+                <button class="btn btn-primary">Buscar</button>
+            </div>
+        </form>
 
-    <!-- Cards de funcionalidades -->
-    <div class="row mb-4">
-        <div class="col-md-4 mb-3">
-            <div class="card text-center shadow">
-                <div class="card-body">
-                    <h5 class="card-title">📊 Avaliações</h5>
-                    <p class="card-text">Visualize suas avaliações feitas pelos olheiros.</p>
+        <!-- Cards de funcionalidades -->
+        <div class="row mb-4">
+            <div class="col-md-4 mb-3">
+                <div class="card text-center shadow">
+                    <div class="card-body">
+                        <h5 class="card-title">📊 Avaliações</h5>
+                        <p class="card-text">Visualize suas avaliações feitas pelos olheiros.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4 mb-3">
+                <div class="card text-center shadow">
+                    <div class="card-body">
+                        <h5 class="card-title">📈 Estatísticas</h5>
+                        <p class="card-text">Consulte seu desempenho por partida.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4 mb-3">
+                <div class="card text-center shadow">
+                    <div class="card-body">
+                        <h5 class="card-title">📅 Próximas Partidas</h5>
+                        <p class="card-text">Veja as datas dos próximos jogos do seu time.</p>
+                    </div>
                 </div>
             </div>
         </div>
-        <div class="col-md-4 mb-3">
-            <div class="card text-center shadow">
-                <div class="card-body">
-                    <h5 class="card-title">📈 Estatísticas</h5>
-                    <p class="card-text">Consulte seu desempenho por partida.</p>
-                </div>
-            </div>
-        </div>
-        <div class="col-md-4 mb-3">
-            <div class="card text-center shadow">
-                <div class="card-body">
-                    <h5 class="card-title">📅 Próximas Partidas</h5>
-                    <p class="card-text">Veja as datas dos próximos jogos do seu time.</p>
-                </div>
-            </div>
-        </div>
-    </div>
 
-    <?php if (!empty($_GET['jogador'])): ?>
+        <?php if (!empty($_GET['jogador'])): ?>
         <?php $nome = $conn->real_escape_string($_GET['jogador']); ?>
 
         <!-- Avaliações -->
@@ -160,10 +163,11 @@ include '../cabecalho/tabela_jogador.php';
                 </tbody>
             </table>
         </div>
-    <?php endif; ?>
-</div>
+        <?php endif; ?>
+    </div>
 
-<?php include '../cabecalho/footer.php'; ?>
-<script src="../../../assets/js/bootstrap.bundle.min.js"></script>
+    <?php include '../cabecalho/footer.php'; ?>
+    <script src="../../../assets/js/bootstrap.bundle.min.js"></script>
 </body>
+
 </html>

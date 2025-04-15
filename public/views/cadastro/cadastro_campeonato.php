@@ -1,5 +1,6 @@
 <?php 
 session_start();
+$restrito_para = ['Administrador', 'Organizador'];
 require_once __DIR__ . '/../../../app/middleware/verifica_sessao.php';
 ?>
 <?php include '../cabecalho/header.php'; ?>
