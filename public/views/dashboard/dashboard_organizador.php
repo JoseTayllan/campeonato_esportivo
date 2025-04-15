@@ -13,8 +13,10 @@ require_once __DIR__ . '/../../../app/middleware/verifica_sessao.php';
     <title>Painel do Organizador</title>
     <link href="../../../assets/css/bootstrap.min.css" rel="stylesheet">
 </head>
-<body>
-<div class="container mt-5">
+<!-- min-vh-100 garante altura completa e d-flex + flex-column permite usar mt-auto no footer -->
+<body class="d-flex flex-column min-vh-100">
+
+<div class="container my-5">
     <h2 class="mb-4 text-center">Painel do Organizador</h2>
 
     <div class="row justify-content-center">
@@ -47,7 +49,11 @@ require_once __DIR__ . '/../../../app/middleware/verifica_sessao.php';
     </div>
 </div>
 
-<?php include '../cabecalho/footer.php'; ?>
+<!-- Footer fixado ao fim da tela -->
+<div class="mt-auto">
+    <?php include '../cabecalho/footer.php'; ?>
+</div>
+
 <script src="../../../assets/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>

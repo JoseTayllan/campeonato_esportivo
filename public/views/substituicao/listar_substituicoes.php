@@ -17,7 +17,7 @@ $result = $conn->query($query);
 
 <?php include '../cabecalho/header.php'; ?>
 <?php include '../cabecalho/tabela.php'; ?>
-
+<body class="d-flex flex-column min-vh-100">
 <div class="container mt-4">
     <h2 class="mb-4">Substituições Registradas</h2>
 
@@ -68,5 +68,7 @@ $result = $conn->query($query);
         </table>
     </div>
 </div>
-
-<?php include '../cabecalho/footer.php'; ?>
+<!-- Footer com margem automática no topo para colar no final -->
+<div class="mt-auto">
+    <?php include '../cabecalho/footer.php'; ?>
+</div>
