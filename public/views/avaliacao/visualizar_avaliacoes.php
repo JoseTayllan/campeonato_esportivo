@@ -15,6 +15,7 @@ require_once __DIR__ . '/../../../config/database.php'; // Conexão com o banco
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Visualização de Avaliações</title>
     <link href="../../../assets/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
 </head>
 
 <body>
@@ -34,15 +35,14 @@ require_once __DIR__ . '/../../../config/database.php'; // Conexão com o banco
                         <select id="selecionar_jogador" class="form-control">
                             <option value="">Selecione um jogador</option>
                             <?php
-                        $jogadorQuery = "SELECT id, nome FROM jogadores ORDER BY nome ASC";
-                        $jogadorResult = $conn->query($jogadorQuery);
-                        while ($jogador = $jogadorResult->fetch_assoc()) {
-                            echo "<option value='{$jogador['id']}'>{$jogador['nome']}</option>";
-                        }
-                        ?>
+                            $jogadorQuery = "SELECT id, nome FROM jogadores ORDER BY nome ASC";
+                            $jogadorResult = $conn->query($jogadorQuery);
+                            while ($jogador = $jogadorResult->fetch_assoc()) {
+                                echo "<option value='{$jogador['id']}'>{$jogador['nome']}</option>";
+                            }
+                            ?>
                         </select>
                     </div>
-
 
                     <div class="col-md-6 d-flex justify-content-end align-items-center">
                         <a id="exportar_csv" href="#" class="btn btn-success me-2 disabled">📂 Exportar CSV</a>
@@ -53,6 +53,13 @@ require_once __DIR__ . '/../../../config/database.php'; // Conexão com o banco
         </div>
 
         <h2 class="mb-4">Avaliações dos Jogadores</h2>
+
+        <!-- Botão de acesso à página de Avaliação -->
+        <div class="d-flex justify-content-end mb-3">
+            <a href="avaliar_jogador.php" class="btn btn-primary">
+                <i class="bi bi-pencil-square"></i> Avaliar Jogador
+            </a>
+        </div>
 
         <!-- Filtros -->
         <form method="GET" class="mb-3">
@@ -65,13 +72,13 @@ require_once __DIR__ . '/../../../config/database.php'; // Conexão com o banco
                     <select name="olheiro" class="form-control">
                         <option value="">Todos os Olheiros</option>
                         <?php
-                    $olheiroQuery = "SELECT id, nome FROM usuarios WHERE tipo = 'Olheiro'";
-                    $olheiroResult = $conn->query($olheiroQuery);
-                    while ($olheiro = $olheiroResult->fetch_assoc()) {
-                        $selected = (isset($_GET['olheiro']) && $_GET['olheiro'] == $olheiro['id']) ? 'selected' : '';
-                        echo "<option value='{$olheiro['id']}' $selected>{$olheiro['nome']}</option>";
-                    }
-                    ?>
+                        $olheiroQuery = "SELECT id, nome FROM usuarios WHERE tipo = 'Olheiro'";
+                        $olheiroResult = $conn->query($olheiroQuery);
+                        while ($olheiro = $olheiroResult->fetch_assoc()) {
+                            $selected = (isset($_GET['olheiro']) && $_GET['olheiro'] == $olheiro['id']) ? 'selected' : '';
+                            echo "<option value='{$olheiro['id']}' $selected>{$olheiro['nome']}</option>";
+                        }
+                        ?>
                     </select>
                 </div>
                 <div class="col-md-2">
@@ -101,45 +108,45 @@ require_once __DIR__ . '/../../../config/database.php'; // Conexão com o banco
                     </thead>
                     <tbody>
                         <?php
-                    $whereClauses = [];
-                    if (!empty($_GET['jogador'])) {
-                        $jogador = $conn->real_escape_string($_GET['jogador']);
-                        $whereClauses[] = "j.nome LIKE '%$jogador%'";
-                    }
-                    if (!empty($_GET['olheiro'])) {
-                        $olheiro = $conn->real_escape_string($_GET['olheiro']);
-                        $whereClauses[] = "u.id = '$olheiro'";
-                    }
-
-                    $whereSQL = !empty($whereClauses) ? "WHERE " . implode(" AND ", $whereClauses) : "";
-
-                    $query = "SELECT a.forca, a.velocidade, a.drible, a.finalizacao, 
-                                     a.nota_geral, a.observacoes, j.nome AS jogador_nome, 
-                                     u.nome AS olheiro_nome
-                              FROM avaliacoes a
-                              JOIN jogadores j ON a.jogador_id = j.id
-                              JOIN usuarios u ON a.olheiro_id = u.id
-                              $whereSQL
-                              ORDER BY a.nota_geral DESC";
-
-                    $result = $conn->query($query);
-                    if ($result->num_rows > 0) {
-                        while ($row = $result->fetch_assoc()) {
-                            echo "<tr>
-                                    <td class='text-nowrap'>{$row['jogador_nome']}</td>
-                                    <td class='text-nowrap'>{$row['olheiro_nome']}</td>
-                                    <td class='text-nowrap'>{$row['forca']}</td>
-                                    <td class='text-nowrap'>{$row['velocidade']}</td>
-                                    <td class='text-nowrap'>{$row['drible']}</td>
-                                    <td class='text-nowrap'>{$row['finalizacao']}</td>
-                                    <td class='text-nowrap'>{$row['nota_geral']}</td>
-                                    <td class='text-nowrap'>{$row['observacoes']}</td>
-                                  </tr>";
+                        $whereClauses = [];
+                        if (!empty($_GET['jogador'])) {
+                            $jogador = $conn->real_escape_string($_GET['jogador']);
+                            $whereClauses[] = "j.nome LIKE '%$jogador%'";
                         }
-                    } else {
-                        echo "<tr><td colspan='8' class='text-center p-4'>Nenhuma avaliação encontrada.</td></tr>";
-                    }
-                    ?>
+                        if (!empty($_GET['olheiro'])) {
+                            $olheiro = $conn->real_escape_string($_GET['olheiro']);
+                            $whereClauses[] = "u.id = '$olheiro'";
+                        }
+
+                        $whereSQL = !empty($whereClauses) ? "WHERE " . implode(" AND ", $whereClauses) : "";
+
+                        $query = "SELECT a.forca, a.velocidade, a.drible, a.finalizacao, 
+                                        a.nota_geral, a.observacoes, j.nome AS jogador_nome, 
+                                        u.nome AS olheiro_nome
+                                FROM avaliacoes a
+                                JOIN jogadores j ON a.jogador_id = j.id
+                                JOIN usuarios u ON a.olheiro_id = u.id
+                                $whereSQL
+                                ORDER BY a.nota_geral DESC";
+
+                        $result = $conn->query($query);
+                        if ($result->num_rows > 0) {
+                            while ($row = $result->fetch_assoc()) {
+                                echo "<tr>
+                                        <td class='text-nowrap'>{$row['jogador_nome']}</td>
+                                        <td class='text-nowrap'>{$row['olheiro_nome']}</td>
+                                        <td class='text-nowrap'>{$row['forca']}</td>
+                                        <td class='text-nowrap'>{$row['velocidade']}</td>
+                                        <td class='text-nowrap'>{$row['drible']}</td>
+                                        <td class='text-nowrap'>{$row['finalizacao']}</td>
+                                        <td class='text-nowrap'>{$row['nota_geral']}</td>
+                                        <td class='text-nowrap'>{$row['observacoes']}</td>
+                                    </tr>";
+                            }
+                        } else {
+                            echo "<tr><td colspan='8' class='text-center p-4'>Nenhuma avaliação encontrada.</td></tr>";
+                        }
+                        ?>
                     </tbody>
                 </table>
             </div>
