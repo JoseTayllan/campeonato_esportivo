@@ -12,6 +12,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         
         if (strpos($resultado, 'sucesso') !== false) {
             $_SESSION['mensagem_sucesso'] = "Usuário cadastrado com sucesso!";
+            header("Location: ../public/views/login/login.php");
+            exit();
         } else {
             $_SESSION['mensagem_erro'] = "Erro ao cadastrar usuário: " . $resultado;
         }
@@ -25,4 +27,3 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     header("Location: ../public/views/cadastro/cadastro_usuario.php");
     exit();
 }
-?>
