@@ -12,7 +12,32 @@ $jogadores = $conn->query("SELECT id, nome FROM jogadores ORDER BY nome ASC");
 ?>
 
 <?php include '../cabecalho/header.php'; ?>
-<?php include '../cabecalho/tabela.php'; ?>
+<?php
+$tipo = strtolower($_SESSION['usuario_tipo'] ?? '');
+
+switch ($tipo) {
+    case 'administrador':
+        include '../cabecalho/tabela_administrativa.php';
+        break;
+    case 'organizador':
+        include '../cabecalho/tabela.php';
+        break;
+    case 'olheiro':
+        include '../cabecalho/tabela_olheiro.php';
+        break;
+    case 'treinador':
+        include '../cabecalho/tabela_treinador.php';
+        break;
+    case 'jogador':
+        include '../cabecalho/tabela_jogador.php';
+        break;
+    case 'patrocinador':
+        include '../cabecalho/tabela_patrocinador.php';
+        break;
+    default:
+        include '../cabecalho/tabela.php';
+}
+?>
 
 <div class="container mt-4">
     <h2 class="mb-4">Registrar Substituição</h2>

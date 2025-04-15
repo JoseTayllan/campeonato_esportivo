@@ -17,7 +17,32 @@ $result = $conn->query($query);
 ?>
 
 <?php include '../cabecalho/header.php'; ?>
-<?php include '../cabecalho/tabela.php'; ?>
+<?php
+$tipo = strtolower($_SESSION['usuario_tipo'] ?? '');
+
+switch ($tipo) {
+    case 'administrador':
+        include '../cabecalho/tabela_administrativa.php';
+        break;
+    case 'organizador':
+        include '../cabecalho/tabela.php';
+        break;
+    case 'olheiro':
+        include '../cabecalho/tabela_olheiro.php';
+        break;
+    case 'treinador':
+        include '../cabecalho/tabela_treinador.php';
+        break;
+    case 'jogador':
+        include '../cabecalho/tabela_jogador.php';
+        break;
+    case 'patrocinador':
+        include '../cabecalho/tabela_patrocinador.php';
+        break;
+    default:
+        include '../cabecalho/tabela.php';
+}
+?>
 
 <body class="d-flex flex-column min-vh-100">
     <div class="container mt-4">
