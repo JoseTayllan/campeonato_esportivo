@@ -4,7 +4,6 @@
         <table class="table table-borderless table-sm text-center mb-0">
             <tbody>
                 <tr class="d-flex">
-                    <td class="p-2 flex-shrink-0"><a href="../cadastro/cadastro_usuario.php" class="btn btn-secondary btn-lg">Cadastro de Usuário</a></td>
                     <td class="p-2 flex-shrink-0"><a href="../cadastro/cadastro_campeonato.php" class="btn btn-secondary btn-lg">Cadastro de Campeonato</a></td>
                     <td class="p-2 flex-shrink-0"><a href="../cadastro/cadastro_time.php" class="btn btn-secondary btn-lg">Cadastro de Time</a></td>
                     <td class="p-2 flex-shrink-0"><a href="../cadastro/cadastro_jogador.php" class="btn btn-secondary btn-lg">Cadastro de Jogador</a></td>
