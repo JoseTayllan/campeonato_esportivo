@@ -1,4 +1,3 @@
-tabela completo ate o momento 
 
 <!-- Linha de botões diretamente abaixo do header -->
 <div class="container-fluid p-0">
