@@ -58,7 +58,7 @@ $totalJogadores = ($resultJogadores->fetch_assoc())['total'] ?? 0;
     <!-- Acesso rápido -->
     <div class="row text-center">
         <div class="col-md-4 mb-3">
-            <a href="../campeonatos/cadastrar_fase.php" class="btn btn-outline-primary w-100">Cadastrar Fase</a>
+            <a href="../cadastro/cadastro_campeonato.php" class="btn btn-outline-primary w-100">Cadastrar Fase</a>
         </div>
         <div class="col-md-4 mb-3">
             <a href="../campeonatos/cadastrar_rodada.php" class="btn btn-outline-success w-100">Cadastrar Rodada</a>

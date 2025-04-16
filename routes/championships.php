@@ -1,69 +1,80 @@
 <?php
 session_start();
-require_once '../config/database.php';
-require_once '../app/controllers/ChampionshipController.php';
+require_once __DIR__ . '/../config/database.php';
+require_once __DIR__ . '/../app/controllers/ChampionshipController.php';
+require_once __DIR__ . '/../app/controllers/FaseController.php';
+require_once __DIR__ . '/../app/controllers/RodadaController.php';
 
-$controller = new ChampionshipController($conn);
+$metodo = $_SERVER['REQUEST_METHOD'];
 
-if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+if ($metodo === 'POST') {
+    // Dados do campeonato
+    $nome = $_POST['nome'] ?? '';
+    $descricao = $_POST['descricao'] ?? '';
+    $temporada = $_POST['temporada'] ?? '';
+    $formato = $_POST['formato'] ?? '';
+    $times = $_POST['times'] ?? [];
 
-    // Cadastro de campeonato
-    if (isset($_POST['nome'], $_POST['descricao'], $_POST['temporada'], $_POST['formato'])) {
-        $formato = $_POST['formato'];
-        $formatos_validos = ['Pontos Corridos', 'Mata-Mata', 'Fase de Grupos'];
+    // Dados da fase
+    $nome_fase = $_POST['fase_nome'] ?? '';
+    $ordem_fase = $_POST['fase_ordem'] ?? 1;
 
-        if (!in_array($formato, $formatos_validos)) {
-            $_SESSION['mensagem_erro'] = "Formato inválido: " . htmlspecialchars($formato);
-            header("Location: ../public/views/cadastro/cadastro_campeonato.php");
-            exit();
-        }
+    // Dados das rodadas (arrays vindos do formulário)
+    $numeros = $_POST['rodada_numero'] ?? [];
+    $tipos = $_POST['rodada_tipo'] ?? [];
+    $descricoes = $_POST['rodada_desc'] ?? [];
 
-        $times = $_POST['times'] ?? []; // array de times selecionados (caso exista no form)
-
-        $resultado = $controller->criarCampeonato(
-            $_POST['nome'],
-            $_POST['descricao'],
-            $_POST['temporada'],
-            $formato,
-            $times
-        );
-
-        if (strpos($resultado, 'sucesso') !== false) {
-            $_SESSION['mensagem_sucesso'] = "Campeonato cadastrado com sucesso!";
-        } else {
-            $_SESSION['mensagem_erro'] = "Erro ao cadastrar campeonato: " . $resultado;
-        }
-
-        header("Location: ../public/views/cadastro/cadastro_campeonato.php");
-        exit();
+    // Verificação mínima
+    if (empty($nome) || empty($temporada) || empty($formato)) {
+        $_SESSION['mensagem_erro'] = "Campos obrigatórios do campeonato estão faltando.";
+        header('Location: ../public/views/cadastro/cadastro_campeonato.php');
+        exit;
     }
 
-    // Associação ou remoção de times
-    if (isset($_POST['acao'], $_POST['time_id'], $_POST['campeonato_id'])) {
-        $acao = $_POST['acao'];
-        $time_id = intval($_POST['time_id']);
-        $campeonato_id = intval($_POST['campeonato_id']);
+    // Criar campeonato
+    $championshipController = new ChampionshipController($conn);
+    $response = json_decode($championshipController->criarCampeonato($nome, $descricao, $temporada, $formato, $times), true);
 
-        if ($acao === 'adicionar') {
-            $controller->adicionarTime($time_id, $campeonato_id);
-            $_SESSION['mensagem_sucesso'] = "Time adicionado com sucesso!";
-        } elseif ($acao === 'remover') {
-            $controller->removerTime($time_id, $campeonato_id);
-            $_SESSION['mensagem_sucesso'] = "Time removido com sucesso!";
+    if (!isset($response['erro'])) {
+        $campeonato_id = $conn->insert_id;
+
+        // Criar fase
+        $faseController = new FaseController($conn);
+        $fase_id = $faseController->criarFase($campeonato_id, $nome_fase, $ordem_fase);
+
+        if ($fase_id) {
+            // Criar rodadas
+            $rodadaController = new RodadaController($conn);
+
+            for ($i = 0; $i < count($numeros); $i++) {
+                $numero = isset($numeros[$i]) ? intval($numeros[$i]) : 0;
+                $tipo = isset($tipos[$i]) ? trim($tipos[$i]) : '';
+                $descricao = isset($descricoes[$i]) ? trim($descricoes[$i]) : '';
+
+                if ($descricao === null) {
+                    $descricao = '';
+                }
+
+                if ($fase_id && $numero > 0 && !empty($tipo)) {
+                    $rodadaController->criarRodada($fase_id, $numero, $tipo, $descricao);
+                } else {
+                    error_log("Rodada ignorada: dados inválidos -> fase_id=$fase_id, numero=$numero, tipo=$tipo");
+                }
+            }
+
+            $_SESSION['mensagem_sucesso'] = "Campeonato, fase e rodadas criadas com sucesso!";
+            header('Location: ../public/views/cadastro/cadastro_campeonato.php');
+            exit;
         } else {
-            $_SESSION['mensagem_erro'] = "Ação inválida.";
+            $_SESSION['mensagem_erro'] = "Campeonato criado, mas erro ao criar a fase.";
         }
-
-        header("Location: ../public/views/campeonatos/times.php?id=$campeonato_id");
-        exit();
+    } else {
+        $_SESSION['mensagem_erro'] = "Erro ao criar campeonato.";
     }
 
-    $_SESSION['mensagem_erro'] = "Requisição malformada.";
-    header("Location: ../public/views/cadastro/cadastro_campeonato.php");
-    exit();
-
+    header('Location: ../public/views/cadastro/cadastro_campeonato.php');
+    exit;
 } else {
-    $_SESSION['mensagem_erro'] = "Método inválido.";
-    header("Location: ../public/views/cadastro/cadastro_campeonato.php");
-    exit();
+    http_response_code(405);
+    echo "Método não permitido.";
 }

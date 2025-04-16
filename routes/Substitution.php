@@ -4,7 +4,7 @@ require_once __DIR__ . '/../app/controllers/SubstitutionController.php';
 
 session_start(); // Iniciar sessão para mensagens
 
-$substitutionController = new SubstituicaoController($conn);
+$substitutionController = new SubstitutionController($conn);
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if (isset($_POST['partida_id'], $_POST['jogador_saiu'], $_POST['jogador_entrou'], $_POST['minuto_substituicao'])) {
