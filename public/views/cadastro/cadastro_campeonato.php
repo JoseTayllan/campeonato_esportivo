@@ -2,14 +2,17 @@
 session_start();
 $restrito_para = ['Administrador', 'Organizador'];
 require_once __DIR__ . '/../../../app/middleware/verifica_sessao.php';
+require_once __DIR__ . '/../../../config/database.php';
 ?>
 <?php include '../cabecalho/header.php'; ?>
-<?php $tipo_usuario = strtolower(trim($_SESSION['usuario_tipo']));
+<?php 
+$tipo_usuario = strtolower(trim($_SESSION['usuario_tipo']));
 if ($tipo_usuario === 'administrador') {
     include '../cabecalho/tabela_administrativa.php';
 } else {
     include '../cabecalho/tabela.php';
-} ?>
+}
+?>
 <!DOCTYPE html>
 <html lang="pt-br">
 
@@ -37,14 +40,12 @@ if ($tipo_usuario === 'administrador') {
 
             <div class="mb-3">
                 <label for="descricao" class="form-label">Descrição</label>
-                <textarea class="form-control" name="descricao" placeholder="Breve descrição sobre o campeonato"
-                    required></textarea>
+                <textarea class="form-control" name="descricao" placeholder="Breve descrição sobre o campeonato" required></textarea>
             </div>
 
             <div class="mb-3">
                 <label for="temporada" class="form-label">Temporada</label>
-                <input type="number" class="form-control" name="temporada" min="1900" max="2100" placeholder="Ex: 2025"
-                    required>
+                <input type="number" class="form-control" name="temporada" min="1900" max="2100" placeholder="Ex: 2025" required>
             </div>
 
             <div class="mb-3">
@@ -60,17 +61,38 @@ if ($tipo_usuario === 'administrador') {
 
             <div class="mb-3">
                 <label for="regulamento" class="form-label">Regulamento</label>
-                <textarea class="form-control" name="regulamento"
-                    placeholder="Informe as regras, critérios de desempate etc." required></textarea>
+                <textarea class="form-control" name="regulamento" placeholder="Informe as regras, critérios de desempate etc." required></textarea>
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label">Times Participantes</label>
+                <div class="border rounded p-3" style="max-height: 200px; overflow-y: auto;">
+                    <?php
+                    $queryTimes = "SELECT id, nome FROM times ORDER BY nome ASC";
+                    $resultTimes = $conn->query($queryTimes);
+                    while ($time = $resultTimes->fetch_assoc()) {
+                        echo "
+                        <div class='form-check'>
+                            <input class='form-check-input' type='checkbox' name='times[]' value='{$time['id']}' id='time_{$time['id']}'>
+                            <label class='form-check-label' for='time_{$time['id']}'>
+                                {$time['nome']}
+                            </label>
+                        </div>";
+                    }
+                    ?>
+                </div>
+                <small class="form-text text-muted">Marque os times que participarão deste campeonato.</small>
             </div>
 
             <button type="submit" class="btn btn-primary">Cadastrar</button>
         </form>
     </div>
-    <div class="row mt-4">
 
+    <div class="row mt-4">
         <?php include '../cabecalho/footer.php'; ?>
-        <script src="../../../assets/js/bootstrap.bundle.min.js"></script>
+    </div>
+
+    <script src="../../../assets/js/bootstrap.bundle.min.js"></script>
 </body>
 
 </html>
