@@ -13,8 +13,7 @@
                     <td class="p-2 flex-shrink-0"><a href="../estatistica/vizualizar_estatistica_jogador.php" class="btn btn-secondary btn-lg">Estatística do Jogador</a></td>
                     <td class="p-2 flex-shrink-0"><a href="../substituicao/cadastrar_substituicao.php" class="btn btn-secondary btn-lg">Cadastrar Substituição</a></td>
                     <td class="p-2 flex-shrink-0"><a href="../substituicao/listar_substituicOES.php" class="btn btn-secondary btn-lg">Visualizar Substituição</a></td>
-                    <td class="p-2 flex-shrink-0"><a href="../campeonatos/cadastrar_fase.php" class="btn btn-secondary btn-lg">Casastro De Fase Do Campeonato </a></td>
-                    <td class="p-2 flex-shrink-0"><a href="../campeonatos/cadastrar_rodada.php" class="btn btn-secondary btn-lg">Casastro De Rodada Do Campeonato </a></td>
+                    <td class="p-2 flex-shrink-0"><a href="../campeonatos/tabela_classificacao.php" class="btn btn-secondary btn-lg">Classificação </a></td>
                     <td class="p-2 flex-shrink-0"><a href="../campeonatos/visualizar_fases_rodadas.php" class="btn btn-secondary btn-lg">Vizualização de fase e rodadas </a></td>
                     <td class="p-2 flex-shrink-0"><a href="../dashboard/dashboard_organizador.php" class="btn btn-secondary btn-lg">Pagina incial do organizador</a></td> 
                 </tr>
