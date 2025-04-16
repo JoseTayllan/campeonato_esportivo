@@ -4,7 +4,6 @@ $restrito_para = ['Administrador', 'Organizador'];
 require_once __DIR__ . '/../../../app/middleware/verifica_sessao.php';
 require_once __DIR__ . '/../../../config/database.php';
 ?>
-
 <?php include '../cabecalho/header.php'; ?>
 <?php 
 $tipo_usuario = strtolower(trim($_SESSION['usuario_tipo']));
@@ -19,11 +18,11 @@ if ($tipo_usuario === 'administrador') {
 <html lang="pt-br">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Cadastro de Campeonato</title>
     <link href="../../../assets/css/bootstrap.min.css" rel="stylesheet">
 </head>
 <body>
-<script src="../../../assets/js/bootstrap.bundle.min.js"></script>
 
 <div class="container mt-4">
     <h2 class="mb-4">Cadastro de Campeonato</h2>
@@ -31,10 +30,11 @@ if ($tipo_usuario === 'administrador') {
     <?php include '../partials/mensagens.php'; ?>
 
     <form action="../../../routes/championships.php" method="POST">
-        <!-- Dados do Campeonato -->
+
+        <!-- DADOS DO CAMPEONATO -->
         <div class="mb-3">
             <label class="form-label">Nome do Campeonato</label>
-            <input type="text" class="form-control" name="nome" placeholder="Ex: Copa Estudantil 2025" required>
+            <input type="text" class="form-control" name="nome" required>
         </div>
 
         <div class="mb-3">
@@ -50,7 +50,7 @@ if ($tipo_usuario === 'administrador') {
         <div class="mb-3">
             <label class="form-label">Formato</label>
             <select class="form-control" name="formato" required>
-                <option value="">Selecione</option>
+                <option value="">Selecione o formato</option>
                 <option value="Pontos Corridos">Pontos Corridos</option>
                 <option value="Mata-Mata">Mata-Mata</option>
                 <option value="Fase de Grupos">Fase de Grupos</option>
@@ -62,28 +62,33 @@ if ($tipo_usuario === 'administrador') {
             <textarea class="form-control" name="regulamento" required></textarea>
         </div>
 
-        <!-- Times Participantes -->
-        <div class="mb-3">
+        <!-- TIMES PARTICIPANTES -->
+        <div class="mb-4">
             <label class="form-label">Times Participantes</label>
-            <div class="border p-3 rounded" style="max-height: 200px; overflow-y: auto;">
+            <div class="border rounded p-3" style="max-height: 200px; overflow-y: auto;">
                 <?php
-                $resultTimes = $conn->query("SELECT id, nome FROM times ORDER BY nome ASC");
+                $queryTimes = "SELECT id, nome FROM times ORDER BY nome ASC";
+                $resultTimes = $conn->query($queryTimes);
                 while ($time = $resultTimes->fetch_assoc()) {
-                    echo "<div class='form-check'>
-                            <input class='form-check-input' type='checkbox' name='times[]' value='{$time['id']}' id='time_{$time['id']}'>
-                            <label class='form-check-label' for='time_{$time['id']}'>{$time['nome']}</label>
-                          </div>";
+                    echo "
+                    <div class='form-check'>
+                        <input class='form-check-input' type='checkbox' name='times[]' value='{$time['id']}' id='time_{$time['id']}'>
+                        <label class='form-check-label' for='time_{$time['id']}'>
+                            {$time['nome']}
+                        </label>
+                    </div>";
                 }
                 ?>
             </div>
         </div>
 
-        <!-- Fase Inicial -->
-        <hr>
-        <h4>Fase Inicial</h4>
+        <!-- FASE -->
+        <hr class="my-4">
+        <h5>Cadastro da 1ª Fase</h5>
         <div class="mb-3">
             <label class="form-label">Nome da Fase</label>
             <select class="form-control" name="fase_nome" required>
+                <option value="">Selecione a fase</option>
                 <option value="Fase de Grupos">Fase de Grupos</option>
                 <option value="Oitavas de Final">Oitavas de Final</option>
                 <option value="Quartas de Final">Quartas de Final</option>
@@ -95,54 +100,80 @@ if ($tipo_usuario === 'administrador') {
         <div class="mb-3">
             <label class="form-label">Ordem de Execução da Fase</label>
             <input type="number" class="form-control" name="fase_ordem" min="1" required>
-            <small class="text-muted">Define em que ordem a fase acontecerá no campeonato.</small>
+            <small class="form-text text-muted">
+                Define a ordem de execução dessa fase no campeonato.
+                Ex: Fase de Grupos = 1, Quartas = 2, etc.
+            </small>
         </div>
 
-        <!-- Rodadas da Fase -->
-        <hr>
-        <h5>Rodada 1</h5>
-        <div class="row">
-            <div class="col-md-6 mb-3">
-                <label class="form-label">Número</label>
-                <input type="number" class="form-control" name="rodada1_numero" required>
-            </div>
-            <div class="col-md-6 mb-3">
-                <label class="form-label">Tipo</label>
-                <select class="form-control" name="rodada1_tipo" required>
-                    <option value="Ida">Ida</option>
-                    <option value="Volta">Volta</option>
-                </select>
-            </div>
-            <div class="col-12 mb-3">
-                <label class="form-label">Descrição</label>
-                <input type="text" class="form-control" name="rodada1_descricao">
-            </div>
-        </div>
-
-        <h5>Rodada 2</h5>
-        <div class="row">
-            <div class="col-md-6 mb-3">
-                <label class="form-label">Número</label>
-                <input type="number" class="form-control" name="rodada2_numero" required>
-            </div>
-            <div class="col-md-6 mb-3">
-                <label class="form-label">Tipo</label>
-                <select class="form-control" name="rodada2_tipo" required>
-                    <option value="Ida">Ida</option>
-                    <option value="Volta">Volta</option>
-                </select>
-            </div>
-            <div class="col-12 mb-3">
-                <label class="form-label">Descrição</label>
-                <input type="text" class="form-control" name="rodada2_descricao">
+        <!-- RODADAS -->
+        <hr class="my-4">
+        <h5>Cadastro das Rodadas da 1ª Fase</h5>
+        <div id="rodadas-container">
+            <div class="row align-items-end mb-3 rodada-item">
+                <div class="col-md-2">
+                    <label class="form-label">Número</label>
+                    <input type="number" class="form-control" name="rodada_numero[]" min="1" required>
+                </div>
+                <div class="col-md-4">
+                    <label class="form-label">Tipo</label>
+                    <select class="form-control" name="rodada_tipo[]" required>
+                        <option value="Ida">Ida</option>
+                        <option value="Volta">Volta</option>
+                    </select>
+                </div>
+                <div class="col-md-5">
+                    <label class="form-label">Descrição</label>
+                    <input type="text" class="form-control" name="rodada_desc[]" placeholder="Ex: Rodada Inaugural">
+                </div>
+                <div class="col-md-1 text-end">
+                    <button type="button" class="btn btn-danger btn-sm" onclick="removerRodada(this)">X</button>
+                </div>
             </div>
         </div>
 
-        <button type="submit" class="btn btn-primary">Cadastrar Campeonato</button>
+        <button type="button" class="btn btn-outline-primary btn-sm mb-4" onclick="adicionarRodada()">➕ Adicionar Rodada</button>
+
+        <!-- BOTÃO FINAL -->
+        <div class="mb-5">
+            <button type="submit" class="btn btn-primary">Cadastrar Campeonato</button>
+        </div>
     </form>
 </div>
 
 <?php include '../cabecalho/footer.php'; ?>
 <script src="../../../assets/js/bootstrap.bundle.min.js"></script>
+
+<script>
+function adicionarRodada() {
+    const container = document.getElementById("rodadas-container");
+    const nova = document.createElement("div");
+    nova.className = "row align-items-end mb-3 rodada-item";
+    nova.innerHTML = `
+        <div class="col-md-2">
+            <input type="number" class="form-control" name="rodada_numero[]" min="1" required>
+        </div>
+        <div class="col-md-4">
+            <select class="form-control" name="rodada_tipo[]" required>
+                <option value="Ida">Ida</option>
+                <option value="Volta">Volta</option>
+            </select>
+        </div>
+        <div class="col-md-5">
+            <input type="text" class="form-control" name="rodada_desc[]" placeholder="Ex: Rodada Extra">
+        </div>
+        <div class="col-md-1 text-end">
+            <button type="button" class="btn btn-danger btn-sm" onclick="removerRodada(this)">X</button>
+        </div>
+    `;
+    container.appendChild(nova);
+}
+
+function removerRodada(botao) {
+    const bloco = botao.closest(".rodada-item");
+    if (bloco) bloco.remove();
+}
+</script>
+
 </body>
 </html>
