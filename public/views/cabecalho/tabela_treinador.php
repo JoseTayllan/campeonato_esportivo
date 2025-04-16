@@ -9,6 +9,8 @@
                     <td class="p-2 flex-shrink-0"><a href="../substituicao/cadastrar_substituicao.php" class="btn btn-secondary btn-lg">Cadastrar Substituição</a></td>
                     <td class="p-2 flex-shrink-0"><a href="../substituicao/listar_substituicOES.php" class="btn btn-secondary btn-lg">Visualizar Substituição</a></td>
                     <td class="p-2 flex-shrink-0"><a href="../dashboard/dashboard_treinador.php" class="btn btn-secondary btn-lg">Pagina Inicial Treinador</a></td>
+                    <td class="p-2 flex-shrink-0"><a href="../campeonatos/visualizar_fases_rodadas.php" class="btn btn-secondary btn-lg">Vizualização de fase e rodadas e classificação </a></td>
+                    <td class="p-2 flex-shrink-0"><a href="../campeonatos/tabela_classificacao.php" class="btn btn-secondary btn-lg">Classificação </a></td>
                 </tr>
             </tbody>
         </table>

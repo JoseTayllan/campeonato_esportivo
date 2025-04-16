@@ -42,6 +42,8 @@ include 'views/cabecalho/header_index.php';
                 <tr class="d-flex">
                     <td class="p-2 flex-shrink-0"><a href="views/cadastro/cadastro_usuario.php" class="btn btn-secondary btn-lg">Cadastro de Usuário</a></td>
                     <td class="p-2 flex-shrink-0"><a href="views/login/login.php" class="btn btn-secondary btn-lg">Login</a></td>
+                    <td class="p-2 flex-shrink-0"><a href="views/campeonatos/visualizar_fases_rodadas.php" class="btn btn-secondary btn-lg">Vizualização de fase e rodadas e classificação </a></td>
+                    <td class="p-2 flex-shrink-0"><a href="views/campeonatos/tabela_classificacao.php" class="btn btn-secondary btn-lg">Classificação </a></td>
                 </tr>
             </tbody>
         </table>
