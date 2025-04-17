@@ -34,61 +34,137 @@ include 'views/cabecalho/header_index.php';
 <body>
 
 
-<!-- Linha de botões diretamente abaixo do header -->
-<div class="container-fluid p-0">
-    <div class="d-flex overflow-auto flex-nowrap">
-        <table class="table table-borderless table-sm text-center mb-0">
-            <tbody>
-                <tr class="d-flex">
-                    <td class="p-2 flex-shrink-0"><a href="views/cadastro/cadastro_usuario.php" class="btn btn-secondary btn-lg">Cadastro de Usuário</a></td>
-                    <td class="p-2 flex-shrink-0"><a href="views/login/login.php" class="btn btn-secondary btn-lg">Login</a></td>
-                    <td class="p-2 flex-shrink-0"><a href="views/campeonatos/visualizar_fases_rodadas.php" class="btn btn-secondary btn-lg">Vizualização de fase e rodadas e classificação </a></td>
-                    <td class="p-2 flex-shrink-0"><a href="views/campeonatos/tabela_classificacao.php" class="btn btn-secondary btn-lg">Classificação </a></td>
-                </tr>
-            </tbody>
-        </table>
-    </div>
-</div>
 
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-
-<div class="container text-center">
-    <h1 class="mb-4">Sistema de Gerenciamento de Campeonatos</h1>
-
-    <div class="row justify-content-center">
-        <div class="col-md-6 col-lg-3 mb-4">
-            <a href="views/cadastro/cadastro_usuario.php" class="text-decoration-none">
-                <div class="card card-custom text-center p-4 bg-primary text-white">
-                    <h4>Cadastro de Usuário</h4>
-                </div>
-            </a>
-        </div>
-
-        <div class="col-md-6 col-lg-3 mb-4">
-            <a href="views/cadastro/cadastro_campeonato.php" class="text-decoration-none">
-                <div class="card card-custom text-center p-4 bg-success text-white">
-                    <h4>Cadastro de Campeonato</h4>
-                </div>
-            </a>
-        </div>
-
-        <div class="col-md-6 col-lg-3 mb-4">
-            <a href="views/cadastro/cadastro_time.php" class="text-decoration-none">
-                <div class="card card-custom text-center p-4 bg-warning text-dark">
-                    <h4>Cadastro de Time</h4>
-                </div>
-            </a>
-        </div>
-
-        <div class="col-md-6 col-lg-3 mb-4">
-            <a href="views/cadastro/cadastro_jogador.php" class="text-decoration-none">
-                <div class="card card-custom text-center p-4 bg-danger text-white">
-                    <h4>Cadastro de Jogador</h4>
-                </div>
-            </a>
+<!-- Placar em Tempo Real -->
+<div class="container my-5">
+    <h3 class="text-center mb-4">Placar ao Vivo</h3>
+    <div class="row justify-content-center" id="placarTempoReal">
+        <!-- Exemplo de Partida (item dinâmico futuro) -->
+        <div class="col-md-6 mb-4 text-center">
+            <div class="d-flex align-items-center justify-content-around border rounded p-3 bg-white shadow-sm">
+                <img src="assets/logos/time1.png" alt="Time 1" class="logo-time" style="width: 60px; cursor: pointer;" data-bs-toggle="modal" data-bs-target="#modalTime1">
+                <strong class="fs-4 mx-3">2 x 1</strong>
+                <img src="assets/logos/time2.png" alt="Time 2" class="logo-time" style="width: 60px; cursor: pointer;" data-bs-toggle="modal" data-bs-target="#modalTime2">
+            </div>
         </div>
     </div>
 </div>
+
+<!-- Modal Escalação Time 1 -->
+<div class="modal fade" id="modalTime1" tabindex="-1" aria-labelledby="modalTime1Label" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Escalação - Time 1</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body">
+                <!-- Lista dinâmica futura -->
+                <ul>
+                    <li>Goleiro: João</li>
+                    <li>Zagueiro: Marcos</li>
+                    <li>Meia: Lucas</li>
+                    <!-- ... -->
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal Escalação Time 2 -->
+<div class="modal fade" id="modalTime2" tabindex="-1" aria-labelledby="modalTime2Label" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Escalação - Time 2</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body">
+                <!-- Lista dinâmica futura -->
+                <ul>
+                    <li>Goleiro: Pedro</li>
+                    <li>Zagueiro: Vinícius</li>
+                    <li>Atacante: Felipe</li>
+                    <!-- ... -->
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Resultados de Jogos Passados - Design com Cards -->
+<div class="container my-5">
+    <h3 class="text-center mb-4">Resultados Anteriores</h3>
+    <div class="row justify-content-center" id="resultadosPassados">
+
+        <!-- Exemplo de Card de Resultado -->
+        <div class="col-md-6 col-lg-4 mb-4">
+            <div class="card shadow-sm border-0">
+                <div class="card-body text-center bg-light rounded">
+                    <p class="text-muted mb-1">15/04/2025</p>
+                    <div class="d-flex justify-content-around align-items-center mb-2">
+                        <div class="text-center">
+                            <img src="assets/logos/time1.png" alt="Time 1" style="width: 40px;">
+                            <p class="mb-0 fw-semibold">Time A</p>
+                        </div>
+                        <div class="fs-4 fw-bold">2 x 0</div>
+                        <div class="text-center">
+                            <img src="assets/logos/time2.png" alt="Time 2" style="width: 40px;">
+                            <p class="mb-0 fw-semibold">Time B</p>
+                        </div>
+                    </div>
+                    <span class="badge bg-secondary">Finalizado</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Exemplo de Card de Resultado -->
+        <div class="col-md-6 col-lg-4 mb-4">
+            <div class="card shadow-sm border-0">
+                <div class="card-body text-center bg-light rounded">
+                    <p class="text-muted mb-1">15/04/2025</p>
+                    <div class="d-flex justify-content-around align-items-center mb-2">
+                        <div class="text-center">
+                            <img src="assets/logos/time1.png" alt="Time 1" style="width: 40px;">
+                            <p class="mb-0 fw-semibold">Time A</p>
+                        </div>
+                        <div class="fs-4 fw-bold">2 x 0</div>
+                        <div class="text-center">
+                            <img src="assets/logos/time2.png" alt="Time 2" style="width: 40px;">
+                            <p class="mb-0 fw-semibold">Time B</p>
+                        </div>
+                    </div>
+                    <span class="badge bg-secondary">Finalizado</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Exemplo de Card de Resultado -->
+        <div class="col-md-6 col-lg-4 mb-4">
+            <div class="card shadow-sm border-0">
+                <div class="card-body text-center bg-light rounded">
+                    <p class="text-muted mb-1">15/04/2025</p>
+                    <div class="d-flex justify-content-around align-items-center mb-2">
+                        <div class="text-center">
+                            <img src="assets/logos/time1.png" alt="Time 1" style="width: 40px;">
+                            <p class="mb-0 fw-semibold">Time A</p>
+                        </div>
+                        <div class="fs-4 fw-bold">2 x 0</div>
+                        <div class="text-center">
+                            <img src="assets/logos/time2.png" alt="Time 2" style="width: 40px;">
+                            <p class="mb-0 fw-semibold">Time B</p>
+                        </div>
+                    </div>
+                    <span class="badge bg-secondary">Finalizado</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Adicione mais cards aqui dinamicamente via PHP/JS -->
+
+    </div>
+</div>
+
 
 <?php include 'views/cabecalho/footer.php'; ?>
 <script src="../assets/js/bootstrap.bundle.min.js"></script>

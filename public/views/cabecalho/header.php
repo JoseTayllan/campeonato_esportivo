@@ -10,44 +10,53 @@ if (session_status() === PHP_SESSION_NONE) {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Gerenciamento de Campeonatos</title>
-    <link href="../../../assets/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
     <style>
-    body {
-        background-color: #f8f9fa;
-    }
 
-    .navbar {
-        background-color: #343a40 !important;
-    }
 
-    .navbar-brand,
-    .nav-link {
-        color: #ffffff !important;
-    }
+        .navbar {
+            background-color: #0d0d0d;
+        }
 
-    .nav-link:hover {
-        color: #d1d1d1 !important;
-    }
+        .navbar-brand,
+        .nav-link,
+        .navbar-text {
+            color: #ffffff !important;
+        }
+
+        .nav-link:hover {
+            color: #bbbbbb !important;
+        }
+
+        .btn-outline-light:hover {
+            background-color: #ffffff10;
+            color: #fff;
+        }
     </style>
 </head>
 
 <body>
 
-    <!-- Navbar -->
-    <nav class="navbar navbar-expand-lg navbar-dark">
+    <!-- Navbar padronizada -->
+    <nav class="navbar navbar-expand-lg shadow-sm">
         <div class="container">
-            <a class="navbar-brand" href="../../index.php">🏠 Início</a>
+            <a class="navbar-brand d-flex align-items-center" href="../../index.php">
+                <i class="bi bi-house-door-fill me-2"></i> Início
+            </a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
                 aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
+
             <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
                 <?php if (isset($_SESSION['usuario_nome'])): ?>
-                <span class="navbar-text text-white me-3 fw-bold">
-                    Olá, <?= htmlspecialchars($_SESSION['usuario_nome']) ?>
-                </span>
-                <!-- 🔔 AVISO PARA O DEV 2: implementar lógica de logout em routes/logout.php -->
-                <a href="../../../routes/logout.php" class="btn btn-sm btn-outline-light">Sair</a>
+                    <span class="navbar-text me-3 fw-semibold">
+                        <i class="bi bi-person-circle me-1"></i>Olá, <?= htmlspecialchars($_SESSION['usuario_nome']) ?>
+                    </span>
+                    <a href="../../../routes/logout.php" class="btn btn-outline-light btn-sm">
+                        <i class="bi bi-box-arrow-right me-1"></i>Sair
+                    </a>
                 <?php endif; ?>
             </div>
         </div>
