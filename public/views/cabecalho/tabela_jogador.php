@@ -12,41 +12,30 @@
 
     .menu-link {
         color: #e0e0e0 !important;
-        font-weight: 500;
-        font-size: 1rem;
-        display: flex;
-        align-items: center;
-        padding: 0.75rem 1.5rem;
-        text-decoration: none;
-        transition: background 0.3s, color 0.3s;
+        transition: 0.3s ease;
         user-select: none;
-        border-radius: 8px;
     }
 
     .menu-link:hover {
         color: #ffffff !important;
-        background-color: rgba(255, 255, 255, 0.08);
+        background-color: rgba(255, 255, 255, 0.05);
     }
 
     .menu-separador {
-        border-right: 1px solid rgba(255, 255, 255, 0.1);
-    }
-
-    .menu-container-dark {
-        background-color: #0d0d0d;
+        border-right: 1px solid #444 !important;
     }
 </style>
 
-<!-- Menu com tonalidade igual ao header e botões centralizados -->
-<div class="container-fluid py-2 border-bottom shadow-sm menu-container-dark">
-    <div class="d-flex flex-row flex-nowrap justify-content-center menu-scroll px-2 gap-2">
-        <a href="../dashboard/dashboard_jogador.php" class="menu-link menu-separador flex-shrink-0">
+<!-- Linha de botões para jogador no padrão moderno -->
+<div class="container-fluid bg-dark py-2 border-bottom shadow-sm">
+    <div class="d-flex flex-row flex-nowrap menu-scroll px-3">
+        <a href="../dashboard/dashboard_jogador.php" class="nav-link px-4 menu-link menu-separador flex-shrink-0">
             <i class="bi bi-house-door-fill me-2"></i>Início Jogador
         </a>
-        <a href="../campeonatos/visualizar_fases_rodadas.php" class="menu-link menu-separador flex-shrink-0">
+        <a href="../campeonatos/visualizar_fases_rodadas.php" class="nav-link px-4 menu-link menu-separador flex-shrink-0">
             <i class="bi bi-diagram-3 me-2"></i>Fases/Rodadas
         </a>
-        <a href="../campeonatos/tabela_classificacao.php" class="menu-link flex-shrink-0">
+        <a href="../campeonatos/tabela_classificacao.php" class="nav-link px-4 menu-link flex-shrink-0">
             <i class="bi bi-trophy me-2"></i>Classificação
         </a>
     </div>

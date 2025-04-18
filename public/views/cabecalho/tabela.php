@@ -34,16 +34,17 @@
 <!-- Container do menu -->
 <div class="container-fluid bg-dark py-2 border-bottom shadow-sm">
     <div class="d-flex flex-nowrap px-3 menu-scroll" id="menuScroll">
-        <a href="#" class="nav-link px-4 menu-link menu-separador flex-shrink-0"><i class="bi bi-plus-square me-2"></i>Campeonato</a>
-        <a href="#" class="nav-link px-4 menu-link menu-separador flex-shrink-0"><i class="bi bi-people-fill me-2"></i>Time</a>
-        <a href="#" class="nav-link px-4 menu-link menu-separador flex-shrink-0"><i class="bi bi-person-lines-fill me-2"></i>Jogador</a>
-        <a href="#" class="nav-link px-4 menu-link menu-separador flex-shrink-0"><i class="bi bi-clipboard-check me-2"></i>Avaliações</a>
-        <a href="#" class="nav-link px-4 menu-link menu-separador flex-shrink-0"><i class="bi bi-bar-chart-fill me-2"></i>Est. por Partida</a>
-        <a href="#" class="nav-link px-4 menu-link menu-separador flex-shrink-0"><i class="bi bi-graph-up me-2"></i>Est. do Jogador</a>
-        <a href="#" class="nav-link px-4 menu-link menu-separador flex-shrink-0"><i class="bi bi-arrow-repeat me-2"></i>Substituição</a>
-        <a href="#" class="nav-link px-4 menu-link flex-shrink-0"><i class="bi bi-house-door-fill me-2"></i>Organizador</a>
+        <a href="../cadastro/cadastro_campeonato.php" class="nav-link px-4 menu-link menu-separador flex-shrink-0"><i class="bi bi-plus-square me-2"></i>Campeonato</a>
+        <a href="../cadastro/cadastro_time.php" class="nav-link px-4 menu-link menu-separador flex-shrink-0"><i class="bi bi-people-fill me-2"></i>Time</a>
+        <a href="../cadastro/cadastro_jogador.php" class="nav-link px-4 menu-link menu-separador flex-shrink-0"><i class="bi bi-person-lines-fill me-2"></i>Jogador</a>
+        <a href="../avaliacao/visualizar_avaliacoes.php" class="nav-link px-4 menu-link menu-separador flex-shrink-0"><i class="bi bi-clipboard-check me-2"></i>Avaliações</a>
+        <a href="../estatistica/cadastrar_estatistica_jogador.php" class="nav-link px-4 menu-link menu-separador flex-shrink-0"><i class="bi bi-bar-chart-fill me-2"></i>Est. por Partida</a>
+        <a href="../estatistica/vizualizar_estatistica_jogador.php" class="nav-link px-4 menu-link menu-separador flex-shrink-0"><i class="bi bi-graph-up me-2"></i>Est. do Jogador</a>
+        <a href="../substituicao/listar_substituicoes.php" class="nav-link px-4 menu-link menu-separador flex-shrink-0"><i class="bi bi-arrow-repeat me-2"></i>Substituição</a>
+        <a href="../dashboard/dashboard_organizador.php" class="nav-link px-4 menu-link flex-shrink-0"><i class="bi bi-house-door-fill me-2"></i>Organizador</a>
     </div>
 </div>
+
 
 <script>
     const menu = document.getElementById('menuScroll');
