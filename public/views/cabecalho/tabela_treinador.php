@@ -56,6 +56,10 @@
         <a href="../dashboard/dashboard_treinador.php" class="nav-link px-4 menu-link flex-shrink-0">
             <i class="bi bi-house-door-fill me-2"></i>Página Inicial
         </a>
+        <a href="../escalacao/escalacao_treinador.php" class="nav-link px-4 menu-link menu-separador flex-shrink-0">
+            <i class="bi bi-people-fill me-2"></i>Escalação
+        </a>
+
     </div>
 </div>
 
