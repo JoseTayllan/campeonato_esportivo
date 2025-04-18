@@ -16,7 +16,7 @@ if (session_status() === PHP_SESSION_NONE) {
 
 
         .navbar {
-            background-color: #0d0d0d;
+            background-color: #343a40;
         }
 
         .navbar-brand,
