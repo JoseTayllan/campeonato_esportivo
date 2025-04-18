@@ -4,10 +4,15 @@
         white-space: nowrap;
         scrollbar-width: none;
         -ms-overflow-style: none;
+        cursor: grab;
     }
 
     .menu-scroll::-webkit-scrollbar {
         display: none;
+    }
+
+    .menu-scroll:active {
+        cursor: grabbing;
     }
 
     .menu-link {
@@ -26,11 +31,11 @@
     }
 </style>
 
-<!-- Linha de botões para jogador no padrão moderno -->
+<!-- MENU DO JOGADOR no padrão moderno -->
 <div class="container-fluid bg-dark py-2 border-bottom shadow-sm">
-    <div class="d-flex flex-row flex-nowrap menu-scroll px-3">
+    <div class="d-flex flex-nowrap justify-content-center px-3 menu-scroll" id="menuScrollJogador">
         <a href="../dashboard/dashboard_jogador.php" class="nav-link px-4 menu-link menu-separador flex-shrink-0">
-            <i class="bi bi-house-door-fill me-2"></i>Início Jogador
+            <i class="bi bi-house-door-fill me-2"></i>Início
         </a>
         <a href="../campeonatos/visualizar_fases_rodadas.php" class="nav-link px-4 menu-link menu-separador flex-shrink-0">
             <i class="bi bi-diagram-3 me-2"></i>Fases/Rodadas
@@ -40,3 +45,36 @@
         </a>
     </div>
 </div>
+
+<!-- SCRIPT de scroll/drag -->
+<script>
+    const menuJogador = document.getElementById('menuScrollJogador');
+
+    menuJogador.addEventListener('wheel', (e) => {
+        if (e.deltaY !== 0) {
+            e.preventDefault();
+            menuJogador.scrollLeft += e.deltaY;
+        }
+    });
+
+    let isDown = false;
+    let startX;
+    let scrollLeft;
+
+    menuJogador.addEventListener('mousedown', (e) => {
+        isDown = true;
+        startX = e.pageX - menuJogador.offsetLeft;
+        scrollLeft = menuJogador.scrollLeft;
+    });
+
+    menuJogador.addEventListener('mouseleave', () => isDown = false);
+    menuJogador.addEventListener('mouseup', () => isDown = false);
+
+    menuJogador.addEventListener('mousemove', (e) => {
+        if (!isDown) return;
+        e.preventDefault();
+        const x = e.pageX - menuJogador.offsetLeft;
+        const walk = (x - startX) * 1.5;
+        menuJogador.scrollLeft = scrollLeft - walk;
+    });
+</script>
