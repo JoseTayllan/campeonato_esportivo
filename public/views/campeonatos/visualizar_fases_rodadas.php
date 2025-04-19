@@ -41,7 +41,6 @@ switch ($tipo) {
 <div class="container mt-4">
     <h2 class="mb-4 text-center">Estrutura do Campeonato</h2>
 
-    <!-- Formulário de seleção de campeonato -->
     <form method="GET" class="mb-4">
         <label for="campeonato_id" class="form-label">Selecione um Campeonato</label>
         <select name="campeonato_id" class="form-control" onchange="this.form.submit()" required>
@@ -78,7 +77,7 @@ switch ($tipo) {
             </div>
             <div class="card-body">
                 <?php
-                $queryRodadas = "SELECT numero, tipo, descricao FROM rodadas WHERE fase_id = ? ORDER BY numero ASC";
+                $queryRodadas = "SELECT id, numero, tipo, descricao FROM rodadas WHERE fase_id = ? ORDER BY numero ASC";
                 $stmtRodada = $conn->prepare($queryRodadas);
                 $stmtRodada->bind_param("i", $fase['id']);
                 $stmtRodada->execute();
@@ -93,6 +92,44 @@ switch ($tipo) {
                                 <?php if (!empty($rodada['descricao'])): ?>
                                     - <?= htmlspecialchars($rodada['descricao']) ?>
                                 <?php endif; ?>
+
+                                <?php
+                                $partidasQuery = "SELECT 
+                                                    t1.nome AS time_casa, 
+                                                    t2.nome AS time_fora, 
+                                                    p.data, 
+                                                    p.horario, 
+                                                    p.local,
+                                                    p.placar_casa,
+                                                    p.placar_fora
+                                                FROM partidas p
+                                                JOIN times t1 ON t1.id = p.time_casa
+                                                JOIN times t2 ON t2.id = p.time_fora
+                                                WHERE p.rodada_id = ?
+                                                ORDER BY p.data, p.horario";
+                                $stmtPartidas = $conn->prepare($partidasQuery);
+                                $stmtPartidas->bind_param("i", $rodada['id']);
+                                $stmtPartidas->execute();
+                                $resultPartidas = $stmtPartidas->get_result();
+                                ?>
+
+                                <?php if ($resultPartidas->num_rows > 0): ?>
+                                    <ul class="mt-2 ms-4">
+                                        <?php while ($partida = $resultPartidas->fetch_assoc()): ?>
+                                            <li class="list-group-item">
+                                                <strong><?= htmlspecialchars($partida['time_casa']) ?></strong>
+                                                <?= is_numeric($partida['placar_casa']) ? "({$partida['placar_casa']})" : "" ?>
+                                                vs
+                                                <?= is_numeric($partida['placar_fora']) ? "({$partida['placar_fora']})" : "" ?>
+                                                <strong><?= htmlspecialchars($partida['time_fora']) ?></strong>
+                                                — <?= $partida['data'] ?> às <?= substr($partida['horario'], 0, 5) ?> (<?= htmlspecialchars($partida['local']) ?>)
+                                            </li>
+                                        <?php endwhile; ?>
+                                    </ul>
+                                <?php else: ?>
+                                    <div class="text-muted ms-3">Nenhuma partida cadastrada nesta rodada.</div>
+                                <?php endif; ?>
+
                             </li>
                         <?php endwhile; ?>
                     </ul>
@@ -108,7 +145,6 @@ switch ($tipo) {
         <!-- Classificação -->
         <hr>
         <h4 class="text-success mt-4">🏆 Tabela de Classificação</h4>
-
         <div class="table-responsive mb-5">
             <table class="table table-striped table-bordered text-center">
                 <thead class="table-dark">
@@ -177,7 +213,6 @@ switch ($tipo) {
         </div>
     <?php endif; ?>
 </div>
-<!-- Rodapé fixado ao final -->
 <div class="mt-auto">
     <?php include '../cabecalho/footer.php'; ?>
 </div>
