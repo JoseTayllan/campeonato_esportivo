@@ -34,38 +34,42 @@ $totalJogadores = ($resultJogadores->fetch_assoc())['total'] ?? 0;
 <div class="container mt-4">
     <h2 class="text-center mb-4">Painel do Organizador</h2>
 
-    <!-- Cartões com totais -->
-    <div class="row text-center">
-        <div class="col-md-4 mb-4">
-            <div class="card bg-primary text-white p-4">
-                <h3><?= $totalCampeonatos ?></h3>
-                <p>Campeonatos Cadastrados</p>
-            </div>
-        </div>
-        <div class="col-md-4 mb-4">
-            <div class="card bg-success text-white p-4">
-                <h3><?= $totalTimes ?></h3>
-                <p>Times Registrados</p>
-            </div>
-        </div>
-        <div class="col-md-4 mb-4">
-            <div class="card bg-warning text-dark p-4">
-                <h3><?= $totalJogadores ?></h3>
-                <p>Jogadores Ativos</p>
-            </div>
+    <!-- Cartões com totais (tom único escuro) -->
+<div class="row text-center">
+    <div class="col-md-4 mb-4">
+        <div class="card text-white border-0 shadow-sm p-4" style="background-color: #343a40;">
+            <h3 class="fw-bold mb-1"><?= $totalCampeonatos ?></h3>
+            <p class="mb-0"><i class="bi bi-flag-fill me-1"></i>Campeonatos Cadastrados</p>
         </div>
     </div>
+    <div class="col-md-4 mb-4">
+        <div class="card text-white border-0 shadow-sm p-4" style="background-color: #343a40;">
+            <h3 class="fw-bold mb-1"><?= $totalTimes ?></h3>
+            <p class="mb-0"><i class="bi bi-people-fill me-1"></i>Times Registrados</p>
+        </div>
+    </div>
+    <div class="col-md-4 mb-4">
+        <div class="card text-white border-0 shadow-sm p-4" style="background-color: #343a40;">
+            <h3 class="fw-bold mb-1"><?= $totalJogadores ?></h3>
+            <p class="mb-0"><i class="bi bi-person-fill me-1"></i>Jogadores Ativos</p>
+        </div>
+    </div>
+</div>
 
-    <!-- Ações rápidas -->
-    <div class="row text-center">
-        <div class="col-md-4 mb-3">
-        <a href="../cadastro/cadastro_campeonato.php" class="btn btn-outline-primary w-100">Cadastrar Campeonato</a>
-        </div>
-        
-        <div class="col-md-4 mb-3">
-            <a href="../campeonatos/visualizar_fases_rodadas.php" class="btn btn-outline-secondary w-100">Visualizar Fases e Rodadas</a>
-        </div>
+<!-- Ações rápidas (mesma paleta escura) -->
+<div class="row text-center mb-5">
+    <div class="col-md-4 mb-3">
+        <a href="../cadastro/cadastro_campeonato.php" class="btn btn-dark w-100 py-2">
+            <i class="bi bi-plus-circle me-1"></i> Cadastrar Campeonato
+        </a>
     </div>
+    <div class="col-md-4 mb-3">
+        <a href="../campeonatos/visualizar_fases_rodadas.php" class="btn btn-dark w-100 py-2">
+            <i class="bi bi-diagram-3 me-1"></i> Fases e Rodadas
+        </a>
+    </div>
+</div>
+
 
     <!-- Tabela de campeonatos -->
     <div class="row mt-5">
