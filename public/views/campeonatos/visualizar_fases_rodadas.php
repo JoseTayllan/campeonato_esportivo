@@ -70,6 +70,30 @@ switch ($tipo) {
 
         if ($resultFases->num_rows > 0):
             while ($fase = $resultFases->fetch_assoc()):
+
+                // Verifica se existem rodadas com partidas na fase atual
+                $queryRodadas = "SELECT id FROM rodadas WHERE fase_id = ?";
+                $stmtRodada = $conn->prepare($queryRodadas);
+                $stmtRodada->bind_param("i", $fase['id']);
+                $stmtRodada->execute();
+                $resRodadas = $stmtRodada->get_result();
+            
+                $tem_partida = false;
+            
+                while ($rodadaTemp = $resRodadas->fetch_assoc()) {
+                    $stmtCheck = $conn->prepare("SELECT COUNT(*) AS total FROM partidas WHERE rodada_id = ?");
+                    $stmtCheck->bind_param("i", $rodadaTemp['id']);
+                    $stmtCheck->execute();
+                    $check = $stmtCheck->get_result()->fetch_assoc();
+            
+                    if ($check['total'] > 0) {
+                        $tem_partida = true;
+                        break;
+                    }
+                }
+            
+                if (!$tem_partida) continue;
+            
         ?>
         <div class="card mb-3">
             <div class="card-header bg-primary text-white">

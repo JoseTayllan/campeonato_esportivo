@@ -7,15 +7,18 @@ class Campeonato {
     }
 
     // Cria um novo campeonato
-    public function criar($nome, $descricao, $temporada, $formato) {
-        $query = "INSERT INTO campeonatos (nome, descricao, temporada, formato) VALUES (?, ?, ?, ?)";
+    public function criar($nome, $descricao, $temporada, $formato, $criado_por) {
+        $query = "INSERT INTO campeonatos (nome, descricao, temporada, formato, criado_por) VALUES (?, ?, ?, ?, ?)";
         $stmt = $this->conn->prepare($query);
-        $stmt->bind_param("ssis", $nome, $descricao, $temporada, $formato);
+        $stmt->bind_param("ssisi", $nome, $descricao, $temporada, $formato, $criado_por);
+        
         if ($stmt->execute()) {
             return $this->conn->insert_id;
         }
         return false;
     }
+    
+    
 
     // Atualiza dados do campeonato
     public function atualizar($id, $nome, $descricao, $temporada, $formato, $modalidade) {
@@ -162,9 +165,16 @@ public function excluirPartida($partida_id) {
 }
 
 public function listarPartidasPorFase($campeonato_id, $fase_nome) {
-    $query = "SELECT p.*, 
-                     t1.nome AS time_casa, 
-                     t2.nome AS time_fora 
+    $query = "SELECT 
+                p.id,
+                p.fase_id,
+                p.time_casa AS id_time_casa,
+                p.time_fora AS id_time_fora,
+                p.data,
+                p.horario,
+                p.local,
+                t1.nome AS nome_time_casa,
+                t2.nome AS nome_time_fora
               FROM partidas p
               JOIN times t1 ON t1.id = p.time_casa
               JOIN times t2 ON t2.id = p.time_fora
@@ -172,11 +182,14 @@ public function listarPartidasPorFase($campeonato_id, $fase_nome) {
               JOIN fases_campeonato f ON f.id = r.fase_id
               WHERE f.campeonato_id = ? AND f.nome = ?
               ORDER BY r.numero ASC";
+
     $stmt = $this->conn->prepare($query);
     $stmt->bind_param("is", $campeonato_id, $fase_nome);
     $stmt->execute();
     return $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
 }
+
+
 
 public function listarFasesDoCampeonato($campeonato_id) {
     $query = "SELECT id, nome FROM fases_campeonato WHERE campeonato_id = ? ORDER BY ordem ASC";
@@ -249,6 +262,14 @@ public function listarTimesClassificacao($campeonato_id) {
     }
 
     return $classificacao;
+}
+
+public function listarPorUsuario($usuario_id) {
+    $query = "SELECT * FROM campeonatos WHERE criado_por = ?";
+    $stmt = $this->conn->prepare($query);
+    $stmt->bind_param("i", $usuario_id);
+    $stmt->execute();
+    return $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
 }
 
 

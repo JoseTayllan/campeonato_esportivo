@@ -33,7 +33,9 @@ if ($metodo === 'POST') {
 
     // Criar campeonato
     $championshipController = new ChampionshipController($conn);
-    $response = json_decode($championshipController->criarCampeonato($nome, $descricao, $temporada, $formato, $times), true);
+    $criado_por = $_SESSION['usuario_id'] ?? null;
+    $response = json_decode($championshipController->criarCampeonato($nome, $descricao, $temporada, $formato, $criado_por, $times), true);
+    
 
     if (!isset($response['erro'])) {
         $campeonato_id = $conn->insert_id;

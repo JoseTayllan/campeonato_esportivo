@@ -1,5 +1,6 @@
 <?php include __DIR__ . '/../cabecalho/header.php'; ?>
 
+
 <div class="container mt-4">
     <h2>Editar Campeonato</h2>
 
@@ -98,9 +99,12 @@
                                         <label>Fase</label>
                                         <select name="fase_id" class="form-select" required>
                                             <?php foreach ($model->listarFasesDoCampeonato($campeonato['id']) as $fase): ?>
-                                                <option value="<?= $fase['id'] ?>"><?= htmlspecialchars($fase['nome']) ?></option>
+                                                <option value="<?= $fase['id'] ?>" <?= ($jogo['fase_id'] ?? '') == $fase['id'] ? 'selected' : '' ?>>
+                                                    <?= htmlspecialchars($fase['nome']) ?>
+                                                </option>
                                             <?php endforeach; ?>
                                         </select>
+
                                     </div>
 
 
@@ -219,6 +223,8 @@
             <label>Fase</label>
             <select name="fase_id" class="form-select" required>
                 <?php foreach ($model->listarFasesDoCampeonato($campeonato['id']) as $fase): ?>
+
+
                     <option value="<?= $fase['id'] ?>"><?= htmlspecialchars($fase['nome']) ?></option>
                 <?php endforeach; ?>
             </select>

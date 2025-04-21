@@ -58,11 +58,7 @@ $totalJogadores = ($resultJogadores->fetch_assoc())['total'] ?? 0;
 
 <!-- Ações rápidas (mesma paleta escura) -->
 <div class="row text-center mb-5">
-    <div class="col-md-4 mb-3">
-        <a href="../cadastro/cadastro_campeonato.php" class="btn btn-dark w-100 py-2">
-            <i class="bi bi-plus-circle me-1"></i> Cadastrar Campeonato
-        </a>
-    </div>
+   
     <div class="col-md-4 mb-3">
         <a href="../campeonatos/visualizar_fases_rodadas.php" class="btn btn-dark w-100 py-2">
             <i class="bi bi-diagram-3 me-1"></i> Fases e Rodadas
@@ -89,17 +85,33 @@ $totalJogadores = ($resultJogadores->fetch_assoc())['total'] ?? 0;
                     </thead>
                     <tbody>
                         <?php
-                        $listar = $conn->query("SELECT * FROM campeonatos ORDER BY criado_em DESC");
+                        $organizador_id = $_SESSION['usuario_id'];
+
+                        $stmt = $conn->prepare("
+                            SELECT * FROM campeonatos 
+                            WHERE criado_por = (
+                                SELECT criado_por FROM usuarios WHERE id = ?
+                            )
+                            ORDER BY criado_em DESC
+                        ");
+                        $stmt->bind_param("i", $organizador_id);
+                        $stmt->execute();
+                        $listar = $stmt->get_result();
                         if ($listar->num_rows > 0) {
                             while ($c = $listar->fetch_assoc()) {
-                                echo "<tr>
-                                        <td>{$c['id']}</td>
-                                        <td>{$c['nome']}</td>
-                                        <td>{$c['temporada']}</td>
-                                        <td>{$c['formato']}</td>
-                                        <td>" . date('d/m/Y', strtotime($c['criado_em'])) . "</td>
-                                        <td><span class='badge bg-secondary'>Em Desenvolvimento</span></td>
-                                    </tr>";
+                                ?>
+                                <tr>
+                                    <td><?= $c['id'] ?></td>
+                                    <td><?= htmlspecialchars($c['nome']) ?></td>
+                                    <td><?= htmlspecialchars($c['temporada']) ?></td>
+                                    <td><?= htmlspecialchars($c['formato']) ?></td>
+                                    <td><?= date('d/m/Y', strtotime($c['criado_em'])) ?></td>
+                                    <td>
+                                        <a href="/campeonato_esportivo/routes/campeonato_editar.php?id=<?= $c['id'] ?>" class="btn btn-sm btn-primary">Editar</a>
+                                    </td>
+                                </tr>
+                                <?php
+                                
                             }
                         } else {
                             echo "<tr><td colspan='6'>Nenhum campeonato encontrado.</td></tr>";

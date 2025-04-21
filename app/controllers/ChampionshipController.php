@@ -9,8 +9,9 @@ class ChampionshipController {
         $this->campeonatoModel = new Campeonato($conn);
     }
 
-    public function criarCampeonato($nome, $descricao, $temporada, $formato, $times = []) {
-        $campeonato_id = $this->campeonatoModel->criar($nome, $descricao, $temporada, $formato);
+    public function criarCampeonato($nome, $descricao, $temporada, $formato, $criado_por, $times = []) {
+        $campeonato_id = $this->campeonatoModel->criar($nome, $descricao, $temporada, $formato, $criado_por);
+        
         if ($campeonato_id) {
             // Associa os times se fornecidos
             if (!empty($times)) {
@@ -21,7 +22,7 @@ class ChampionshipController {
             return json_encode(["erro" => "Erro ao criar campeonato."]);
         }
     }
-
+    
     public function adicionarTime($time_id, $campeonato_id) {
         return $this->campeonatoModel->associarTimes($campeonato_id, [$time_id]);
     }
@@ -33,5 +34,10 @@ class ChampionshipController {
     public function listarTimes($campeonato_id) {
         return $this->campeonatoModel->listarTimesPorCampeonato($campeonato_id);
     }
+    public function listarMeusCampeonatos($usuario_id) {
+        return $this->campeonatoModel->listarPorUsuario($usuario_id);
+    }
+    
+    
 }
 ?>
