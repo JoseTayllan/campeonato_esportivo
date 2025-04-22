@@ -54,8 +54,10 @@
                 <?= htmlspecialchars($time['nome']) ?>
                 <a href="/campeonato_esportivo/routes/remover_time.php?campeonato_id=<?= $campeonato['id'] ?>&time_id=<?= $time['id'] ?>" class="btn btn-sm btn-danger">Remover</a>
             </li>
+
         <?php endforeach; ?>
     </ul>
+
 
     <!-- Adicionar time -->
     <form method="POST" action="/campeonato_esportivo/routes/adicionar_time.php" class="d-flex align-items-center gap-2 mb-5">
@@ -66,6 +68,13 @@
             <?php endforeach; ?>
         </select>
         <button class="btn btn-primary">Vincular Time</button>
+        <!-- Formulário: Adicionar time via código público -->
+        <form method="POST" action="/campeonato_esportivo/routes/adicionar_time_codigo.php" class="d-flex align-items-center gap-2 mb-5">
+            <input type="hidden" name="campeonato_id" value="<?= $campeonato['id'] ?>">
+            <input type="text" name="codigo_publico" class="form-control w-auto" placeholder="Código do time (ex: T-0001)" required>
+            <button class="btn btn-secondary">Vincular pelo Código</button>
+        </form>
+
     </form>
 
 

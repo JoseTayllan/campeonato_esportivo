@@ -7,15 +7,21 @@ class User {
     }
 
     // Verifica se o e-mail já está cadastrado
+   
     public function emailExiste($email) {
-        $query = "SELECT id FROM usuarios WHERE email = ?";
-        $stmt = $this->conn->prepare($query);
+        $sql = "SELECT id FROM usuarios WHERE email = ?";
+        $stmt = $this->conn->prepare($sql);
         $stmt->bind_param("s", $email);
         $stmt->execute();
-        $stmt->store_result();
-        return $stmt->num_rows > 0;
+        return $stmt->get_result()->num_rows > 0;
     }
 
+    public function criarUsuario($nome, $email, $senha_hash, $tipo, $tipo_assinatura) {
+        $sql = "INSERT INTO usuarios (nome, email, senha, tipo, tipo_assinatura) VALUES (?, ?, ?, ?, ?)";
+        $stmt = $this->conn->prepare($sql);
+        $stmt->bind_param("sssss", $nome, $email, $senha_hash, $tipo, $tipo_assinatura);
+        return $stmt->execute();
+    }
     // Cria o usuário apenas se o e-mail não existir
     public function criar($nome, $email, $senha, $tipo) {
         if ($this->emailExiste($email)) {
@@ -33,5 +39,7 @@ class User {
             return "Erro ao inserir no banco de dados: " . $stmt->error;
         }
     }
+
+ 
 }
 ?>

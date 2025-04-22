@@ -2,6 +2,7 @@
 session_start();
 require_once __DIR__ . '/../config/database.php';
 require_once __DIR__ . '/../app/controllers/loginController.php';
+require_once __DIR__ . '/../app/helpers/redirecionar_usuario.php'; // integração
 
 $loginController = new LoginController($conn);
 
@@ -15,27 +16,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $_SESSION['usuario_id'] = $usuario['id'];
         $_SESSION['usuario_nome'] = $usuario['nome'];
         $_SESSION['usuario_tipo'] = $usuario['tipo'];
+        $_SESSION['usuario'] = $usuario; // necessário para o middleware de assinatura
 
-        $tipo = strtolower(trim($usuario['tipo'])); // Garantir consistência
+        // 🔁 Redirecionamento centralizado
+        redirecionarUsuario($usuario);
 
-        // Redirecionamento baseado no tipo
-        if ($tipo === 'administrador') {
-            header("Location: ../public/views/dashboard/dashboard_administrador.php");
-        } elseif ($tipo === 'organizador') {
-            header("Location: ../public/views/dashboard/dashboard_organizador.php");// não tenho no momento
-        } elseif ($tipo === 'treinador') {
-            header("Location: ../public/views/dashboard/dashboard_treinador.php");// não tenho no momento
-        } elseif ($tipo === 'jogador') {
-            header("Location: ../public/views/dashboard/dashboard_jogador.php"); // não tenho no momento
-        } elseif ($tipo === 'olheiro') {
-            header("Location: ../public/views/avaliacao/visualizar_avaliacoes.php");
-        } elseif ($tipo === 'patrocinador') {
-            header("Location: ../public/views/dashboard/dashboard_patrocinador.php"); // não tenho no momento
-        } else {
-            // Tipo desconhecido
-            $_SESSION['mensagem_erro'] = "Tipo de usuário não reconhecido.";
-            header("Location: ../public/views/login/login.php");
-        }
     } else {
         $_SESSION['mensagem_erro'] = "Credenciais inválidas.";
         header("Location: ../public/views/login/login.php");
