@@ -136,6 +136,10 @@ $jogadores = $controller->listarJogadoresDoMeuTime($time['id']);
 
     </div>
 </div>
+<a href="../../../routes/agenda_time.php" class="btn btn-primary mb-3">
+    📅 Ver Agenda de Jogos
+</a>
+
 
 </body>
 </html>
