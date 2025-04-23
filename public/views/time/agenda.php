@@ -37,6 +37,11 @@ $base_url = '/campeonato_esportivo/public/';
                                 <img src="<?= $base_url . $jogo['logo_fora'] ?>" alt="Escudo Fora" width="30" class="ms-2">
                                 <br><small>Local: <?= $jogo['local'] ?></small>
                             </div>
+                            <div>
+                                <a href="/campeonato_esportivo/public/views/time/definir_escalacao.php?partida_id=<?= $jogo['id'] ?>" class="btn btn-primary">
+                                   Definir Escalação
+                                </a>
+                            </div>
                         </div>
                     </div>
                 <?php endforeach; ?>
