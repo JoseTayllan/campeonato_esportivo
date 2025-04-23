@@ -138,7 +138,7 @@ CREATE TABLE `estatisticas_partida` (
   PRIMARY KEY (`id`),
   KEY `idx_partida` (`partida_id`),
   KEY `idx_jogador` (`jogador_id`)
-) ENGINE=MyISAM AUTO_INCREMENT=9 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=MyISAM AUTO_INCREMENT=14 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -147,8 +147,40 @@ CREATE TABLE `estatisticas_partida` (
 
 LOCK TABLES `estatisticas_partida` WRITE;
 /*!40000 ALTER TABLE `estatisticas_partida` DISABLE KEYS */;
-INSERT INTO `estatisticas_partida` VALUES (1,1,1,1,1,30,5,2,1,0,60,1),(2,2,1,0,0,10,2,1,0,0,60,0),(3,2,2,0,0,8,1,0,0,0,45,0),(4,3,1,0,0,10,2,1,0,0,60,0),(5,3,2,0,0,8,1,0,0,0,45,0),(6,3,3,0,0,0,0,0,0,0,30,0),(7,1,1,2,1,30,5,2,1,0,60,1),(8,1,2,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL);
+INSERT INTO `estatisticas_partida` VALUES (1,1,1,1,1,30,5,2,1,0,60,1),(2,2,1,0,0,10,2,1,0,0,60,0),(3,2,2,0,0,8,1,0,0,0,45,0),(4,3,1,0,0,10,2,1,0,0,60,0),(5,3,2,0,0,8,1,0,0,0,45,0),(6,3,3,0,0,0,0,0,0,0,30,0),(7,1,1,2,1,30,5,2,1,0,60,1),(8,1,2,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(9,25,0,1,NULL,NULL,0,NULL,0,0,NULL,NULL),(10,25,1,1,NULL,NULL,0,NULL,0,0,NULL,NULL),(11,25,0,1,NULL,NULL,0,NULL,0,0,NULL,NULL),(12,25,1,1,NULL,NULL,0,NULL,0,0,NULL,NULL),(13,29,8,1,NULL,NULL,0,NULL,0,0,NULL,NULL);
 /*!40000 ALTER TABLE `estatisticas_partida` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `eventos_partida`
+--
+
+DROP TABLE IF EXISTS `eventos_partida`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `eventos_partida` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `partida_id` int NOT NULL,
+  `jogador_id` int DEFAULT NULL,
+  `time_id` int DEFAULT NULL,
+  `tipo_evento` enum('gol','cartao_amarelo','cartao_vermelho','substituicao','posse_bola','finalizacao','outro') NOT NULL,
+  `minuto` varchar(10) DEFAULT NULL,
+  `descricao` text,
+  `criado_em` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`),
+  KEY `partida_id` (`partida_id`),
+  KEY `jogador_id` (`jogador_id`)
+) ENGINE=MyISAM AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `eventos_partida`
+--
+
+LOCK TABLES `eventos_partida` WRITE;
+/*!40000 ALTER TABLE `eventos_partida` DISABLE KEYS */;
+INSERT INTO `eventos_partida` VALUES (1,25,NULL,NULL,'gol','10','Goll de bunda','2025-04-22 17:01:21'),(2,25,1,1,'gol','15','gol','2025-04-22 17:15:56'),(3,23,2,2,'gol','10','Goll de bike','2025-04-22 17:47:58'),(4,29,8,5,'gol','20','gol de caça','2025-04-22 21:24:39');
+/*!40000 ALTER TABLE `eventos_partida` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -194,7 +226,7 @@ CREATE TABLE `jogadores` (
   `time_id` int DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `time_id` (`time_id`)
-) ENGINE=MyISAM AUTO_INCREMENT=11 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=MyISAM AUTO_INCREMENT=12 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -203,7 +235,7 @@ CREATE TABLE `jogadores` (
 
 LOCK TABLES `jogadores` WRITE;
 /*!40000 ALTER TABLE `jogadores` DISABLE KEYS */;
-INSERT INTO `jogadores` VALUES (1,'Carlos Mendes',22,'Brasil','Atacante',1),(2,'Neymar',29,'Brasil','Atacante',2),(4,'Diogo Nogueira',0,NULL,'',0),(5,'Diogo Nogueira',0,NULL,'Atacante',0),(6,'Diogo Nogueira',21,'Paudarquensse','Atacante',1),(7,'teste',21,'Paudarquensse','Atacante',1),(8,'Montello',21,'Amador','Zagueiro',5),(9,'José neymar Messi de Cr7',20,'Jogador caro','Atacante',5);
+INSERT INTO `jogadores` VALUES (1,'Carlos Mendes',22,'Brasil','Atacante',1),(2,'Neymar',29,'Brasil','Atacante',2),(4,'Diogo Nogueira',0,NULL,'',0),(5,'Diogo Nogueira',0,NULL,'Atacante',0),(6,'Diogo Nogueira',21,'Paudarquensse','Atacante',1),(7,'teste',21,'Paudarquensse','Atacante',1),(8,'Montello',21,'Amador','Zagueiro',5),(9,'José neymar Messi de Cr7',20,'Jogador caro','Atacante',5),(11,'Neymar',21,'Jogador caro','Atacante',6);
 /*!40000 ALTER TABLE `jogadores` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -226,6 +258,7 @@ CREATE TABLE `partidas` (
   `placar_casa` int DEFAULT '0',
   `placar_fora` int DEFAULT '0',
   `rodada_id` int DEFAULT NULL,
+  `status` enum('nao_iniciada','em_andamento','finalizada') DEFAULT 'nao_iniciada',
   PRIMARY KEY (`id`),
   KEY `campeonato_id` (`campeonato_id`),
   KEY `time_casa` (`time_casa`),
@@ -234,7 +267,7 @@ CREATE TABLE `partidas` (
   KEY `fk_partidas_fase` (`fase_id`),
   CONSTRAINT `fk_partidas_fase` FOREIGN KEY (`fase_id`) REFERENCES `fases_campeonato` (`id`) ON DELETE SET NULL ON UPDATE CASCADE,
   CONSTRAINT `fk_rodada_id` FOREIGN KEY (`rodada_id`) REFERENCES `rodadas` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=27 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=30 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -243,7 +276,7 @@ CREATE TABLE `partidas` (
 
 LOCK TABLES `partidas` WRITE;
 /*!40000 ALTER TABLE `partidas` DISABLE KEYS */;
-INSERT INTO `partidas` VALUES (1,NULL,1,'2025-03-27','15:00:00','Estádio Municipal',1,2,0,0,NULL),(2,NULL,1,'2025-03-27','15:00:00','Estádio Municipal',1,2,0,0,NULL),(3,NULL,1,'2025-03-27','15:00:00','Estádio Municipal',1,2,0,0,NULL),(23,10,0,'2025-04-22','22:59:00','Casa da mãe',2,1,0,0,22),(24,NULL,0,'2025-04-21','12:23:00','Casa da vô',1,2,0,0,23),(25,NULL,0,'2025-04-23','12:21:00','Casa da mae',2,1,0,0,24),(26,NULL,0,'2025-04-03','00:43:00','Casa da vovó',5,1,0,0,22);
+INSERT INTO `partidas` VALUES (1,NULL,1,'2025-03-27','15:00:00','Estádio Municipal',1,2,0,0,NULL,'nao_iniciada'),(2,NULL,1,'2025-03-27','15:00:00','Estádio Municipal',1,2,0,0,NULL,'nao_iniciada'),(3,NULL,1,'2025-03-27','15:00:00','Estádio Municipal',1,2,0,0,NULL,'nao_iniciada'),(23,10,2,'2025-04-22','22:59:00','Casa da mãe',2,1,1,0,22,'finalizada'),(24,10,2,'2025-04-21','12:23:00','Casa da vô',1,6,0,0,23,'em_andamento'),(25,10,2,'2025-04-23','12:21:00','Casa da mae',6,1,3,2,24,'finalizada'),(26,NULL,0,'2025-04-03','00:43:00','Casa da vovó',5,1,0,0,22,'nao_iniciada'),(29,14,2,'2025-04-29','20:36:00','Laboratório-FPM',6,5,0,1,24,'finalizada');
 /*!40000 ALTER TABLE `partidas` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -363,6 +396,31 @@ LOCK TABLES `substituicoes` WRITE;
 INSERT INTO `substituicoes` VALUES (1,1,3,5,60),(2,2,1,3,60),(3,3,1,3,60),(4,1,1,3,60);
 /*!40000 ALTER TABLE `substituicoes` ENABLE KEYS */;
 UNLOCK TABLES;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8mb4 */ ;
+/*!50003 SET character_set_results = utf8mb4 */ ;
+/*!50003 SET collation_connection  = utf8mb4_0900_ai_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = '' */ ;
+DELIMITER ;;
+/*!50003 CREATE*/ /*!50017 DEFINER=`root`@`localhost`*/ /*!50003 TRIGGER `atualizar_minutos_apos_substituicao` AFTER INSERT ON `substituicoes` FOR EACH ROW BEGIN
+    -- Atualiza minutos jogados para quem saiu (assumindo que saiu no minuto exato da substituição)
+    UPDATE estatisticas_partida
+    SET minutos_jogados = NEW.minuto_substituicao
+    WHERE jogador_id = NEW.jogador_saiu AND partida_id = NEW.partida_id;
+
+    -- Atualiza minutos jogados para quem entrou (assumindo que jogou o restante da partida)
+    UPDATE estatisticas_partida
+    SET minutos_jogados = 90 - NEW.minuto_substituicao
+    WHERE jogador_id = NEW.jogador_entrou AND partida_id = NEW.partida_id;
+END */;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
 
 --
 -- Table structure for table `times`
@@ -405,10 +463,17 @@ CREATE TABLE `times_campeonatos` (
   `id` int NOT NULL AUTO_INCREMENT,
   `time_id` int NOT NULL,
   `campeonato_id` int NOT NULL,
+  `pontos` int DEFAULT '0',
+  `vitorias` int DEFAULT '0',
+  `empates` int DEFAULT '0',
+  `derrotas` int DEFAULT '0',
+  `jogos` int DEFAULT '0',
+  `gols_pro` int DEFAULT '0',
+  `gols_contra` int DEFAULT '0',
   PRIMARY KEY (`id`),
   KEY `time_id` (`time_id`),
   KEY `campeonato_id` (`campeonato_id`)
-) ENGINE=MyISAM AUTO_INCREMENT=18 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=MyISAM AUTO_INCREMENT=19 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -417,7 +482,7 @@ CREATE TABLE `times_campeonatos` (
 
 LOCK TABLES `times_campeonatos` WRITE;
 /*!40000 ALTER TABLE `times_campeonatos` DISABLE KEYS */;
-INSERT INTO `times_campeonatos` VALUES (14,2,2),(15,1,2),(11,2,1),(12,1,1),(17,5,2);
+INSERT INTO `times_campeonatos` VALUES (14,2,2,0,0,0,0,0,0,0),(15,1,2,0,0,0,2,2,4,6),(11,2,1,0,0,0,0,0,0,0),(12,1,1,0,0,0,0,0,0,0),(17,5,2,3,1,0,0,1,1,0),(18,6,2,6,2,0,1,3,6,5);
 /*!40000 ALTER TABLE `times_campeonatos` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -461,4 +526,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2025-04-22  9:06:06
+-- Dump completed on 2025-04-22 21:08:11

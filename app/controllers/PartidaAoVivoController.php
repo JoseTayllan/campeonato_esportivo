@@ -1,0 +1,129 @@
+<?php
+
+class PartidaAoVivoController {
+    private $conn;
+
+    public function __construct($db) {
+        $this->conn = $db;
+    }
+
+    public function buscarDadosDaPartida($partida_id) {
+        $stmt = $this->conn->prepare("
+            SELECT p.*, t1.nome AS nome_casa, t2.nome AS nome_fora
+            FROM partidas p
+            JOIN times t1 ON p.time_casa = t1.id
+            JOIN times t2 ON p.time_fora = t2.id
+            WHERE p.id = ?
+        ");
+        $stmt->bind_param("i", $partida_id);
+        $stmt->execute();
+        $res = $stmt->get_result();
+        return $res->fetch_assoc();
+    }
+
+    public function listarEventos($partida_id) {
+        $stmt = $this->conn->prepare("
+            SELECT * FROM eventos_partida
+            WHERE partida_id = ?
+            ORDER BY criado_em ASC
+        ");
+        $stmt->bind_param("i", $partida_id);
+        $stmt->execute();
+        return $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
+    }
+    public function listarJogadoresDaPartida($time_casa, $time_fora) {
+        $stmt = $this->conn->prepare("
+            SELECT j.id, j.nome, t.nome AS time_nome, t.id AS time_id
+            FROM jogadores j
+            JOIN times t ON j.time_id = t.id
+            WHERE t.id IN (?, ?)
+        ");
+        $stmt->bind_param("ii", $time_casa, $time_fora);
+        $stmt->execute();
+        return $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
+    }
+
+private function registrarResultadoTime($time_id, $pontos, $gols_pro, $gols_contra) {
+    $this->conn->query("
+        UPDATE times_campeonatos
+        SET pontos = pontos + $pontos,
+            gols_pro = gols_pro + $gols_pro,
+            gols_contra = gols_contra + $gols_contra,
+            jogos = jogos + 1
+        WHERE time_id = $time_id
+    ");
+}
+
+public function finalizarPartida($partida_id) {
+    // 1. Marcar como finalizada
+    $this->conn->prepare("UPDATE partidas SET status = 'finalizada' WHERE id = ?")
+        ->bind_param("i", $partida_id)
+        ->execute();
+
+    // 2. Consolidar eventos por jogador
+    $eventos = $this->conn->query("
+        SELECT jogador_id, tipo_evento, COUNT(*) as total
+        FROM eventos_partida
+        WHERE partida_id = $partida_id
+        AND jogador_id IS NOT NULL
+        GROUP BY jogador_id, tipo_evento
+    ");
+
+    while ($e = $eventos->fetch_assoc()) {
+        $jogador_id = $e['jogador_id'];
+        $tipo = $e['tipo_evento'];
+        $qtd = (int)$e['total'];
+
+        $campo = match ($tipo) {
+            'gol' => 'gols',
+            'cartao_amarelo' => 'cartoes_amarelos',
+            'cartao_vermelho' => 'cartoes_vermelhos',
+            'finalizacao' => 'finalizacoes',
+            default => null
+        };
+
+        if ($campo) {
+            $this->conn->query("
+                INSERT INTO estatisticas_partida (partida_id, jogador_id, $campo)
+                VALUES ($partida_id, $jogador_id, $qtd)
+                ON DUPLICATE KEY UPDATE $campo = $campo + $qtd
+            ");
+        }
+    }
+
+    // 3. Atualizar pontos e saldo dos times
+    $res = $this->conn->query("SELECT * FROM partidas WHERE id = $partida_id")->fetch_assoc();
+    $t1 = $res['time_casa'];
+    $t2 = $res['time_fora'];
+    $g1 = (int)$res['placar_casa'];
+    $g2 = (int)$res['placar_fora'];
+    $campeonato_id = $res['campeonato_id'];
+
+    if ($g1 > $g2) {
+        $this->atualizarClassificacao($t1, $campeonato_id, 3, 1, 0, 0, $g1, $g2);
+        $this->atualizarClassificacao($t2, $campeonato_id, 0, 0, 0, 1, $g2, $g1);
+    } elseif ($g2 > $g1) {
+        $this->atualizarClassificacao($t2, $campeonato_id, 3, 1, 0, 0, $g2, $g1);
+        $this->atualizarClassificacao($t1, $campeonato_id, 0, 0, 0, 1, $g1, $g2);
+    } else {
+        $this->atualizarClassificacao($t1, $campeonato_id, 1, 0, 1, 0, $g1, $g2);
+        $this->atualizarClassificacao($t2, $campeonato_id, 1, 0, 1, 0, $g2, $g1);
+    }
+}
+
+private function atualizarClassificacao($time_id, $campeonato_id, $pontos, $vitorias, $empates, $derrotas, $gols_pro, $gols_contra) {
+    $this->conn->query("
+        UPDATE times_campeonatos
+        SET pontos = pontos + $pontos,
+            vitorias = vitorias + $vitorias,
+            empates = empates + $empates,
+            derrotas = derrotas + $derrotas,
+            jogos = jogos + 1,
+            gols_pro = gols_pro + $gols_pro,
+            gols_contra = gols_contra + $gols_contra
+        WHERE time_id = $time_id AND campeonato_id = $campeonato_id
+    ");
+}
+
+    
+}

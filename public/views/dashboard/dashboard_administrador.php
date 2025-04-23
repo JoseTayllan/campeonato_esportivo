@@ -75,6 +75,10 @@ $totalJogadores = ($resultJogadores->fetch_assoc())['total'] ?? 0;
             <a href="/campeonato_esportivo/routes/cadastro_organizador.php" class="btn btn-outline-primary mb-3">
                 ➕ Cadastrar Novo Organizador
             </a>
+            <a href="../../../routes/gerenciar_partidas.php" class="btn btn-outline-primary mb-3">
+    ⚙️ Gerenciar Partidas
+</a>
+
 
         </div>
 

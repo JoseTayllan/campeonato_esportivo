@@ -138,12 +138,25 @@ class Campeonato {
     }
     
     
-
     public function cadastrarPartida($rodada_id, $time_casa, $time_fora, $data, $horario, $local) {
-        $query = "INSERT INTO partidas (rodada_id, time_casa, time_fora, data, horario, local)
-                  VALUES (?, ?, ?, ?, ?, ?)";
+        // Buscar fase_id e campeonato_id com base na rodada_id
+        $query = "SELECT r.fase_id, f.campeonato_id
+                  FROM rodadas r
+                  JOIN fases_campeonato f ON f.id = r.fase_id
+                  WHERE r.id = ?";
         $stmt = $this->conn->prepare($query);
-        $stmt->bind_param("iiisss", $rodada_id, $time_casa, $time_fora, $data, $horario, $local);
+        $stmt->bind_param("i", $rodada_id);
+        $stmt->execute();
+        $result = $stmt->get_result()->fetch_assoc();
+    
+        $fase_id = $result['fase_id'] ?? null;
+        $campeonato_id = $result['campeonato_id'] ?? null;
+    
+        // Agora inserir a partida com os dados completos
+        $query = "INSERT INTO partidas (rodada_id, fase_id, campeonato_id, time_casa, time_fora, data, horario, local, status)
+                  VALUES (?, ?, ?, ?, ?, ?, ?, ?, 'nao_iniciada')";
+        $stmt = $this->conn->prepare($query);
+        $stmt->bind_param("iiisssss", $rodada_id, $fase_id, $campeonato_id, $time_casa, $time_fora, $data, $horario, $local);
         return $stmt->execute();
     }
     
