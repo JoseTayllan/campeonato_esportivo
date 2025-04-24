@@ -21,12 +21,15 @@ class Campeonato {
     
 
     // Atualiza dados do campeonato
-    public function atualizar($id, $nome, $descricao, $temporada, $formato, $modalidade) {
-        $query = "UPDATE campeonatos SET nome=?, descricao=?, temporada=?, formato=?, modalidade=? WHERE id=?";
-        $stmt = $this->conn->prepare($query);
-        $stmt->bind_param("sssssi", $nome, $descricao, $temporada, $formato, $modalidade, $id);
+    public function atualizar($id, $nome, $descricao, $temporada, $formato, $modalidade, $status) {
+        $sql = "UPDATE campeonatos 
+                SET nome = ?, descricao = ?, temporada = ?, formato = ?, modalidade = ?, status = ?
+                WHERE id = ?";
+        $stmt = $this->conn->prepare($sql);
+        $stmt->bind_param("ssisssi", $nome, $descricao, $temporada, $formato, $modalidade, $status, $id);
         return $stmt->execute();
     }
+    
 
     // Buscar campeonato por ID
     public function buscarPorId($id) {

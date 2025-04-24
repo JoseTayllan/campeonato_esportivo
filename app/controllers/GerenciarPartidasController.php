@@ -22,8 +22,13 @@ class GerenciarPartidasController {
     }
 
     public function alterarStatus($partida_id, $status) {
-        $stmt = $this->conn->prepare("UPDATE partidas SET status = ? WHERE id = ?");
+        if ($status === 'em_andamento') {
+            $stmt = $this->conn->prepare("UPDATE partidas SET status = ?, inicio_partida = NOW() WHERE id = ?");
+        } else {
+            $stmt = $this->conn->prepare("UPDATE partidas SET status = ? WHERE id = ?");
+        }
         $stmt->bind_param("si", $status, $partida_id);
         $stmt->execute();
     }
+    
 }

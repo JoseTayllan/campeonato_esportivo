@@ -40,6 +40,13 @@
                 <option <?= $campeonato['modalidade'] == '2x2' ? 'selected' : '' ?>>2x2</option>
             </select>
         </div>
+        <div class="mb-3">
+            <label>Status</label>
+            <select name="status" class="form-select">
+                <option value="ativo" <?= $campeonato['status'] === 'ativo' ? 'selected' : '' ?>>Ativo</option>
+                <option value="inativo" <?= $campeonato['status'] === 'inativo' ? 'selected' : '' ?>>Inativo</option>
+            </select>
+        </div>
 
         <button type="submit" class="btn btn-primary">Salvar Alterações</button>
     </form>
@@ -259,8 +266,5 @@
             <button class="btn btn-success">Adicionar Rodada</button>
         </div>
     </form>
-
-
-</div>
 
 <?php include __DIR__ . '/../cabecalho/footer.php'; ?>

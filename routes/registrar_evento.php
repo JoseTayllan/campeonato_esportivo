@@ -10,6 +10,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $jogador_id   = $_POST['jogador_id'] ?? null;
     $time_id      = $_POST['time_id'] ?? null;
 
+    if (!$minuto || !is_numeric($minuto)) {
+        $_SESSION['mensagem_erro'] = "Erro: minuto inválido.";
+        header("Location: partida_ao_vivo.php?id=" . $partida_id);
+        exit;
+    }
+
     if ($partida_id && $tipo_evento && $minuto && $time_id) {
         // 1. Inserir o evento
         $stmt = $conn->prepare("INSERT INTO eventos_partida (partida_id, jogador_id, time_id, tipo_evento, minuto, descricao) VALUES (?, ?, ?, ?, ?, ?)");
