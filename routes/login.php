@@ -16,6 +16,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $_SESSION['usuario_id'] = $usuario['id'];
         $_SESSION['usuario_nome'] = $usuario['nome'];
         $_SESSION['usuario_tipo'] = $usuario['tipo'];
+        $_SESSION['usuario_assinatura'] = $usuario['tipo_assinatura'] ?? null;
+        $_SESSION['usuario_criado_por'] = $usuario['criado_por'] ?? null;
         $_SESSION['usuario'] = $usuario; // necessário para o middleware de assinatura
 
         // 🔁 Redirecionamento centralizado
