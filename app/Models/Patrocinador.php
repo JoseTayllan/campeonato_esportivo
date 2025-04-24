@@ -18,5 +18,7 @@ class Patrocinador {
         $result = $this->conn->query($sql);
         return $result->fetch_all(MYSQLI_ASSOC);
     }
+
+    
 }
 ?>

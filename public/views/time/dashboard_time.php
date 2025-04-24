@@ -15,6 +15,7 @@ $stmt->execute();
 $resultado = $stmt->get_result();
 $time = $resultado->fetch_assoc();
 
+
 if (!$time):
     ?>
     <div class="container py-5">

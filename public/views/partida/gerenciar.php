@@ -1,43 +1,43 @@
-<?require_once __DIR__ . '/../../cabecalho/header.php';
- ?>
+<?php require_once __DIR__ . '/../cabecalho/header.php'; ?>
+<?php require_once __DIR__ . '/../cabecalho/tabela_administrativa.php'; ?>
 
-<div class="container mt-4">
-    <h2>Gerenciar Partidas</h2>
 
-    <table class="table table-striped">
-        <thead>
-            <tr>
-                <th>Data</th>
-                <th>Times</th>
-                <th>Status</th>
-                <th>Ações</th>
-            </tr>
-        </thead>
-        <tbody>
-            <?php foreach ($partidas as $p): ?>
-                <tr>
-                    <td><?= date('d/m/Y', strtotime($p['data'])) ?> <?= $p['horario'] ?></td>
-                    <td><?= $p['nome_casa'] ?> x <?= $p['nome_fora'] ?></td>
-                    <td><?= ucfirst($p['status']) ?></td>
-                    <td>
-                        <form method="post" class="d-inline">
+<div class="container mt-4 mb-5">
+    <h2 class="mb-4">Gerenciar Partidas</h2>
+
+    <div class="row g-4">
+        <?php foreach ($partidas as $p): ?>
+            <div class="col-md-6">
+                <div class="card shadow-sm border-0">
+                    <div class="card-body">
+                        <h5 class="card-title mb-2">
+                            <?= $p['nome_casa'] ?> <span class="text-muted">x</span> <?= $p['nome_fora'] ?>
+                        </h5>
+                        <p class="mb-1"><strong>Data:</strong> <?= date('d/m/Y', strtotime($p['data'])) ?> às <?= $p['horario'] ?></p>
+                        <p class="mb-2"><strong>Status:</strong> <span class="text-capitalize"><?= $p['status'] ?></span></p>
+
+                        <form method="post" class="d-flex gap-2 flex-wrap align-items-center">
                             <input type="hidden" name="partida_id" value="<?= $p['id'] ?>">
+
                             <?php if ($p['status'] === 'nao_iniciada'): ?>
                                 <input type="hidden" name="status" value="em_andamento">
                                 <button class="btn btn-warning btn-sm">Iniciar</button>
+
                             <?php elseif ($p['status'] === 'em_andamento'): ?>
                                 <a href="partida_ao_vivo.php?id=<?= $p['id'] ?>" class="btn btn-info btn-sm">Ir para ao vivo</a>
                                 <input type="hidden" name="status" value="finalizada">
                                 <button class="btn btn-success btn-sm">Finalizar</button>
+
                             <?php else: ?>
-                                <span class="text-muted">Finalizada</span>
+                                <span class="text-muted">Partida Finalizada</span>
                             <?php endif; ?>
                         </form>
-                    </td>
-                </tr>
-            <?php endforeach; ?>
-        </tbody>
-    </table>
+                    </div>
+                </div>
+            </div>
+        <?php endforeach; ?>
+    </div>
 </div>
 
-<?require_once __DIR__ . '/../cabecalho/footer.php'; ?>
+<?php require_once __DIR__ . '/../cabecalho/footer.php'; ?>
+<script src="../../../assets/js/bootstrap.bundle.min.js"></script>
