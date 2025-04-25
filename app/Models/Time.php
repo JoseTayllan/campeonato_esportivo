@@ -54,21 +54,28 @@ class Team {
         return $stmt->get_result();
     }
 
-    public function inserirJogador($nome, $posicao, $idade, $nacionalidade, $time_id) {
-        $sql = "INSERT INTO jogadores (nome, posicao, idade, nacionalidade, time_id) VALUES (?, ?, ?, ?, ?)";
+    public function inserirJogador($nome, $posicao, $idade, $nacionalidade, $time_id, $imagem = null) {
+        $sql = "INSERT INTO jogadores (nome, posicao, idade, nacionalidade, time_id, imagem) 
+                VALUES (?, ?, ?, ?, ?, ?)";
         $stmt = $this->conn->prepare($sql);
-        $stmt->bind_param("ssisi", $nome, $posicao, $idade, $nacionalidade, $time_id);
+        $stmt->bind_param("ssisis", $nome, $posicao, $idade, $nacionalidade, $time_id, $imagem);
         return $stmt->execute();
     }
     
     
-    public function atualizarJogador($id, $nome, $posicao, $idade, $nacionalidade) {
-        $sql = "UPDATE jogadores SET nome = ?, posicao = ?, idade = ?, nacionalidade = ? WHERE id = ?";
-        $stmt = $this->conn->prepare($sql);
-        $stmt->bind_param("ssisi", $nome, $posicao, $idade, $nacionalidade, $id);
+    public function atualizarJogador($id, $nome, $posicao, $idade, $nacionalidade, $imagem = null) {
+        if ($imagem) {
+            $sql = "UPDATE jogadores SET nome = ?, posicao = ?, idade = ?, nacionalidade = ?, imagem = ? WHERE id = ?";
+            $stmt = $this->conn->prepare($sql);
+            $stmt->bind_param("ssissi", $nome, $posicao, $idade, $nacionalidade, $imagem, $id);
+        } else {
+            $sql = "UPDATE jogadores SET nome = ?, posicao = ?, idade = ?, nacionalidade = ? WHERE id = ?";
+            $stmt = $this->conn->prepare($sql);
+            $stmt->bind_param("ssisi", $nome, $posicao, $idade, $nacionalidade, $id);
+        }
+    
         return $stmt->execute();
     }
-    
     
     public function buscarJogadorPorId($id) {
         $sql = "SELECT * FROM jogadores WHERE id = ?";

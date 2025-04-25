@@ -30,7 +30,7 @@ if (!$jogador) {
     <div class="card p-4 shadow">
         <h2 class="mb-4">Editar Jogador</h2>
 
-        <form action="../../../routes/jogador.php" method="POST">
+        <form action="../../../routes/jogador.php" method="POST" enctype="multipart/form-data">
             <input type="hidden" name="editar_jogador" value="1">
             <input type="hidden" name="jogador_id" value="<?= $jogador['id'] ?>">
 
@@ -48,10 +48,22 @@ if (!$jogador) {
                 <label class="form-label">Idade</label>
                 <input type="number" name="idade" class="form-control" value="<?= (int) $jogador['idade'] ?>" required>
             </div>
-
+            
             <div class="mb-3">
                 <label class="form-label">Nacionalidade</label>
                 <input type="text" name="nacionalidade" class="form-control" value="<?= htmlspecialchars($jogador['nacionalidade']) ?>" required>
+            </div>
+
+            <?php if (!empty($jogador['imagem'])): ?>
+                <div class="mb-3">
+                    <label class="form-label">Imagem Atual</label><br>
+                    <img src="/campeonato_esportivo/public/img/jogadores/<?= $jogador['imagem'] ?>" alt="Imagem atual" width="100">
+                </div>
+            <?php endif; ?>
+
+            <div class="mb-3">
+                <label class="form-label">Nova Imagem (opcional)</label>
+                <input type="file" name="imagem" class="form-control" accept="image/*">
             </div>
 
             <button type="submit" class="btn btn-primary">Salvar Alterações</button>

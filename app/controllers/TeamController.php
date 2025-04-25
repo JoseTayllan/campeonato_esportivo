@@ -26,14 +26,15 @@ class TeamController {
     public function listarJogadoresDoMeuTime($time_id) {
         return $this->teamModel->listarJogadores($time_id);
     }
-    public function adicionarJogador($nome, $posicao, $idade, $nacionalidade, $time_id) {
-        return $this->teamModel->inserirJogador($nome, $posicao, $idade, $nacionalidade, $time_id);
+    
+    public function adicionarJogador($nome, $posicao, $idade, $nacionalidade, $time_id, $imagem = null) {
+        return $this->teamModel->inserirJogador($nome, $posicao, $idade, $nacionalidade, $time_id, $imagem);
     }
     
     
 
-    public function editarJogador($id, $nome, $posicao, $idade, $nacionalidade) {
-        return $this->teamModel->atualizarJogador($id, $nome, $posicao, $idade, $nacionalidade);
+    public function editarJogador($id, $nome, $posicao, $idade, $nacionalidade, $imagem = null) {
+        return $this->teamModel->atualizarJogador($id, $nome, $posicao, $idade, $nacionalidade, $imagem);
     }
     
     

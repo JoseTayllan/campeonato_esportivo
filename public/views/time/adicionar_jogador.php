@@ -29,7 +29,7 @@ $time = $result->fetch_assoc();
     <div class="container py-5">
         <div class="card p-4 shadow">
             <h2 class="mb-4">Adicionar Jogador</h2>
-            <form action="../../../routes/jogador.php" method="POST">
+            <form action="../../../routes/jogador.php" method="POST" enctype="multipart/form-data">
                 <input type="hidden" name="time_id" value="<?= $time['id'] ?>">
 
                 <div class="mb-3">
@@ -52,6 +52,12 @@ $time = $result->fetch_assoc();
                     <input type="text" name="nacionalidade" class="form-control" required>
                 </div>
 
+                <!-- 🔽 CAMPO DE UPLOAD DE IMAGEM -->
+                <div class="mb-3">
+                    <label>Imagem do Jogador</label>
+                    <input type="file" name="imagem" class="form-control" accept="image/*">
+                </div>
+                
                 <button type="submit" class="btn btn-success">Salvar</button>
                 <a href="dashboard_time.php" class="btn btn-secondary">Voltar</a>
             </form>

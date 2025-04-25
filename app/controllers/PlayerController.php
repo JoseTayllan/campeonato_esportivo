@@ -9,8 +9,8 @@ class PlayerController {
         $this->playerModel = new Player($conn);
     }
 
-    public function criarJogador($nome, $idade, $nacionalidade, $posicao, $time_id) {
-        if ($this->playerModel->criar($nome, $idade, $nacionalidade, $posicao, $time_id)) {
+    public function criarJogador($nome, $idade, $nacionalidade, $posicao, $time_id, $imagem = null) {
+        if ($this->playerModel->criar($nome, $idade, $nacionalidade, $posicao, $time_id, $imagem)) {
             return json_encode(["mensagem" => "Jogador criado com sucesso!"]);
         } else {
             return json_encode(["erro" => "Erro ao criar jogador."]);
