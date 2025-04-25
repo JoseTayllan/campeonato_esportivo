@@ -1,6 +1,11 @@
-<?php 
+<?php
+require_once __DIR__ . '/../config/database.php';
+require_once __DIR__ . '/../app/controllers/IndexPublicoController.php';
 
-include 'views/cabecalho/header_index.php'; 
+$controller = new IndexPublicoController($conn);
+$campeonatosPorEsporte = $controller->listarCampeonatosPorEsporte();
+
+include 'views/cabecalho/header_index.php';
 ?>
 
 <div class="container mt-4">
@@ -19,33 +24,33 @@ include 'views/cabecalho/header_index.php';
     </div>
 
     <h4>Campeonatos em Andamento</h4>
-    <h4>Campeonatos em Andamento</h4>
-<?php if (empty($campeonatosPorEsporte)): ?>
-    <div class="alert alert-info">Nenhum campeonato em andamento.</div>
-<?php else: ?>
-    <div class="row">
-        <?php foreach ($campeonatosPorEsporte as $camp): ?>
-            <div class="col-md-4">
-                <div class="card mb-3 shadow-sm">
-                    <div class="card-body">
-                        <h5 class="card-title"><?= htmlspecialchars($camp['nome']) ?></h5>
-                        <p class="card-text">
-                            Temporada: <?= htmlspecialchars($camp['temporada']) ?><br>
-                            Formato: <?= htmlspecialchars($camp['formato']) ?>
-                        </p>
-                        <a href="#" class="btn btn-sm btn-outline-primary">Ver Campeonato</a>
+    <?php if (empty($campeonatosPorEsporte)): ?>
+        <div class="alert alert-info">Nenhum campeonato em andamento.</div>
+    <?php else: ?>
+        <div class="row">
+            <?php foreach ($campeonatosPorEsporte as $camp): ?>
+                <div class="col-md-4">
+                    <div class="card mb-3 shadow-sm">
+                        <div class="card-body">
+                            <h5 class="card-title"><?= htmlspecialchars($camp['nome']) ?></h5>
+                            <p class="card-text">
+                                Temporada: <?= htmlspecialchars($camp['temporada']) ?><br>
+                                Formato: <?= htmlspecialchars($camp['formato']) ?>
+                            </p>
+                            <a href="/campeonato_esportivo/routes/campeonato_publico.php?id=<?= $camp['id'] ?>" class="btn btn-sm btn-outline-primary">
+                                Ver Campeonato
+                            </a>
+
+                        </div>
                     </div>
                 </div>
-            </div>
-        <?php endforeach; ?>
-    </div>
-<?php endif; ?>
-
+            <?php endforeach; ?>
+        </div>
+    <?php endif; ?>
 </div>
-
-
 
 <?php include 'views/cabecalho/footer.php'; ?>
 <script src="../assets/js/bootstrap.bundle.min.js"></script>
 </body>
+
 </html>

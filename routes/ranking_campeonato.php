@@ -13,4 +13,3 @@ $controller = new RankingCampeonatoController($conn);
 $dados = $controller->dadosPorCampeonato((int)$campeonato_id);
 
 require_once __DIR__ . '/../public/views/public/ranking_campeonato.php';
- 
