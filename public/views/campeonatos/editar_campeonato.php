@@ -75,6 +75,8 @@
             <?php endforeach; ?>
         </select>
         <button class="btn btn-primary">Vincular Time</button>
+
+    </form>
         <!-- Formulário: Adicionar time via código público -->
         <form method="POST" action="/campeonato_esportivo/routes/adicionar_time_codigo.php" class="d-flex align-items-center gap-2 mb-5">
             <input type="hidden" name="campeonato_id" value="<?= $campeonato['id'] ?>">
@@ -82,7 +84,6 @@
             <button class="btn btn-secondary">Vincular pelo Código</button>
         </form>
 
-    </form>
 
 
 

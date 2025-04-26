@@ -7,14 +7,25 @@ class Campeonato {
     }
 
     // Cria um novo campeonato
-    public function criar($nome, $descricao, $temporada, $formato, $criado_por) {
-        $query = "INSERT INTO campeonatos (nome, descricao, temporada, formato, criado_por) VALUES (?, ?, ?, ?, ?)";
+    public function criar($nome, $descricao, $temporada, $formato, $modalidade, $criado_por) {
+        $query = "INSERT INTO campeonatos (nome, descricao, temporada, formato, modalidade, criado_por) VALUES (?, ?, ?, ?, ?, ?)";
         $stmt = $this->conn->prepare($query);
-        $stmt->bind_param("ssisi", $nome, $descricao, $temporada, $formato, $criado_por);
+        $stmt->bind_param("sssssi", $nome, $descricao, $temporada, $formato, $modalidade, $criado_por);
         
         if ($stmt->execute()) {
-            return $this->conn->insert_id;
+            $campeonato_id = $this->conn->insert_id;
+    
+            // Inserir fases padrão automaticamente
+            $fases = ['Fase de Grupos', 'Oitavas de Final', 'Quartas de Final', 'Semifinal', 'Final', 'Pontos Corridos'];
+            foreach ($fases as $fase) {
+                $fstmt = $this->conn->prepare("INSERT INTO fases_campeonato (campeonato_id, nome) VALUES (?, ?)");
+                $fstmt->bind_param("is", $campeonato_id, $fase);
+                $fstmt->execute();
+            }
+    
+            return $campeonato_id;
         }
+    
         return false;
     }
     

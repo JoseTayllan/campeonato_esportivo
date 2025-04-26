@@ -20,7 +20,8 @@ class AgendaTimeController {
         $time_id = $time['id'];
 
         // Busca partidas em que o time participa
-        $sql = "SELECT p.*, 
+        $sql = "SELECT p.id, p.data, p.horario, p.local, 
+                       p.placar_casa, p.placar_fora, p.status,
                        t1.nome AS nome_casa, t1.escudo AS logo_casa, 
                        t2.nome AS nome_fora, t2.escudo AS logo_fora 
                 FROM partidas p

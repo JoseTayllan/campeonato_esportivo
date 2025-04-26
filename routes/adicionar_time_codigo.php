@@ -13,13 +13,13 @@ $time = $controller->buscarTimePublico($codigo);
 
 if ($time && $campeonato_id) {
     // Evitar duplicidade
-    $check = $conn->prepare("SELECT * FROM time_campeonato WHERE time_id = ? AND campeonato_id = ?");
+    $check = $conn->prepare("SELECT * FROM times_campeonatos WHERE time_id = ? AND campeonato_id = ?");
     $check->bind_param("ii", $time['id'], $campeonato_id);
     $check->execute();
     $res = $check->get_result();
 
     if ($res->num_rows === 0) {
-        $stmt = $conn->prepare("INSERT INTO time_campeonato (time_id, campeonato_id) VALUES (?, ?)");
+        $stmt = $conn->prepare("INSERT INTO times_campeonatos (time_id, campeonato_id) VALUES (?, ?)");
         $stmt->bind_param("ii", $time['id'], $campeonato_id);
         if ($stmt->execute()) {
             $_SESSION['mensagem_sucesso'] = "Time adicionado com sucesso!";
@@ -33,5 +33,6 @@ if ($time && $campeonato_id) {
     $_SESSION['mensagem_erro'] = "Código inválido ou campeonato não informado.";
 }
 
-header("Location: ../public/views/campeonatos/editar_campeonato.php?id=$campeonato_id");
+header("Location: campeonato_editar.php?id=" . $campeonato_id);
+
 exit();

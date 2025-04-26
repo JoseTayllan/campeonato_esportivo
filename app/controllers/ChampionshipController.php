@@ -10,7 +10,7 @@ class ChampionshipController {
     }
 
     public function criarCampeonato($nome, $descricao, $temporada, $formato, $criado_por, $times = []) {
-        $campeonato_id = $this->campeonatoModel->criar($nome, $descricao, $temporada, $formato, $criado_por);
+        $campeonato_id = $this->campeonatoModel->criar($nome, $descricao, $temporada, $formato, $formato, $criado_por);
         
         if ($campeonato_id) {
             // Associa os times se fornecidos

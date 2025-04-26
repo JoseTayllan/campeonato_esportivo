@@ -1,6 +1,5 @@
 <?php
 $base_url = '/campeonato_esportivo/public/';
-
 ?>
 
 <div class="container mt-4">
@@ -12,18 +11,19 @@ $base_url = '/campeonato_esportivo/public/';
     <?php else: ?>
         <div class="row">
             <?php
-                $hoje = date('Y-m-d');
-                $proximos = [];
-                $passados = [];
+            $hoje = date('Y-m-d');
+            $proximos = [];
+            $passados = [];
 
-                foreach ($partidas as $p) {
-                    if ($p['data'] >= $hoje) {
-                        $proximos[] = $p;
-                    } else {
-                        $passados[] = $p;
-                    }
+            foreach ($partidas as $p) {
+                if ($p['status'] === 'finalizada') {
+                    $passados[] = $p;
+                } else {
+                    $proximos[] = $p;
                 }
+            }
             ?>
+
 
             <div class="col-md-6">
                 <h4>Próximos Jogos</h4>
@@ -35,11 +35,20 @@ $base_url = '/campeonato_esportivo/public/';
                                 <img src="<?= $base_url . $jogo['logo_casa'] ?>" alt="Escudo Casa" width="30" class="me-2">
                                 <?= $jogo['nome_casa'] ?> x <?= $jogo['nome_fora'] ?>
                                 <img src="<?= $base_url . $jogo['logo_fora'] ?>" alt="Escudo Fora" width="30" class="ms-2">
-                                <br><small>Local: <?= $jogo['local'] ?></small>
+                                <br><small>Local: <?= $jogo['local'] ?></small><br>
+
+                                <!-- Badge de Status -->
+                                <?php if ($jogo['status'] === 'finalizada'): ?>
+                                    <span class="badge bg-success mt-2">Finalizado</span>
+                                <?php elseif ($jogo['status'] === 'em_andamento'): ?>
+                                    <span class="badge bg-warning text-dark mt-2">Em andamento</span>
+                                <?php else: ?>
+                                    <span class="badge bg-secondary mt-2">Não iniciado</span>
+                                <?php endif; ?>
                             </div>
                             <div>
                                 <a href="/campeonato_esportivo/public/views/time/definir_escalacao.php?partida_id=<?= $jogo['id'] ?>" class="btn btn-primary">
-                                   Definir Escalação
+                                    Definir Escalação
                                 </a>
                             </div>
                         </div>
@@ -57,12 +66,22 @@ $base_url = '/campeonato_esportivo/public/';
                                 <img src="<?= $base_url . $jogo['logo_casa'] ?>" alt="Escudo Casa" width="30" class="me-2">
                                 <?= $jogo['nome_casa'] ?> x <?= $jogo['nome_fora'] ?>
                                 <img src="<?= $base_url . $jogo['logo_fora'] ?>" alt="Escudo Fora" width="30" class="ms-2">
-                                <br><small>Local: <?= $jogo['local'] ?></small>
+                                <br><small>Local: <?= $jogo['local'] ?></small><br>
+
+                                <!-- Badge de Status -->
+                                <?php if ($jogo['status'] === 'finalizada'): ?>
+                                    <span class="badge bg-success mt-2">Finalizado</span>
+                                <?php elseif ($jogo['status'] === 'em_andamento'): ?>
+                                    <span class="badge bg-warning text-dark mt-2">Em andamento</span>
+                                <?php else: ?>
+                                    <span class="badge bg-secondary mt-2">Não iniciado</span>
+                                <?php endif; ?>
                             </div>
                         </div>
                     </div>
                 <?php endforeach; ?>
             </div>
+
         </div>
     <?php endif; ?>
 </div>
