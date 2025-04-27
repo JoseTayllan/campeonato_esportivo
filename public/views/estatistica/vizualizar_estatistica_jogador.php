@@ -124,62 +124,72 @@ switch ($tipo) {
 
                 <table class="table table-striped table-bordered text-center align-middle">
                     <thead class="table-dark">
-                        <tr>
-                            <th class="text-nowrap">Partida</th>
-                            <th class="text-nowrap">Jogador</th>
-                            <th class="text-nowrap">Gols</th>
-                            <th class="text-nowrap">Assistências</th>
-                            <th class="text-nowrap">Passes Completos</th>
-                            <th class="text-nowrap">Finalizações</th>
-                            <th class="text-nowrap">Faltas Cometidas</th>
-                            <th class="text-nowrap">Cartões Amarelos</th>
-                            <th class="text-nowrap">Cartões Vermelhos</th>
-                            <th class="text-nowrap">Minutos Jogados</th>
-                            <th class="text-nowrap">Substituições</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <?php
-                    $query = "SELECT e.partida_id, j.id AS jogador_id, j.nome AS jogador_nome, e.gols, e.assistencias, 
-                                     e.passes_completos, e.finalizacoes, e.faltas_cometidas, 
-                                     e.cartoes_amarelos, e.cartoes_vermelhos, e.minutos_jogados, e.substituicoes
-                              FROM estatisticas_partida e
-                              JOIN jogadores j ON e.jogador_id = j.id
-                              WHERE 1";
+                    <tr>
+                        <th class="text-nowrap">Partida</th>
+                        <th class="text-nowrap">Jogador</th>
+                        <th class="text-nowrap">Gols</th>
+                        <th class="text-nowrap">Assistências</th>
+                        <th class="text-nowrap">Passes Completos</th>
+                        <th class="text-nowrap">Finalizações</th>
+                        <th class="text-nowrap">Faltas Cometidas</th>
+                        <th class="text-nowrap">Cartões Amarelos</th>
+                        <th class="text-nowrap">Cartões Vermelhos</th>
+                        <th class="text-nowrap">Minutos Jogados</th>
+                        <th class="text-nowrap">Substituições</th>
+                        <th class="text-nowrap">Defesas</th>
+                        <th class="text-nowrap">Gols Sofridos</th>
+                        <th class="text-nowrap">Pênaltis Defendidos</th>
+                        <th class="text-nowrap">Partidas sem Sofrer Gols</th>
+                    </tr>
+                </thead>
+                <tbody>
+                <?php
+                $query = "SELECT e.partida_id, j.id AS jogador_id, j.nome AS jogador_nome,
+                                 e.gols, e.assistencias, e.passes_completos, e.finalizacoes,
+                                 e.faltas_cometidas, e.cartoes_amarelos, e.cartoes_vermelhos,
+                                 e.minutos_jogados, e.substituicoes,
+                                 e.defesas, e.gols_sofridos, e.penaltis_defendidos, e.clean_sheets
+                          FROM estatisticas_partida e
+                          JOIN jogadores j ON e.jogador_id = j.id
+                        WHERE 1";
 
-                    // Adiciona filtros se forem preenchidos
-                    if (!empty($_GET['partida_id'])) {
-                        $query .= " AND e.partida_id = " . intval($_GET['partida_id']);
-                    }
-                    if (!empty($_GET['jogador_nome'])) {
-                        $jogadorNome = $conn->real_escape_string($_GET['jogador_nome']);
-                        $query .= " AND j.nome LIKE '%$jogadorNome%'";
-                    }
+                // Adiciona filtros se forem preenchidos
+                if (!empty($_GET['partida_id'])) {
+                    $query .= " AND e.partida_id = " . intval($_GET['partida_id']);
+                }
+                if (!empty($_GET['jogador_nome'])) {
+                    $jogadorNome = $conn->real_escape_string($_GET['jogador_nome']);
+                    $query .= " AND j.nome LIKE '%$jogadorNome%'";
+                }
 
-                    $query .= " ORDER BY e.partida_id DESC";
+                $query .= " ORDER BY e.partida_id DESC";
 
-                    $result = $conn->query($query);
-                    if ($result->num_rows > 0) {
-                        while ($row = $result->fetch_assoc()) {
-                            echo "<tr>
-                                    <td class='text-nowrap'>Partida #{$row['partida_id']}</td>
-                                    <td class='text-nowrap'>{$row['jogador_nome']}</td>
-                                    <td class='text-nowrap'>{$row['gols']}</td>
-                                    <td class='text-nowrap'>{$row['assistencias']}</td>
-                                    <td class='text-nowrap'>{$row['passes_completos']}</td>
-                                    <td class='text-nowrap'>{$row['finalizacoes']}</td>
-                                    <td class='text-nowrap'>{$row['faltas_cometidas']}</td>
-                                    <td class='text-nowrap'>{$row['cartoes_amarelos']}</td>
-                                    <td class='text-nowrap'>{$row['cartoes_vermelhos']}</td>
-                                    <td class='text-nowrap'>{$row['minutos_jogados']}</td>
-                                    <td class='text-nowrap'>{$row['substituicoes']}</td>
-                                  </tr>";
-                        }
-                    } else {
-                        echo "<tr><td colspan='11' class='text-center p-4'>Nenhuma estatística registrada.</td></tr>";
+                $result = $conn->query($query);
+                if ($result->num_rows > 0) {
+                    while ($row = $result->fetch_assoc()) {
+                        echo "<tr>
+                                <td class='text-nowrap'>Partida #{$row['partida_id']}</td>
+                                <td class='text-nowrap'>{$row['jogador_nome']}</td>
+                                <td class='text-nowrap'>{$row['gols']}</td>
+                                <td class='text-nowrap'>{$row['assistencias']}</td>
+                                <td class='text-nowrap'>{$row['passes_completos']}</td>
+                                <td class='text-nowrap'>{$row['finalizacoes']}</td>
+                                <td class='text-nowrap'>{$row['faltas_cometidas']}</td>
+                                <td class='text-nowrap'>{$row['cartoes_amarelos']}</td>
+                                <td class='text-nowrap'>{$row['cartoes_vermelhos']}</td>
+                                <td class='text-nowrap'>{$row['minutos_jogados']}</td>
+                                <td class='text-nowrap'>{$row['substituicoes']}</td>
+                                <td class='text-nowrap'>{$row['defesas']}</td>
+                                <td class='text-nowrap'>{$row['gols_sofridos']}</td>
+                                <td class='text-nowrap'>{$row['penaltis_defendidos']}</td>
+                                <td class='text-nowrap'>{$row['clean_sheets']}</td>
+                             </tr>";
                     }
-                    ?>
-                    </tbody>
+                } else {
+                     echo "<tr><td colspan='11' class='text-center p-4'>Nenhuma estatística registrada.</td></tr>";
+                }
+                ?>
+                </tbody>
                 </table>
             </div>
         </div>

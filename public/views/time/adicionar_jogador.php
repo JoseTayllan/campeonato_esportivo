@@ -38,8 +38,16 @@ $time = $result->fetch_assoc();
                 </div>
 
                 <div class="mb-3">
-                    <label>Posição</label>
-                    <input type="text" name="posicao" class="form-control" required>
+                    <label class="form-label">Posição</label>
+                    <select name="posicao" class="form-select" required>
+                      <option value="">Selecione a posição</option>
+                      <option value="Goleiro">Goleiro</option>
+                      <option value="Zagueiro">Zagueiro</option>
+                      <option value="Lateral">Lateral</option>
+                      <option value="Volante">Volante</option>
+                      <option value="Meia">Meia</option>
+                      <option value="Atacante">Atacante</option>
+                    </select>
                 </div>
 
                 <div class="mb-3">

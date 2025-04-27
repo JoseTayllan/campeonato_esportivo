@@ -41,7 +41,15 @@ if (!$jogador) {
 
             <div class="mb-3">
                 <label class="form-label">Posição</label>
-                <input type="text" name="posicao" class="form-control" value="<?= htmlspecialchars($jogador['posicao']) ?>" required>
+                <select name="posicao" class="form-select" required>
+                    <option value="">Selecione a posição</option>
+                    <option value="Goleiro" <?= ($jogador['posicao'] === 'Goleiro') ? 'selected' : '' ?>>Goleiro</option>
+                    <option value="Zagueiro" <?= ($jogador['posicao'] === 'Zagueiro') ? 'selected' : '' ?>>Zagueiro</option>
+                    <option value="Lateral" <?= ($jogador['posicao'] === 'Lateral') ? 'selected' : '' ?>>Lateral</option>
+                    <option value="volante" <?= ($jogador['posicao'] === 'volante') ? 'selected' : '' ?>>Volante</option>
+                    <option value="Meia" <?= ($jogador['posicao'] === 'Meia') ? 'selected' : '' ?>>Meia</option>
+                    <option value="Atacante" <?= ($jogador['posicao'] === 'Atacante') ? 'selected' : '' ?>>Atacante</option>
+                </select>
             </div>
 
             <div class="mb-3">
@@ -54,12 +62,14 @@ if (!$jogador) {
                 <input type="text" name="nacionalidade" class="form-control" value="<?= htmlspecialchars($jogador['nacionalidade']) ?>" required>
             </div>
 
-            <?php if (!empty($jogador['imagem'])): ?>
-                <div class="mb-3">
-                    <label class="form-label">Imagem Atual</label><br>
-                    <img src="/campeonato_esportivo/public/img/jogadores/<?= $jogador['imagem'] ?>" alt="Imagem atual" width="100">
-                </div>
-            <?php endif; ?>
+            <div class="mb-3">
+                <label class="form-label">Imagem Atual</label><br>
+                <?php if (!empty($jogador['imagem'])): ?>
+                    <img src="/campeonato_esportivo/public/img/jogadores/<?= $jogador['imagem'] ?>" width="100" alt="Imagem atual">
+                <?php else: ?>
+                    <img src="/campeonato_esportivo/public/img/perfil_padrao/perfil_padrao.png" width="100" alt="Imagem padrão">
+                <?php endif; ?>
+            </div>
 
             <div class="mb-3">
                 <label class="form-label">Nova Imagem (opcional)</label>
