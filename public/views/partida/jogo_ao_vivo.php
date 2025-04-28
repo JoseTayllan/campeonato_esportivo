@@ -1,3 +1,13 @@
+<?php 
+// Proteger contra acesso direto
+if (!isset($_SERVER['HTTP_REFERER']) || empty($_SERVER['HTTP_REFERER'])) {
+    echo "<div style='text-align:center; padding:20px; font-family:sans-serif;'>
+            <h2 style='color:red;'>Erro: Acesso direto não permitido!</h2>
+            <p>Utilize o sistema normalmente para acessar esta página.</p>
+          </div>";
+    exit();
+} 
+?>
 <div class="container mt-4">
     <h2>Partida Ao Vivo</h2>
     <h4><?= $partida['nome_casa'] ?> x <?= $partida['nome_fora'] ?></h4>
