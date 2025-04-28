@@ -36,26 +36,38 @@ $jogadores = $controller->listarElencoPublico($time['id']);
     </div>
 
     <h4>Elenco</h4>
-    <table class="table table-bordered">
+    <table class="table table-bordered align-middle text-center">
         <thead>
             <tr>
+                <th>Imagem</th>
                 <th>Nome</th>
                 <th>Posição</th>
                 <th>Idade</th>
                 <th>Nacionalidade</th>
+                <th>Ações</th>
             </tr>
         </thead>
-        <tbody>
-            <?php while ($j = $jogadores->fetch_assoc()): ?>
-                <tr>
-                    <td><?= htmlspecialchars($j['nome']) ?></td>
-                    <td><?= htmlspecialchars($j['posicao']) ?></td>
-                    <td><?= (int) $j['idade'] ?></td>
-                    <td><?= htmlspecialchars($j['nacionalidade']) ?></td>
-                </tr>
-            <?php endwhile; ?>
-        </tbody>
-    </table>
+    <tbody>
+        <?php while ($j = $jogadores->fetch_assoc()): ?>
+            <tr>
+                <td>
+                    <?php if (!empty($j['imagem'])): ?>
+                        <img src="/campeonato_esportivo/public/img/jogadores/<?= $j['imagem'] ?>" alt="Imagem do jogador" style="width: 50px; height: 50px; object-fit: cover; border-radius: 50%;">
+                    <?php else: ?>
+                        <img src="/campeonato_esportivo/public/img/perfil_padrao/perfil_padrao.png" alt="Imagem padrão" style="width: 50px; height: 50px; object-fit: cover; border-radius: 50%;">
+                    <?php endif; ?>
+                </td>
+                <td><?= htmlspecialchars($j['nome']) ?></td>
+                <td><?= htmlspecialchars($j['posicao']) ?></td>
+                <td><?= (int) $j['idade'] ?></td>
+                <td><?= htmlspecialchars($j['nacionalidade']) ?></td>
+                <td>
+                        <a href="/campeonato_esportivo/routes/public/jogador.php?id=<?= $j['id'] ?>" class="btn btn-primary btn-sm">Ver Perfil</a>
+                </td>
+            </tr>
+        <?php endwhile; ?>
+    </tbody>
+</table>
 </div>
 </body>
 </html>

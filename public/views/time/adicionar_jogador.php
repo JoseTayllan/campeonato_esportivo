@@ -1,4 +1,12 @@
 <?php
+// Proteger contra acesso direto
+if (!isset($_SERVER['HTTP_REFERER']) || empty($_SERVER['HTTP_REFERER'])) {
+    echo "<div style='text-align:center; padding:20px; font-family:sans-serif;'>
+            <h2 style='color:red;'>Erro: Acesso direto não permitido!</h2>
+            <p>Utilize o sistema normalmente para acessar esta página.</p>
+          </div>";
+    exit();
+}
 require_once __DIR__ . '/../../../config/database.php';
 require_once __DIR__ . '/../../../app/controllers/TeamController.php';
 require_once __DIR__ . '/../../../app/middleware/verifica_sessao.php';
@@ -38,8 +46,16 @@ $time = $result->fetch_assoc();
                 </div>
 
                 <div class="mb-3">
-                    <label>Posição</label>
-                    <input type="text" name="posicao" class="form-control" required>
+                    <label class="form-label">Posição</label>
+                    <select name="posicao" class="form-select" required>
+                      <option value="">Selecione a posição</option>
+                      <option value="Goleiro">Goleiro</option>
+                      <option value="Zagueiro">Zagueiro</option>
+                      <option value="Lateral">Lateral</option>
+                      <option value="Volante">Volante</option>
+                      <option value="Meia">Meia</option>
+                      <option value="Atacante">Atacante</option>
+                    </select>
                 </div>
 
                 <div class="mb-3">

@@ -1,4 +1,12 @@
 <?php 
+// Proteger contra acesso direto
+if (!isset($_SERVER['HTTP_REFERER']) || empty($_SERVER['HTTP_REFERER'])) {
+    echo "<div style='text-align:center; padding:20px; font-family:sans-serif;'>
+            <h2 style='color:red;'>Erro: Acesso direto não permitido!</h2>
+            <p>Utilize o sistema normalmente para acessar esta página.</p>
+          </div>";
+    exit();
+}
 session_start();
 $restrito_para = ['Administrador', 'Organizador', 'Treinador'];
 require_once __DIR__ . '/../../../app/middleware/verifica_sessao.php';
@@ -33,117 +41,133 @@ switch ($tipo) {
 }
 ?>
 
-<!DOCTYPE html>
-<html lang="pt-br">
+<div class="container mt-4">
+    <h2 class="mb-4">Cadastrar Estatísticas de Jogador</h2>
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Cadastrar Estatística de Jogador</title>
-    <link href="../../../assets/css/bootstrap.min.css" rel="stylesheet">
-</head>
+    <?php include '../partials/mensagens.php'; ?>
 
-<body>
+    <form action="../../../routes/statistics.php" method="POST">
 
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-
-    <div class="container mt-4">
-        <h2 class="mb-4">Cadastrar Estatísticas de Jogador</h2>
-
-        <?php include '../partials/mensagens.php'; ?>
-
-        <form action="../../../routes/statistics.php" method="POST">
-
-            <!-- Seleção da Partida -->
-            <div class="mb-3">
-                <label for="partida_id" class="form-label">Partida</label>
-                <select class="form-control" name="partida_id" required>
-                    <option value="">Selecione uma partida</option>
-                    <?php
+        <div class="mb-3">
+            <label for="partida_id" class="form-label">Partida</label>
+            <select class="form-control" name="partida_id" required>
+                <option value="">Selecione uma partida</option>
+                <?php
                 $queryPartidas = "SELECT id, data FROM partidas ORDER BY data DESC";
                 $resultPartidas = $conn->query($queryPartidas);
                 while ($row = $resultPartidas->fetch_assoc()) {
-                    $dataFormatada = date('d/m/Y', strtotime($row['data']));
-                    echo "<option value='{$row['id']}'>Partida #{$row['id']} - {$dataFormatada}</option>";
+                    echo "<option value='{$row['id']}'>Partida #{$row['id']} - ".date('d/m/Y', strtotime($row['data']))."</option>";
                 }
                 ?>
-                </select>
-                <small class="form-text text-muted">Escolha a partida que deseja cadastrar estatísticas.</small>
-            </div>
+            </select>
+        </div>
 
-            <!-- Seleção do Jogador -->
-            <div class="mb-3">
-                <label for="jogador_id" class="form-label">Jogador</label>
-                <select class="form-control" name="jogador_id" required>
-                    <option value="">Selecione um jogador</option>
-                    <?php
-                $queryJogadores = "SELECT id, nome FROM jogadores";
+        <div class="mb-3">
+            <label for="jogador_id" class="form-label">Jogador</label>
+            <select class="form-control" name="jogador_id" required id="jogador_id">
+                <option value="">Selecione um jogador</option>
+                <?php
+                $queryJogadores = "SELECT id, nome, posicao FROM jogadores";
                 $resultJogadores = $conn->query($queryJogadores);
                 while ($row = $resultJogadores->fetch_assoc()) {
-                    echo "<option value='{$row['id']}'>{$row['nome']}</option>";
+                    echo "<option value='{$row['id']}' data-posicao='{$row['posicao']}'>{$row['nome']} ({$row['posicao']})</option>";
                 }
                 ?>
-                </select>
-                <small class="form-text text-muted">Escolha o jogador que participou da partida.</small>
-            </div>
+            </select>
+        </div>
 
-            <!-- Campos de Estatísticas -->
-            <div class="mb-3">
-                <label for="gols" class="form-label">Gols</label>
-                <input type="number" class="form-control" name="gols" min="0" placeholder="Ex: 2">
-            </div>
+        <div id="campos-estatisticas"></div>
 
-            <div class="mb-3">
-                <label for="assistencias" class="form-label">Assistências</label>
-                <input type="number" class="form-control" name="assistencias" min="0" placeholder="Ex: 1">
-            </div>
+        <button type="submit" class="btn btn-primary mt-3">Salvar Estatística</button>
+    </form>
+</div>
 
-            <div class="mb-3">
-                <label for="passes_completos" class="form-label">Passes Completos</label>
-                <input type="number" class="form-control" name="passes_completos" min="0" placeholder="Ex: 30">
-            </div>
+<script src="../../../assets/js/bootstrap.bundle.min.js"></script>
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    const jogadorSelect = document.getElementById('jogador_id');
+    const camposEstatisticas = document.getElementById('campos-estatisticas');
 
-            <div class="mb-3">
-                <label for="finalizacoes" class="form-label">Finalizações</label>
-                <input type="number" class="form-control" name="finalizacoes" min="0" placeholder="Ex: 5">
-            </div>
+    jogadorSelect.addEventListener('change', function () {
+        const selected = jogadorSelect.options[jogadorSelect.selectedIndex];
+        const posicao = selected.getAttribute('data-posicao')?.toLowerCase();
 
-            <div class="mb-3">
-                <label for="faltas_cometidas" class="form-label">Faltas Cometidas</label>
-                <input type="number" class="form-control" name="faltas_cometidas" min="0" placeholder="Ex: 2">
-            </div>
+        let html = '';
 
-            <div class="mb-3">
-                <label for="cartoes_amarelos" class="form-label">Cartões Amarelos</label>
-                <input type="number" class="form-control" name="cartoes_amarelos" min="0" placeholder="Ex: 1">
-            </div>
+        if (!posicao) {
+            camposEstatisticas.innerHTML = '';
+            return;
+        }
 
-            <div class="mb-3">
-                <label for="cartoes_vermelhos" class="form-label">Cartões Vermelhos</label>
-                <input type="number" class="form-control" name="cartoes_vermelhos" min="0" placeholder="Ex: 0">
-            </div>
+        if (posicao === 'goleiro') {
+            html = `
+                <div class="mb-3">
+                    <label>Defesas</label>
+                    <input type="number" class="form-control" name="defesas" min="0">
+                </div>
+                <div class="mb-3">
+                    <label>Gols Sofridos</label>
+                    <input type="number" class="form-control" name="gols_sofridos" min="0">
+                </div>
+                <div class="mb-3">
+                    <label>Pênaltis Defendidos</label>
+                    <input type="number" class="form-control" name="penaltis_defendidos" min="0">
+                </div>
+                <div class="mb-3">
+                    <label>Partidas sem Sofrer Gol</label>
+                    <input type="number" class="form-control" name="clean_sheets" min="0">
+                </div>
+            `;
+        } else {
+            html = `
+                <div class="mb-3">
+                    <label>Gols</label>
+                    <input type="number" class="form-control" name="gols" min="0">
+                </div>
+                <div class="mb-3">
+                    <label>Assistências</label>
+                    <input type="number" class="form-control" name="assistencias" min="0">
+                </div>
+                <div class="mb-3">
+                    <label>Passes Completos</label>
+                    <input type="number" class="form-control" name="passes_completos" min="0">
+                </div>
+                <div class="mb-3">
+                    <label>Finalizações</label>
+                    <input type="number" class="form-control" name="finalizacoes" min="0">
+                </div>
+            `;
+        }
 
+        html += `
             <div class="mb-3">
-                <label for="minutos_jogados" class="form-label">Minutos Jogados</label>
-                <input type="number" class="form-control" name="minutos_jogados" min="0" max="90" placeholder="Ex: 75">
+                <label>Faltas Cometidas</label>
+                <input type="number" class="form-control" name="faltas_cometidas" min="0">
             </div>
-
-            <!-- Substituições (Apenas 0 ou 1) -->
             <div class="mb-3">
-                <label for="substituicoes" class="form-label">Substituições</label>
+                <label>Cartões Amarelos</label>
+                <input type="number" class="form-control" name="cartoes_amarelos" min="0">
+            </div>
+            <div class="mb-3">
+                <label>Cartões Vermelhos</label>
+                <input type="number" class="form-control" name="cartoes_vermelhos" min="0">
+            </div>
+            <div class="mb-3">
+                <label>Minutos Jogados</label>
+                <input type="number" class="form-control" name="minutos_jogados" min="0" max="90">
+            </div>
+            <div class="mb-3">
+                <label>Substituições</label>
                 <select class="form-control" name="substituicoes" required>
-                    <option value="0">Não foi substituído (0)</option>
-                    <option value="1">Foi substituído (1)</option>
+                    <option value="0">Não foi substituído</option>
+                    <option value="1">Foi substituído</option>
                 </select>
-                <small class="form-text text-muted">Indique se o jogador foi substituído durante a partida.</small>
             </div>
+        `;
 
-            <button type="submit" class="btn btn-primary">Salvar Estatística</button>
-        </form>
-    </div>
+        camposEstatisticas.innerHTML = html;
+    });
+});
+</script>
 
-    <?php include '../cabecalho/footer.php'; ?>
-    <script src="../../../assets/js/bootstrap.bundle.min.js"></script>
-</body>
-
-</html>
+<?php include '../cabecalho/footer.php'; ?>

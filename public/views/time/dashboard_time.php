@@ -1,4 +1,12 @@
 <?php
+// Proteger contra acesso direto
+if (!isset($_SERVER['HTTP_REFERER']) || empty($_SERVER['HTTP_REFERER'])) {
+    echo "<div style='text-align:center; padding:20px; font-family:sans-serif;'>
+            <h2 style='color:red;'>Erro: Acesso direto não permitido!</h2>
+            <p>Utilize o sistema normalmente para acessar esta página.</p>
+          </div>";
+    exit();
+}
 require_once __DIR__ . '/../../../app/middleware/verifica_sessao.php';
 require_once __DIR__ . '/../../../app/middleware/verifica_assinatura.php';
 require_once __DIR__ . '/../../../config/database.php';
@@ -125,21 +133,31 @@ endif;
             <table class="table table-bordered">
                 <thead>
                     <tr>
+                        <tr>
+                        <th>Imagem</th>
                         <th>Nome</th>
                         <th>Posição</th>
                         <th>Ações</th>
+                </tr>
                     </tr>
                 </thead>
                 <tbody>
                     <?php while ($jogador = $jogadores->fetch_assoc()): ?>
                         <tr>
-                            <td><?= htmlspecialchars($jogador['nome']) ?></td>
-                            <td><?= htmlspecialchars($jogador['posicao']) ?></td>
-                            <td>
-                                <a href="editar_jogador.php?id=<?= $jogador['id'] ?>" class="btn btn-sm btn-warning">Editar</a>
-                                <a href="excluir_jogador.php?id=<?= $jogador['id'] ?>" class="btn btn-sm btn-danger" onclick="return confirm('Tem certeza que deseja excluir este jogador?')">Excluir</a>
-                            </td>
-                        </tr>
+                        <td class="text-center" style="width: 60px;">
+                            <?php if (!empty($jogador['imagem']) && file_exists(__DIR__ . '/../../../public/img/jogadores/' . $jogador['imagem'])): ?>
+                                <img src="/campeonato_esportivo/public/img/jogadores/<?= $jogador['imagem'] ?>" alt="Imagem do jogador" class="rounded-circle" style="width: 50px; height: 50px; object-fit: cover;">
+                            <?php else: ?>
+                                <img src="/campeonato_esportivo/public/img/perfil_padrao/perfil_padrao.png" alt="Imagem padrão" class="rounded-circle" style="width: 50px; height: 50px; object-fit: cover;">
+                            <?php endif; ?>
+                        </td>
+                        <td style="vertical-align: middle;"><?= htmlspecialchars($jogador['nome']) ?></td>
+                        <td style="vertical-align: middle;"><?= htmlspecialchars($jogador['posicao']) ?></td>
+                        <td style="vertical-align: middle;">
+                            <a href="editar_jogador.php?id=<?= $jogador['id'] ?>" class="btn btn-sm btn-warning">Editar</a>
+                            <a href="excluir_jogador.php?id=<?= $jogador['id'] ?>" class="btn btn-sm btn-danger" onclick="return confirm('Tem certeza que deseja excluir este jogador?')">Excluir</a>
+                        </td>
+                    </tr>
                     <?php endwhile; ?>
                 </tbody>
             </table>

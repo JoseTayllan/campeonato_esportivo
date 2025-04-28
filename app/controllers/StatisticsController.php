@@ -21,7 +21,11 @@ class StatisticsController {
             $dados['cartoes_amarelos'] ?? null, 
             $dados['cartoes_vermelhos'] ?? null, 
             $dados['minutos_jogados'] ?? null, 
-            $dados['substituicoes'] ?? null
+            $dados['substituicoes'] ?? null,
+            $dados['defesas'] ?? null,
+            $dados['gols_sofridos'] ?? null,
+            $dados['penaltis_defendidos'] ?? null,
+            $dados['clean_sheets'] ?? null
         )) {
             return json_encode(["mensagem" => "Estatística registrada com sucesso!"]);
         } else {
