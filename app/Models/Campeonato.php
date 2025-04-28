@@ -298,6 +298,12 @@ public function listarPorUsuario($usuario_id) {
     $stmt->execute();
     return $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
 }
+public function listarTodos() {
+    $sql = "SELECT * FROM campeonatos ORDER BY nome ASC";
+    $result = $this->conn->query($sql);
+    return $result->fetch_all(MYSQLI_ASSOC);
+}
+
 
 
 }

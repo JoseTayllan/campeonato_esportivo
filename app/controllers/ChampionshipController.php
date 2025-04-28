@@ -37,6 +37,9 @@ class ChampionshipController {
     public function listarMeusCampeonatos($usuario_id) {
         return $this->campeonatoModel->listarPorUsuario($usuario_id);
     }
+    public function listarTodos() {
+        return $this->campeonatoModel->listarTodos();
+    }
     
     
 }

@@ -16,5 +16,9 @@ class UsuarioController {
             return "Erro ao criar usuário.";
         }
     }
+    public function listarTodos() {
+        return $this->usuarioModel->listarTodos();
+    }
+    
 }
 ?>

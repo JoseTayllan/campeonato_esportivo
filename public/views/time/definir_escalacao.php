@@ -42,12 +42,13 @@ foreach ($escalacao_existente as $esc) {
     <form action="../../../routes/escalacao.php" method="post">
         <input type="hidden" name="partida_id" value="<?= $partida_id ?>">
 
-        <table class="table table-bordered">
+        <table class="table table-bordered text-center align-middle">
             <thead class="table-light">
                 <tr>
+                    <th>Imagem</th>
                     <th>Jogador</th>
-                    <th class="text-center">Titular?</th>
-                    <th class="text-center">Capitão?</th>
+                    <th>Titular?</th>
+                    <th>Capitão?</th>
                 </tr>
             </thead>
             <tbody>
@@ -65,16 +66,22 @@ foreach ($escalacao_existente as $esc) {
                                 $capitao_checked = 'checked';
                             }
                         }
+                        $imagemCaminho = (!empty($jogador['imagem']) && file_exists(__DIR__ . '/../../../public/img/jogadores/' . $jogador['imagem']))
+                            ? "/campeonato_esportivo/public/img/jogadores/{$jogador['imagem']}"
+                            : "/campeonato_esportivo/public/img/perfil_padrao/perfil_padrao.png";
                     ?>
                     <tr>
-                        <td>
+                        <td class="text-center" style="width: 60px;">
+                            <img src="<?= $imagemCaminho ?>" alt="Imagem do jogador" class="rounded-circle" style="width: 50px; height: 50px; object-fit: cover;">
+                        </td>
+                        <td class="text-start">
                             <?= htmlspecialchars($jogador['nome']) ?>
                             <input type="hidden" name="escalacao[<?= $index ?>][jogador_id]" value="<?= $id ?>">
                         </td>
-                        <td class="text-center">
+                        <td>
                             <input type="checkbox" name="escalacao[<?= $index ?>][titular]" value="1" <?= $titular_checked ?>>
                         </td>
-                        <td class="text-center">
+                        <td>
                             <input type="radio" name="capitao" value="<?= $id ?>" <?= $capitao_checked ?>>
                         </td>
                     </tr>

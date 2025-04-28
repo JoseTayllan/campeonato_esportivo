@@ -1,4 +1,4 @@
-<?php
+<?php 
 function redirecionarUsuario($usuario) {
     if (!$usuario || !isset($usuario['tipo'])) {
         header("Location: ../public/views/login/login.php");
@@ -15,6 +15,7 @@ function redirecionarUsuario($usuario) {
     }
 
     $rotas = [
+        'master'        => '../public/views/master/dashboard_master.php', // 🔥 Adicionado Master aqui
         'administrador' => '../public/views/dashboard/dashboard_administrador.php',
         'organizador'   => '../public/views/dashboard/dashboard_organizador.php',
         'treinador'     => '../public/views/dashboard/dashboard_treinador.php',
@@ -31,3 +32,4 @@ function redirecionarUsuario($usuario) {
     }
     exit;
 }
+?>

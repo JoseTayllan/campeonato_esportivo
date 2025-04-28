@@ -39,6 +39,11 @@ class User {
             return "Erro ao inserir no banco de dados: " . $stmt->error;
         }
     }
+    public function listarTodos() {
+        $sql = "SELECT * FROM usuarios ORDER BY nome ASC";
+        $result = $this->conn->query($sql);
+        return $result->fetch_all(MYSQLI_ASSOC);
+    }
 
  
 }
