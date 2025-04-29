@@ -41,6 +41,9 @@ if ($tipo_usuario === 'administrador') {
         <?php include '../partials/mensagens.php'; ?>
 
         <form action="../../../routes/team.php" method="POST" enctype="multipart/form-data">
+            <!-- 🔥 Campo escondido para enviar o ID do admin -->
+            <input type="hidden" name="admin_id" value="<?= $_SESSION['usuario_id']; ?>">
+
             <div class="mb-3">
                 <label for="nome" class="form-label">Nome do Time</label>
                 <input type="text" class="form-control" name="nome" placeholder="Ex: Estrela FC" required>
@@ -65,9 +68,11 @@ if ($tipo_usuario === 'administrador') {
             <button type="submit" class="btn btn-primary">Cadastrar</button>
         </form>
     </div>
+
     <div class="row mt-4">
         <?php include '../cabecalho/footer.php'; ?>
-        <script src="../../../assets/js/bootstrap.bundle.min.js"></script>
+    </div>
+    <script src="../../../assets/js/bootstrap.bundle.min.js"></script>
 </body>
 
 </html>

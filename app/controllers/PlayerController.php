@@ -16,5 +16,11 @@ class PlayerController {
             return json_encode(["erro" => "Erro ao criar jogador."]);
         }
     }
+
+    // 🔥 Método novo: Listar jogadores do meu time (validação pelo admin logado)
+    public function listarMeusJogadores($time_id) {
+        $usuario_id = $_SESSION['usuario_id'];
+        return $this->playerModel->listarPorTimeEUsuario($time_id, $usuario_id);
+    }
 }
 ?>
