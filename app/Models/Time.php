@@ -7,10 +7,8 @@ class Team {
     }
 
     public function criar($nome, $escudo, $cidade, $estadio, $admin_id) {
-        // Geração única do código público
         $codigo_publico = 'T-' . str_pad(rand(1, 9999), 4, '0', STR_PAD_LEFT);
-    
-        // Verificar se já existe (loop até encontrar um único)
+
         do {
             $verifica = $this->conn->prepare("SELECT id FROM times WHERE codigo_publico = ?");
             $verifica->bind_param("s", $codigo_publico);
@@ -21,15 +19,13 @@ class Team {
                 $codigo_publico = 'T-' . str_pad(rand(1, 9999), 4, '0', STR_PAD_LEFT);
             }
         } while ($existe);
-    
+
         $sql = "INSERT INTO times (nome, escudo, cidade, estadio, admin_id, codigo_publico)
                 VALUES (?, ?, ?, ?, ?, ?)";
         $stmt = $this->conn->prepare($sql);
         $stmt->bind_param("ssssss", $nome, $escudo, $cidade, $estadio, $admin_id, $codigo_publico);
         return $stmt->execute();
     }
-    
-    
 
     public function editar($id, $nome, $cidade, $escudo = null) {
         try {
@@ -46,6 +42,7 @@ class Team {
             return false;
         }
     }
+
     public function listarJogadores($time_id) {
         $sql = "SELECT * FROM jogadores WHERE time_id = ?";
         $stmt = $this->conn->prepare($sql);
@@ -61,8 +58,7 @@ class Team {
         $stmt->bind_param("ssisis", $nome, $posicao, $idade, $nacionalidade, $time_id, $imagem);
         return $stmt->execute();
     }
-    
-    
+
     public function atualizarJogador($id, $nome, $posicao, $idade, $nacionalidade, $imagem = null) {
         if ($imagem) {
             $sql = "UPDATE jogadores SET nome = ?, posicao = ?, idade = ?, nacionalidade = ?, imagem = ? WHERE id = ?";
@@ -76,7 +72,7 @@ class Team {
     
         return $stmt->execute();
     }
-    
+
     public function buscarJogadorPorId($id) {
         $sql = "SELECT * FROM jogadores WHERE id = ?";
         $stmt = $this->conn->prepare($sql);
@@ -84,13 +80,14 @@ class Team {
         $stmt->execute();
         return $stmt->get_result()->fetch_assoc();
     }
-    
+
     public function deletarJogador($id) {
         $sql = "DELETE FROM jogadores WHERE id = ?";
         $stmt = $this->conn->prepare($sql);
         $stmt->bind_param("i", $id);
         return $stmt->execute();
     }
+
     public function buscarPorCodigoPublico($codigo) {
         $sql = "SELECT * FROM times WHERE codigo_publico = ?";
         $stmt = $this->conn->prepare($sql);
@@ -98,7 +95,7 @@ class Team {
         $stmt->execute();
         return $stmt->get_result()->fetch_assoc();
     }
-    
+
     public function listarJogadoresDoTime($time_id) {
         $sql = "SELECT * FROM jogadores WHERE time_id = ?";
         $stmt = $this->conn->prepare($sql);
@@ -106,10 +103,14 @@ class Team {
         $stmt->execute();
         return $stmt->get_result();
     }
-    
-    
-    
-    
-    
+
+    // 🔥 NOVA FUNÇÃO adicionada (sem alterar o que você já tinha):
+    public function listarPorUsuario($usuario_id) {
+        $sql = "SELECT * FROM times WHERE admin_id = ?";
+        $stmt = $this->conn->prepare($sql);
+        $stmt->bind_param("i", $usuario_id);
+        $stmt->execute();
+        return $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
+    }
 }
 ?>

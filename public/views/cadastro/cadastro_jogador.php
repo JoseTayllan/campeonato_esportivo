@@ -10,7 +10,7 @@ if (!isset($_SERVER['HTTP_REFERER']) || empty($_SERVER['HTTP_REFERER'])) {
 session_start();
 $restrito_para = ['Administrador', 'Organizador'];
 require_once __DIR__ . '/../../../app/middleware/verifica_sessao.php';
-require_once __DIR__ . '/../../../config/database.php'; // Conexão com o banco
+require_once __DIR__ . '/../../../config/database.php';
 ?>
 
 <?php include '../cabecalho/header.php'; ?>
@@ -40,7 +40,6 @@ switch ($tipo) {
         include '../cabecalho/tabela.php';
 }
 ?>
-
 
 <!DOCTYPE html>
 <html lang="pt-br">
@@ -96,17 +95,23 @@ switch ($tipo) {
                 <select class="form-control" name="time_id" required>
                     <option value="">Selecione um time</option>
                     <?php
-                $query = "SELECT id, nome FROM times";
-                $result = $conn->query($query);
-                while ($row = $result->fetch_assoc()) {
-                    echo "<option value='{$row['id']}'>{$row['nome']}</option>";
-                }
-                ?>
+                    // 🔥 Alterado aqui: mostrar apenas times do admin logado
+                    $usuario_id = $_SESSION['usuario_id'];
+                    $query = "SELECT id, nome FROM times WHERE admin_id = ?";
+                    $stmt = $conn->prepare($query);
+                    $stmt->bind_param("i", $usuario_id);
+                    $stmt->execute();
+                    $result = $stmt->get_result();
+
+                    while ($row = $result->fetch_assoc()) {
+                        echo "<option value='{$row['id']}'>{$row['nome']}</option>";
+                    }
+                    ?>
                 </select>
                 <small class="form-text text-muted">Selecione o time atual do jogador</small>
             </div>
 
-             <!-- 🔥 Novo campo de upload de imagem -->
+            <!-- 🔥 Campo de upload de imagem -->
             <div class="mb-3">
                 <label for="imagem" class="form-label">Imagem do Jogador</label>
                 <input type="file" name="imagem" class="form-control" accept="image/*">
@@ -116,9 +121,11 @@ switch ($tipo) {
             <button type="submit" class="btn btn-primary">Cadastrar</button>
         </form>
     </div>
+
     <div class="row mt-4">
         <?php include '../cabecalho/footer.php'; ?>
-        <script src="../../../assets/js/bootstrap.bundle.min.js"></script>
+    </div>
+    <script src="../../../assets/js/bootstrap.bundle.min.js"></script>
 </body>
 
 </html>

@@ -9,11 +9,20 @@ $timeController = new TeamController($conn);
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     // ✅ BLOCO NOVO: Criação de time via campo oculto (form direto na dashboard)
-    if (isset($_POST['criar_time']) && isset($_POST['nome'], $_POST['cidade'], $_POST['estadio'])) {
+    if (isset($_POST['nome'], $_POST['cidade'], $_POST['estadio'])) {
         $nome = $_POST['nome'];
         $cidade = $_POST['cidade'];
         $estadio = $_POST['estadio'];
         $escudo = NULL;
+
+        // 🔥 Pega também o admin_id enviado pelo formulário
+        $admin_id = $_POST['admin_id'] ?? ($_SESSION['usuario_id'] ?? null);
+
+        if (!$admin_id) {
+            $_SESSION['mensagem_erro'] = "Erro: Admin não identificado.";
+            header("Location: ../public/views/time/dashboard_time.php");
+            exit();
+        }
 
         if (isset($_FILES['escudo']) && $_FILES['escudo']['error'] === UPLOAD_ERR_OK) {
             $extensao = pathinfo($_FILES['escudo']['name'], PATHINFO_EXTENSION);
@@ -29,7 +38,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             }
         }
 
-        $resultado = $timeController->criarTime($nome, $escudo, $cidade, $estadio);
+        // 🔥 Agora passa o admin_id para criarTime
+        $resultado = $timeController->criarTime($nome, $escudo, $cidade, $estadio, $admin_id);
 
         if (strpos($resultado, 'sucesso') !== false) {
             $_SESSION['mensagem_sucesso'] = "Time cadastrado com sucesso!";
