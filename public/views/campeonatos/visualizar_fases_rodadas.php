@@ -14,7 +14,7 @@ if ($campeonatoSelecionado) {
     $dados['campeonatos'] = $controller->carregarDados(0)['campeonatos'];
 }
 ?>
-
+<body class="d-flex flex-column min-vh-100">
 <div class="container mt-4">
 
     <!-- Botão de Voltar -->
@@ -129,8 +129,10 @@ if ($campeonatoSelecionado) {
     <?php endif; ?>
 
 </div>
-
+</body>
+<!-- Footer com margem automática no topo para colar no final -->
 <div class="mt-auto">
+
     <?php include __DIR__ . '/../cabecalho/footer.php'; ?>
 </div>
 

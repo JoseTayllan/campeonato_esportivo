@@ -10,7 +10,7 @@ if (!isset($_SERVER['HTTP_REFERER']) || empty($_SERVER['HTTP_REFERER'])) {
 ?>
 
 <?php include __DIR__ . '/../cabecalho/header.php'; ?>
-
+<body class="d-flex flex-column min-vh-100">
 <div class="container mt-4">
     <h2 class="mb-4">Meus Campeonatos</h2>
 
@@ -39,5 +39,8 @@ if (!isset($_SERVER['HTTP_REFERER']) || empty($_SERVER['HTTP_REFERER'])) {
         <div class="alert alert-warning">Você ainda não criou nenhum campeonato.</div>
     <?php endif; ?>
 </div>
-
+</body>
+<!-- Footer com margem automática no topo para colar no final -->
+<div class="mt-auto">
 <?php include __DIR__ . '/../cabecalho/footer.php'; ?>
+</div>
