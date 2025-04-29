@@ -47,6 +47,34 @@
             <?php endforeach; ?>
         </tbody>
     </table>
+<!-- Goleiros Destaque -->
+<h4>🧤 Goleiros em Destaque</h4>
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>Goleiro</th>
+            <th>Time</th>
+            <th>Defesas</th>
+            <th>Gols Sofridos</th>
+            <th>Pênaltis Defendidos</th>
+            <th>Clean Sheets</th>
+        </tr>
+    </thead>
+    <tbody>
+        <?php foreach ($dados['goleiros'] as $g): ?>
+            <tr>
+                <td><?= htmlspecialchars($g['nome']) ?></td>
+                <td><?= htmlspecialchars($g['time']) ?></td>
+                <td><?= $g['total_defesas'] ?? 0 ?></td>
+                <td><?= $g['total_gols_sofridos'] ?? 0 ?></td>
+                <td><?= $g['total_penaltis_defendidos'] ?? 0 ?></td>
+                <td><?= $g['total_clean_sheets'] ?? 0 ?></td>
+            </tr>
+        <?php endforeach; ?>
+    </tbody>
+</table>
+
+    
 </div>
 
 <?php require_once __DIR__ . '/../cabecalho/footer.php'; ?>

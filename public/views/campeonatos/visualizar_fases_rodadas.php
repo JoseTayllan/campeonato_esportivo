@@ -1,180 +1,97 @@
 <?php
-// Proteger contra acesso direto
-if (!isset($_SERVER['HTTP_REFERER']) || empty($_SERVER['HTTP_REFERER'])) {
-    echo "<div style='text-align:center; padding:20px; font-family:sans-serif;'>
-            <h2 style='color:red;'>Erro: Acesso direto não permitido!</h2>
-            <p>Utilize o sistema normalmente para acessar esta página.</p>
-          </div>";
-    exit();
-} 
 require_once __DIR__ . '/../../../config/database.php';
-include '../cabecalho/header.php';
+require_once __DIR__ . '/../../../app/controllers/FaseRodadaController.php';
+require_once __DIR__ . '/../cabecalho/header.php';
 
-$tipo = strtolower($_SESSION['usuario_tipo'] ?? '');
+$controller = new FaseRodadaController($conn);
 
-switch ($tipo) {
-    case 'administrador':
-        include '../cabecalho/tabela_administrativa.php';
-        break;
-    case 'organizador':
-        include '../cabecalho/tabela.php';
-        break;
-    case 'olheiro':
-        include '../cabecalho/tabela_olheiro.php';
-        break;
-    case 'treinador':
-        include '../cabecalho/tabela_treinador.php';
-        break;
-    case 'jogador':
-        include '../cabecalho/tabela_jogador.php';
-        break;
-    case 'patrocinador':
-        include '../cabecalho/tabela_patrocinador.php';
-        break;
-    default:
-        include '../cabecalho/tabela_geral.php';
-};
+$campeonatoSelecionado = $_GET['campeonato_id'] ?? null;
+$dados = [];
+
+if ($campeonatoSelecionado) {
+    $dados = $controller->carregarDados((int)$campeonatoSelecionado);
+} else {
+    $dados['campeonatos'] = $controller->carregarDados(0)['campeonatos'];
+}
 ?>
 
-<!DOCTYPE html>
-<html lang="pt-br">
-<head>
-    <meta charset="UTF-8">
-    <title>Visualização Pública do Campeonato</title>
-    <link href="../../../assets/css/bootstrap.min.css" rel="stylesheet">
-</head>
-
-<body class="d-flex flex-column min-vh-100">
-
 <div class="container mt-4">
+
+    <!-- Botão de Voltar -->
+    <a href="/campeonato_esportivo/routes/campeonato_publico.php?id=<?= (int)$campeonatoSelecionado ?>"
+       class="btn btn-outline-secondary btn-sm mb-4">
+        🔙 Voltar para o Campeonato
+    </a>
+
     <h2 class="mb-4 text-center">Estrutura do Campeonato</h2>
 
-    <form method="GET" class="mb-4">
-        <label for="campeonato_id" class="form-label">Selecione um Campeonato</label>
-        <select name="campeonato_id" class="form-control" onchange="this.form.submit()" required>
-            <option value="">Escolha um campeonato</option>
-            <?php
-            $campeonatoSelecionado = $_GET['campeonato_id'] ?? '';
-            $query = "SELECT id, nome FROM campeonatos ORDER BY nome ASC";
-            $result = $conn->query($query);
-            while ($row = $result->fetch_assoc()) {
-                $selected = ($row['id'] == $campeonatoSelecionado) ? 'selected' : '';
-                echo "<option value='{$row['id']}' $selected>{$row['nome']}</option>";
-            }
-            ?>
-        </select>
-    </form>
-
-    <?php if (!empty($campeonatoSelecionado)): ?>
+    <?php if (!empty($dados['fases'])): ?>
         <hr>
         <h4 class="text-primary mt-4">📋 Fases e Rodadas</h4>
 
-        <?php
-        $queryFases = "SELECT id, nome, ordem FROM fases_campeonato WHERE campeonato_id = ? ORDER BY ordem ASC";
-        $stmtFase = $conn->prepare($queryFases);
-        $stmtFase->bind_param("i", $campeonatoSelecionado);
-        $stmtFase->execute();
-        $resultFases = $stmtFase->get_result();
+        <?php foreach ($dados['fases'] as $fase): ?>
+            <div class="card mb-4">
+                <div class="card-header bg-primary text-white">
+                    <strong><?= htmlspecialchars($fase['nome']) ?> (Ordem <?= $fase['ordem'] ?>)</strong>
+                </div>
+                <div class="card-body">
+                    <?php if (!empty($fase['rodadas'])): ?>
+                        <ul class="list-group">
+                            <?php foreach ($fase['rodadas'] as $rodada): ?>
+                                <li class="list-group-item">
+                                    <strong>Rodada <?= $rodada['numero'] ?>:</strong> <?= htmlspecialchars($rodada['tipo']) ?>
+                                    <?php if (!empty($rodada['descricao'])): ?>
+                                        - <?= htmlspecialchars($rodada['descricao']) ?>
+                                    <?php endif; ?>
 
-        if ($resultFases->num_rows > 0):
-            while ($fase = $resultFases->fetch_assoc()):
+                                    <?php if (!empty($rodada['partidas'])): ?>
+                                        <ul class="mt-3">
+                                            <?php foreach ($rodada['partidas'] as $partida): ?>
+                                                <li class="list-group-item">
+                                                    <div class="d-flex justify-content-between align-items-center flex-wrap text-center">
+                                                        <div class="d-flex align-items-center">
+                                                            <?php if (!empty($partida['escudo_time_casa'])): ?>
+                                                                <img src="/campeonato_esportivo/public/<?= $partida['escudo_time_casa'] ?>" alt="Escudo <?= $partida['time_casa'] ?>" width="40" class="me-2">
+                                                            <?php endif; ?>
+                                                            <strong><?= htmlspecialchars($partida['time_casa']) ?></strong>
+                                                        </div>
 
-                // Verifica se existem rodadas com partidas na fase atual
-                $queryRodadas = "SELECT id FROM rodadas WHERE fase_id = ?";
-                $stmtRodada = $conn->prepare($queryRodadas);
-                $stmtRodada->bind_param("i", $fase['id']);
-                $stmtRodada->execute();
-                $resRodadas = $stmtRodada->get_result();
-            
-                $tem_partida = false;
-            
-                while ($rodadaTemp = $resRodadas->fetch_assoc()) {
-                    $stmtCheck = $conn->prepare("SELECT COUNT(*) AS total FROM partidas WHERE rodada_id = ?");
-                    $stmtCheck->bind_param("i", $rodadaTemp['id']);
-                    $stmtCheck->execute();
-                    $check = $stmtCheck->get_result()->fetch_assoc();
-            
-                    if ($check['total'] > 0) {
-                        $tem_partida = true;
-                        break;
-                    }
-                }
-            
-                if (!$tem_partida) continue;
-            
-        ?>
-        <div class="card mb-3">
-            <div class="card-header bg-primary text-white">
-                <strong><?= htmlspecialchars($fase['nome']) ?> (Ordem <?= $fase['ordem'] ?>)</strong>
+                                                        <div class="fw-bold fs-4 text-primary">
+                                                            <?= is_numeric($partida['placar_casa']) ? $partida['placar_casa'] : '-' ?>
+                                                            <span class="mx-2">x</span>
+                                                            <?= is_numeric($partida['placar_fora']) ? $partida['placar_fora'] : '-' ?>
+                                                        </div>
+
+                                                        <div class="d-flex align-items-center">
+                                                            <strong><?= htmlspecialchars($partida['time_fora']) ?></strong>
+                                                            <?php if (!empty($partida['escudo_time_fora'])): ?>
+                                                                <img src="/campeonato_esportivo/public/<?= $partida['escudo_time_fora'] ?>" alt="Escudo <?= $partida['time_fora'] ?>" width="40" class="ms-2">
+                                                            <?php endif; ?>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="small text-muted mt-2 text-center">
+                                                        <?= $partida['data'] ?> às <?= substr($partida['horario'], 0, 5) ?> — 
+                                                        <em><?= htmlspecialchars($partida['local']) ?></em>
+                                                    </div>
+                                                </li>
+                                            <?php endforeach; ?>
+                                        </ul>
+                                    <?php else: ?>
+                                        <div class="text-muted ms-3">Nenhuma partida cadastrada nesta rodada.</div>
+                                    <?php endif; ?>
+                                </li>
+                            <?php endforeach; ?>
+                        </ul>
+                    <?php else: ?>
+                        <div class="text-muted">Nenhuma rodada cadastrada nesta fase.</div>
+                    <?php endif; ?>
+                </div>
             </div>
-            <div class="card-body">
-                <?php
-                $queryRodadas = "SELECT id, numero, tipo, descricao FROM rodadas WHERE fase_id = ? ORDER BY numero ASC";
-                $stmtRodada = $conn->prepare($queryRodadas);
-                $stmtRodada->bind_param("i", $fase['id']);
-                $stmtRodada->execute();
-                $resultRodadas = $stmtRodada->get_result();
+        <?php endforeach; ?>
+    <?php endif; ?>
 
-                if ($resultRodadas->num_rows > 0): ?>
-                    <ul class="list-group">
-                        <?php while ($rodada = $resultRodadas->fetch_assoc()): ?>
-                            <li class="list-group-item">
-                                <strong>Rodada <?= $rodada['numero'] ?>:</strong>
-                                <?= htmlspecialchars($rodada['tipo']) ?>
-                                <?php if (!empty($rodada['descricao'])): ?>
-                                    - <?= htmlspecialchars($rodada['descricao']) ?>
-                                <?php endif; ?>
-
-                                <?php
-                                $partidasQuery = "SELECT 
-                                                    t1.nome AS time_casa, 
-                                                    t2.nome AS time_fora, 
-                                                    p.data, 
-                                                    p.horario, 
-                                                    p.local,
-                                                    p.placar_casa,
-                                                    p.placar_fora
-                                                FROM partidas p
-                                                JOIN times t1 ON t1.id = p.time_casa
-                                                JOIN times t2 ON t2.id = p.time_fora
-                                                WHERE p.rodada_id = ?
-                                                ORDER BY p.data, p.horario";
-                                $stmtPartidas = $conn->prepare($partidasQuery);
-                                $stmtPartidas->bind_param("i", $rodada['id']);
-                                $stmtPartidas->execute();
-                                $resultPartidas = $stmtPartidas->get_result();
-                                ?>
-
-                                <?php if ($resultPartidas->num_rows > 0): ?>
-                                    <ul class="mt-2 ms-4">
-                                        <?php while ($partida = $resultPartidas->fetch_assoc()): ?>
-                                            <li class="list-group-item">
-                                                <strong><?= htmlspecialchars($partida['time_casa']) ?></strong>
-                                                <?= is_numeric($partida['placar_casa']) ? "({$partida['placar_casa']})" : "" ?>
-                                                vs
-                                                <?= is_numeric($partida['placar_fora']) ? "({$partida['placar_fora']})" : "" ?>
-                                                <strong><?= htmlspecialchars($partida['time_fora']) ?></strong>
-                                                — <?= $partida['data'] ?> às <?= substr($partida['horario'], 0, 5) ?> (<?= htmlspecialchars($partida['local']) ?>)
-                                            </li>
-                                        <?php endwhile; ?>
-                                    </ul>
-                                <?php else: ?>
-                                    <div class="text-muted ms-3">Nenhuma partida cadastrada nesta rodada.</div>
-                                <?php endif; ?>
-
-                            </li>
-                        <?php endwhile; ?>
-                    </ul>
-                <?php else: ?>
-                    <div class="text-muted">Nenhuma rodada cadastrada nesta fase.</div>
-                <?php endif; ?>
-            </div>
-        </div>
-        <?php endwhile; else: ?>
-            <div class="alert alert-warning">Nenhuma fase cadastrada neste campeonato.</div>
-        <?php endif; ?>
-
-        <!-- Classificação -->
+    <?php if (!empty($dados['classificacao'])): ?>
         <hr>
         <h4 class="text-success mt-4">🏆 Tabela de Classificação</h4>
         <div class="table-responsive mb-5">
@@ -193,61 +110,28 @@ switch ($tipo) {
                     </tr>
                 </thead>
                 <tbody>
-                <?php
-                $sqlTimes = "SELECT t.id, t.nome FROM times t
-                             JOIN times_campeonatos tc ON tc.time_id = t.id
-                             WHERE tc.campeonato_id = $campeonatoSelecionado
-                             ORDER BY t.nome ASC";
-                $res = $conn->query($sqlTimes);
-
-                while ($time = $res->fetch_assoc()) {
-                    $timeId = $time['id'];
-
-                    $partidas = "SELECT * FROM partidas 
-                                 WHERE campeonato_id = $campeonatoSelecionado
-                                 AND (time_casa = $timeId OR time_fora = $timeId)";
-                    $resultPartidas = $conn->query($partidas);
-
-                    $jogos = $vitorias = $empates = $derrotas = $gols_pro = $gols_contra = 0;
-
-                    while ($p = $resultPartidas->fetch_assoc()) {
-                        $jogos++;
-                        $is_casa = $p['time_casa'] == $timeId;
-                        $gp = $is_casa ? $p['placar_casa'] : $p['placar_fora'];
-                        $gc = $is_casa ? $p['placar_fora'] : $p['placar_casa'];
-
-                        $gols_pro += $gp;
-                        $gols_contra += $gc;
-
-                        if ($gp > $gc) $vitorias++;
-                        elseif ($gp == $gc) $empates++;
-                        else $derrotas++;
-                    }
-
-                    $saldo = $gols_pro - $gols_contra;
-                    $pontos = $vitorias * 3 + $empates;
-
-                    echo "<tr>
-                            <td>{$time['nome']}</td>
-                            <td>{$jogos}</td>
-                            <td>{$vitorias}</td>
-                            <td>{$empates}</td>
-                            <td>{$derrotas}</td>
-                            <td>{$gols_pro}</td>
-                            <td>{$gols_contra}</td>
-                            <td>{$saldo}</td>
-                            <td>{$pontos}</td>
-                          </tr>";
-                }
-                ?>
+                    <?php foreach ($dados['classificacao'] as $time): ?>
+                        <tr>
+                            <td><?= htmlspecialchars($time['nome']) ?></td>
+                            <td><?= $time['jogos'] ?></td>
+                            <td><?= $time['vitorias'] ?></td>
+                            <td><?= $time['empates'] ?></td>
+                            <td><?= $time['derrotas'] ?></td>
+                            <td><?= $time['gols_pro'] ?></td>
+                            <td><?= $time['gols_contra'] ?></td>
+                            <td><?= $time['saldo'] ?></td>
+                            <td><?= $time['pontos'] ?></td>
+                        </tr>
+                    <?php endforeach; ?>
                 </tbody>
             </table>
         </div>
     <?php endif; ?>
+
 </div>
+
 <div class="mt-auto">
-    <?php include '../cabecalho/footer.php'; ?>
+    <?php include __DIR__ . '/../cabecalho/footer.php'; ?>
 </div>
+
 <script src="../../../assets/js/bootstrap.bundle.min.js"></script>
-</body>
-</html>

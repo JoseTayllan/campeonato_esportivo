@@ -13,7 +13,8 @@ class RankingCampeonatoController {
         return [
             'artilheiros' => $this->model->artilheiros($campeonato_id),
             'cartoes' => $this->model->cartoes($campeonato_id),
-            'vitorias' => $this->model->timesComMaisVitorias($campeonato_id)
+            'vitorias' => $this->model->timesComMaisVitorias($campeonato_id),
+            'goleiros' => $this->model->goleiros($campeonato_id)
         ];
     }
 }

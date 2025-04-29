@@ -33,18 +33,20 @@ class CampeonatoPublicoController
 
         // Rodadas e partidas
         $stmt = $this->conn->prepare("SELECT r.id AS rodada_id, r.numero, r.tipo, r.descricao,
-            p.id AS partida_id, p.data, p.horario, p.local,
-            tc.nome AS time_casa, tf.nome AS time_fora,
-            p.placar_casa, p.placar_fora
-            FROM rodadas r
-            LEFT JOIN partidas p ON p.rodada_id = r.id
-            LEFT JOIN times tc ON p.time_casa = tc.id
-            LEFT JOIN times tf ON p.time_fora = tf.id
-            WHERE r.fase_id IN (
-                SELECT id FROM fases_campeonato WHERE campeonato_id = ?
-            )
-            ORDER BY r.numero ASC, p.data ASC
-        ");
+        p.id AS partida_id, p.data, p.horario, p.local,
+        tc.nome AS time_casa, tc.escudo AS escudo_time_casa,
+        tf.nome AS time_fora, tf.escudo AS escudo_time_fora,
+        p.placar_casa, p.placar_fora
+        FROM rodadas r
+        LEFT JOIN partidas p ON p.rodada_id = r.id
+        LEFT JOIN times tc ON p.time_casa = tc.id
+        LEFT JOIN times tf ON p.time_fora = tf.id
+        WHERE r.fase_id IN (
+            SELECT id FROM fases_campeonato WHERE campeonato_id = ?
+        )
+        ORDER BY r.numero ASC, p.data ASC
+    ");
+    
         $stmt->bind_param("i", $id);
         $stmt->execute();
         $partidas = $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
