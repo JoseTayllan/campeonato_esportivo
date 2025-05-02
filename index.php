@@ -70,6 +70,7 @@
         }
 
         .grid {
+            align-items: stretch;
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
             gap: 2rem;
@@ -77,6 +78,10 @@
         }
 
         .card {
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            height: 100%;
             background: var(--light-bg);
             border-radius: 12px;
             overflow: hidden;
