@@ -1,4 +1,4 @@
-<?php include __DIR__ . '../../../includes/admin_sec.php'; ?>
+<?php include __DIR__ . '../../../includes/index_sec.php'; ?>
 
 <div class="container mt-4">
     <h2 class="mb-4">📊 Ranking do Campeonato</h2>
@@ -77,4 +77,8 @@
     
 </div>
 
+<div class="mt-auto">
+<div class="mt-5"></div>
 <?php require_once __DIR__ . '/../cabecalho/footer.php'; ?>
+<script src="../../../assets/js/bootstrap.bundle.min.js"></script>
+</div>

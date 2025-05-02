@@ -1,4 +1,5 @@
-<footer class="bg-dark text-light pt-4">
+<footer style="background-color: var(--primary-color); color: var(--primary-text);" class="pt-4">
+
     <div class="container">
         <div class="row">
             <div class="col-md-4 mb-3">

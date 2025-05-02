@@ -2,6 +2,7 @@
 require_once __DIR__ . '/../../../config/database.php';
 require_once __DIR__ . '/../../../app/controllers/TeamController.php';
 
+
 $controller = new TeamController($conn);
 $codigo = $_GET['codigo'] ?? '';
 
@@ -14,7 +15,7 @@ if (!$time) {
 
 $jogadores = $controller->listarElencoPublico($time['id']);
 ?>
-
+<?php require_once __DIR__ . '../../../includes/index_sec.php'; ?>  
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
@@ -71,3 +72,8 @@ $jogadores = $controller->listarElencoPublico($time['id']);
 </div>
 </body>
 </html>
+<div class="mt-auto">
+<div class="mt-5"></div>
+<?php require_once __DIR__ . '/../cabecalho/footer.php'; ?>
+<script src="../../../assets/js/bootstrap.bundle.min.js"></script>
+</div>

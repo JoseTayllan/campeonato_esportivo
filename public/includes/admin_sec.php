@@ -34,6 +34,26 @@ if (session_status() === PHP_SESSION_NONE) {
                 <span class="navbar-text me-3 fw-semibold">
                     <i class="bi bi-person-circle me-1"></i>Olá, <?= htmlspecialchars($_SESSION['usuario_nome']) ?>
                 </span>
+                <?php
+                    $tipo_assinatura = $_SESSION['usuario']['tipo_assinatura'] ?? null;
+                    $tipo_usuario = $_SESSION['usuario']['tipo'] ?? null;
+
+                    if ($tipo_assinatura === 'completo' && $tipo_usuario === 'Olheiro') {
+                        $link = '/campeonato_esportivo/public/views/avaliacao/visualizar_avaliacoes.php';
+                    } elseif ($tipo_assinatura === 'completo' && $tipo_usuario === 'Administrador') {
+                        $link = '/campeonato_esportivo/public/views/dashboard/dashboard_administrador.php';
+                    } elseif ($tipo_assinatura === 'time') {
+                        $link = '/campeonato_esportivo/public/views/dashboard/dashboard_time.php';
+                    } else {
+                        $link = null;
+                    }
+                    ?>
+
+                    <?php if ($link): ?>
+                        <a href="<?= $link ?>" class="btn btn-outline-warning btn-sm me-2">
+                            <i class="bi bi-arrow-left-circle me-1"></i> Painel
+                        </a>
+                    <?php endif; ?>
                 <a href="../../../routes/logout.php" class="btn btn-outline-light btn-sm">
                     <i class="bi bi-box-arrow-right me-1"></i>Sair
                 </a>
@@ -60,9 +80,7 @@ if (session_status() === PHP_SESSION_NONE) {
         <a href="/campeonato_esportivo/public/views/cadastro/cadastro_estatistica.php" class="menu-link flex-shrink-0">
             <i class="bi bi-bar-chart-fill me-2"></i>Estatísticas
         </a>
-        <a href="/campeonato_esportivo/public/views/dashboard/dashboard_administrador.php" class="menu-link flex-shrink-0">
-            <i class="bi bi-house-door-fill me-2"></i>Início Admin
-        </a>
+        
     </div>
 </div>
 

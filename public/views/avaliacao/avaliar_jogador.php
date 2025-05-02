@@ -13,8 +13,7 @@ require_once __DIR__ . '/../../../app/middleware/verifica_sessao.php';
 require_once __DIR__ . '/../../../config/database.php'; // Conexão com o banco
 ?>
 
-<?php include '../cabecalho/header.php'; ?>
-<?php include '../cabecalho/tabela_olheiro.php'; ?>
+<?php include_once __DIR__ . '/../../includes/olheiro_sec.php'; ?>
 
 <!DOCTYPE html>
 <html lang="pt-br">

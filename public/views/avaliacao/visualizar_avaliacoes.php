@@ -13,33 +13,8 @@ require_once __DIR__ . '/../../../app/middleware/verifica_sessao.php';
 require_once __DIR__ . '/../../../config/database.php'; // Conexão com o banco
 ?>
 
-<?php include '../cabecalho/header.php'; ?>
-<?php
-$tipo = strtolower($_SESSION['usuario_tipo'] ?? '');
+<?php include_once __DIR__ . '/../../includes/header_olheiro.php'; ?>
 
-switch ($tipo) {
-    case 'administrador':
-        include '../cabecalho/tabela_administrativa.php';
-        break;
-    case 'organizador':
-        include '../cabecalho/tabela.php';
-        break;
-    case 'olheiro':
-        include '../cabecalho/tabela_olheiro.php';
-        break;
-    case 'treinador':
-        include '../cabecalho/tabela_treinador.php';
-        break;
-    case 'jogador':
-        include '../cabecalho/tabela_jogador.php';
-        break;
-    case 'patrocinador':
-        include '../cabecalho/tabela_patrocinador.php';
-        break;
-    default:
-        include '../cabecalho/tabela.php';
-}
-?>
 
 
 <!DOCTYPE html>

@@ -1,7 +1,7 @@
 <?php
 require_once __DIR__ . '/../../../config/database.php';
 require_once __DIR__ . '/../../../app/controllers/FaseRodadaController.php';
-require_once __DIR__ . '/../cabecalho/header.php';
+require_once __DIR__ . '/../../includes/index_sec.php';
 
 $controller = new FaseRodadaController($conn);
 

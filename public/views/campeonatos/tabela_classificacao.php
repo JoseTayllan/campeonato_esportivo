@@ -8,32 +8,7 @@ if (!isset($_SERVER['HTTP_REFERER']) || empty($_SERVER['HTTP_REFERER'])) {
     exit();
 } 
 require_once __DIR__ . '/../../../config/database.php';
-include '../cabecalho/header.php';
-
-$tipo = strtolower($_SESSION['usuario_tipo'] ?? '');
-
-switch ($tipo) {
-    case 'administrador':
-        include '../cabecalho/tabela_administrativa.php';
-        break;
-    case 'organizador':
-        include '../cabecalho/tabela.php';
-        break;
-    case 'olheiro':
-        include '../cabecalho/tabela_olheiro.php';
-        break;
-    case 'treinador':
-        include '../cabecalho/tabela_treinador.php';
-        break;
-    case 'jogador':
-        include '../cabecalho/tabela_jogador.php';
-        break;
-    case 'patrocinador':
-        include '../cabecalho/tabela_patrocinador.php';
-        break;
-    default:
-        include '../cabecalho/tabela_geral.php';
-}
+require_once __DIR__ . '/../../includes/index_sec.php';
 ?>
 
 <!DOCTYPE html>

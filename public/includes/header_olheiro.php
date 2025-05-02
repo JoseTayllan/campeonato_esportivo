@@ -32,7 +32,6 @@ if (session_status() === PHP_SESSION_NONE) {
                 <span class="navbar-text me-3 fw-semibold">
                     <i class="bi bi-person-circle me-1"></i>Olá, <?= htmlspecialchars($_SESSION['usuario_nome']) ?>
                 </span>
-                
                 <a href="../../../routes/logout.php" class="btn btn-outline-light btn-sm">
                     <i class="bi bi-box-arrow-right me-1"></i>Sair
                 </a>
@@ -44,20 +43,9 @@ if (session_status() === PHP_SESSION_NONE) {
 <!-- Menu Horizontal Administrativo -->
 <div class="container-fluid py-2 border-bottom shadow-sm menu-container">
     <div class="d-flex flex-row flex-nowrap justify-content-center menu-scroll px-2 gap-2">
-        <a href="../cadastro/cadastro_campeonato.php" class="menu-link menu-separador flex-shrink-0">
-            <i class="bi bi-flag-fill me-2"></i>Campeonato
-        </a>
-        <a href="../cadastro/cadastro_time.php" class="menu-link menu-separador flex-shrink-0">
-            <i class="bi bi-people-fill me-2"></i>Time
-        </a>
-        <a href="../cadastro/cadastro_jogador.php" class="menu-link menu-separador flex-shrink-0">
-            <i class="bi bi-person-fill me-2"></i>Jogador
-        </a>
-        <a href="../cadastro/cadastro_jogo.php" class="menu-link menu-separador flex-shrink-0">
-            <i class="bi bi-calendar-event-fill me-2"></i>Jogos
-        </a>
-        <a href="../cadastro/cadastro_estatistica.php" class="menu-link flex-shrink-0">
-            <i class="bi bi-bar-chart-fill me-2"></i>Estatísticas
+      
+<a href="/campeonato_esportivo/public/views/avaliacao/avaliar_jogador.php" class="menu-link menu-separador px-4 flex-shrink-0">
+            <i class="bi bi-clipboard2-check me-2"></i>Avaliar Jogador
         </a>
     </div>
 </div>

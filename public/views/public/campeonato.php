@@ -1,4 +1,4 @@
-<?php require_once __DIR__ . '/../cabecalho/header.php'; ?>
+<?php include __DIR__ . '../../../includes/index_sec.php'; ?>
 
 <div class="container mt-4">
     <h2><?= htmlspecialchars($dados['campeonato']['nome']) ?></h2>
@@ -51,4 +51,9 @@
     <?php endif; ?>
 </div>
 
+
+<div class="mt-auto">
+<div class="mt-5"></div>
 <?php require_once __DIR__ . '/../cabecalho/footer.php'; ?>
+<script src="../../../assets/js/bootstrap.bundle.min.js"></script>
+</div>

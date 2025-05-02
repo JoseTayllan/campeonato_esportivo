@@ -78,6 +78,8 @@
 
         .card {
             background: var(--light-bg);
+            border-radius: 12px;
+            overflow: hidden;
             border: 1px solid rgba(255, 255, 255, 0.15);
             border-radius: 1rem;
             padding: 2rem;
@@ -139,7 +141,25 @@
             box-shadow: 0 5px 16px rgba(0, 212, 255, 0.5);
             transform: translateY(-2px);
         }
+    
+        img {
+            max-width: 100%;
+            height: auto;
+        }
+
+        .flex-wrap {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+
+        @media (min-width: 768px) {
+            .overlay {
+                padding: 4rem 6rem;
+            }
+        }
     </style>
+
 </head>
 
 <body>
@@ -191,7 +211,25 @@
   .nav-links a:hover {
     color: #00d4ff;
   }
-</style>
+
+        img {
+            max-width: 100%;
+            height: auto;
+        }
+
+        .flex-wrap {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+
+        @media (min-width: 768px) {
+            .overlay {
+                padding: 4rem 6rem;
+            }
+        }
+    </style>
+
 
     <div class="overlay">
         <div class="container">
