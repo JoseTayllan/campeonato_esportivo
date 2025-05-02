@@ -1,3 +1,4 @@
+<?php require_once __DIR__ . '/../../includes/assinatura_time.php'; ?>
 <?php
 // Proteger contra acesso direto
 if (!isset($_SERVER['HTTP_REFERER']) || empty($_SERVER['HTTP_REFERER'])) {
@@ -166,11 +167,12 @@ endif;
 
         </div>
     </div>
-    <a href="../../../routes/agenda_time.php" class="btn btn-primary mb-3">
-        📅 Ver Agenda de Jogos
-    </a>
+    
 
 
 </body>
 
 </html>
+
+<?php require_once __DIR__ . '/../cabecalho/footer.php'; ?>
+<script src="../../../assets/js/bootstrap.bundle.min.js"></script>

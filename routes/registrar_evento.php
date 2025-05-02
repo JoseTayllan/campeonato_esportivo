@@ -37,6 +37,17 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 }
             }
         }
+
+        // 3. Se for defesa ou penalti_defendido, atualizar estatísticas do goleiro
+        if ($tipo_evento === 'defesa') {
+            $stmt = $conn->prepare("UPDATE estatisticas_partida SET defesas = defesas + 1 WHERE partida_id = ? AND jogador_id = ?");
+            $stmt->bind_param("ii", $partida_id, $jogador_id);
+            $stmt->execute();
+        } elseif ($tipo_evento === 'penalti_defendido') {
+            $stmt = $conn->prepare("UPDATE estatisticas_partida SET penaltis_defendidos = penaltis_defendidos + 1 WHERE partida_id = ? AND jogador_id = ?");
+            $stmt->bind_param("ii", $partida_id, $jogador_id);
+            $stmt->execute();
+        }
     }
 
     // Redireciona de volta

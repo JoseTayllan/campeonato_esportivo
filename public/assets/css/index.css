@@ -1,0 +1,17 @@
+.navbar {
+  background-color: var(--primary-color);
+}
+
+.navbar-brand,
+.nav-link,
+.navbar-text {
+  color: var(--primary-text) !important;
+}
+
+.nav-link:hover {
+  color: var(--secondary-text) !important;
+}
+
+body {
+  background-color: var(--background-color);
+}

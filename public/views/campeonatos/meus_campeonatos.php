@@ -9,7 +9,7 @@ if (!isset($_SERVER['HTTP_REFERER']) || empty($_SERVER['HTTP_REFERER'])) {
 } 
 ?>
 
-<?php include __DIR__ . '/../cabecalho/header.php'; ?>
+<?php include __DIR__ . '../../../includes/admin_sec.php'; ?>
 <body class="d-flex flex-column min-vh-100">
 <div class="container mt-4">
     <h2 class="mb-4">Meus Campeonatos</h2>

@@ -8,8 +8,8 @@ if (!isset($_SERVER['HTTP_REFERER']) || empty($_SERVER['HTTP_REFERER'])) {
           </div>";
     exit();
 }
-require_once __DIR__ . '/../cabecalho/header.php'; ?>
-<?php require_once __DIR__ . '/../cabecalho/tabela_administrativa.php'; ?>
+require_once __DIR__ . '../../../includes/admin_sec.php'; ?>  
+
 
 
 <div class="container mt-4 mb-5">
@@ -49,5 +49,9 @@ require_once __DIR__ . '/../cabecalho/header.php'; ?>
     </div>
 </div>
 
+<div class="mt-auto">
+<div class="mt-5"></div>
 <?php require_once __DIR__ . '/../cabecalho/footer.php'; ?>
 <script src="../../../assets/js/bootstrap.bundle.min.js"></script>
+</div>
+

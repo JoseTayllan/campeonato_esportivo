@@ -68,8 +68,8 @@ if ($totalCampeonatos > 0) {
 }
 ?>
 
-<?php include '../cabecalho/header.php'; ?>
-<?php include '../cabecalho/tabela_administrativa.php'; ?>
+<?php include_once '../../includes/admin_header.php'; ?>
+
 
 <!DOCTYPE html>
 <html lang="pt-br">
@@ -110,11 +110,6 @@ if ($totalCampeonatos > 0) {
         <div class="col-md-4 mb-3">
             <a href="../cadastro/cadastro_campeonato.php" class="btn btn-dark w-100 py-2">
                 <i class="bi bi-plus-circle me-1"></i> Cadastrar Campeonato
-            </a>
-        </div>
-        <div class="col-md-4 mb-3">
-            <a href="../campeonatos/visualizar_fases_rodadas.php" class="btn btn-dark w-100 py-2">
-                <i class="bi bi-diagram-3 me-1"></i> Fases e Rodadas
             </a>
         </div>
         <div class="col-md-4 mb-3">

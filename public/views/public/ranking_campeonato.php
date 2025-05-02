@@ -1,4 +1,4 @@
-<?php require_once __DIR__ . '/../cabecalho/header.php'; ?>
+<?php include __DIR__ . '../../../includes/admin_sec.php'; ?>
 
 <div class="container mt-4">
     <h2 class="mb-4">📊 Ranking do Campeonato</h2>

@@ -7,7 +7,7 @@ if (!isset($_SERVER['HTTP_REFERER']) || empty($_SERVER['HTTP_REFERER'])) {
           </div>";
     exit();
 } 
-include __DIR__ . '/../cabecalho/header.php'; ?>
+include __DIR__ . '../../../includes/admin_sec.php'; ?>
 
 <div class="container mt-4">
     <h2 class="mb-4">Cadastro de Organizador</h2>

@@ -12,16 +12,9 @@ $restrito_para = ['Administrador', 'Organizador'];
 require_once __DIR__ . '/../../../app/middleware/verifica_sessao.php';
 require_once __DIR__ . '/../../../config/database.php';
 ?>
-<?php include '../cabecalho/header.php'; ?>
-<?php
-$tipo_usuario = strtolower(trim($_SESSION['usuario_tipo']));
-if ($tipo_usuario === 'administrador') {
-    include '../cabecalho/tabela_administrativa.php';
-} else {
-    include '../cabecalho/tabela.php';
-}
-?>
 
+
+<?php include_once '../../includes/admin_sec.php'; ?>
 <!DOCTYPE html>
 <html lang="pt-br">
 
