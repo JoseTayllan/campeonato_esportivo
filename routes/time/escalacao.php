@@ -1,7 +1,7 @@
 
 <?php
-require_once __DIR__ . '/../config/database.php';
-require_once __DIR__ . '/../app/controllers/escalacaoController.php';
+require_once __DIR__ . '/../../config/database.php';
+require_once __DIR__ . '/../../app/controllers/escalacaoController.php';
 session_start();
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {

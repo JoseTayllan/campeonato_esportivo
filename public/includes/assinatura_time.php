@@ -43,7 +43,7 @@ if (session_status() === PHP_SESSION_NONE) {
 <!-- Menu Horizontal Administrativo -->
 <div class="container-fluid py-2 border-bottom shadow-sm menu-container">
     <div class="d-flex flex-row flex-nowrap justify-content-center menu-scroll px-2 gap-2">
-        <a href="../../../routes/agenda_time.php" class="menu-link menu-separador flex-shrink-0">
+        <a href="../../../routes/time/agenda_time.php" class="menu-link menu-separador flex-shrink-0">
             <i class="bi bi-calendar-event-fill me-2"></i> Ver Agenda de Jogos
         </a>
     

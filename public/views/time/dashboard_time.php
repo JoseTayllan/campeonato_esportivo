@@ -32,7 +32,7 @@ if (!$time):
 
         <div class="card p-4 shadow">
             <h4>Cadastro do Meu Time</h4>
-            <form action="../../../routes/team.php" method="POST" enctype="multipart/form-data">
+            <form action="../../../routes/time/team.php" method="POST" enctype="multipart/form-data">
                 <input type="hidden" name="criar_time" value="1">
 
                 <div class="mb-3">
@@ -97,7 +97,7 @@ endif;
                                                 unset($_SESSION['mensagem_erro']); ?></div>
             <?php endif; ?>
 
-            <form action="../../../routes/team.php" method="POST" enctype="multipart/form-data">
+            <form action="../../../routes/time/team.php" method="POST" enctype="multipart/form-data">
                 <input type="hidden" name="editar_time" value="1">
                 <input type="hidden" name="time_id" value="<?= $time['id'] ?>">
 

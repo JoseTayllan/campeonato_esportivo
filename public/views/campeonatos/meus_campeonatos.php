@@ -27,7 +27,7 @@ if (!isset($_SERVER['HTTP_REFERER']) || empty($_SERVER['HTTP_REFERER'])) {
     🏆 Ranking
 </a>
 
-            <a href="/campeonato_esportivo/routes/campeonato_editar.php?id=<?= $camp['id'] ?>" class="btn btn-primary btn-sm">
+            <a href="/campeonato_esportivo/routes/adms/campeonato_editar.php?id=<?= $camp['id'] ?>" class="btn btn-primary btn-sm">
                 Editar
             </a>
         </div>

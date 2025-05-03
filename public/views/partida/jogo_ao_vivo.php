@@ -32,7 +32,7 @@
             <div class="card shadow mb-3">
                 <div class="card-body">
                     <h5 class="card-title">Registrar Evento</h5>
-                    <form method="post" action="/campeonato_esportivo/routes/registrar_evento.php" onsubmit="inserirMinuto(); separarJogadorTime();">
+                    <form method="post" action="/campeonato_esportivo/routes/adms/aovivo/registrar_evento.php" onsubmit="inserirMinuto(); separarJogadorTime();">
                         <input type="hidden" name="partida_id" value="<?= $partida['id'] ?>">
                         <input type="hidden" name="minuto" id="campoMinuto">
                         <input type="hidden" name="jogador_id" id="jogador_id_hidden">
@@ -91,7 +91,7 @@
         <button type="submit" name="tempo_atual" value="2º Tempo" class="btn btn-outline-success btn-sm">2º Tempo</button>
     </div>
 </form>
-<a href="/campeonato_esportivo/routes/finalizar_partida.php?id=<?= $partida['id'] ?>" class="btn btn-danger w-100 mt-2">
+<a href="/campeonato_esportivo/routes/adms/aovivo/finalizar_partida.php?id=<?= $partida['id'] ?>" class="btn btn-danger w-100 mt-2">
                 Finalizar Partida
             </a>
         </div>

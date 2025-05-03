@@ -1,7 +1,7 @@
 <?php
 session_start();
-require_once __DIR__ . '/../config/database.php';
-require_once __DIR__ . '/../app/controllers/GerenciarPartidasController.php';
+require_once __DIR__ . '/../../../config/database.php';
+require_once __DIR__ . '/../../../app/controllers/GerenciarPartidasController.php';
 
 $controller = new GerenciarPartidasController($conn);
 
@@ -16,4 +16,4 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['partida_id'], $_POST[
 $partidas = $controller->listarPartidas();
 
 // Exibir view
-require_once __DIR__ . '/../public/views/partida/gerenciar.php';
+require_once __DIR__ . '/../../../public/views/partida/gerenciar.php';

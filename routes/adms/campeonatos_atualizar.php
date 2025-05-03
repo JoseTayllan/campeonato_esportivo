@@ -1,8 +1,8 @@
 <?php
 session_start();
 $restrito_para = ['Administrador', 'Organizador'];
-require_once __DIR__ . '/../config/database.php';
-require_once __DIR__ . '/../app/models/Campeonato.php';
+require_once __DIR__ . '/../../config/database.php';
+require_once __DIR__ . '/../../app/models/Campeonato.php';
 
 $model = new Campeonato($conn);
 

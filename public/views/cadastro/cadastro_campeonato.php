@@ -32,7 +32,7 @@ require_once __DIR__ . '/../../../config/database.php';
 
         <?php include '../partials/mensagens.php'; ?>
 
-        <form action="../../../routes/championships.php" method="POST">
+        <form action="../../../routes/adms/championships.php" method="POST">
 
             <!-- DADOS DO CAMPEONATO -->
             <div class="mb-3">

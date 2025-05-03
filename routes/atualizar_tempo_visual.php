@@ -11,6 +11,6 @@ if ($partida_id && $tempo_atual) {
 }
 
 // Corrigido para o caminho real da view
-header("Location: /campeonato_esportivo/routes/partida_ao_vivo.php?id=$partida_id");
+header("Location: /campeonato_esportivo/routes/adms/aovivo/partida_ao_vivo.php?id=$partida_id");
 
 exit;

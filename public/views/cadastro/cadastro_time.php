@@ -34,7 +34,7 @@ require_once __DIR__ . '/../../../config/database.php'; // Conexão com o banco
 
         <?php include '../partials/mensagens.php'; ?>
 
-        <form action="../../../routes/team.php" method="POST" enctype="multipart/form-data">
+        <form action="../../../routes/time/team.php" method="POST" enctype="multipart/form-data">
             <!-- 🔥 Campo escondido para enviar o ID do admin -->
             <input type="hidden" name="admin_id" value="<?= $_SESSION['usuario_id']; ?>">
 

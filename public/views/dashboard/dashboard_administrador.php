@@ -118,12 +118,12 @@ if ($totalCampeonatos > 0) {
             </a>
         </div>
         <div class="col-md-6 mb-3">
-            <a href="/campeonato_esportivo/routes/cadastro_organizador.php" class="btn btn-outline-primary w-100 py-2">
+            <a href="/campeonato_esportivo/routes/adms/cadastro_organizador.php" class="btn btn-outline-primary w-100 py-2">
                 ➕ Cadastrar Novo Organizador
             </a>
         </div>
         <div class="col-md-6 mb-3">
-            <a href="../../../routes/gerenciar_partidas.php" class="btn btn-outline-primary w-100 py-2">
+            <a href="../../../routes/adms/aovivo/gerenciar_partidas.php" class="btn btn-outline-primary w-100 py-2">
                 ⚙️ Gerenciar Partidas
             </a>
         </div>

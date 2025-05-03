@@ -12,7 +12,7 @@ include __DIR__ . '../../../includes/admin_sec.php';?>
 <div class="container mt-4">
     <h2>Editar Campeonato</h2>
 
-    <form action="/campeonato_esportivo/routes/campeonatos_atualizar.php" method="POST">
+    <form action="/campeonato_esportivo/routes/adms/campeonatos_atualizar.php" method="POST">
         <input type="hidden" name="id" value="<?= $campeonato['id'] ?>">
 
         <div class="mb-3">
@@ -67,7 +67,7 @@ include __DIR__ . '../../../includes/admin_sec.php';?>
         <?php foreach ($model->listarTimesPorCampeonato($campeonato['id']) as $time): ?>
             <li class="list-group-item d-flex justify-content-between align-items-center">
                 <?= htmlspecialchars($time['nome']) ?>
-                <a href="/campeonato_esportivo/routes/remover_time.php?campeonato_id=<?= $campeonato['id'] ?>&time_id=<?= $time['id'] ?>" class="btn btn-sm btn-danger">Remover</a>
+                <a href="/campeonato_esportivo/routes/adms/remover_time.php?campeonato_id=<?= $campeonato['id'] ?>&time_id=<?= $time['id'] ?>" class="btn btn-sm btn-danger">Remover</a>
             </li>
 
         <?php endforeach; ?>
@@ -75,7 +75,7 @@ include __DIR__ . '../../../includes/admin_sec.php';?>
 
 
     <!-- Adicionar time -->
-    <form method="POST" action="/campeonato_esportivo/routes/adicionar_time.php" class="d-flex align-items-center gap-2 mb-5">
+    <form method="POST" action="/campeonato_esportivo/routes/adms/adicionar_time.php" class="d-flex align-items-center gap-2 mb-5">
         <input type="hidden" name="campeonato_id" value="<?= $campeonato['id'] ?>">
         <select name="time_id" class="form-select w-auto" required>
             <?php foreach ($model->buscarTimesDisponiveis($campeonato['id']) as $time): ?>
@@ -86,7 +86,7 @@ include __DIR__ . '../../../includes/admin_sec.php';?>
 
     </form>
         <!-- Formulário: Adicionar time via código público -->
-        <form method="POST" action="/campeonato_esportivo/routes/adicionar_time_codigo.php" class="d-flex align-items-center gap-2 mb-5">
+        <form method="POST" action="/campeonato_esportivo/routes/adms/adicionar_time_codigo.php" class="d-flex align-items-center gap-2 mb-5">
             <input type="hidden" name="campeonato_id" value="<?= $campeonato['id'] ?>">
             <input type="text" name="codigo_publico" class="form-control w-auto" placeholder="Código do time (ex: T-0001)" required>
             <button class="btn btn-secondary">Vincular pelo Código</button>
@@ -107,7 +107,7 @@ include __DIR__ . '../../../includes/admin_sec.php';?>
                         <strong>Rodada <?= $rodada['numero'] ?></strong> - <?= htmlspecialchars($rodada['tipo']) ?><br>
                         <?= htmlspecialchars($rodada['descricao']) ?>
                     </div>
-                    <a href="/campeonato_esportivo/routes/excluir_rodada.php?id=<?= $rodada['id'] ?>&campeonato_id=<?= $campeonato['id'] ?>" class="btn btn-sm btn-danger">Excluir</a>
+                    <a href="/campeonato_esportivo/routes/adms/excluir_rodada.php?id=<?= $rodada['id'] ?>&campeonato_id=<?= $campeonato['id'] ?>" class="btn btn-sm btn-danger">Excluir</a>
                 </div>
 
                 <!-- Lista de jogos da rodada -->
@@ -116,7 +116,7 @@ include __DIR__ . '../../../includes/admin_sec.php';?>
                     <ul class="mt-2">
                         <?php foreach ($partidas as $jogo): ?>
                             <li>
-                                <form method="POST" action="/campeonato_esportivo/routes/editar_partida.php" class="row g-2 align-items-center">
+                                <form method="POST" action="/campeonato_esportivo/routes/adms/editar_partida.php" class="row g-2 align-items-center">
                                     <input type="hidden" name="partida_id" value="<?= $jogo['id'] ?>">
                                     <input type="hidden" name="campeonato_id" value="<?= $campeonato['id'] ?>">
 
@@ -171,7 +171,7 @@ include __DIR__ . '../../../includes/admin_sec.php';?>
 
                                     <div class="col-md-2 d-flex gap-2">
                                         <button class="btn btn-sm btn-success w-100">Salvar</button>
-                                        <a href="/campeonato_esportivo/routes/excluir_partida.php?id=<?= $jogo['id'] ?>&campeonato_id=<?= $campeonato['id'] ?>" class="btn btn-sm btn-outline-danger">X</a>
+                                        <a href="/campeonato_esportivo/routes/adms/excluir_partida.php?id=<?= $jogo['id'] ?>&campeonato_id=<?= $campeonato['id'] ?>" class="btn btn-sm btn-outline-danger">X</a>
                                     </div>
 
                                 </form>
@@ -184,7 +184,7 @@ include __DIR__ . '../../../includes/admin_sec.php';?>
                 <?php endif; ?>
 
                 <!-- Formulário para adicionar nova partida -->
-                <form method="POST" action="/campeonato_esportivo/routes/adicionar_partida.php" class="row g-2 mt-2">
+                <form method="POST" action="/campeonato_esportivo/routes/adms/adicionar_partida.php" class="row g-2 mt-2">
                     <input type="hidden" name="rodada_id" value="<?= $rodada['id'] ?>">
                     <input type="hidden" name="campeonato_id" value="<?= $campeonato['id'] ?>">
 
@@ -228,7 +228,7 @@ include __DIR__ . '../../../includes/admin_sec.php';?>
 
 
     <h5>Nova Rodada</h5>
-    <form method="POST" action="/campeonato_esportivo/routes/adicionar_rodada.php" class="row g-3">
+    <form method="POST" action="/campeonato_esportivo/routes/adms/adicionar_rodada.php" class="row g-3">
         <input type="hidden" name="campeonato_id" value="<?= $campeonato['id'] ?>">
 
         <div class="col-md-2">

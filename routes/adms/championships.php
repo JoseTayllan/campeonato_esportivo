@@ -1,9 +1,9 @@
 <?php
 session_start();
-require_once __DIR__ . '/../config/database.php';
-require_once __DIR__ . '/../app/controllers/ChampionshipController.php';
-require_once __DIR__ . '/../app/controllers/FaseController.php';
-require_once __DIR__ . '/../app/controllers/RodadaController.php';
+require_once __DIR__ . '/../../config/database.php';
+require_once __DIR__ . '/../../app/controllers/ChampionshipController.php';
+require_once __DIR__ . '/../../app/controllers/FaseController.php';
+require_once __DIR__ . '/../../app/controllers/RodadaController.php';
 
 $metodo = $_SERVER['REQUEST_METHOD'];
 
@@ -27,7 +27,7 @@ if ($metodo === 'POST') {
     // Verificação mínima
     if (empty($nome) || empty($temporada) || empty($formato)) {
         $_SESSION['mensagem_erro'] = "Campos obrigatórios do campeonato estão faltando.";
-        header('Location: ../public/views/cadastro/cadastro_campeonato.php');
+        header('Location: ../../public/views/cadastro/cadastro_campeonato.php');
         exit;
     }
 
@@ -65,7 +65,7 @@ if ($metodo === 'POST') {
             }
 
             $_SESSION['mensagem_sucesso'] = "Campeonato, fase e rodadas criadas com sucesso!";
-            header('Location: ../public/views/cadastro/cadastro_campeonato.php');
+            header('Location: ../../public/views/cadastro/cadastro_campeonato.php');
             exit;
         } else {
             $_SESSION['mensagem_erro'] = "Campeonato criado, mas erro ao criar a fase.";
@@ -74,7 +74,7 @@ if ($metodo === 'POST') {
         $_SESSION['mensagem_erro'] = "Erro ao criar campeonato.";
     }
 
-    header('Location: ../public/views/cadastro/cadastro_campeonato.php');
+    header('Location: ../../public/views/cadastro/cadastro_campeonato.php');
     exit;
 } else {
     http_response_code(405);

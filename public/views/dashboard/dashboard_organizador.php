@@ -115,7 +115,7 @@ $totalJogadores = ($resultJogadores->fetch_assoc())['total'] ?? 0;
                                     <td><?= htmlspecialchars($c['formato']) ?></td>
                                     <td><?= date('d/m/Y', strtotime($c['criado_em'])) ?></td>
                                     <td>
-                                        <a href="/campeonato_esportivo/routes/campeonato_editar.php?id=<?= $c['id'] ?>" class="btn btn-sm btn-primary">Editar</a>
+                                        <a href="/campeonato_esportivo/routes/adms/campeonato_editar.php?id=<?= $c['id'] ?>" class="btn btn-sm btn-primary">Editar</a>
                                     </td>
                                 </tr>
                                 <?php

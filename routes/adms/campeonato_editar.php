@@ -1,9 +1,9 @@
 <?php 
 session_start();
 $restrito_para = ['Administrador', 'Organizador'];
-require_once __DIR__ . '/../config/database.php';
-require_once __DIR__ . '/../app/models/Campeonato.php';
-require_once __DIR__ . '/../app/models/Fase.php';
+require_once __DIR__ . '/../../config/database.php';
+require_once __DIR__ . '/../../app/models/Campeonato.php';
+require_once __DIR__ . '/../../app/models/Fase.php';
 
 $id = $_GET['id'] ?? null;
 
@@ -28,5 +28,5 @@ if (count($fasesExistentes) === 0) {
 
 $campeonato = $campeonatoModel->buscarPorId($id);
 
-include __DIR__ . '/../public/views/campeonatos/editar_campeonato.php';
+include __DIR__ . '/../../public/views/campeonatos/editar_campeonato.php';
 ?>

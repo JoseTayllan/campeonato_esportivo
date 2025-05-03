@@ -1,7 +1,7 @@
 <?php
 session_start();
-require_once __DIR__ . '/../config/database.php';
-require_once __DIR__ . '/../app/models/Campeonato.php';
+require_once __DIR__ . '/../../config/database.php';
+require_once __DIR__ . '/../../app/models/Campeonato.php';
 
 $partida_id = $_POST['partida_id'] ?? null;
 $campeonato_id = $_POST['campeonato_id'] ?? null;

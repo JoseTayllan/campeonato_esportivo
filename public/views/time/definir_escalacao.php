@@ -47,7 +47,7 @@ foreach ($escalacao_existente as $esc) {
 <div class="container mt-4">
     <h2>Definir Escalação</h2>
 
-    <form action="../../../routes/escalacao.php" method="post">
+    <form action="../../../routes/time/escalacao.php" method="post">
         <input type="hidden" name="partida_id" value="<?= $partida_id ?>">
 
         <table class="table table-bordered text-center align-middle">
@@ -98,7 +98,7 @@ foreach ($escalacao_existente as $esc) {
         </table>
 
         <div class="d-flex justify-content-between">
-            <a href="../../../routes/agenda_time.php" class="btn btn-secondary">Cancelar</a>
+            <a href="../../../routes/time/agenda_time.php" class="btn btn-secondary">Cancelar</a>
             <button type="submit" class="btn btn-success">Salvar Escalação</button>
         </div>
     </form>
