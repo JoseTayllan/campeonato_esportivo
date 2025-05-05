@@ -56,6 +56,10 @@ $result = $stmt2->get_result();
                         <?php endwhile; ?>
                     </select>
                 </div>
+                <div class="mb-3">
+                    <label for="valor_investido" class="form-label">Valor do Investimento (R$)</label>
+                    <input type="number" name="valor_investido" class="form-control" step="0.01" min="0" required>
+                </div>
                 <button type="submit" class="btn btn-success">Vincular Time</button>
             </form>
         <?php endif; ?>

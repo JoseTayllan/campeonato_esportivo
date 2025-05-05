@@ -126,5 +126,31 @@ class Estatistica {
     
         return $quantidade > 0 ? round($total / $quantidade, 1) : null;
     }
+
+    public function listarTodos() {
+        $query = "SELECT 
+                    e.partida_id,
+                    j.nome AS jogador_nome,
+                    e.gols,
+                    e.assistencias,
+                    e.passes_completos,
+                    e.finalizacoes,
+                    e.faltas_cometidas,
+                    e.cartoes_amarelos,
+                    e.cartoes_vermelhos,
+                    e.minutos_jogados,
+                    e.substituicoes
+                  FROM estatisticas_partida e
+                  JOIN jogadores j ON e.jogador_id = j.id";
+    
+        $result = $this->conn->query($query);
+    
+        $dados = [];
+        while ($row = $result->fetch_assoc()) {
+            $dados[] = $row;
+        }
+    
+        return $dados;
+    }
 }
 ?>

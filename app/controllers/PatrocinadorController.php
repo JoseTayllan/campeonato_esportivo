@@ -14,11 +14,11 @@ class PatrocinadorController {
     }
 
     public function obterTimesPatrocinados($patrocinador_id) {
-        // Também traz o valor investido da empresa
         $sql = "
             SELECT 
                 t.id, t.nome, t.cidade, t.estadio,
-                p.valor_investido, p.logo
+                pt.valor_investido,
+                p.logo
             FROM times t
             INNER JOIN patrocinador_time pt ON t.id = pt.time_id
             INNER JOIN patrocinadores p ON pt.patrocinador_id = p.id

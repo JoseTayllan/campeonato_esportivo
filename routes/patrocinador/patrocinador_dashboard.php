@@ -6,9 +6,9 @@ require_once __DIR__ . '/../../app/middleware/verifica_sessao.php';
 
 $controller = new PatrocinadorController($conn); // ✅ MOVIDO PARA CIMA
 
-// ✅ Vincular novo time
 if (isset($_POST['vincular_time']) && isset($_POST['time_id'])) {
     $time_id = $_POST['time_id'];
+    $valor = $_POST['valor_investido'] ?? 0;
 
     $stmt = $conn->prepare("SELECT id FROM patrocinadores WHERE usuario_id = ?");
     $stmt->bind_param("i", $_SESSION['usuario_id']);
@@ -18,8 +18,8 @@ if (isset($_POST['vincular_time']) && isset($_POST['time_id'])) {
 
     if ($patrocinador) {
         $patrocinador_id = $patrocinador['id'];
-        $stmt2 = $conn->prepare("INSERT INTO patrocinador_time (patrocinador_id, time_id, data_inicio) VALUES (?, ?, CURDATE())");
-        $stmt2->bind_param("ii", $patrocinador_id, $time_id);
+        $stmt2 = $conn->prepare("INSERT INTO patrocinador_time (patrocinador_id, time_id, data_inicio, valor_investido) VALUES (?, ?, CURDATE(), ?)");
+        $stmt2->bind_param("iid", $patrocinador_id, $time_id, $valor);
         $stmt2->execute();
     }
 

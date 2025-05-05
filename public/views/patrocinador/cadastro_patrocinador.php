@@ -21,13 +21,6 @@ if ($usuario_id) {
         exit;
     }
 }
-
-// Buscar times disponíveis para vínculo
-$times = [];
-$result = $conn->query("SELECT id, nome FROM times ORDER BY nome ASC");
-while ($row = $result->fetch_assoc()) {
-    $times[] = $row;
-}
 ?>
 
 <!DOCTYPE html>
@@ -57,26 +50,15 @@ while ($row = $result->fetch_assoc()) {
             </div>
 
             <div class="mb-3">
-                <label>Valor Investido</label>
-                <input type="number" step="0.01" name="valor_investido" class="form-control" required>
-            </div>
-
-            <div class="mb-3">
                 <label>Logo da Empresa (opcional)</label>
                 <input type="file" name="logo" class="form-control">
             </div>
 
-            <div class="mb-3">
-                <label>Vincular a um Time</label>
-                <select name="time_id" class="form-control">
-                    <option value="">-- Nenhum --</option>
-                    <?php foreach ($times as $time): ?>
-                        <option value="<?= $time['id'] ?>"><?= htmlspecialchars($time['nome']) ?></option>
-                    <?php endforeach; ?>
-                </select>
+            <div class="alert alert-info text-center">
+                O valor a ser investido será informado na hora de vincular a um time.
             </div>
 
-            <button type="submit" class="btn btn-success">Cadastrar e Vincular</button>
+            <button type="submit" class="btn btn-success">Cadastrar Empresa</button>
         </form>
     </div>
 </div>

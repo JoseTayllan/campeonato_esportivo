@@ -41,7 +41,10 @@ if (!isset($_SERVER['HTTP_REFERER']) || empty($_SERVER['HTTP_REFERER'])) {
     </div>
 
     <?php if (empty($dados_dashboard)): ?>
-        <div class="alert alert-info text-center">Nenhum time patrocinado encontrado.</div>
+        <div class="alert alert-info text-center">
+          <h5>Você ainda não vinculou sua empresa a nenhum time.</h5>
+          <p>Clique no botão <strong>“Vincular a Outro Time”</strong> acima para começar a patrocinar sua equipe.</p>
+        </div>
     <?php else: ?>
         <?php foreach ($dados_dashboard as $info): ?>
             <div class="card mb-5 shadow-sm">
