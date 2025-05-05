@@ -1,6 +1,7 @@
 <?php 
 date_default_timezone_set('America/Sao_Paulo');
-require_once __DIR__ . '/../cabecalho/header.php'; ?>
+require_once __DIR__ . '/../cabecalho/header.php'; 
+?>
 
 <div class="container mt-4">
     <h2>Partidas em Andamento</h2>
@@ -73,15 +74,103 @@ function carregarPlacarAoVivo() {
                                         ${statusBadge} ⏱ ${tempoJogo} ${acrescimoBadge} ${tempoVisualBadge}
                                     </small>
                                 </div>
-                                <hr>
-                                <h6>Eventos ao Vivo:</h6>
-                                ${eventosHtml}
+
+                                <hr class="my-3">
+                                <div class="d-flex justify-content-center gap-2 mt-3">
+                                    <button class="btn btn-outline-primary btn-sm" onclick="mostrarMinutoMinuto(${p.id})">Minuto a Minuto</button>
+                                    <button class="btn btn-outline-success btn-sm" onclick="mostrarEscalacoes(${p.id}, ${p.time_casa}, ${p.time_fora})">Escalações</button>
+                                </div>
+
+                                <div id="minuto-${p.id}" class="mt-2" style="display:none;">
+                                    <h6>Minuto a Minuto:</h6>
+                                    ${eventosHtml}
+                                </div>
+
+                                <div id="escalacoes-${p.id}" class="mt-2 text-start" style="display:none;"></div>
                             </div>
                         </div>
                     </div>
                 `;
             });
         });
+}
+
+function mostrarMinutoMinuto(partida_id) {
+    const boxMinuto = document.getElementById(`minuto-${partida_id}`);
+    const boxEscalacao = document.getElementById(`escalacoes-${partida_id}`);
+    if (!boxMinuto) return;
+    if (boxEscalacao && boxEscalacao.style.display === 'block') {
+        boxEscalacao.style.display = 'none';
+    }
+    boxMinuto.style.display = boxMinuto.style.display === 'block' ? 'none' : 'block';
+}
+
+function mostrarEscalacoes(partida_id, timeCasa, timeFora) {
+    const box = document.getElementById(`escalacoes-${partida_id}`);
+    const boxMinuto = document.getElementById(`minuto-${partida_id}`);
+    if (!box) return;
+    if (boxMinuto && boxMinuto.style.display === 'block') {
+        boxMinuto.style.display = 'none';
+    }
+    if (box.style.display === 'block') {
+        box.style.display = 'none';
+        box.innerHTML = '';
+        return;
+    }
+
+    Promise.all([
+        fetch(`/campeonato_esportivo/routes/ajax/escalacao_publica.php?partida_id=${partida_id}&time_id=${timeCasa}`).then(res => res.json()),
+        fetch(`/campeonato_esportivo/routes/ajax/escalacao_publica.php?partida_id=${partida_id}&time_id=${timeFora}`).then(res => res.json())
+    ])
+    .then(([casa, fora]) => {
+        let html = "";
+
+        html += `
+            <div class="mb-2 d-flex align-items-center">
+                ${casa.escudo ? `<img src="/campeonato_esportivo/public/img/times/${casa.escudo}" width="30" class="me-2">` : ''}
+                <strong>${casa.time_nome}</strong>
+            </div>`;
+        html += montarTabelaEscalacao(casa);
+
+        html += `
+            <div class="mb-2 d-flex align-items-center">
+                ${fora.escudo ? `<img src="/campeonato_esportivo/public/img/times/${fora.escudo}" width="30" class="me-2">` : ''}
+                <strong>${fora.time_nome}</strong>
+            </div>`;
+        html += montarTabelaEscalacao(fora);
+
+        box.innerHTML = html;
+        box.style.display = 'block';
+    })
+    .catch(() => {
+        box.innerHTML = "<p class='text-danger'>Erro ao carregar escalação.</p>";
+        box.style.display = 'block';
+    });
+}
+
+
+function montarTabelaEscalacao(time) {
+    let html = "";
+    html += "<strong>Titulares:</strong>";
+    html += "<table class='table table-bordered table-sm'><thead><tr><th>Imagem</th><th>Nome</th><th>Posição</th></tr></thead><tbody>";
+    time.titulares.forEach(j => {
+        html += `<tr>
+            <td><img src='/campeonato_esportivo/public/img/jogadores/${j.imagem}' onerror="this.src='/campeonato_esportivo/public/img/perfil_padrao/perfil_padrao.png'" style='width:30px;height:30px;border-radius:50%;'></td>
+            <td>${j.nome}</td>
+            <td>${j.posicao}</td>
+        </tr>`;
+    });
+    html += "</tbody></table><strong>Reservas:</strong>";
+    html += "<table class='table table-bordered table-sm'><thead><tr><th>Imagem</th><th>Nome</th><th>Posição</th></tr></thead><tbody>";
+    time.reservas.forEach(j => {
+        html += `<tr>
+            <td><img src='/campeonato_esportivo/public/img/jogadores/${j.imagem}' onerror="this.src='/campeonato_esportivo/public/img/perfil_padrao/perfil_padrao.png'" style='width:30px;height:30px;border-radius:50%;'></td>
+            <td>${j.nome}</td>
+            <td>${j.posicao}</td>
+        </tr>`;
+    });
+    html += "</tbody></table><hr>";
+    return html;
 }
 
 carregarPlacarAoVivo();

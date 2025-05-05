@@ -24,5 +24,12 @@ class PatrocinadorTime {
         $result = $stmt->get_result();
         return $result->fetch_all(MYSQLI_ASSOC);
     }
+
+    public function desvincular($patrocinador_id, $time_id) {
+        $sql = "DELETE FROM patrocinador_time WHERE patrocinador_id = ? AND time_id = ?";
+        $stmt = $this->conn->prepare($sql);
+        $stmt->bind_param("ii", $patrocinador_id, $time_id);
+        return $stmt->execute();
+    }
 }
 ?>

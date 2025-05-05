@@ -2,7 +2,6 @@
 require_once __DIR__ . '/../../../config/database.php';
 require_once __DIR__ . '/../../../app/controllers/TeamController.php';
 
-
 $controller = new TeamController($conn);
 $codigo = $_GET['codigo'] ?? '';
 
@@ -14,8 +13,9 @@ if (!$time) {
 }
 
 $jogadores = $controller->listarElencoPublico($time['id']);
+$patrocinadores = $controller->buscarPatrocinadoresDoTime($time['id']);
 ?>
-<?php require_once __DIR__ . '../../../includes/index_sec.php'; ?>  
+
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
@@ -48,7 +48,7 @@ $jogadores = $controller->listarElencoPublico($time['id']);
                 <th>Ações</th>
             </tr>
         </thead>
-    <tbody>
+        <tbody>
         <?php while ($j = $jogadores->fetch_assoc()): ?>
             <tr>
                 <td>
@@ -63,17 +63,32 @@ $jogadores = $controller->listarElencoPublico($time['id']);
                 <td><?= (int) $j['idade'] ?></td>
                 <td><?= htmlspecialchars($j['nacionalidade']) ?></td>
                 <td>
-                        <a href="/campeonato_esportivo/routes/public/jogador.php?id=<?= $j['id'] ?>" class="btn btn-primary btn-sm">Ver Perfil</a>
+                    <a href="/campeonato_esportivo/routes/public/jogador.php?id=<?= $j['id'] ?>" class="btn btn-primary btn-sm">Ver Perfil</a>
                 </td>
             </tr>
         <?php endwhile; ?>
-    </tbody>
-</table>
+        </tbody>
+    </table>
+
+    <?php if (!empty($patrocinadores)): ?>
+    <div class="card shadow mt-5">
+        <div class="card-body">
+            <h4 class="mb-4">Patrocinadores</h4>
+            <div class="d-flex flex-wrap gap-3 justify-content-start">
+                <?php foreach ($patrocinadores as $p): ?>
+                    <div class="bg-white border rounded shadow-sm p-2 d-flex align-items-center justify-content-center" style="width: 140px; height: 100px;">
+                        <?php if (!empty($p['logo'])): ?>
+                            <img src="/campeonato_esportivo/<?= $p['logo'] ?>" alt="<?= htmlspecialchars($p['nome_empresa']) ?>" style="max-width: 100%; max-height: 100%; object-fit: contain;">
+                        <?php else: ?>
+                            <small class="text-muted">Sem logo</small>
+                        <?php endif; ?>
+                    </div>
+                <?php endforeach; ?>
+            </div>
+        </div>
+    </div>
+<?php endif; ?>
+
 </div>
 </body>
 </html>
-<div class="mt-auto">
-<div class="mt-5"></div>
-<?php require_once __DIR__ . '/../cabecalho/footer.php'; ?>
-<script src="../../../assets/js/bootstrap.bundle.min.js"></script>
-</div>

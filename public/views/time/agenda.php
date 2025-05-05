@@ -9,6 +9,9 @@ if (!isset($_SERVER['HTTP_REFERER']) || empty($_SERVER['HTTP_REFERER'])) {
 }
 $base_url = '/campeonato_esportivo/public/';
 ?>
+<?php
+include_once __DIR__ . '/../../includes/assinatura_sec.php';
+?>
 
 <div class="container mt-4">
     <h2>Agenda de Jogos</h2>

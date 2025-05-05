@@ -14,10 +14,16 @@ class PatrocinadorController {
     }
 
     public function obterTimesPatrocinados($patrocinador_id) {
-        $sql = "SELECT t.id, t.nome, t.cidade, t.estadio
-                FROM times t
-                INNER JOIN patrocinador_time pt ON t.id = pt.time_id
-                WHERE pt.patrocinador_id = ?";
+        // Também traz o valor investido da empresa
+        $sql = "
+            SELECT 
+                t.id, t.nome, t.cidade, t.estadio,
+                p.valor_investido, p.logo
+            FROM times t
+            INNER JOIN patrocinador_time pt ON t.id = pt.time_id
+            INNER JOIN patrocinadores p ON pt.patrocinador_id = p.id
+            WHERE pt.patrocinador_id = ?
+        ";
         $stmt = $this->conn->prepare($sql);
         $stmt->bind_param("i", $patrocinador_id);
         $stmt->execute();
@@ -25,7 +31,6 @@ class PatrocinadorController {
     }
 
     public function obterDesempenhoTime($time_id) {
-        // Jogos que o time participou
         $sql = "
             SELECT 
                 p.id,
@@ -38,40 +43,40 @@ class PatrocinadorController {
         $stmt->bind_param("ii", $time_id, $time_id);
         $stmt->execute();
         $result = $stmt->get_result();
-    
+
         $jogos = 0;
         $vitorias = 0;
         $empates = 0;
         $derrotas = 0;
         $gols_pro = 0;
         $gols_contra = 0;
-    
+
         while ($row = $result->fetch_assoc()) {
             $jogos++;
-    
+
             if ($row['time_casa'] == $time_id) {
                 $gols_pro += $row['placar_casa'];
                 $gols_contra += $row['placar_fora'];
-    
+
                 if ($row['placar_casa'] > $row['placar_fora']) $vitorias++;
                 elseif ($row['placar_casa'] == $row['placar_fora']) $empates++;
                 else $derrotas++;
             } else {
                 $gols_pro += $row['placar_fora'];
                 $gols_contra += $row['placar_casa'];
-    
+
                 if ($row['placar_fora'] > $row['placar_casa']) $vitorias++;
                 elseif ($row['placar_fora'] == $row['placar_casa']) $empates++;
                 else $derrotas++;
             }
         }
-    
+
         $pontos = ($vitorias * 3) + ($empates);
         $pontos_disputados = $jogos * 3;
         $aproveitamento = $pontos_disputados > 0 ? round(($pontos / $pontos_disputados) * 100, 2) : 0;
         $saldo = $gols_pro - $gols_contra;
         $media_gols = $jogos > 0 ? round($gols_pro / $jogos, 2) : 0;
-    
+
         return [
             'jogos' => $jogos,
             'vitorias' => $vitorias,
@@ -84,7 +89,8 @@ class PatrocinadorController {
             'aproveitamento' => $aproveitamento
         ];
     }
-
-    
-    
+    // ✅ NOVO: Desvincular patrocinador de um time
+    public function desvincularTime($patrocinador_id, $time_id) {
+        return $this->patrocinadorTimeModel->desvincular($patrocinador_id, $time_id);
+    }
 }
