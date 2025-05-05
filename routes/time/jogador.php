@@ -1,6 +1,6 @@
 <?php
-require_once __DIR__ . '/../config/database.php';
-require_once __DIR__ . '/../app/controllers/TeamController.php';
+require_once __DIR__ . '/../../config/database.php';
+require_once __DIR__ . '/../../app/controllers/TeamController.php';
 
 session_start();
 
@@ -21,7 +21,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         if (isset($_FILES['imagem']) && $_FILES['imagem']['error'] === UPLOAD_ERR_OK) {
             $ext = pathinfo($_FILES['imagem']['name'], PATHINFO_EXTENSION);
             $imagem_nome = uniqid() . "." . $ext;
-            $destino = __DIR__ . '/../public/img/jogadores/' . $imagem_nome;
+            $destino = __DIR__ . '/../../public/img/jogadores/' . $imagem_nome;
 
             if (move_uploaded_file($_FILES['imagem']['tmp_name'], $destino)) {
                 $imagem = $imagem_nome;
@@ -34,7 +34,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $_SESSION['mensagem_erro'] = "Erro ao editar jogador.";
         }
 
-        header("Location: ../public/views/time/dashboard_time.php");
+        header("Location: ../../public/views/time/dashboard_time.php");
         exit();
     }
 
@@ -49,7 +49,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if (isset($_FILES['imagem']) && $_FILES['imagem']['error'] === UPLOAD_ERR_OK) {
         $ext = pathinfo($_FILES['imagem']['name'], PATHINFO_EXTENSION);
         $imagem_nome = uniqid() . "." . $ext;
-        $destino = __DIR__ . '/../public/img/jogadores/' . $imagem_nome;
+        $destino = __DIR__ . '/../../public/img/jogadores/' . $imagem_nome;
 
         if (move_uploaded_file($_FILES['imagem']['tmp_name'], $destino)) {
             $imagem = $imagem_nome;
@@ -62,6 +62,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $_SESSION['mensagem_erro'] = "Erro ao adicionar jogador.";
     }
 
-    header("Location: ../public/views/time/dashboard_time.php");
+    header("Location: ../../public/views/time/dashboard_time.php");
     exit();
 }

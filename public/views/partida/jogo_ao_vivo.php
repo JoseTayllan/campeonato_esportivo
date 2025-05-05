@@ -83,7 +83,7 @@
             </div>
 
             
-<form method="post" action="/campeonato_esportivo/routes/atualizar_tempo_visual.php" class="mt-2">
+<form method="post" action="/campeonato_esportivo/routes/adms/aovivo/atualizar_tempo_visual.php" class="mt-2">
     <input type="hidden" name="partida_id" value="<?= $partida['id'] ?>">
     <div class="btn-group w-100">
         <button type="submit" name="tempo_atual" value="1º Tempo" class="btn btn-outline-primary btn-sm">1º Tempo</button>
@@ -154,7 +154,7 @@ function atualizarCronometro() {
 }
 
 function pausarCronometro() {
-    fetch('/campeonato_esportivo/routes/cronometro.php', {
+    fetch('/campeonato_esportivo/routes/adms/aovivo/cronometro.php', {
         method: 'POST',
         headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
         body: 'partida_id=<?= $partida['id'] ?>&status=pausado'
@@ -162,7 +162,7 @@ function pausarCronometro() {
 }
 
 function retomarCronometro() {
-    fetch('/campeonato_esportivo/routes/cronometro.php', {
+    fetch('/campeonato_esportivo/routes/adms/aovivo/cronometro.php', {
         method: 'POST',
         headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
         body: 'partida_id=<?= $partida['id'] ?>&status=rodando'
@@ -172,7 +172,7 @@ function retomarCronometro() {
 function destacarAcrescimo() {
     const novo = prompt("Quantos minutos de acréscimo?");
     if (novo && !isNaN(novo)) {
-        fetch('/campeonato_esportivo/routes/cronometro.php', {
+        fetch('/campeonato_esportivo/routes/adms/aovivo/cronometro.php', {
             method: 'POST',
             headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
             body: 'partida_id=<?= $partida['id'] ?>&acrescimos=' + parseInt(novo)

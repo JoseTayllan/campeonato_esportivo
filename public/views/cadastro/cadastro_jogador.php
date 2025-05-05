@@ -34,7 +34,7 @@ require_once __DIR__ . '/../../../config/database.php';
 
         <?php include '../partials/mensagens.php'; ?>
 
-        <form action="../../../routes/players.php" method="POST" enctype="multipart/form-data">
+        <form action="../../../routes/adms/players.php" method="POST" enctype="multipart/form-data">
             <div class="mb-3">
                 <label for="nome" class="form-label">Nome do Jogador</label>
                 <input type="text" class="form-control" name="nome" placeholder="Ex: João da Silva" required>

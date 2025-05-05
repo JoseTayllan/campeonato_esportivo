@@ -1,6 +1,6 @@
 <?php
-require_once __DIR__ . '/../config/database.php';
-require_once __DIR__ . '/../app/controllers/EvaluationController.php';
+require_once __DIR__ . '/../../config/database.php';
+require_once __DIR__ . '/../../app/controllers/avaliacao/EvaluationController.php';
 
 session_start(); // Iniciar sessão para mensagens
 
@@ -18,11 +18,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     } else {
         $_SESSION['mensagem_erro'] = "Parâmetros ausentes.";
     }
-    header("Location: ../public/views/avaliacao/avaliar_jogador.php");
+    header("Location: ../../public/views/avaliacao/avaliar_jogador.php");
     exit();
 } else {
     $_SESSION['mensagem_erro'] = "Método inválido.";
-    header("Location: ../public/views/avaliacao/avaliar_jogador.php");
+    header("Location: ../../public/views/avaliacao/avaliar_jogador.php");
     exit();
 }
 ?>

@@ -13,7 +13,7 @@ include_once __DIR__ . '/includes/header_index.php';
     <h2 class="mb-4">Bem-vindo ao Sistema de Campeonatos Esportivos</h2>
 
     <div class="mb-4 d-flex flex-wrap gap-2">
-        <a href="/campeonato_esportivo/routes/placar_publico.php" class="btn btn-outline-success">
+        <a href="/campeonato_esportivo/routes/public/placar_publico.php" class="btn btn-outline-success">
             📻 Ver Placar Ao Vivo
         </a>
         <a href="/campeonato_esportivo/routes/login.php" class="btn btn-outline-dark">
@@ -52,7 +52,7 @@ include_once __DIR__ . '/includes/header_index.php';
                                 Temporada: <?= htmlspecialchars($camp['temporada']) ?><br>
                                 Formato: <?= htmlspecialchars($camp['formato']) ?>
                             </p>
-                            <a href="/campeonato_esportivo/routes/campeonato_publico.php?id=<?= $camp['id'] ?>" class="btn btn-sm btn-outline-primary">
+                            <a href="/campeonato_esportivo/routes/public/campeonato_publico.php?id=<?= $camp['id'] ?>" class="btn btn-sm btn-outline-primary">
                                 Ver Campeonato
                             </a>
                         </div>

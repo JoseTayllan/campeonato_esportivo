@@ -34,7 +34,7 @@ require_once __DIR__ . '/../../../config/database.php'; // Conexão com o banco
 
         <?php include '../partials/mensagens.php'; ?>
 
-        <form action="../../../routes/Evaluation.php" method="POST">
+        <form action="../../../routes/avaliacao/Evaluation.php" method="POST">
             <div class="mb-3">
                 <label for="jogador_id" class="form-label">Jogador</label>
                 <select class="form-control" name="jogador_id" required>

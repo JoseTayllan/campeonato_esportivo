@@ -1,6 +1,6 @@
 <?php
-require_once __DIR__ . '/../config/database.php';
-require_once __DIR__ . '/../app/controllers/PlayerController.php';
+require_once __DIR__ . '/../../config/database.php';
+require_once __DIR__ . '/../../app/controllers/PlayerController.php';
 
 session_start(); // Iniciar sessão para mensagens
 
@@ -12,7 +12,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if (isset($_FILES['imagem']) && $_FILES['imagem']['error'] === UPLOAD_ERR_OK) {
         $ext = pathinfo($_FILES['imagem']['name'], PATHINFO_EXTENSION);
         $imagem_nome = uniqid() . '.' . $ext;
-        $destino = __DIR__ . '/../public/img/jogadores/' . $imagem_nome;
+        $destino = __DIR__ . '/../../public/img/jogadores/' . $imagem_nome;
 
         if (move_uploaded_file($_FILES['imagem']['tmp_name'], $destino)) {
             $imagem = $imagem_nome;
@@ -37,11 +37,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     } else {
         $_SESSION['mensagem_erro'] = "Parâmetros ausentes.";
     }
-    header("Location: ../public/views/cadastro/cadastro_jogador.php"); // Caminho corrigido
+    header("Location: ../../public/views/cadastro/cadastro_jogador.php"); // Caminho corrigido
     exit();
 } else {
     $_SESSION['mensagem_erro'] = "Método inválido.";
-    header("Location: ../public/views/cadastro/cadastro_jogador.php"); // Caminho corrigido
+    header("Location: ../../public/views/cadastro/cadastro_jogador.php"); // Caminho corrigido
     exit();
 }
 ?>

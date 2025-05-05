@@ -23,7 +23,7 @@ if (!isset($_SERVER['HTTP_REFERER']) || empty($_SERVER['HTTP_REFERER'])) {
             Temporada: <?= htmlspecialchars($camp['temporada']) ?> — <?= htmlspecialchars($camp['formato']) ?>
         </div>
         <div class="d-flex gap-2">
-        <a href="/campeonato_esportivo/routes/ranking_campeonato.php?campeonato_id=<?= $camp['id'] ?>" class="btn btn-outline-secondary btn-sm">
+        <a href="/campeonato_esportivo/routes/public/ranking_campeonato.php?campeonato_id=<?= $camp['id'] ?>" class="btn btn-outline-secondary btn-sm">
     🏆 Ranking
 </a>
 

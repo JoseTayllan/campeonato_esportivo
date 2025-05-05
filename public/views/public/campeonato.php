@@ -3,7 +3,7 @@
 <div class="container mt-4">
     <h2><?= htmlspecialchars($dados['campeonato']['nome']) ?></h2>
 
-    <a href="/campeonato_esportivo/routes/ranking_campeonato.php?campeonato_id=<?= $dados['campeonato']['id'] ?>" 
+    <a href="/campeonato_esportivo/routes/public/ranking_campeonato.php?campeonato_id=<?= $dados['campeonato']['id'] ?>" 
        class="btn btn-outline-primary btn-sm mb-3">
        🥇 Ver Ranking do Campeonato
     </a>

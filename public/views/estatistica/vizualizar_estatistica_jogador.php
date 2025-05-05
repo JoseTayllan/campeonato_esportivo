@@ -211,9 +211,9 @@ switch ($tipo) {
             var jogadorId = $(this).val();
             if (jogadorId) {
                 $("#exportar_csv").removeClass("disabled").attr("href",
-                    "../../../routes/export.php?tipo=csv&jogador_id=" + jogadorId);
+                    "../../../routes/avaliacao/export.php?tipo=csv&jogador_id=" + jogadorId);
                 $("#exportar_pdf").removeClass("disabled").attr("href",
-                    "../../../routes/export.php?tipo=pdf&jogador_id=" + jogadorId);
+                    "../../../routes/avaliacao/export.php?tipo=pdf&jogador_id=" + jogadorId);
             } else {
                 $("#exportar_csv, #exportar_pdf").addClass("disabled").attr("href", "#");
             }

@@ -37,7 +37,7 @@ $time = $result->fetch_assoc();
     <div class="container py-5">
         <div class="card p-4 shadow">
             <h2 class="mb-4">Adicionar Jogador</h2>
-            <form action="../../../routes/jogador.php" method="POST" enctype="multipart/form-data">
+            <form action="../../.." method="POST" enctype="multipart/form-data">
                 <input type="hidden" name="time_id" value="<?= $time['id'] ?>">
 
                 <div class="mb-3">

@@ -1,6 +1,6 @@
 <?php
 session_start();
-require_once __DIR__ . '/../app/controllers/ExportAvaliacaoController.php';
+require_once __DIR__ . '/../../app/controllers/ExportAvaliacaoController.php';
 
 $exportController = new ExportAvaliacaoController();
 

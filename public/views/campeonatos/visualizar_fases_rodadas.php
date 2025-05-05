@@ -18,7 +18,7 @@ if ($campeonatoSelecionado) {
 <div class="container mt-4">
 
     <!-- Botão de Voltar -->
-    <a href="/campeonato_esportivo/routes/campeonato_publico.php?id=<?= (int)$campeonatoSelecionado ?>"
+    <a href="/campeonato_esportivo/routes/public/campeonato_publico.php?id=<?= (int)$campeonatoSelecionado ?>"
        class="btn btn-outline-secondary btn-sm mb-4">
         🔙 Voltar para o Campeonato
     </a>

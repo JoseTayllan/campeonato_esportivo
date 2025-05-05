@@ -173,9 +173,9 @@ require_once __DIR__ . '/../../../config/database.php'; // Conexão com o banco
             document.getElementById("exportar_csv").classList.remove("disabled");
             document.getElementById("exportar_pdf").classList.remove("disabled");
             document.getElementById("exportar_csv").href =
-                "../../../routes/exportar_dados.php?tipo=csv&jogador_id=" + jogadorId;
+                "../../../routes/avaliacao/exportar_dados.php?tipo=csv&jogador_id=" + jogadorId;
             document.getElementById("exportar_pdf").href =
-                "../../../routes/exportar_dados.php?tipo=pdf&jogador_id=" + jogadorId;
+                "../../../routes/avaliacao/exportar_dados.php?tipo=pdf&jogador_id=" + jogadorId;
         } else {
             document.getElementById("exportar_csv").classList.add("disabled");
             document.getElementById("exportar_pdf").classList.add("disabled");

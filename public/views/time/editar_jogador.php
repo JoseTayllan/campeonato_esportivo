@@ -38,7 +38,7 @@ if (!$jogador) {
     <div class="card p-4 shadow">
         <h2 class="mb-4">Editar Jogador</h2>
 
-        <form action="../../../routes/jogador.php" method="POST" enctype="multipart/form-data">
+        <form action="../../../routes/time/jogador.php" method="POST" enctype="multipart/form-data">
             <input type="hidden" name="editar_jogador" value="1">
             <input type="hidden" name="jogador_id" value="<?= $jogador['id'] ?>">
 
