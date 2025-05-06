@@ -1,6 +1,6 @@
 <?php
 require_once __DIR__ . '/../../config/database.php';
-require_once __DIR__ . '/../../app/controllers/avaliacao/EvaluationController.php';
+require_once __DIR__ . '/../../app/controllers/EvaluationController.php';
 
 session_start(); // Iniciar sessão para mensagens
 

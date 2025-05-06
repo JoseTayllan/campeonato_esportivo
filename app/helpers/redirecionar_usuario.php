@@ -27,7 +27,8 @@ function redirecionarUsuario($usuario) {
         'organizador'   => '../public/views/dashboard/dashboard_organizador.php',
         'treinador'     => '../public/views/dashboard/dashboard_treinador.php',
         'jogador'       => '../public/views/dashboard/dashboard_jogador.php',
-        'olheiro'       => '../public/views/avaliacao/visualizar_avaliacoes.php',
+        'olheiro' => '../routes/avaliacao/visualizar_avaliacoes.php'
+
     ];
 
     if (isset($rotas[$tipo])) {

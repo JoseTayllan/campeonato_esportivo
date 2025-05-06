@@ -40,7 +40,7 @@ if (session_status() === PHP_SESSION_NONE) {
                     $tipo_usuario = $_SESSION['usuario']['tipo'] ?? null;
 
                     if ($tipo_assinatura === 'completo' && $tipo_usuario === 'Olheiro') {
-                        $link = '/campeonato_esportivo/public/views/avaliacao/visualizar_avaliacoes.php';
+                        $link = '/campeonato_esportivo/routes/avaliacao/visualizar_avaliacoes.php';
                     } elseif ($tipo_assinatura === 'completo' && $tipo_usuario === 'Administrador') {
                         $link = '/campeonato_esportivo/public/views/dashboard/dashboard_administrador.php';
                     } elseif ($tipo_assinatura === 'time') {
