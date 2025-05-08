@@ -1,21 +1,5 @@
-<?php
-session_start();
-require_once __DIR__ . '/../../../config/database.php';
-require_once __DIR__ . '/../../../app/middleware/verifica_sessao.php';
-require_once __DIR__ . '/../../includes/assinatura_patrocinador_sec.php';
 
-$usuario_id = $_SESSION['usuario_id'];
-$stmt = $conn->prepare("SELECT id, logo FROM patrocinadores WHERE usuario_id = ?");
-$stmt->bind_param("i", $usuario_id);
-$stmt->execute();
-$res = $stmt->get_result();
-$patrocinador = $res->fetch_assoc();
-
-if (!$patrocinador) {
-    echo "<div class='container py-5'><div class='alert alert-danger'>Empresa não encontrada.</div></div>";
-    exit;
-}
-?>
+<?php require_once __DIR__ . '/../../includes/assinatura_patrocinador_sec.php'; ?>
 
 <div class="container py-5">
     <div class="card p-4 shadow">

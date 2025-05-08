@@ -39,7 +39,7 @@
                              alt="Escudo <?= $time['nome'] ?>" width="60" class="mb-2">
                         <div class="fw-semibold"><?= htmlspecialchars($time['nome']) ?></div>
                         <?php if (!empty($time['codigo_publico'])): ?>
-                            <a href="/campeonato_esportivo/public/views/time/perfil_time.php?codigo=<?= urlencode($time['codigo_publico']) ?>" 
+                            <a href="/campeonato_esportivo/routes/public/perfil_time.php?codigo=<?= urlencode($time['codigo_publico']) ?>" 
                                class="btn btn-sm btn-outline-secondary mt-2">
                                 Ver Perfil
                             </a>

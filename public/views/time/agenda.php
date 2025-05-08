@@ -1,24 +1,13 @@
-<?php
-// Proteger contra acesso direto
-if (!isset($_SERVER['HTTP_REFERER']) || empty($_SERVER['HTTP_REFERER'])) {
-    echo "<div style='text-align:center; padding:20px; font-family:sans-serif;'>
-            <h2 style='color:red;'>Erro: Acesso direto não permitido!</h2>
-            <p>Utilize o sistema normalmente para acessar esta página.</p>
-          </div>";
-    exit();
-}
-$base_url = '/campeonato_esportivo/public/';
-?>
-<?php
-include_once __DIR__ . '/../../includes/assinatura_sec.php';
-?>
+<?php if (!isset($partidas)) { die('Acesso direto não permitido.'); } ?>
+<?php $base_url = '/campeonato_esportivo/'; ?>
+<?php include_once __DIR__ . '/../../includes/assinatura_sec.php'; ?>
 
 <div class="container mt-4">
     <h2>Agenda de Jogos</h2>
 
     <?php if (empty($partidas)): ?>
         <div class="alert alert-info">Nenhuma partida encontrada para seu time.</div>
-        <a href="../../dashboard/dashboard_time.php" class="btn btn-primary">Voltar ao Painel</a>
+        <a href="/campeonato_esportivo/routes/time/dashboard_time.php" class="btn btn-primary">Voltar ao Painel</a>
     <?php else: ?>
         <div class="row">
             <?php
@@ -35,7 +24,6 @@ include_once __DIR__ . '/../../includes/assinatura_sec.php';
             }
             ?>
 
-
             <div class="col-md-6">
                 <h4>Próximos Jogos</h4>
                 <?php foreach ($proximos as $jogo): ?>
@@ -48,7 +36,6 @@ include_once __DIR__ . '/../../includes/assinatura_sec.php';
                                 <img src="<?= $base_url . $jogo['logo_fora'] ?>" alt="Escudo Fora" width="30" class="ms-2">
                                 <br><small>Local: <?= $jogo['local'] ?></small><br>
 
-                                <!-- Badge de Status -->
                                 <?php if ($jogo['status'] === 'finalizada'): ?>
                                     <span class="badge bg-success mt-2">Finalizado</span>
                                 <?php elseif ($jogo['status'] === 'em_andamento'): ?>
@@ -58,7 +45,7 @@ include_once __DIR__ . '/../../includes/assinatura_sec.php';
                                 <?php endif; ?>
                             </div>
                             <div>
-                                <a href="/campeonato_esportivo/public/views/time/definir_escalacao.php?partida_id=<?= $jogo['id'] ?>" class="btn btn-primary">
+                                <a href="/campeonato_esportivo/routes/time/definir_escalacao.php?partida_id=<?= $jogo['id'] ?>" class="btn btn-primary">
                                     Definir Escalação
                                 </a>
                             </div>
@@ -79,7 +66,6 @@ include_once __DIR__ . '/../../includes/assinatura_sec.php';
                                 <img src="<?= $base_url . $jogo['logo_fora'] ?>" alt="Escudo Fora" width="30" class="ms-2">
                                 <br><small>Local: <?= $jogo['local'] ?></small><br>
 
-                                <!-- Badge de Status -->
                                 <?php if ($jogo['status'] === 'finalizada'): ?>
                                     <span class="badge bg-success mt-2">Finalizado</span>
                                 <?php elseif ($jogo['status'] === 'em_andamento'): ?>
@@ -92,7 +78,6 @@ include_once __DIR__ . '/../../includes/assinatura_sec.php';
                     </div>
                 <?php endforeach; ?>
             </div>
-
         </div>
     <?php endif; ?>
 </div>

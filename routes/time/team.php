@@ -1,44 +1,41 @@
 <?php
-require_once __DIR__ . '/../../config/database.php';
-require_once __DIR__ . '/../../app/controllers/TeamController.php';
 
-session_start(); // Iniciar sessão para armazenar mensagens
+require_once __DIR__ . '/../../app/controllers/time_contro/TeamController.php';
+
+session_start();
 
 $timeController = new TeamController($conn);
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
-    // ✅ BLOCO NOVO: Criação de time via campo oculto (form direto na dashboard)
+    // ✅ Criação do time
     if (isset($_POST['nome'], $_POST['cidade'], $_POST['estadio'])) {
         $nome = $_POST['nome'];
         $cidade = $_POST['cidade'];
         $estadio = $_POST['estadio'];
-        $escudo = NULL;
+        $escudo = null;
 
-        // 🔥 Pega também o admin_id enviado pelo formulário
         $admin_id = $_POST['admin_id'] ?? ($_SESSION['usuario_id'] ?? null);
-
         if (!$admin_id) {
             $_SESSION['mensagem_erro'] = "Erro: Admin não identificado.";
-            header("Location: ../../public/views/time/dashboard_time.php");
+            header("Location: /campeonato_esportivo/routes/time/dashboard_time.php");
             exit();
         }
 
         if (isset($_FILES['escudo']) && $_FILES['escudo']['error'] === UPLOAD_ERR_OK) {
             $extensao = pathinfo($_FILES['escudo']['name'], PATHINFO_EXTENSION);
             $novoNome = uniqid("escudo_") . "." . $extensao;
-            $caminhoDestino = __DIR__ . "/../../public/img/times/" . $novoNome;
+            $destino = __DIR__ . "/../../public/img/times/" . $novoNome;
 
-            if (move_uploaded_file($_FILES['escudo']['tmp_name'], $caminhoDestino)) {
-                $escudo = "img/times/" . $novoNome;
+            if (move_uploaded_file($_FILES['escudo']['tmp_name'], $destino)) {
+                $escudo = "public/img/times/" . $novoNome;
             } else {
                 $_SESSION['mensagem_erro'] = "Erro ao salvar o escudo.";
-                header("Location: ../../public/views/time/dashboard_time.php");
+                header("Location: /campeonato_esportivo/routes/time/dashboard_time.php");
                 exit();
             }
         }
 
-        // 🔥 Agora passa o admin_id para criarTime
         $resultado = $timeController->criarTime($nome, $escudo, $cidade, $estadio, $admin_id);
 
         if (strpos($resultado, 'sucesso') !== false) {
@@ -47,27 +44,27 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $_SESSION['mensagem_erro'] = "Erro ao cadastrar time: " . $resultado;
         }
 
-        header("Location: ../../public/views/time/dashboard_time.php");
+        header("Location: /campeonato_esportivo/routes/time/dashboard_time.php");
         exit();
     }
 
-    // ✅ Edição de time existente
-    if (isset($_POST['editar_time']) && isset($_POST['time_id'], $_POST['nome'], $_POST['cidade'])) {
+    // ✅ Edição de time
+    if (isset($_POST['editar_time'], $_POST['time_id'], $_POST['nome'], $_POST['cidade'])) {
         $id = $_POST['time_id'];
         $nome = $_POST['nome'];
         $cidade = $_POST['cidade'];
-        $escudo = NULL;
+        $escudo = null;
 
         if (isset($_FILES['escudo']) && $_FILES['escudo']['error'] === UPLOAD_ERR_OK) {
             $extensao = pathinfo($_FILES['escudo']['name'], PATHINFO_EXTENSION);
             $novoNome = uniqid("escudo_") . "." . $extensao;
-            $caminhoDestino = __DIR__ . "/../../public/img/times/" . $novoNome;
+            $destino = __DIR__ . "/../../public/img/times/" . $novoNome;
 
-            if (move_uploaded_file($_FILES['escudo']['tmp_name'], $caminhoDestino)) {
-                $escudo = "img/times/" . $novoNome;
+            if (move_uploaded_file($_FILES['escudo']['tmp_name'], $destino)) {
+                $escudo = "public/img/times/" . $novoNome;
             } else {
                 $_SESSION['mensagem_erro'] = "Erro ao salvar o novo escudo.";
-                header("Location: ../../public/views/time/dashboard_time.php");
+                header("Location: /campeonato_esportivo/routes/time/dashboard_time.php");
                 exit();
             }
         }
@@ -80,16 +77,16 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $_SESSION['mensagem_erro'] = "Erro ao atualizar time.";
         }
 
-        header("Location: ../../public/views/time/dashboard_time.php");
+        header("Location: /campeonato_esportivo/routes/time/dashboard_time.php");
         exit();
     }
 
-    // Segurança extra (fallback)
+    // Fallback
     $_SESSION['mensagem_erro'] = "Parâmetros inválidos.";
-    header("Location: ../../public/views/time/dashboard_time.php");
+    header("Location: /campeonato_esportivo/routes/time/dashboard_time.php");
     exit();
 } else {
     $_SESSION['mensagem_erro'] = "Método inválido.";
-    header("Location: ../../public/views/time/dashboard_time.php");
+    header("Location: /campeonato_esportivo/routes/time/dashboard_time.php");
     exit();
 }

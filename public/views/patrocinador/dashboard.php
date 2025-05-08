@@ -1,14 +1,3 @@
-<?php
-// Proteger contra acesso direto
-if (!isset($_SERVER['HTTP_REFERER']) || empty($_SERVER['HTTP_REFERER'])) {
-    echo "<div style='text-align:center; padding:20px; font-family:sans-serif;'>
-            <h2 style='color:red;'>Erro: Acesso direto não permitido!</h2>
-            <p>Utilize o sistema normalmente para acessar esta página.</p>
-          </div>";
-    exit();
-}
-?>
-
 <?php require_once __DIR__ . '/../../includes/assinatura_patrocinador.php'; ?>
 
 <!DOCTYPE html>
@@ -55,15 +44,23 @@ if (!isset($_SERVER['HTTP_REFERER']) || empty($_SERVER['HTTP_REFERER'])) {
                     <p><strong>Cidade:</strong> <?= $info['time']['cidade'] ?><br>
                        <strong>Estádio:</strong> <?= $info['time']['estadio'] ?></p>
 
-                    <?php if (!empty($info['time']['valor_investido'])): ?>
+                       <?php if (!empty($info['validade_contrato'])): ?>
+       <div class="valor-investido">
+        <span class="badge bg-secondary">
+            Contrato até <?= htmlspecialchars(date('Y', strtotime($info['validade_contrato']))) ?>
+        </span>
+    </div>
+<?php endif; ?>
+
+
+                    <?php if (!empty($info['valor_investido'])): ?>
                         <div class="valor-investido">
                             <span class="badge bg-success">
-                                Investido: R$ <?= number_format($info['time']['valor_investido'], 2, ',', '.') ?>
+                                Investido: R$ <?= number_format($info['valor_investido'], 2, ',', '.') ?>
                             </span>
                         </div>
                     <?php endif; ?>
 
-                    <!-- 🔴 Formulário de Desvincular -->
                     <form method="POST" action="/campeonato_esportivo/routes/patrocinador/patrocinador_dashboard.php" class="text-end mt-3">
                         <input type="hidden" name="desvincular_time" value="1">
                         <input type="hidden" name="time_id" value="<?= $info['time']['id'] ?>">

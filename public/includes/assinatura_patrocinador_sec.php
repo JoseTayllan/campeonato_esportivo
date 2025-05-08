@@ -64,10 +64,10 @@ if (isset($_SESSION['usuario_id'])) {
                 <i class="bi bi-building-add me-2"></i> Cadastrar Empresa
             </a>
         <?php endif; ?>
-        <a href="/campeonato_esportivo/public/views/patrocinador/vincular_time.php" class="menu-link flex-shrink-0">
+        <a href="/campeonato_esportivo/routes/patrocinador/vincular_time.php" class="menu-link flex-shrink-0">
             <i class="bi bi-link-45deg me-2"></i> Vincular a Outro Time
         </a>
-        <a href="/campeonato_esportivo/public/views/patrocinador/editar_banner.php" class="menu-link flex-shrink-0">
+        <a href="/campeonato_esportivo/routes/patrocinador/editar_banner.php" class="menu-link flex-shrink-0">
             <i class="bi bi-image me-2"></i> Atualizar Banner
         </a>
         <a href="/campeonato_esportivo/routes/patrocinador/patrocinador_dashboard.php" class="menu-link flex-shrink-0">
