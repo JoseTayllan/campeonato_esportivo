@@ -708,16 +708,14 @@ footer {
 <div class="container">
 <h1>ChampCore</h1>
 <p class="lead">Gerencie campeonatos, estatísticas e equipes com um sistema moderno e acessível.</p>
-<div class="cta">
+<div class="cta" style="display: flex; flex-direction: column; gap: 1rem; justify-content: center; align-items: center;">
 <a href="futebol/index.php">Acessar módulo Futebol</a>
+<iframe width="560" height="315" src="https://www.youtube.com/embed/fVu5Gvo9Pb0?si=o8VD4IEjSrttu8qA" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
 </div>
 <section>
 <h2 id="esportes">📂 Esportes</h2>
 <div class="grid">
 <div class="card" style="position: relative; overflow: hidden; height: 100%; border-radius: 1rem;">
-<video autoplay="" loop="" muted="" playsinline="" style="position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; z-index: 0; border-radius: 1rem;">
-<source src="videos/futebol_intro.mp4" type="video/mp4"/>
-</video>
 <div style="position: relative; z-index: 1; padding: 2rem; height: 90%;">
 <h3>⚽ Futebol</h3>
 <p>Controle completo de partidas, escalações e desempenho.</p>
