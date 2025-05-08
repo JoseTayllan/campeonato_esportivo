@@ -9,7 +9,7 @@ $mostrarCadastrarEmpresa = true;
 if (isset($_SESSION['usuario_id'])) {
     $idUsuario = $_SESSION['usuario_id'];
     $stmt = $conn->prepare("SELECT id FROM patrocinadores WHERE usuario_id = ?");
-    $stmt->bind_param("i", $idUsuario);
+    $stmt->bindValue(1, $idUsuario, PDO::PARAM_INT);
     $stmt->execute();
     $res = $stmt->get_result();
     if ($res && $res->num_rows > 0) {

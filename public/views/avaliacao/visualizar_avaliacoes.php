@@ -75,7 +75,7 @@
                 </thead>
                 <tbody>
                     <?php if ($dados['avaliacoes']->num_rows > 0): ?>
-                        <?php while ($row = $dados['avaliacoes']->fetch_assoc()): ?>
+                        <?php while ($row = $dados['avaliacoes']->fetch(PDO::FETCH_ASSOC)): ?>
                             <tr>
                                 <td><?= $row['jogador_nome'] ?></td>
                                 <td><?= $row['olheiro_nome'] ?></td>

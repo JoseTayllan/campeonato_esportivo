@@ -20,9 +20,9 @@ class RankingPorCampeonato {
             LIMIT 10
         ";
         $stmt = $this->conn->prepare($sql);
-        $stmt->bind_param("i", $campeonato_id);
+        $stmt->bindValue(1, $campeonato_id, PDO::PARAM_INT);
         $stmt->execute();
-        return $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
+        return $stmt->get_result()->fetchAll(PDO::FETCH_ASSOC);
     }
 
     public function cartoes($campeonato_id) {
@@ -42,9 +42,9 @@ class RankingPorCampeonato {
             LIMIT 10
         ";
         $stmt = $this->conn->prepare($sql);
-        $stmt->bind_param("i", $campeonato_id);
+        $stmt->bindValue(1, $campeonato_id, PDO::PARAM_INT);
         $stmt->execute();
-        return $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
+        return $stmt->get_result()->fetchAll(PDO::FETCH_ASSOC);
     }
     
     
@@ -64,9 +64,9 @@ class RankingPorCampeonato {
             LIMIT 10
         ";
         $stmt = $this->conn->prepare($sql);
-        $stmt->bind_param("i", $campeonato_id);
+        $stmt->bindValue(1, $campeonato_id, PDO::PARAM_INT);
         $stmt->execute();
-        return $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
+        return $stmt->get_result()->fetchAll(PDO::FETCH_ASSOC);
     }
     public function goleiros($campeonato_id) {
         $sql = "
@@ -87,9 +87,9 @@ class RankingPorCampeonato {
             LIMIT 10
         ";
         $stmt = $this->conn->prepare($sql);
-        $stmt->bind_param("i", $campeonato_id);
+        $stmt->bindValue(1, $campeonato_id, PDO::PARAM_INT);
         $stmt->execute();
-        return $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
+        return $stmt->get_result()->fetchAll(PDO::FETCH_ASSOC);
     }
     
     

@@ -59,7 +59,7 @@ class ExportAvaliacaoController {
         // Dados
         $pdf->SetFont('Arial', '', 9);
         $fill = false;
-        while ($row = $result->fetch_assoc()) {
+        while ($row = $result->fetch(PDO::FETCH_ASSOC)) {
             $pdf->SetFillColor($fill ? 245 : 255);
             $pdf->Cell(40, 7, mb_convert_encoding($row['jogador_nome'], 'ISO-8859-1', 'UTF-8'), 1, 0, 'C', $fill);
             $pdf->Cell(40, 7, mb_convert_encoding($row['olheiro_nome'], 'ISO-8859-1', 'UTF-8'), 1, 0, 'C', $fill);
@@ -113,7 +113,7 @@ class ExportAvaliacaoController {
     
         $result = $conn->query($query);
     
-        while ($row = $result->fetch_assoc()) {
+        while ($row = $result->fetch(PDO::FETCH_ASSOC)) {
             $linha = [
                 $row['jogador_nome'] ?? '',
                 $row['olheiro_nome'] ?? '',
@@ -181,7 +181,7 @@ class ExportAvaliacaoController {
         // Dados
         $pdf->SetFont('Arial', '', 8);
         $fill = false;
-        while ($row = $result->fetch_assoc()) {
+        while ($row = $result->fetch(PDO::FETCH_ASSOC)) {
             $partidaLabel = "Partida #{$row['partida_id']} - " . date('d/m/Y', strtotime($row['data_partida']));
             $pdf->SetFillColor($fill ? 245 : 255);
     
@@ -236,7 +236,7 @@ class ExportAvaliacaoController {
     
         $result = $conn->query($query);
     
-        while ($row = $result->fetch_assoc()) {
+        while ($row = $result->fetch(PDO::FETCH_ASSOC)) {
             $partidaTexto = "Partida #{$row['partida_id']} - " . date('d/m/Y', strtotime($row['data_partida']));
             $linha = [
                 $partidaTexto,

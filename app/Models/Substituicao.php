@@ -16,7 +16,10 @@ class Substituicao {
         $query = "INSERT INTO substituicoes (partida_id, jogador_saiu, jogador_entrou, minuto_substituicao) 
                   VALUES (?, ?, ?, ?)";
         $stmt = $this->conn->prepare($query);
-        $stmt->bind_param("iiii", $partida_id, $jogador_saiu, $jogador_entrou, $minuto_substituicao);
+        $stmt->bindValue(1, $partida_id, PDO::PARAM_INT);
+    $stmt->bindValue(2, $jogador_saiu, PDO::PARAM_INT);
+    $stmt->bindValue(3, $jogador_entrou, PDO::PARAM_INT);
+    $stmt->bindValue(4, $minuto_substituicao, PDO::PARAM_INT);
         return $stmt->execute();
     }
 }

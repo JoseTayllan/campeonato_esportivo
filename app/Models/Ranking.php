@@ -18,7 +18,8 @@ class Ranking {
             ORDER BY gols DESC
             LIMIT 10
         ";
-        return $this->conn->query($sql)->fetch_all(MYSQLI_ASSOC);
+        $stmt = $this->conn->query($sql);
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 
     public function cartoes() {
@@ -33,7 +34,8 @@ class Ranking {
             ORDER BY amarelos DESC, vermelhos DESC
             LIMIT 10
         ";
-        return $this->conn->query($sql)->fetch_all(MYSQLI_ASSOC);
+        $stmt = $this->conn->query($sql);
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 
     public function timesComMaisVitorias() {
@@ -44,6 +46,7 @@ class Ranking {
             ORDER BY tc.vitorias DESC
             LIMIT 10
         ";
-        return $this->conn->query($sql)->fetch_all(MYSQLI_ASSOC);
+        $stmt = $this->conn->query($sql);
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 }

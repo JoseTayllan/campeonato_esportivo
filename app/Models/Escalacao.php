@@ -16,7 +16,7 @@ class Escalacao {
         $partida_id = (int)$dados[0]['partida_id'];
 
         $stmtDelete = $this->conn->prepare("DELETE FROM escalacoes WHERE partida_id = ?");
-        $stmtDelete->bind_param("i", $partida_id);
+        $stmtDelete->bindValue(1, $partida_id, PDO::PARAM_INT);
         $stmtDelete->execute();
 
         foreach ($dados as $jogador) {
@@ -27,7 +27,10 @@ class Escalacao {
             $stmt = $this->conn->prepare("INSERT INTO escalacoes (partida_id, jogador_id, titular, capitao) VALUES (?, ?, ?, ?)");
             if (!$stmt) continue;
 
-            $stmt->bind_param("iiii", $partida_id, $jogador_id, $titular, $capitao);
+            $stmt->bindValue(1, $partida_id, PDO::PARAM_INT);
+    $stmt->bindValue(2, $jogador_id, PDO::PARAM_INT);
+    $stmt->bindValue(3, $titular, PDO::PARAM_INT);
+    $stmt->bindValue(4, $capitao, PDO::PARAM_INT);
             $stmt->execute();
             $stmt->close();
         }
@@ -36,19 +39,19 @@ class Escalacao {
     }
     public function buscarJogadoresDoTime($time_id) {
         $stmt = $this->conn->prepare("SELECT * FROM jogadores WHERE time_id = ?");
-        $stmt->bind_param("i", $time_id);
+        $stmt->bindValue(1, $time_id, PDO::PARAM_INT);
         $stmt->execute();
-        return $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
+        return $stmt->get_result()->fetchAll(PDO::FETCH_ASSOC);
     }
 
     public function buscarEscalacaoPorPartida($partida_id) {
         $stmt = $this->conn->prepare("SELECT * FROM escalacoes WHERE partida_id = ?");
-        $stmt->bind_param("i", $partida_id);
+        $stmt->bindValue(1, $partida_id, PDO::PARAM_INT);
         $stmt->execute();
         $result = $stmt->get_result();
 
         $escalacao = [];
-        while ($row = $result->fetch_assoc()) {
+        while ($row = $result->fetch(PDO::FETCH_ASSOC)) {
             $escalacao[$row['jogador_id']] = $row;
         }
         return $escalacao;

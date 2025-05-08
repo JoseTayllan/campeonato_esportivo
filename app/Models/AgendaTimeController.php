@@ -10,10 +10,10 @@ class AgendaTimeController {
     public function buscarPartidasDoMeuTime($admin_id) {
         // Busca o ID do time vinculado ao usuário logado
         $stmt = $this->conn->prepare("SELECT id FROM times WHERE admin_id = ?");
-        $stmt->bind_param("i", $admin_id);
+        $stmt->bindValue(1, $admin_id, PDO::PARAM_INT);
         $stmt->execute();
         $res = $stmt->get_result();
-        $time = $res->fetch_assoc();
+        $time = $res->fetch(PDO::FETCH_ASSOC);
 
         if (!$time) return [];
 
@@ -31,7 +31,8 @@ class AgendaTimeController {
                 ORDER BY p.data ASC";
 
         $stmt = $this->conn->prepare($sql);
-        $stmt->bind_param("ii", $time_id, $time_id);
+        $stmt->bindValue(1, $time_id, PDO::PARAM_INT);
+    $stmt->bindValue(2, $time_id, PDO::PARAM_INT);
         $stmt->execute();
         return $stmt->get_result();
     }

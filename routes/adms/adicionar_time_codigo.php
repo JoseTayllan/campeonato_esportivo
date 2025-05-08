@@ -14,13 +14,15 @@ $time = $controller->buscarTimePublico($codigo);
 if ($time && $campeonato_id) {
     // Evitar duplicidade
     $check = $conn->prepare("SELECT * FROM times_campeonatos WHERE time_id = ? AND campeonato_id = ?");
-    $check->bind_param("ii", $time['id'], $campeonato_id);
+    $check->bindValue(1, $time['id'], PDO::PARAM_INT);
+    $stmt->bindValue(2, $campeonato_id, PDO::PARAM_INT);
     $check->execute();
     $res = $check->get_result();
 
     if ($res->num_rows === 0) {
         $stmt = $conn->prepare("INSERT INTO times_campeonatos (time_id, campeonato_id) VALUES (?, ?)");
-        $stmt->bind_param("ii", $time['id'], $campeonato_id);
+        $stmt->bindValue(1, $time['id'], PDO::PARAM_INT);
+    $stmt->bindValue(2, $campeonato_id, PDO::PARAM_INT);
         if ($stmt->execute()) {
             $_SESSION['mensagem_sucesso'] = "Time adicionado com sucesso!";
         } else {

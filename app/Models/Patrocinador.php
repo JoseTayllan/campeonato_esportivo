@@ -9,14 +9,17 @@ class Patrocinador {
     public function criar($nome, $contrato, $valor, $logo) {
         $sql = "INSERT INTO patrocinadores (nome_empresa, contrato, valor_investido, logo) VALUES (?, ?, ?, ?)";
         $stmt = $this->conn->prepare($sql);
-        $stmt->bind_param("ssds", $nome, $contrato, $valor, $logo);
+        $stmt->bindValue(1, $nome, PDO::PARAM_STR);
+    $stmt->bindValue(2, $contrato, PDO::PARAM_STR);
+    $stmt->bindValue(3, $valor, PDO::PARAM_STR);
+    $stmt->bindValue(4, $logo, PDO::PARAM_STR);
         return $stmt->execute();
     }
 
     public function listar() {
         $sql = "SELECT * FROM patrocinadores";
         $result = $this->conn->query($sql);
-        return $result->fetch_all(MYSQLI_ASSOC);
+        return $result->fetchAll(PDO::FETCH_ASSOC);
     }
 
     

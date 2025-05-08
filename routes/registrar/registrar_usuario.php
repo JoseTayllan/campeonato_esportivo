@@ -1,6 +1,6 @@
 <?php
 require_once __DIR__ . '/../../config/database.php';
-require_once __DIR__ . '/../../app/models/Usuario.php';
+require_once __DIR__ . '/../../app/Models/Usuario.php';
 
 session_start();
 
@@ -28,7 +28,7 @@ $userModel->criarUsuario($nome, $email, $hash, $tipo, $tipo_assinatura);
 
 // Login automático pós-cadastro
 $_SESSION['usuario'] = [
-    'id' => $conn->insert_id,
+    'id' => $conn->lastInsertId(),
     'nome' => $nome,
     'tipo' => $tipo,
     'tipo_assinatura' => $tipo_assinatura

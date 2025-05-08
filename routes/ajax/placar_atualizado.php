@@ -21,7 +21,7 @@ $sql = "
 $res = $conn->query($sql);
 $partidas = [];
 
-while ($p = $res->fetch_assoc()) {
+while ($p = $res->fetch(PDO::FETCH_ASSOC)) {
     // Ajusta e valida escudo da casa
     $escudoCasa = basename($p['escudo_casa']);
     $escudoCasaPath = __DIR__ . '/../../public/img/times/' . $escudoCasa;
@@ -34,9 +34,9 @@ while ($p = $res->fetch_assoc()) {
 
     // Eventos da partida
     $stmt = $conn->prepare("SELECT tipo_evento, minuto, descricao FROM eventos_partida WHERE partida_id = ? ORDER BY minuto ASC");
-    $stmt->bind_param("i", $p['id']);
+    $stmt->bindValue(1, $p['id'], PDO::PARAM_INT);
     $stmt->execute();
-    $eventos = $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
+    $eventos = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
     $p['eventos'] = $eventos;
     $partidas[] = $p;

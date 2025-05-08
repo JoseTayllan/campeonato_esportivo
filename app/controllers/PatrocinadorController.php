@@ -25,9 +25,9 @@ class PatrocinadorController {
             WHERE pt.patrocinador_id = ?
         ";
         $stmt = $this->conn->prepare($sql);
-        $stmt->bind_param("i", $patrocinador_id);
+        $stmt->bindValue(1, $patrocinador_id, PDO::PARAM_INT);
         $stmt->execute();
-        return $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
+        return $stmt->get_result()->fetchAll(PDO::FETCH_ASSOC);
     }
 
     public function obterDesempenhoTime($time_id) {
@@ -40,7 +40,8 @@ class PatrocinadorController {
             WHERE p.time_casa = ? OR p.time_fora = ?
         ";
         $stmt = $this->conn->prepare($sql);
-        $stmt->bind_param("ii", $time_id, $time_id);
+        $stmt->bindValue(1, $time_id, PDO::PARAM_INT);
+    $stmt->bindValue(2, $time_id, PDO::PARAM_INT);
         $stmt->execute();
         $result = $stmt->get_result();
 
@@ -51,7 +52,7 @@ class PatrocinadorController {
         $gols_pro = 0;
         $gols_contra = 0;
 
-        while ($row = $result->fetch_assoc()) {
+        while ($row = $result->fetch(PDO::FETCH_ASSOC)) {
             $jogos++;
 
             if ($row['time_casa'] == $time_id) {

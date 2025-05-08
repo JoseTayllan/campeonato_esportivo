@@ -18,10 +18,10 @@ $controller = new TeamController($conn);
 $admin_id = $_SESSION['usuario_id'];
 
 $stmt = $conn->prepare("SELECT id FROM times WHERE admin_id = ?");
-$stmt->bind_param("i", $admin_id);
+$stmt->bindValue(1, $admin_id, PDO::PARAM_INT);
 $stmt->execute();
 $result = $stmt->get_result();
-$time = $result->fetch_assoc();
+$time = $result->fetch(PDO::FETCH_ASSOC);
 ?>
 
 <!DOCTYPE html>

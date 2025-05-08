@@ -709,17 +709,17 @@ footer {
 <h1>ChampCore</h1>
 <p class="lead">Gerencie campeonatos, estatísticas e equipes com um sistema moderno e acessível.</p>
 <div class="cta" style="display: flex; flex-direction: column; gap: 1rem; justify-content: center; align-items: center;">
-<a href="futebol/index.php">Acessar módulo Futebol</a>
+<a href="/public">Acessar a Plataforma</a>
 <iframe width="560" height="315" src="https://www.youtube.com/embed/fVu5Gvo9Pb0?si=o8VD4IEjSrttu8qA" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
 </div>
 <section>
 <h2 id="esportes">📂 Esportes</h2>
 <div class="grid">
-<div class="card" style="opacity:0.5; background: url('/public/images/capa_futebol.jpeg') center/cover no-repeat; backdrop-filter: blur(6px);"">
-<div style="position: relative; z-index: 1; padding: 2rem; height: 90%;">
+<div class="card" style="height: 100%;opacity:0.5; background: url('/public/images/capa_futebol.jpeg') center/cover no-repeat; backdrop-filter: blur(6px);"">
+<div style="height: 100%; display: flex; flex-direction: column; justify-content: space-between; align-items: space-between; position: relative; z-index: 1; padding: 2rem; height: 90%;">
 <h3>⚽ Futebol</h3>
 <p style="color: #000; background-color: #565656; border-radius: 10px; padding: 10px;">Controle completo de partidas, escalações e desempenho.</p>
-<a class="btn-esporte" href="/public">Entrar</a>
+<!-- <a class="btn-esporte" href="/public">Entrar</a> -->
 </div>
 </div>
 <div class="card" style="opacity:0.5; background: url('/public/images/capa_basquete.jpeg') center/cover no-repeat; backdrop-filter: blur(6px);">

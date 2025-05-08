@@ -6,7 +6,8 @@ $tempo_atual = $_POST['tempo_atual'] ?? null;
 
 if ($partida_id && $tempo_atual) {
     $stmt = $conn->prepare("UPDATE partidas SET tempo_atual = ? WHERE id = ?");
-    $stmt->bind_param("si", $tempo_atual, $partida_id);
+    $stmt->bindValue(1, $tempo_atual, PDO::PARAM_STR);
+    $stmt->bindValue(2, $partida_id, PDO::PARAM_INT);
     $stmt->execute();
 }
 

@@ -7,10 +7,10 @@ if (isset($_POST['atualizar_banner']) && !empty($_FILES['logo']['name'])) {
     $usuario_id = $_SESSION['usuario_id'];
 
     $stmt = $conn->prepare("SELECT id FROM patrocinadores WHERE usuario_id = ?");
-    $stmt->bind_param("i", $usuario_id);
+    $stmt->bindValue(1, $usuario_id, PDO::PARAM_INT);
     $stmt->execute();
     $res = $stmt->get_result();
-    $patrocinador = $res->fetch_assoc();
+    $patrocinador = $res->fetch(PDO::FETCH_ASSOC);
 
     if ($patrocinador) {
         $upload_dir = __DIR__ . '/../../public/img/patrocinadores/';
@@ -29,7 +29,8 @@ if (isset($_POST['atualizar_banner']) && !empty($_FILES['logo']['name'])) {
             $logo_path = 'public/img/patrocinadores/' . $logo_nome;
 
             $stmt2 = $conn->prepare("UPDATE patrocinadores SET logo = ? WHERE id = ?");
-            $stmt2->bind_param("si", $logo_path, $patrocinador['id']);
+            $stmt2->bindValue(1, $logo_path, PDO::PARAM_STR);
+    $stmt->bindValue(2, $patrocinador['id'], PDO::PARAM_INT);
             $stmt2->execute();
         }
     }

@@ -70,6 +70,10 @@ include '../cabecalho/header.php';
                         <i class="bi bi-box-arrow-in-right me-2"></i>Entrar
                     </button>
                 </form>
+                
+                <div class="mt-3 text-center">
+                    <p class="mb-0">Ainda não tem uma conta? <a href="cadastro_usuario_time.php" class="text-primary">Registre-se aqui</a></p>
+                </div>
             </div>
         </div>
     </div>

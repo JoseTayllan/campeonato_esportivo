@@ -19,7 +19,7 @@ if (session_status() === PHP_SESSION_NONE) {
 <!-- Navbar -->
 <nav class="navbar navbar-expand-lg shadow-sm">
     <div class="container">
-        <a class="navbar-brand d-flex align-items-center" href="../../index.php">
+        <a class="navbar-brand d-flex align-items-center" href="/public/index.php">
             <i class="bi bi-house-door-fill me-2"></i> Início
         </a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"

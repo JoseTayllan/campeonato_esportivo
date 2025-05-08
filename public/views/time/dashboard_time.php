@@ -20,10 +20,9 @@ $controller = new TeamController($conn);
 $admin_id = $_SESSION['usuario_id'];
 
 $stmt = $conn->prepare("SELECT * FROM times WHERE admin_id = ?");
-$stmt->bind_param("i", $admin_id);
+$stmt->bindValue(1, $admin_id, PDO::PARAM_INT);
 $stmt->execute();
-$resultado = $stmt->get_result();
-$time = $resultado->fetch_assoc();
+$time = $stmt->fetch(PDO::FETCH_ASSOC);
 
 if (!$time):
 ?>
@@ -105,7 +104,7 @@ if (!$time):
                 </tr>
             </thead>
             <tbody>
-                <?php while ($jogador = $jogadores->fetch_assoc()): ?>
+                <?php while ($jogador = $jogadores->fetch(PDO::FETCH_ASSOC)): ?>
                     <tr>
                         <td class="text-center" style="width: 60px;">
                             <?php if (!empty($jogador['imagem']) && file_exists(__DIR__ . '/../../../public/img/jogadores/' . $jogador['imagem'])): ?>

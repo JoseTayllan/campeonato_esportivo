@@ -14,10 +14,10 @@ $resultTimes = $conn->query($queryTimes);
 $resultJogadores = $conn->query($queryJogadores);
 $resultUsuarios = $conn->query($queryUsuarios);
 
-$totalCampeonatos = ($resultCampeonatos->fetch_assoc())['total'] ?? 0;
-$totalTimes = ($resultTimes->fetch_assoc())['total'] ?? 0;
-$totalJogadores = ($resultJogadores->fetch_assoc())['total'] ?? 0;
-$totalUsuarios = ($resultUsuarios->fetch_assoc())['total'] ?? 0;
+$totalCampeonatos = ($resultCampeonatos->fetch(PDO::FETCH_ASSOC))['total'] ?? 0;
+$totalTimes = ($resultTimes->fetch(PDO::FETCH_ASSOC))['total'] ?? 0;
+$totalJogadores = ($resultJogadores->fetch(PDO::FETCH_ASSOC))['total'] ?? 0;
+$totalUsuarios = ($resultUsuarios->fetch(PDO::FETCH_ASSOC))['total'] ?? 0;
 
 include '../cabecalho/header.php';
 ?>
@@ -89,7 +89,7 @@ include '../cabecalho/header.php';
                         <?php
                         $listar = $conn->query("SELECT * FROM campeonatos ORDER BY criado_em DESC");
                         if ($listar->num_rows > 0) {
-                            while ($c = $listar->fetch_assoc()) {
+                            while ($c = $listar->fetch(PDO::FETCH_ASSOC)) {
                                 echo "<tr>
                                     <td>{$c['id']}</td>
                                     <td>{$c['nome']}</td>

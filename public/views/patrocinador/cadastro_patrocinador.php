@@ -12,7 +12,7 @@ $usuario_id = $_SESSION['usuario_id'] ?? null;
 
 if ($usuario_id) {
     $verifica = $conn->prepare("SELECT id FROM patrocinadores WHERE usuario_id = ?");
-    $verifica->bind_param("i", $usuario_id);
+    $verifica->bindValue(1, $usuario_id, PDO::PARAM_INT);
     $verifica->execute();
     $res = $verifica->get_result();
 

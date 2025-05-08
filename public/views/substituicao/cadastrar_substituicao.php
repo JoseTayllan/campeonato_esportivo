@@ -57,7 +57,7 @@ switch ($tipo) {
             <label for="partida" class="form-label">Partida</label>
             <select name="partida_id" id="partida" class="form-select" required>
                 <option value="">Selecione uma partida</option>
-                <?php while ($row = $partidas->fetch_assoc()): ?>
+                <?php while ($row = $partidas->fetch(PDO::FETCH_ASSOC)): ?>
                 <option value="<?= $row['id'] ?>">
                     Partida #<?= $row['id'] ?> - <?= date('d/m/Y', strtotime($row['data'])) ?> - <?= $row['local'] ?>
                 </option>
@@ -69,7 +69,7 @@ switch ($tipo) {
             <label for="jogador_saiu" class="form-label">Jogador que saiu</label>
             <select name="jogador_saiu" id="jogador_saiu" class="form-select" required>
                 <option value="">Selecione o jogador</option>
-                <?php mysqli_data_seek($jogadores, 0); while ($row = $jogadores->fetch_assoc()): ?>
+                <?php mysqli_data_seek($jogadores, 0); while ($row = $jogadores->fetch(PDO::FETCH_ASSOC)): ?>
                 <option value="<?= $row['id'] ?>"><?= $row['nome'] ?></option>
                 <?php endwhile; ?>
             </select>
@@ -79,7 +79,7 @@ switch ($tipo) {
             <label for="jogador_entrou" class="form-label">Jogador que entrou</label>
             <select name="jogador_entrou" id="jogador_entrou" class="form-select" required>
                 <option value="">Selecione o jogador</option>
-                <?php mysqli_data_seek($jogadores, 0); while ($row = $jogadores->fetch_assoc()): ?>
+                <?php mysqli_data_seek($jogadores, 0); while ($row = $jogadores->fetch(PDO::FETCH_ASSOC)): ?>
                 <option value="<?= $row['id'] ?>"><?= $row['nome'] ?></option>
                 <?php endwhile; ?>
             </select>

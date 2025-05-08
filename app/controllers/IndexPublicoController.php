@@ -14,8 +14,8 @@ class IndexPublicoController {
             WHERE status = 'ativo'
             ORDER BY nome
         ";
-        $result = $this->conn->query($sql);
-        return $result->fetch_all(MYSQLI_ASSOC);
+        $stmt = $this->conn->query($sql);
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
     
 }

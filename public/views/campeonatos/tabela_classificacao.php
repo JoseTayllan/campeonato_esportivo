@@ -26,7 +26,7 @@ require_once __DIR__ . '/../../includes/index_sec.php';
     <?php
     $campeonatos = $conn->query("SELECT id, nome, temporada FROM campeonatos ORDER BY temporada DESC");
 
-    while ($camp = $campeonatos->fetch_assoc()) {
+    while ($camp = $campeonatos->fetch(PDO::FETCH_ASSOC)) {
         echo "<h4 class='mt-5 mb-3 text-primary'>🏆 {$camp['nome']} - Temporada {$camp['temporada']}</h4>";
         echo "<div class='table-responsive'>
                 <table class='table table-striped table-bordered text-center'>
@@ -51,7 +51,7 @@ require_once __DIR__ . '/../../includes/index_sec.php';
                      ORDER BY t.nome ASC";
         $res = $conn->query($sqlTimes);
 
-        while ($time = $res->fetch_assoc()) {
+        while ($time = $res->fetch(PDO::FETCH_ASSOC)) {
             $timeId = $time['id'];
 
             $partidas = "SELECT * FROM partidas 
@@ -60,7 +60,7 @@ require_once __DIR__ . '/../../includes/index_sec.php';
 
             $jogos = $vitorias = $empates = $derrotas = $gols_pro = $gols_contra = 0;
 
-            while ($p = $resultPartidas->fetch_assoc()) {
+            while ($p = $resultPartidas->fetch(PDO::FETCH_ASSOC)) {
                 $jogos++;
                 $is_casa = $p['time_casa'] == $timeId;
                 $gp = $is_casa ? $p['placar_casa'] : $p['placar_fora'];

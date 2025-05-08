@@ -15,16 +15,17 @@ if (!$partida_id) {
 if ($acrescimos !== null && $status === null) {
     $acrescimos = (int)$acrescimos;
     $stmt = $conn->prepare("UPDATE partidas SET acrescimos = ? WHERE id = ?");
-    $stmt->bind_param("ii", $acrescimos, $partida_id);
+    $stmt->bindValue(1, $acrescimos, PDO::PARAM_INT);
+    $stmt->bindValue(2, $partida_id, PDO::PARAM_INT);
     $stmt->execute();
     exit('Acréscimo registrado');
 }
 
 // Buscar dados atuais da partida
 $stmt = $conn->prepare("SELECT inicio_partida, tempo_acumulado FROM partidas WHERE id = ?");
-$stmt->bind_param("i", $partida_id);
+$stmt->bindValue(1, $partida_id, PDO::PARAM_INT);
 $stmt->execute();
-$res = $stmt->get_result()->fetch_assoc();
+$res = $stmt->get_result()->fetch(PDO::FETCH_ASSOC);
 
 if (!$res) {
     http_response_code(404);
@@ -40,14 +41,16 @@ if ($status === 'pausado') {
         $novoTempo = $res['tempo_acumulado'] + $decorridos;
 
         $stmt = $conn->prepare("UPDATE partidas SET tempo_acumulado = ?, inicio_partida = NULL, cronometro_status = 'pausado' WHERE id = ?");
-        $stmt->bind_param("ii", $novoTempo, $partida_id);
+        $stmt->bindValue(1, $novoTempo, PDO::PARAM_INT);
+    $stmt->bindValue(2, $partida_id, PDO::PARAM_INT);
         $stmt->execute();
     }
     exit('Pausado');
 
 } elseif ($status === 'rodando') {
     $stmt = $conn->prepare("UPDATE partidas SET inicio_partida = ?, cronometro_status = 'rodando' WHERE id = ?");
-    $stmt->bind_param("si", $agora, $partida_id);
+    $stmt->bindValue(1, $agora, PDO::PARAM_STR);
+    $stmt->bindValue(2, $partida_id, PDO::PARAM_INT);
     $stmt->execute();
     exit('Retomado');
 }

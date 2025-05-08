@@ -73,7 +73,7 @@ class ExportController {
         $titulo = 'Relatório de Estatísticas';
         if ($jogadorId) {
             $stmt = $this->conn->prepare("SELECT nome FROM jogadores WHERE id = ?");
-            $stmt->bind_param("i", $jogadorId);
+            $stmt->bindValue(1, $jogadorId, PDO::PARAM_INT);
             $stmt->execute();
 
             $nomeJogador = ''; // evita erro

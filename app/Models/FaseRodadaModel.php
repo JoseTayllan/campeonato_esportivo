@@ -13,7 +13,7 @@ class FaseRodadaModel
     {
         $sql = "SELECT id, nome FROM campeonatos ORDER BY nome ASC";
         $result = $this->conn->query($sql);
-        return $result->fetch_all(MYSQLI_ASSOC);
+        return $result->fetchAll(PDO::FETCH_ASSOC);
     }
 
     public function buscarFasesERodadas($campeonato_id) {
@@ -21,20 +21,20 @@ class FaseRodadaModel
     
         $query = "SELECT id, nome, ordem FROM fases_campeonato WHERE campeonato_id = ? ORDER BY ordem ASC";
         $stmt = $this->conn->prepare($query);
-        $stmt->bind_param("i", $campeonato_id);
+        $stmt->bindValue(1, $campeonato_id, PDO::PARAM_INT);
         $stmt->execute();
         $resultFases = $stmt->get_result();
     
-        while ($fase = $resultFases->fetch_assoc()) {
+        while ($fase = $resultFases->fetch(PDO::FETCH_ASSOC)) {
             $fase['rodadas'] = [];
     
             $queryRodadas = "SELECT id, numero, tipo, descricao FROM rodadas WHERE fase_id = ? ORDER BY numero ASC";
             $stmtRodada = $this->conn->prepare($queryRodadas);
-            $stmtRodada->bind_param("i", $fase['id']);
+            $stmtRodada->bindValue(1, $fase['id'], PDO::PARAM_INT);
             $stmtRodada->execute();
             $resultRodadas = $stmtRodada->get_result();
     
-            while ($rodada = $resultRodadas->fetch_assoc()) {
+            while ($rodada = $resultRodadas->fetch(PDO::FETCH_ASSOC)) {
                 $rodada['partidas'] = [];
     
                 $queryPartidas = "
@@ -56,11 +56,11 @@ class FaseRodadaModel
                     ORDER BY p.data, p.horario
                 ";
                 $stmtPartida = $this->conn->prepare($queryPartidas);
-                $stmtPartida->bind_param("i", $rodada['id']);
+                $stmtPartida->bindValue(1, $rodada['id'], PDO::PARAM_INT);
                 $stmtPartida->execute();
                 $resultPartidas = $stmtPartida->get_result();
     
-                while ($partida = $resultPartidas->fetch_assoc()) {
+                while ($partida = $resultPartidas->fetch(PDO::FETCH_ASSOC)) {
                     $rodada['partidas'][] = $partida;
                 }
     
@@ -89,9 +89,9 @@ class FaseRodadaModel
                 WHERE tc.campeonato_id = ?
                 ORDER BY t.nome ASC";
         $stmt = $this->conn->prepare($sql);
-        $stmt->bind_param("i", $campeonato_id);
+        $stmt->bindValue(1, $campeonato_id, PDO::PARAM_INT);
         $stmt->execute();
-        $times = $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
+        $times = $stmt->get_result()->fetchAll(PDO::FETCH_ASSOC);
 
         foreach ($times as &$time) {
             $sqlPartidas = "SELECT * FROM partidas 
@@ -99,9 +99,11 @@ class FaseRodadaModel
                             AND status = 'finalizada'
                             AND (time_casa = ? OR time_fora = ?)";
             $stmt2 = $this->conn->prepare($sqlPartidas);
-            $stmt2->bind_param("iii", $campeonato_id, $time['id'], $time['id']);
+            $stmt2->bindValue(1, $campeonato_id, PDO::PARAM_INT);
+    $stmt->bindValue(2, $time['id'], PDO::PARAM_INT);
+    $stmt->bindValue(3, $time['id'], PDO::PARAM_INT);
             $stmt2->execute();
-            $partidas = $stmt2->get_result()->fetch_all(MYSQLI_ASSOC);
+            $partidas = $stmt2->get_result()->fetchAll(PDO::FETCH_ASSOC);
 
             $time['jogos'] = $time['vitorias'] = $time['empates'] = $time['derrotas'] = $time['gols_pro'] = $time['gols_contra'] = 0;
 

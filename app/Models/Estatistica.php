@@ -47,11 +47,11 @@ class Estatistica {
                   WHERE e.jogador_id = ?";
     
         $stmt = $this->conn->prepare($query);
-        $stmt->bind_param("i", $jogador_id);
+        $stmt->bindValue(1, $jogador_id, PDO::PARAM_INT);
         $stmt->execute();
         $result = $stmt->get_result();
     
-        return [$result->fetch_assoc()];
+        return [$result->fetch(PDO::FETCH_ASSOC)];
     }
 
     public function historicoPartidas($jogador_id) {
@@ -81,12 +81,12 @@ class Estatistica {
                 ORDER BY p.data DESC";
     
         $stmt = $this->conn->prepare($query);
-        $stmt->bind_param("i", $jogador_id);
+        $stmt->bindValue(1, $jogador_id, PDO::PARAM_INT);
         $stmt->execute();
         $result = $stmt->get_result();
     
         $partidas = [];
-        while ($row = $result->fetch_assoc()) {
+        while ($row = $result->fetch(PDO::FETCH_ASSOC)) {
             if ($row['time_jogador'] == $row['time_casa']) {
                 $row['resultado'] = "{$row['time_casa']} {$row['placar_casa']} x {$row['placar_fora']} {$row['time_fora']}";
             } else {
@@ -104,14 +104,14 @@ class Estatistica {
                 FROM estatisticas_partida 
                 WHERE jogador_id = ?";
         $stmt = $this->conn->prepare($sql);
-        $stmt->bind_param("i", $jogador_id);
+        $stmt->bindValue(1, $jogador_id, PDO::PARAM_INT);
         $stmt->execute();
         $result = $stmt->get_result();
     
         $total = 0;
         $quantidade = 0;
     
-        while ($row = $result->fetch_assoc()) {
+        while ($row = $result->fetch(PDO::FETCH_ASSOC)) {
             $nota = 
                 ($row['gols'] * 1.5) +
                 ($row['assistencias'] * 1.0) +
@@ -146,7 +146,7 @@ class Estatistica {
         $result = $this->conn->query($query);
     
         $dados = [];
-        while ($row = $result->fetch_assoc()) {
+        while ($row = $result->fetch(PDO::FETCH_ASSOC)) {
             $dados[] = $row;
         }
     

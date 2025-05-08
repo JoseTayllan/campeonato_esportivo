@@ -73,7 +73,7 @@ switch ($tipo) {
                             <?php
                         $queryJogadores = "SELECT id, nome FROM jogadores ORDER BY nome ASC";
                         $resultJogadores = $conn->query($queryJogadores);
-                        while ($row = $resultJogadores->fetch_assoc()) {
+                        while ($row = $resultJogadores->fetch(PDO::FETCH_ASSOC)) {
                             echo "<option value='{$row['id']}'>{$row['nome']}</option>";
                         }
                         ?>
@@ -101,7 +101,7 @@ switch ($tipo) {
                         <?php
                     $queryPartidas = "SELECT DISTINCT partida_id FROM estatisticas_partida ORDER BY partida_id DESC";
                     $resultPartidas = $conn->query($queryPartidas);
-                    while ($row = $resultPartidas->fetch_assoc()) {
+                    while ($row = $resultPartidas->fetch(PDO::FETCH_ASSOC)) {
                         $selected = (isset($_GET['partida_id']) && $_GET['partida_id'] == $row['partida_id']) ? "selected" : "";
                         echo "<option value='{$row['partida_id']}' $selected>Partida #{$row['partida_id']}</option>";
                     }
@@ -174,7 +174,7 @@ switch ($tipo) {
 
                 $result = $conn->query($query);
                 if ($result->num_rows > 0) {
-                    while ($row = $result->fetch_assoc()) {
+                    while ($row = $result->fetch(PDO::FETCH_ASSOC)) {
                         echo "<tr>
                                 <td class='text-nowrap'>Partida #{$row['partida_id']}</td>
                                 <td class='text-nowrap'>{$row['jogador_nome']}</td>

@@ -11,15 +11,17 @@ if (isset($_POST['vincular_time']) && isset($_POST['time_id'])) {
     $valor = $_POST['valor_investido'] ?? 0;
 
     $stmt = $conn->prepare("SELECT id FROM patrocinadores WHERE usuario_id = ?");
-    $stmt->bind_param("i", $_SESSION['usuario_id']);
+    $stmt->bindValue(1, $_SESSION['usuario_id'], PDO::PARAM_INT);
     $stmt->execute();
     $res = $stmt->get_result();
-    $patrocinador = $res->fetch_assoc();
+    $patrocinador = $res->fetch(PDO::FETCH_ASSOC);
 
     if ($patrocinador) {
         $patrocinador_id = $patrocinador['id'];
         $stmt2 = $conn->prepare("INSERT INTO patrocinador_time (patrocinador_id, time_id, data_inicio, valor_investido) VALUES (?, ?, CURDATE(), ?)");
-        $stmt2->bind_param("iid", $patrocinador_id, $time_id, $valor);
+        $stmt2->bindValue(1, $patrocinador_id, PDO::PARAM_INT);
+    $stmt->bindValue(2, $time_id, PDO::PARAM_INT);
+    $stmt->bindValue(3, $valor, PDO::PARAM_STR);
         $stmt2->execute();
     }
 
@@ -33,10 +35,10 @@ if (isset($_POST['desvincular_time']) && isset($_POST['time_id'])) {
     $patrocinador_id = (int) $_SESSION['usuario_id'];
 
     $stmt = $conn->prepare("SELECT id FROM patrocinadores WHERE usuario_id = ?");
-    $stmt->bind_param("i", $patrocinador_id);
+    $stmt->bindValue(1, $patrocinador_id, PDO::PARAM_INT);
     $stmt->execute();
     $res = $stmt->get_result();
-    $patrocinador = $res->fetch_assoc();
+    $patrocinador = $res->fetch(PDO::FETCH_ASSOC);
 
     if ($patrocinador) {
         $controller->desvincularTime($patrocinador['id'], $time_id);
@@ -73,13 +75,18 @@ if (isset($_POST['criar_patrocinador'])) {
     }
 
     $stmt = $conn->prepare("INSERT INTO patrocinadores (nome_empresa, contrato, valor_investido, logo, usuario_id) VALUES (?, ?, ?, ?, ?)");
-    $stmt->bind_param("ssdsi", $nome, $contrato, $valor, $logo_path, $_SESSION['usuario_id']);
+    $stmt->bindValue(1, $nome, PDO::PARAM_STR);
+    $stmt->bindValue(2, $contrato, PDO::PARAM_STR);
+    $stmt->bindValue(3, $valor, PDO::PARAM_STR);
+    $stmt->bindValue(4, $logo_path, PDO::PARAM_STR);
+    $stmt->bindValue(5, $_SESSION['usuario_id'], PDO::PARAM_INT);
     $stmt->execute();
     $patrocinador_id = $stmt->insert_id;
 
     if (!empty($time_id)) {
         $stmt2 = $conn->prepare("INSERT INTO patrocinador_time (patrocinador_id, time_id, data_inicio) VALUES (?, ?, CURDATE())");
-        $stmt2->bind_param("ii", $patrocinador_id, $time_id);
+        $stmt2->bindValue(1, $patrocinador_id, PDO::PARAM_INT);
+    $stmt->bindValue(2, $time_id, PDO::PARAM_INT);
         $stmt2->execute();
     }
 
@@ -92,10 +99,10 @@ $restrito_para = ['patrocinador'];
 
 // ✅ Verifica se empresa já foi cadastrada
 $stmt = $conn->prepare("SELECT id, logo FROM patrocinadores WHERE usuario_id = ?");
-$stmt->bind_param("i", $_SESSION['usuario_id']);
+$stmt->bindValue(1, $_SESSION['usuario_id'], PDO::PARAM_INT);
 $stmt->execute();
 $res = $stmt->get_result();
-$patrocinador = $res->fetch_assoc();
+$patrocinador = $res->fetch(PDO::FETCH_ASSOC);
 
 if (!$patrocinador) {
     require_once __DIR__ . '/../../public/includes/assinatura_patrocinador.php';

@@ -18,7 +18,7 @@ class GerenciarPartidasController {
             ORDER BY p.data DESC, p.horario DESC
         ";
         $result = $this->conn->query($query);
-        return $result->fetch_all(MYSQLI_ASSOC);
+        return $result->fetchAll(PDO::FETCH_ASSOC);
     }
 
     public function alterarStatus($partida_id, $status) {
@@ -27,7 +27,8 @@ class GerenciarPartidasController {
         } else {
             $stmt = $this->conn->prepare("UPDATE partidas SET status = ? WHERE id = ?");
         }
-        $stmt->bind_param("si", $status, $partida_id);
+        $stmt->bindValue(1, $status, PDO::PARAM_STR);
+    $stmt->bindValue(2, $partida_id, PDO::PARAM_INT);
         $stmt->execute();
     }
     

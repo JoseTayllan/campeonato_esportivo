@@ -9,7 +9,7 @@ class Jogador
         global $conn;
         $query = "SELECT id, nome FROM jogadores ORDER BY nome ASC";
         $result = $conn->query($query);
-        return $result ? $result->fetch_all(MYSQLI_ASSOC) : [];
+        return $result ? $result->fetchAll(PDO::FETCH_ASSOC) : [];
     }
 
     // Lista jogadores filtrados por treinador/criador (se necessário)
@@ -17,9 +17,9 @@ class Jogador
     {
         global $conn;
         $stmt = $conn->prepare("SELECT id, nome FROM jogadores WHERE criado_por = ?");
-        $stmt->bind_param("i", $criador_id);
+        $stmt->bindValue(1, $criador_id, PDO::PARAM_INT);
         $stmt->execute();
-        return $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
+        return $stmt->get_result()->fetchAll(PDO::FETCH_ASSOC);
     }
 
     // Salva avaliação do jogador

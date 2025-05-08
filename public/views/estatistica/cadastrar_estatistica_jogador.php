@@ -55,7 +55,7 @@ switch ($tipo) {
                 <?php
                 $queryPartidas = "SELECT id, data FROM partidas ORDER BY data DESC";
                 $resultPartidas = $conn->query($queryPartidas);
-                while ($row = $resultPartidas->fetch_assoc()) {
+                while ($row = $resultPartidas->fetch(PDO::FETCH_ASSOC)) {
                     echo "<option value='{$row['id']}'>Partida #{$row['id']} - ".date('d/m/Y', strtotime($row['data']))."</option>";
                 }
                 ?>
@@ -69,7 +69,7 @@ switch ($tipo) {
                 <?php
                 $queryJogadores = "SELECT id, nome, posicao FROM jogadores";
                 $resultJogadores = $conn->query($queryJogadores);
-                while ($row = $resultJogadores->fetch_assoc()) {
+                while ($row = $resultJogadores->fetch(PDO::FETCH_ASSOC)) {
                     echo "<option value='{$row['id']}' data-posicao='{$row['posicao']}'>{$row['nome']} ({$row['posicao']})</option>";
                 }
                 ?>

@@ -36,7 +36,7 @@ include '../cabecalho/tabela_jogador.php';
                     <?php
                 $query = "SELECT nome FROM jogadores ORDER BY nome ASC";
                 $res = $conn->query($query);
-                while ($row = $res->fetch_assoc()) {
+                while ($row = $res->fetch(PDO::FETCH_ASSOC)) {
                     $selected = (isset($_GET['jogador']) && $_GET['jogador'] == $row['nome']) ? 'selected' : '';
                     echo "<option value='{$row['nome']}' $selected>{$row['nome']}</option>";
                 }
@@ -102,7 +102,7 @@ include '../cabecalho/tabela_jogador.php';
                               ORDER BY a.nota_geral DESC";
                     $res = $conn->query($query);
                     if ($res->num_rows > 0) {
-                        while ($r = $res->fetch_assoc()) {
+                        while ($r = $res->fetch(PDO::FETCH_ASSOC)) {
                             echo "<tr>
                                     <td>{$r['olheiro']}</td>
                                     <td>{$r['forca']}</td>
@@ -150,7 +150,7 @@ include '../cabecalho/tabela_jogador.php';
                               ORDER BY e.partida_id DESC";
                     $res = $conn->query($query);
                     if ($res->num_rows > 0) {
-                        while ($r = $res->fetch_assoc()) {
+                        while ($r = $res->fetch(PDO::FETCH_ASSOC)) {
                             echo "<tr>
                                     <td>#{$r['partida_id']}</td>
                                     <td>{$r['gols']}</td>

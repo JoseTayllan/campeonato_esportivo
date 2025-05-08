@@ -17,7 +17,7 @@ if (!$id) {
 }
 
 $stmt = $conn->prepare("DELETE FROM usuarios WHERE id = ?");
-$stmt->bind_param("i", $id);
+$stmt->bindValue(1, $id, PDO::PARAM_INT);
 $stmt->execute();
 
 $_SESSION['mensagem_sucesso'] = "Usuário excluído com sucesso!";

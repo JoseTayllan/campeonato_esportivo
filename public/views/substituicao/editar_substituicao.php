@@ -21,7 +21,7 @@ $id = intval($_GET['id']);
 
 $query = "SELECT * FROM substituicoes WHERE id = ?";
 $stmt = $conn->prepare($query);
-$stmt->bind_param("i", $id);
+$stmt->bindValue(1, $id, PDO::PARAM_INT);
 $stmt->execute();
 $result = $stmt->get_result();
 
@@ -31,7 +31,7 @@ if ($result->num_rows === 0) {
     exit;
 }
 
-$substituicao = $result->fetch_assoc();
+$substituicao = $result->fetch(PDO::FETCH_ASSOC);
 
 $partidas = $conn->query("SELECT id, data, local FROM partidas ORDER BY data DESC");
 $jogadores = $conn->query("SELECT id, nome FROM jogadores ORDER BY nome ASC");
@@ -73,7 +73,7 @@ switch ($tipo) {
         <div class="mb-3">
             <label class="form-label">Partida</label>
             <select name="partida_id" class="form-select" required>
-                <?php while ($p = $partidas->fetch_assoc()): ?>
+                <?php while ($p = $partidas->fetch(PDO::FETCH_ASSOC)): ?>
                 <option value="<?= $p['id'] ?>" <?= $p['id'] == $substituicao['partida_id'] ? 'selected' : '' ?>>
                     Partida #<?= $p['id'] ?> - <?= date('d/m/Y', strtotime($p['data'])) ?> - <?= $p['local'] ?>
                 </option>
@@ -84,7 +84,7 @@ switch ($tipo) {
         <div class="mb-3">
             <label class="form-label">Jogador que saiu</label>
             <select name="jogador_saiu" class="form-select" required>
-                <?php mysqli_data_seek($jogadores, 0); while ($j = $jogadores->fetch_assoc()): ?>
+                <?php mysqli_data_seek($jogadores, 0); while ($j = $jogadores->fetch(PDO::FETCH_ASSOC)): ?>
                 <option value="<?= $j['id'] ?>" <?= $j['id'] == $substituicao['jogador_saiu'] ? 'selected' : '' ?>>
                     <?= $j['nome'] ?>
                 </option>
@@ -95,7 +95,7 @@ switch ($tipo) {
         <div class="mb-3">
             <label class="form-label">Jogador que entrou</label>
             <select name="jogador_entrou" class="form-select" required>
-                <?php mysqli_data_seek($jogadores, 0); while ($j = $jogadores->fetch_assoc()): ?>
+                <?php mysqli_data_seek($jogadores, 0); while ($j = $jogadores->fetch(PDO::FETCH_ASSOC)): ?>
                 <option value="<?= $j['id'] ?>" <?= $j['id'] == $substituicao['jogador_entrou'] ? 'selected' : '' ?>>
                     <?= $j['nome'] ?>
                 </option>

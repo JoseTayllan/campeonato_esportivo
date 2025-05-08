@@ -72,7 +72,7 @@ require_once __DIR__ . '/../../../config/database.php';
                     <?php
                     $queryTimes = "SELECT id, nome FROM times ORDER BY nome ASC";
                     $resultTimes = $conn->query($queryTimes);
-                    while ($time = $resultTimes->fetch_assoc()) {
+                    while ($time = $resultTimes->fetch(PDO::FETCH_ASSOC)) {
                         echo "
                     <div class='form-check'>
                         <input class='form-check-input' type='checkbox' name='times[]' value='{$time['id']}' id='time_{$time['id']}'>

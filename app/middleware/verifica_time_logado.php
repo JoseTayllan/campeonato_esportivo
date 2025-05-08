@@ -14,10 +14,10 @@ if (!isset($_SESSION['usuario_id'])) {
 // Se ainda não tiver time_id na sessão, tenta buscar no banco
 if (!isset($_SESSION['time_id'])) {
     $stmt = $conn->prepare("SELECT id FROM times WHERE admin_id = ?");
-    $stmt->bind_param("i", $_SESSION['usuario_id']);
+    $stmt->bindValue(1, $_SESSION['usuario_id'], PDO::PARAM_INT);
     $stmt->execute();
     $resultado = $stmt->get_result();
-    $time = $resultado->fetch_assoc();
+    $time = $resultado->fetch(PDO::FETCH_ASSOC);
 
     if ($time) {
         $_SESSION['time_id'] = $time['id'];

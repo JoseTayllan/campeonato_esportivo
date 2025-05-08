@@ -74,7 +74,7 @@ switch ($tipo) {
                 </thead>
                 <tbody>
                     <?php if ($result->num_rows > 0): ?>
-                    <?php while ($row = $result->fetch_assoc()): ?>
+                    <?php while ($row = $result->fetch(PDO::FETCH_ASSOC)): ?>
                     <tr>
                         <td>#<?= $row['partida_id'] ?></td>
                         <td><?= date('d/m/Y', strtotime($row['data'])) ?></td>

@@ -19,14 +19,15 @@ $sql = "
     WHERE e.partida_id = ? AND j.time_id = ?
 ";
 $stmt = $conn->prepare($sql);
-$stmt->bind_param("ii", $partida_id, $time_id);
+$stmt->bindValue(1, $partida_id, PDO::PARAM_INT);
+    $stmt->bindValue(2, $time_id, PDO::PARAM_INT);
 $stmt->execute();
 $res = $stmt->get_result();
 
 $titulares = [];
 $reservas = [];
 
-while ($row = $res->fetch_assoc()) {
+while ($row = $res->fetch(PDO::FETCH_ASSOC)) {
     $caminhoImagem = __DIR__ . '/../../public/img/jogadores/' . $row['imagem'];
     $imagemFinal = (!empty($row['imagem']) && file_exists($caminhoImagem)) ? $row['imagem'] : 'perfil_padrao.png';
 
@@ -45,9 +46,9 @@ while ($row = $res->fetch_assoc()) {
 
 // Busca nome e escudo do time SEM DEPENDER de jogadores escalados
 $infoTime = $conn->prepare("SELECT nome, escudo FROM times WHERE id = ?");
-$infoTime->bind_param("i", $time_id);
+$infoTime->bindValue(1, $time_id, PDO::PARAM_INT);
 $infoTime->execute();
-$info = $infoTime->get_result()->fetch_assoc();
+$info = $infoTime->get_result()->fetch(PDO::FETCH_ASSOC);
 
 $escudo_time = '';
 $time_nome = $info['nome'] ?? '';

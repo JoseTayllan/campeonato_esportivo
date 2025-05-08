@@ -30,9 +30,9 @@ class EscalacaoController {
                 SELECT partida_id FROM escalacoes WHERE jogador_id = j.id
             )
         ");
-        $stmt->bind_param("i", $time_id);
+        $stmt->bindValue(1, $time_id, PDO::PARAM_INT);
         $stmt->execute();
-        return $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
+        return $stmt->get_result()->fetchAll(PDO::FETCH_ASSOC);
     }
 
 }

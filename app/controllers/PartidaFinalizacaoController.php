@@ -15,10 +15,10 @@ class PartidaAoVivoController {
             JOIN times t2 ON p.time_fora = t2.id
             WHERE p.id = ?
         ");
-        $stmt->bind_param("i", $partida_id);
+        $stmt->bindValue(1, $partida_id, PDO::PARAM_INT);
         $stmt->execute();
         $res = $stmt->get_result();
-        return $res->fetch_assoc();
+        return $res->fetch(PDO::FETCH_ASSOC);
     }
 
     public function listarEventos($partida_id) {
@@ -27,9 +27,9 @@ class PartidaAoVivoController {
             WHERE partida_id = ?
             ORDER BY criado_em ASC
         ");
-        $stmt->bind_param("i", $partida_id);
+        $stmt->bindValue(1, $partida_id, PDO::PARAM_INT);
         $stmt->execute();
-        return $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
+        return $stmt->get_result()->fetchAll(PDO::FETCH_ASSOC);
     }
 
     public function listarJogadoresDaPartida($time_casa, $time_fora) {
@@ -39,9 +39,10 @@ class PartidaAoVivoController {
             JOIN times t ON j.time_id = t.id
             WHERE t.id IN (?, ?)
         ");
-        $stmt->bind_param("ii", $time_casa, $time_fora);
+        $stmt->bindValue(1, $time_casa, PDO::PARAM_INT);
+    $stmt->bindValue(2, $time_fora, PDO::PARAM_INT);
         $stmt->execute();
-        return $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
+        return $stmt->get_result()->fetchAll(PDO::FETCH_ASSOC);
     }
 
     private function registrarResultadoTime($time_id, $pontos, $gols_pro, $gols_contra) {
@@ -57,7 +58,7 @@ class PartidaAoVivoController {
 
     public function finalizarPartida($partida_id) {
         $this->conn->prepare("UPDATE partidas SET status = 'finalizada' WHERE id = ?")
-            ->bind_param("i", $partida_id)
+            ->bindValue(1, $partida_id, PDO::PARAM_INT)
             ->execute();
 
         $eventos = $this->conn->query("
@@ -68,7 +69,7 @@ class PartidaAoVivoController {
             GROUP BY jogador_id, tipo_evento
         ");
 
-        while ($e = $eventos->fetch_assoc()) {
+        while ($e = $eventos->fetch(PDO::FETCH_ASSOC)) {
             $jogador_id = $e['jogador_id'];
             $tipo = $e['tipo_evento'];
             $qtd = (int)$e['total'];
@@ -92,7 +93,7 @@ class PartidaAoVivoController {
             }
         }
 
-        $res = $this->conn->query("SELECT * FROM partidas WHERE id = $partida_id")->fetch_assoc();
+        $res = $this->conn->query("SELECT * FROM partidas WHERE id = $partida_id")->fetch(PDO::FETCH_ASSOC);
         $t1 = $res['time_casa'];
         $t2 = $res['time_fora'];
         $g1 = (int)$res['placar_casa'];
@@ -114,14 +115,14 @@ class PartidaAoVivoController {
 
         $stmt = $this->conn->prepare("SELECT id FROM jogadores WHERE time_id = ? AND posicao = 'Goleiro' LIMIT 1");
 
-        $stmt->bind_param("i", $t1);
+        $stmt->bindValue(1, $t1, PDO::PARAM_INT);
         $stmt->execute();
-        $res1 = $stmt->get_result()->fetch_assoc();
+        $res1 = $stmt->get_result()->fetch(PDO::FETCH_ASSOC);
         if ($res1) $goleiros[] = ['id' => $res1['id'], 'gols_sofridos' => $g2];
 
-        $stmt->bind_param("i", $t2);
+        $stmt->bindValue(1, $t2, PDO::PARAM_INT);
         $stmt->execute();
-        $res2 = $stmt->get_result()->fetch_assoc();
+        $res2 = $stmt->get_result()->fetch(PDO::FETCH_ASSOC);
         if ($res2) $goleiros[] = ['id' => $res2['id'], 'gols_sofridos' => $g1];
 
         $stmt->close();

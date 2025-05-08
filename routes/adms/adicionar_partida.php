@@ -24,9 +24,9 @@ $stmt = $conn->prepare("
     JOIN fases_campeonato f ON f.id = r.fase_id
     WHERE r.id = ?
 ");
-$stmt->bind_param("i", $rodada_id);
+$stmt->bindValue(1, $rodada_id, PDO::PARAM_INT);
 $stmt->execute();
-$res = $stmt->get_result()->fetch_assoc();
+$res = $stmt->get_result()->fetch(PDO::FETCH_ASSOC);
 
 $fase_id = $res['fase_id'] ?? null;
 $campeonato_id = $res['campeonato_id'] ?? $campeonato_id;
@@ -36,7 +36,14 @@ $stmt = $conn->prepare("
     INSERT INTO partidas (fase_id, campeonato_id, rodada_id, time_casa, time_fora, data, horario, local, status)
     VALUES (?, ?, ?, ?, ?, ?, ?, ?, 'nao_iniciada')
 ");
-$stmt->bind_param("iiiissss", $fase_id, $campeonato_id, $rodada_id, $time_casa, $time_fora, $data, $horario, $local);
+$stmt->bindValue(1, $fase_id, PDO::PARAM_INT);
+    $stmt->bindValue(2, $campeonato_id, PDO::PARAM_INT);
+    $stmt->bindValue(3, $rodada_id, PDO::PARAM_INT);
+    $stmt->bindValue(4, $time_casa, PDO::PARAM_INT);
+    $stmt->bindValue(5, $time_fora, PDO::PARAM_STR);
+    $stmt->bindValue(6, $data, PDO::PARAM_STR);
+    $stmt->bindValue(7, $horario, PDO::PARAM_STR);
+    $stmt->bindValue(8, $local, PDO::PARAM_STR);
 $stmt->execute();
 
 header("Location: campeonato_editar.php?id=$campeonato_id");

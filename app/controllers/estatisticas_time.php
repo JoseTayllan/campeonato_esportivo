@@ -20,21 +20,22 @@ class EstatisticasTimeController {
     
         $sql = "SELECT partida_id, gols_time_casa as gols FROM estatisticas_partida WHERE time_id = ?";
         $stmt = $this->conn->prepare($sql);
-        $stmt->bind_param("i", $time_id);
+        $stmt->bindValue(1, $time_id, PDO::PARAM_INT);
         $stmt->execute();
         $result = $stmt->get_result();
     
-        while ($linha = $result->fetch_assoc()) {
+        while ($linha = $result->fetch(PDO::FETCH_ASSOC)) {
             $partida_id = $linha['partida_id'];
             $gols_time = (int)$linha['gols'];
     
             // Buscar adversário da mesma partida
             $sql_adv = "SELECT gols_time_casa as gols FROM estatisticas_partida WHERE partida_id = ? AND time_id != ?";
             $stmt_adv = $this->conn->prepare($sql_adv);
-            $stmt_adv->bind_param("ii", $partida_id, $time_id);
+            $stmt_adv->bindValue(1, $partida_id, PDO::PARAM_INT);
+    $stmt->bindValue(2, $time_id, PDO::PARAM_INT);
             $stmt_adv->execute();
             $res_adv = $stmt_adv->get_result();
-            $adv = $res_adv->fetch_assoc();
+            $adv = $res_adv->fetch(PDO::FETCH_ASSOC);
     
             if (!$adv) continue;
     
@@ -63,10 +64,10 @@ class EstatisticasTimeController {
                 LIMIT 1";
 
         $stmt = $this->conn->prepare($sql);
-        $stmt->bind_param("i", $time_id);
+        $stmt->bindValue(1, $time_id, PDO::PARAM_INT);
         $stmt->execute();
         $res = $stmt->get_result();
 
-        return $res->fetch_assoc();
+        return $res->fetch(PDO::FETCH_ASSOC);
     }
 }

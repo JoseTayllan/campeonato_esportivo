@@ -7,10 +7,10 @@ require_once __DIR__ . '/../../includes/assinatura_patrocinador_sec.php';
 // Buscar ID da empresa vinculada ao usuário logado
 $usuario_id = $_SESSION['usuario_id'];
 $stmt = $conn->prepare("SELECT id FROM patrocinadores WHERE usuario_id = ?");
-$stmt->bind_param("i", $usuario_id);
+$stmt->bindValue(1, $usuario_id, PDO::PARAM_INT);
 $stmt->execute();
 $res = $stmt->get_result();
-$patrocinador = $res->fetch_assoc();
+$patrocinador = $res->fetch(PDO::FETCH_ASSOC);
 
 if (!$patrocinador) {
     echo "<div class='container py-5'><div class='alert alert-danger'>Erro: Empresa não encontrada.</div></div>";
@@ -30,7 +30,7 @@ $sql = "
 ";
 
 $stmt2 = $conn->prepare($sql);
-$stmt2->bind_param("i", $patrocinador_id);
+$stmt2->bindValue(1, $patrocinador_id, PDO::PARAM_INT);
 $stmt2->execute();
 $result = $stmt2->get_result();
 
@@ -49,7 +49,7 @@ $result = $stmt2->get_result();
                     <label>Escolha um Time:</label>
                     <select name="time_id" class="form-select" required>
                         <option value="">-- Selecione --</option>
-                        <?php while ($row = $result->fetch_assoc()): ?>
+                        <?php while ($row = $result->fetch(PDO::FETCH_ASSOC)): ?>
                             <option value="<?= $row['id'] ?>">
                                 <?= htmlspecialchars($row['nome']) ?> (<?= htmlspecialchars($row['cidade']) ?>)
                             </option>

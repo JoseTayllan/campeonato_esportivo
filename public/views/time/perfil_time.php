@@ -49,7 +49,7 @@ $patrocinadores = $controller->buscarPatrocinadoresDoTime($time['id']);
             </tr>
         </thead>
         <tbody>
-        <?php while ($j = $jogadores->fetch_assoc()): ?>
+        <?php while ($j = $jogadores->fetch(PDO::FETCH_ASSOC)): ?>
             <tr>
                 <td>
                     <?php if (!empty($j['imagem'])): ?>

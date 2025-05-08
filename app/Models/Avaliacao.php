@@ -12,7 +12,14 @@ class Avaliacao {
                   VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
         
         $stmt = $this->conn->prepare($query);
-        $stmt->bind_param("iiiiiiss", $jogador_id, $olheiro_id, $forca, $velocidade, $drible, $finalizacao, $nota_geral, $observacoes);
+        $stmt->bindValue(1, $jogador_id, PDO::PARAM_INT);
+    $stmt->bindValue(2, $olheiro_id, PDO::PARAM_INT);
+    $stmt->bindValue(3, $forca, PDO::PARAM_INT);
+    $stmt->bindValue(4, $velocidade, PDO::PARAM_INT);
+    $stmt->bindValue(5, $drible, PDO::PARAM_INT);
+    $stmt->bindValue(6, $finalizacao, PDO::PARAM_INT);
+    $stmt->bindValue(7, $nota_geral, PDO::PARAM_STR);
+    $stmt->bindValue(8, $observacoes, PDO::PARAM_STR);
         return $stmt->execute();
     }
 }

@@ -73,11 +73,11 @@ require_once __DIR__ . '/../../../config/database.php';
                     $usuario_id = $_SESSION['usuario_id'];
                     $query = "SELECT id, nome FROM times WHERE admin_id = ?";
                     $stmt = $conn->prepare($query);
-                    $stmt->bind_param("i", $usuario_id);
+                    $stmt->bindValue(1, $usuario_id, PDO::PARAM_INT);
                     $stmt->execute();
                     $result = $stmt->get_result();
 
-                    while ($row = $result->fetch_assoc()) {
+                    while ($row = $result->fetch(PDO::FETCH_ASSOC)) {
                         echo "<option value='{$row['id']}'>{$row['nome']}</option>";
                     }
                     ?>

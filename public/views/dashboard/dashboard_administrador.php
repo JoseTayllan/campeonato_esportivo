@@ -24,11 +24,11 @@ if (!$usuario_id) {
 
 // Total de campeonatos criados pelo admin
 $stmt = $conn->prepare("SELECT id FROM campeonatos WHERE criado_por = ?");
-$stmt->bind_param("i", $usuario_id);
+$stmt->bindValue(1, $usuario_id, PDO::PARAM_INT);
 $stmt->execute();
 $campeonatos_result = $stmt->get_result();
 $campeonato_ids = [];
-while ($row = $campeonatos_result->fetch_assoc()) {
+while ($row = $campeonatos_result->fetch(PDO::FETCH_ASSOC)) {
     $campeonato_ids[] = $row['id'];
 }
 $totalCampeonatos = count($campeonato_ids);
@@ -46,10 +46,10 @@ if ($totalCampeonatos > 0) {
                  JOIN campeonatos c ON c.id = tc.campeonato_id
                  WHERE c.criado_por = ?";
     $stmtTimes = $conn->prepare($sqlTimes);
-    $stmtTimes->bind_param("i", $usuario_id);
+    $stmtTimes->bindValue(1, $usuario_id, PDO::PARAM_INT);
     $stmtTimes->execute();
     $resultTimes = $stmtTimes->get_result();
-    $totalTimes = $resultTimes->fetch_assoc()['total'] ?? 0;
+    $totalTimes = $resultTimes->fetch(PDO::FETCH_ASSOC)['total'] ?? 0;
 
     // Buscar jogadores vinculados aos times desses campeonatos
     $sqlJogadores = "
@@ -61,10 +61,10 @@ if ($totalCampeonatos > 0) {
         WHERE c.criado_por = ?
     ";
     $stmtJogadores = $conn->prepare($sqlJogadores);
-    $stmtJogadores->bind_param("i", $usuario_id);
+    $stmtJogadores->bindValue(1, $usuario_id, PDO::PARAM_INT);
     $stmtJogadores->execute();
     $resultJogadores = $stmtJogadores->get_result();
-    $totalJogadores = $resultJogadores->fetch_assoc()['total'] ?? 0;
+    $totalJogadores = $resultJogadores->fetch(PDO::FETCH_ASSOC)['total'] ?? 0;
 }
 ?>
 
@@ -148,12 +148,12 @@ if ($totalCampeonatos > 0) {
                     <tbody>
                         <?php
                         $listar = $conn->prepare("SELECT * FROM campeonatos WHERE criado_por = ? ORDER BY criado_em DESC");
-                        $listar->bind_param("i", $usuario_id);
+                        $listar->bindValue(1, $usuario_id, PDO::PARAM_INT);
                         $listar->execute();
                         $result = $listar->get_result();
 
                         if ($result->num_rows > 0) {
-                            while ($c = $result->fetch_assoc()) {
+                            while ($c = $result->fetch(PDO::FETCH_ASSOC)) {
                                 echo "<tr>
                                     <td>{$c['id']}</td>
                                     <td>{$c['nome']}</td>

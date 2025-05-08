@@ -21,6 +21,7 @@ class PlacarPublicoController {
             ORDER BY p.data, p.horario
         ";
 
-        return $this->conn->query($sql)->fetch_all(MYSQLI_ASSOC);
+        $stmt = $this->conn->query($sql);
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 }

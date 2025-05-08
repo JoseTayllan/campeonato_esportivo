@@ -14,9 +14,9 @@ class CampeonatoPublicoController
     {
         // Info do campeonato
         $stmt = $this->conn->prepare("SELECT * FROM campeonatos WHERE id = ?");
-        $stmt->bind_param("i", $id);
+        $stmt->bindValue(1, $id, PDO::PARAM_INT);
         $stmt->execute();
-        $campeonato = $stmt->get_result()->fetch_assoc();
+        $campeonato = $stmt->get_result()->fetch(PDO::FETCH_ASSOC);
 
         if (!$campeonato) return null;
 
@@ -27,9 +27,9 @@ class CampeonatoPublicoController
             JOIN times_campeonatos tc ON tc.time_id = t.id
             WHERE tc.campeonato_id = ?
         ");
-        $stmt->bind_param("i", $id);
+        $stmt->bindValue(1, $id, PDO::PARAM_INT);
         $stmt->execute();
-        $times = $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
+        $times = $stmt->get_result()->fetchAll(PDO::FETCH_ASSOC);
 
         // Rodadas e partidas
         $stmt = $this->conn->prepare("SELECT r.id AS rodada_id, r.numero, r.tipo, r.descricao,
@@ -47,9 +47,9 @@ class CampeonatoPublicoController
         ORDER BY r.numero ASC, p.data ASC
     ");
     
-        $stmt->bind_param("i", $id);
+        $stmt->bindValue(1, $id, PDO::PARAM_INT);
         $stmt->execute();
-        $partidas = $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
+        $partidas = $stmt->get_result()->fetchAll(PDO::FETCH_ASSOC);
 
         return [
             'campeonato' => $campeonato,

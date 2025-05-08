@@ -12,7 +12,7 @@ $admin_id = $_SESSION['usuario_id'] ?? null;
 $partidas = [];
 if ($admin_id) {
     $result = $controller->buscarPartidasDoMeuTime($admin_id);
-    $partidas = $result->fetch_all(MYSQLI_ASSOC);
+    $partidas = $result->fetchAll(PDO::FETCH_ASSOC);
 }
 require_once __DIR__ . '/../../public/views/time/agenda.php';
 

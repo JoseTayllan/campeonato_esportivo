@@ -70,9 +70,9 @@ class TeamController {
                 WHERE pt.time_id = ?";
 
         $stmt = $this->conn->prepare($sql);
-        $stmt->bind_param("i", $time_id);
+        $stmt->bindValue(1, $time_id, PDO::PARAM_INT);
         $stmt->execute();
-        return $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 }
 ?>

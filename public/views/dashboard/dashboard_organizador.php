@@ -20,9 +20,9 @@ $resultCampeonatos = $conn->query($queryCampeonatos);
 $resultTimes = $conn->query($queryTimes);
 $resultJogadores = $conn->query($queryJogadores);
 
-$totalCampeonatos = ($resultCampeonatos->fetch_assoc())['total'] ?? 0;
-$totalTimes = ($resultTimes->fetch_assoc())['total'] ?? 0;
-$totalJogadores = ($resultJogadores->fetch_assoc())['total'] ?? 0;
+$totalCampeonatos = ($resultCampeonatos->fetch(PDO::FETCH_ASSOC))['total'] ?? 0;
+$totalTimes = ($resultTimes->fetch(PDO::FETCH_ASSOC))['total'] ?? 0;
+$totalJogadores = ($resultJogadores->fetch(PDO::FETCH_ASSOC))['total'] ?? 0;
 ?>
 
 <?php include '../cabecalho/header.php'; ?>
@@ -102,11 +102,11 @@ $totalJogadores = ($resultJogadores->fetch_assoc())['total'] ?? 0;
                             )
                             ORDER BY criado_em DESC
                         ");
-                        $stmt->bind_param("i", $organizador_id);
+                        $stmt->bindValue(1, $organizador_id, PDO::PARAM_INT);
                         $stmt->execute();
                         $listar = $stmt->get_result();
                         if ($listar->num_rows > 0) {
-                            while ($c = $listar->fetch_assoc()) {
+                            while ($c = $listar->fetch(PDO::FETCH_ASSOC)) {
                                 ?>
                                 <tr>
                                     <td><?= $c['id'] ?></td>

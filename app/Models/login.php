@@ -9,9 +9,8 @@ class Usuario {
     public function buscarPorEmail($email) {
         $query = "SELECT * FROM usuarios WHERE email = ?";
         $stmt = $this->conn->prepare($query);
-        $stmt->bind_param("s", $email);
+        $stmt->bindValue(1, $email, PDO::PARAM_STR);
         $stmt->execute();
-        $result = $stmt->get_result();
-        return $result->fetch_assoc();
+        return $stmt->fetch(PDO::FETCH_ASSOC);
     }
 }
