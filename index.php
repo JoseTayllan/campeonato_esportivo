@@ -715,18 +715,18 @@ footer {
 <section>
 <h2 id="esportes">📂 Esportes</h2>
 <div class="grid">
-<div class="card" style="position: relative; overflow: hidden; height: 100%; border-radius: 1rem;">
+<div class="card" style="opacity:0.5; background: url('/public/images/capa_futebol.jpeg') center/cover no-repeat; backdrop-filter: blur(6px);"">
 <div style="position: relative; z-index: 1; padding: 2rem; height: 90%;">
 <h3>⚽ Futebol</h3>
-<p>Controle completo de partidas, escalações e desempenho.</p>
+<p style="color: #000; background-color: #565656; border-radius: 10px; padding: 10px;">Controle completo de partidas, escalações e desempenho.</p>
 <a class="btn-esporte" href="/public">Entrar</a>
 </div>
 </div>
-<div class="card" style="opacity:0.5; background: url('images/capa_basquete.jpg') center/cover no-repeat; backdrop-filter: blur(6px);">
+<div class="card" style="opacity:0.5; background: url('/public/images/capa_basquete.jpeg') center/cover no-repeat; backdrop-filter: blur(6px);">
 <h3>🏀 Basquete</h3>
 <p>Em breve</p>
 </div>
-<div class="card" style="opacity:0.5; background: url('images/capa_volei.jpg') center/cover no-repeat; backdrop-filter: blur(6px);">
+<div class="card" style="opacity:0.5; background: url('/public/images/capa_volei.jpeg') center/cover no-repeat; backdrop-filter: blur(6px);">
 <h3>🏐 Vôlei</h3>
 <p>Planejado para fase 2</p>
 </div>
