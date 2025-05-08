@@ -54,17 +54,17 @@ include '../cabecalho/header.php';
 
     <div class="row text-center mb-5">
         <div class="col-md-4 mb-3">
-            <a href="/campeonato_esportivo/routes/public/placar_publico.php" class="btn btn-dark w-100 py-2">
+            <a href="/routes/public/placar_publico.php" class="btn btn-dark w-100 py-2">
                 📢 Ver Placar Ao Vivo
             </a>
         </div>
         <div class="col-md-4 mb-3">
-            <a href="/campeonato_esportivo/routes/public/ranking.php" class="btn btn-dark w-100 py-2">
+            <a href="/routes/public/ranking.php" class="btn btn-dark w-100 py-2">
                 🏆 Ver Ranking Geral
             </a>
         </div>
         <div class="col-md-4 mb-3">
-            <a href="/campeonato_esportivo/public/views/master/usuarios.php" class="btn btn-dark w-100 py-2">
+            <a href="/public/views/master/usuarios.php" class="btn btn-dark w-100 py-2">
                 👤 Gerenciar Usuários
             </a>
         </div>

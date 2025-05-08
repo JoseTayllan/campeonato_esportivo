@@ -23,11 +23,11 @@ if (!$patrocinador) {
         <?php if (!empty($patrocinador['logo'])): ?>
             <div class="mb-3">
                 <strong>Banner atual:</strong><br>
-                <img src="/campeonato_esportivo/<?= $patrocinador['logo'] ?>" class="img-fluid rounded" style="max-height: 160px;">
+                <img src="/<?= $patrocinador['logo'] ?>" class="img-fluid rounded" style="max-height: 160px;">
             </div>
         <?php endif; ?>
 
-        <form action="/campeonato_esportivo/routes/patrocinador/atualizar_banner.php" method="POST" enctype="multipart/form-data">
+        <form action="/routes/patrocinador/atualizar_banner.php" method="POST" enctype="multipart/form-data">
             <input type="hidden" name="atualizar_banner" value="1">
             <div class="mb-3">
                 <label>Nova Imagem</label>

@@ -18,7 +18,7 @@ if ($campeonatoSelecionado) {
 <div class="container mt-4">
 
     <!-- Botão de Voltar -->
-    <a href="/campeonato_esportivo/routes/public/campeonato_publico.php?id=<?= (int)$campeonatoSelecionado ?>"
+    <a href="/routes/public/campeonato_publico.php?id=<?= (int)$campeonatoSelecionado ?>"
        class="btn btn-outline-secondary btn-sm mb-4">
         🔙 Voltar para o Campeonato
     </a>
@@ -51,7 +51,7 @@ if ($campeonatoSelecionado) {
                                                     <div class="d-flex justify-content-between align-items-center flex-wrap text-center">
                                                         <div class="d-flex align-items-center">
                                                             <?php if (!empty($partida['escudo_time_casa'])): ?>
-                                                                <img src="/campeonato_esportivo/public/<?= $partida['escudo_time_casa'] ?>" alt="Escudo <?= $partida['time_casa'] ?>" width="40" class="me-2">
+                                                                <img src="/public/<?= $partida['escudo_time_casa'] ?>" alt="Escudo <?= $partida['time_casa'] ?>" width="40" class="me-2">
                                                             <?php endif; ?>
                                                             <strong><?= htmlspecialchars($partida['time_casa']) ?></strong>
                                                         </div>
@@ -65,7 +65,7 @@ if ($campeonatoSelecionado) {
                                                         <div class="d-flex align-items-center">
                                                             <strong><?= htmlspecialchars($partida['time_fora']) ?></strong>
                                                             <?php if (!empty($partida['escudo_time_fora'])): ?>
-                                                                <img src="/campeonato_esportivo/public/<?= $partida['escudo_time_fora'] ?>" alt="Escudo <?= $partida['time_fora'] ?>" width="40" class="ms-2">
+                                                                <img src="/public/<?= $partida['escudo_time_fora'] ?>" alt="Escudo <?= $partida['time_fora'] ?>" width="40" class="ms-2">
                                                             <?php endif; ?>
                                                         </div>
                                                     </div>

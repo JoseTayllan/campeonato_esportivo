@@ -14,7 +14,7 @@ include __DIR__ . '../../../includes/admin_sec.php'; ?>
     <?php include __DIR__ . '/../partials/mensagens.php'; ?>
 
 
-    <form action="/campeonato_esportivo/routes/salvar_organizador.php" method="POST">
+    <form action="/routes/salvar_organizador.php" method="POST">
         <div class="mb-3">
             <label>Nome</label>
             <input type="text" name="nome" class="form-control" required>

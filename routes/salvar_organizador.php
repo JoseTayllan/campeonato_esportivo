@@ -13,9 +13,9 @@ $stmt->bind_param("ssssi", $nome, $email, $senha, $tipo, $criado_por);
 
 if ($stmt->execute()) {
     $_SESSION['mensagem_sucesso'] = "Organizador cadastrado com sucesso!";
-    header("Location: /campeonato_esportivo/routes/adms/cadastro_organizador.php");
+    header("Location: /routes/adms/cadastro_organizador.php");
 } else {
     $_SESSION['mensagem_erro'] = "Erro ao cadastrar organizador.";
-    header("Location: /campeonato_esportivo/routes/adms/cadastro_organizador.php ");
+    header("Location: /routes/adms/cadastro_organizador.php ");
 }
 exit;

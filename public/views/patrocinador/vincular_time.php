@@ -43,7 +43,7 @@ $result = $stmt2->get_result();
         <?php if ($result->num_rows === 0): ?>
             <div class="alert alert-info">Nenhum time disponível para vínculo.</div>
         <?php else: ?>
-            <form method="POST" action="/campeonato_esportivo/routes/patrocinador/patrocinador_dashboard.php">
+            <form method="POST" action="/routes/patrocinador/patrocinador_dashboard.php">
                 <input type="hidden" name="vincular_time" value="1">
                 <div class="mb-3">
                     <label>Escolha um Time:</label>

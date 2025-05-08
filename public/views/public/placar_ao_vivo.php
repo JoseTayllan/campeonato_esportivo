@@ -10,7 +10,7 @@ require_once __DIR__ . '/../cabecalho/header.php';
 
 <script>
 function carregarPlacarAoVivo() {
-    fetch('/campeonato_esportivo/routes/ajax/placar_atualizado.php')
+    fetch('/routes/ajax/placar_atualizado.php')
         .then(res => res.json())
         .then(dados => {
             const container = document.getElementById('placar-container');
@@ -63,11 +63,11 @@ function carregarPlacarAoVivo() {
                             <div class="card-body">
                                 <div class="text-center">
                                     <h5>
-                                        <img src="/campeonato_esportivo/public/img/times/${p.escudo_casa}" width="30">
+                                        <img src="/public/img/times/${p.escudo_casa}" width="30">
                                         ${p.nome_casa}
                                         <strong>${p.placar_casa} x ${p.placar_fora}</strong>
                                         ${p.nome_fora}
-                                        <img src="/campeonato_esportivo/public/img/times/${p.escudo_fora}" width="30">
+                                        <img src="/public/img/times/${p.escudo_fora}" width="30">
                                     </h5>
                                     <small>
                                         ${p.data} ${p.horario} | ${p.local} <br>
@@ -119,22 +119,22 @@ function mostrarEscalacoes(partida_id, timeCasa, timeFora) {
     }
 
     Promise.all([
-        fetch(`/campeonato_esportivo/routes/ajax/escalacao_publica.php?partida_id=${partida_id}&time_id=${timeCasa}`).then(res => res.json()),
-        fetch(`/campeonato_esportivo/routes/ajax/escalacao_publica.php?partida_id=${partida_id}&time_id=${timeFora}`).then(res => res.json())
+        fetch(`/routes/ajax/escalacao_publica.php?partida_id=${partida_id}&time_id=${timeCasa}`).then(res => res.json()),
+        fetch(`/routes/ajax/escalacao_publica.php?partida_id=${partida_id}&time_id=${timeFora}`).then(res => res.json())
     ])
     .then(([casa, fora]) => {
         let html = "";
 
         html += `
             <div class="mb-2 d-flex align-items-center">
-                ${casa.escudo ? `<img src="/campeonato_esportivo/public/img/times/${casa.escudo}" width="30" class="me-2">` : ''}
+                ${casa.escudo ? `<img src="/public/img/times/${casa.escudo}" width="30" class="me-2">` : ''}
                 <strong>${casa.time_nome}</strong>
             </div>`;
         html += montarTabelaEscalacao(casa);
 
         html += `
             <div class="mb-2 d-flex align-items-center">
-                ${fora.escudo ? `<img src="/campeonato_esportivo/public/img/times/${fora.escudo}" width="30" class="me-2">` : ''}
+                ${fora.escudo ? `<img src="/public/img/times/${fora.escudo}" width="30" class="me-2">` : ''}
                 <strong>${fora.time_nome}</strong>
             </div>`;
         html += montarTabelaEscalacao(fora);
@@ -155,7 +155,7 @@ function montarTabelaEscalacao(time) {
     html += "<table class='table table-bordered table-sm'><thead><tr><th>Imagem</th><th>Nome</th><th>Posição</th></tr></thead><tbody>";
     time.titulares.forEach(j => {
         html += `<tr>
-            <td><img src='/campeonato_esportivo/public/img/jogadores/${j.imagem}' onerror="this.src='/campeonato_esportivo/public/img/perfil_padrao/perfil_padrao.png'" style='width:30px;height:30px;border-radius:50%;'></td>
+            <td><img src='/public/img/jogadores/${j.imagem}' onerror="this.src='/public/img/perfil_padrao/perfil_padrao.png'" style='width:30px;height:30px;border-radius:50%;'></td>
             <td>${j.nome}</td>
             <td>${j.posicao}</td>
         </tr>`;
@@ -164,7 +164,7 @@ function montarTabelaEscalacao(time) {
     html += "<table class='table table-bordered table-sm'><thead><tr><th>Imagem</th><th>Nome</th><th>Posição</th></tr></thead><tbody>";
     time.reservas.forEach(j => {
         html += `<tr>
-            <td><img src='/campeonato_esportivo/public/img/jogadores/${j.imagem}' onerror="this.src='/campeonato_esportivo/public/img/perfil_padrao/perfil_padrao.png'" style='width:30px;height:30px;border-radius:50%;'></td>
+            <td><img src='/public/img/jogadores/${j.imagem}' onerror="this.src='/public/img/perfil_padrao/perfil_padrao.png'" style='width:30px;height:30px;border-radius:50%;'></td>
             <td>${j.nome}</td>
             <td>${j.posicao}</td>
         </tr>`;

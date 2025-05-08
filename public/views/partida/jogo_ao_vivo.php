@@ -32,7 +32,7 @@
             <div class="card shadow mb-3">
                 <div class="card-body">
                     <h5 class="card-title">Registrar Evento</h5>
-                    <form method="post" action="/campeonato_esportivo/routes/adms/aovivo/registrar_evento.php" onsubmit="inserirMinuto(); separarJogadorTime();">
+                    <form method="post" action="/routes/adms/aovivo/registrar_evento.php" onsubmit="inserirMinuto(); separarJogadorTime();">
                         <input type="hidden" name="partida_id" value="<?= $partida['id'] ?>">
                         <input type="hidden" name="minuto" id="campoMinuto">
                         <input type="hidden" name="jogador_id" id="jogador_id_hidden">
@@ -83,7 +83,7 @@
             </div>
 
             
-<form method="post" action="/campeonato_esportivo/routes/adms/aovivo/atualizar_tempo_visual.php" class="mt-2">
+<form method="post" action="/routes/adms/aovivo/atualizar_tempo_visual.php" class="mt-2">
     <input type="hidden" name="partida_id" value="<?= $partida['id'] ?>">
     <div class="btn-group w-100">
         <button type="submit" name="tempo_atual" value="1º Tempo" class="btn btn-outline-primary btn-sm">1º Tempo</button>
@@ -91,7 +91,7 @@
         <button type="submit" name="tempo_atual" value="2º Tempo" class="btn btn-outline-success btn-sm">2º Tempo</button>
     </div>
 </form>
-<a href="/campeonato_esportivo/routes/adms/aovivo/finalizar_partida.php?id=<?= $partida['id'] ?>" class="btn btn-danger w-100 mt-2">
+<a href="/routes/adms/aovivo/finalizar_partida.php?id=<?= $partida['id'] ?>" class="btn btn-danger w-100 mt-2">
                 Finalizar Partida
             </a>
         </div>
@@ -154,7 +154,7 @@ function atualizarCronometro() {
 }
 
 function pausarCronometro() {
-    fetch('/campeonato_esportivo/routes/adms/aovivo/cronometro.php', {
+    fetch('/routes/adms/aovivo/cronometro.php', {
         method: 'POST',
         headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
         body: 'partida_id=<?= $partida['id'] ?>&status=pausado'
@@ -162,7 +162,7 @@ function pausarCronometro() {
 }
 
 function retomarCronometro() {
-    fetch('/campeonato_esportivo/routes/adms/aovivo/cronometro.php', {
+    fetch('/routes/adms/aovivo/cronometro.php', {
         method: 'POST',
         headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
         body: 'partida_id=<?= $partida['id'] ?>&status=rodando'
@@ -172,7 +172,7 @@ function retomarCronometro() {
 function destacarAcrescimo() {
     const novo = prompt("Quantos minutos de acréscimo?");
     if (novo && !isNaN(novo)) {
-        fetch('/campeonato_esportivo/routes/adms/aovivo/cronometro.php', {
+        fetch('/routes/adms/aovivo/cronometro.php', {
             method: 'POST',
             headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
             body: 'partida_id=<?= $partida['id'] ?>&acrescimos=' + parseInt(novo)

@@ -27,7 +27,7 @@
     <h2 class="mb-4">Avaliações dos Jogadores</h2>
 
     <div class="d-flex justify-content-end mb-3">
-        <a href="/campeonato_esportivo/routes/avaliacao/avaliar_jogador.php" class="btn btn-primary">
+        <a href="/routes/avaliacao/avaliar_jogador.php" class="btn btn-primary">
             <i class="bi bi-pencil-square"></i> Avaliar Jogador
         </a>
 
@@ -106,8 +106,8 @@
         if (jogadorId) {
             document.getElementById("exportar_csv").classList.remove("disabled");
             document.getElementById("exportar_pdf").classList.remove("disabled");
-            document.getElementById("exportar_csv").href = "/campeonato_esportivo/routes/avaliacao/exportar_dados.php?tipo=csv&jogador_id=" + jogadorId;
-            document.getElementById("exportar_pdf").href = "/campeonato_esportivo/routes/avaliacao/exportar_dados.php?tipo=pdf&jogador_id=" + jogadorId;
+            document.getElementById("exportar_csv").href = "/routes/avaliacao/exportar_dados.php?tipo=csv&jogador_id=" + jogadorId;
+            document.getElementById("exportar_pdf").href = "/routes/avaliacao/exportar_dados.php?tipo=pdf&jogador_id=" + jogadorId;
         } else {
             document.getElementById("exportar_csv").classList.add("disabled");
             document.getElementById("exportar_pdf").classList.add("disabled");

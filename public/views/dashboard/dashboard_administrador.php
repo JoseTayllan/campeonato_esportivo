@@ -113,12 +113,12 @@ if ($totalCampeonatos > 0) {
             </a>
         </div>
         <div class="col-md-4 mb-3">
-            <a href="/campeonato_esportivo/routes/adms/meus_campeonatos.php" class="btn btn-outline-primary w-100 py-2">
+            <a href="/routes/adms/meus_campeonatos.php" class="btn btn-outline-primary w-100 py-2">
                 <i class="bi bi-trophy-fill me-1"></i> Meus Campeonatos
             </a>
         </div>
         <div class="col-md-6 mb-3">
-            <a href="/campeonato_esportivo/routes/adms/cadastro_organizador.php" class="btn btn-outline-primary w-100 py-2">
+            <a href="/routes/adms/cadastro_organizador.php" class="btn btn-outline-primary w-100 py-2">
                 ➕ Cadastrar Novo Organizador
             </a>
         </div>

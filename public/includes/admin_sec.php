@@ -11,8 +11,8 @@ if (session_status() === PHP_SESSION_NONE) {
     <title>Gerenciamento de Campeonatos</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
-    <link href="/campeonato_esportivo/public/assets/css/global.css" rel="stylesheet">
-    <link href="/campeonato_esportivo/public/assets/css/admin.css" rel="stylesheet">
+    <link href="/public/assets/css/global.css" rel="stylesheet">
+    <link href="/public/assets/css/admin.css" rel="stylesheet">
 
 
 </head>
@@ -39,11 +39,11 @@ if (session_status() === PHP_SESSION_NONE) {
                     $tipo_usuario = $_SESSION['usuario']['tipo'] ?? null;
 
                     if ($tipo_assinatura === 'completo' && $tipo_usuario === 'Olheiro') {
-                        $link = '/campeonato_esportivo/public/views/avaliacao/visualizar_avaliacoes.php';
+                        $link = '/public/views/avaliacao/visualizar_avaliacoes.php';
                     } elseif ($tipo_assinatura === 'completo' && $tipo_usuario === 'Administrador') {
-                        $link = '/campeonato_esportivo/public/views/dashboard/dashboard_administrador.php';
+                        $link = '/public/views/dashboard/dashboard_administrador.php';
                     } elseif ($tipo_assinatura === 'time') {
-                        $link = '/campeonato_esportivo/public/views/dashboard/dashboard_time.php';
+                        $link = '/public/views/dashboard/dashboard_time.php';
                     } else {
                         $link = null;
                     }
@@ -65,19 +65,19 @@ if (session_status() === PHP_SESSION_NONE) {
 <!-- Menu Horizontal Administrativo -->
 <div class="container-fluid py-2 border-bottom shadow-sm menu-container">
     <div class="d-flex flex-row flex-nowrap justify-content-center menu-scroll px-2 gap-2">
-        <a href="/campeonato_esportivo/public/views/cadastro/cadastro_campeonato.php" class="menu-link menu-separador flex-shrink-0">
+        <a href="/public/views/cadastro/cadastro_campeonato.php" class="menu-link menu-separador flex-shrink-0">
             <i class="bi bi-flag-fill me-2"></i>Campeonato
         </a>
-        <a href="/campeonato_esportivo/public/views/cadastro/cadastro_time.php" class="menu-link menu-separador flex-shrink-0">
+        <a href="/public/views/cadastro/cadastro_time.php" class="menu-link menu-separador flex-shrink-0">
             <i class="bi bi-people-fill me-2"></i>Time
         </a>
-        <a href="/campeonato_esportivo/public/views/cadastro/cadastro_jogador.php" class="menu-link menu-separador flex-shrink-0">
+        <a href="/public/views/cadastro/cadastro_jogador.php" class="menu-link menu-separador flex-shrink-0">
             <i class="bi bi-person-fill me-2"></i>Jogador
         </a>
-        <a href="/campeonato_esportivo/public/views/cadastro/cadastro_jogo.php" class="menu-link menu-separador flex-shrink-0">
+        <a href="/public/views/cadastro/cadastro_jogo.php" class="menu-link menu-separador flex-shrink-0">
             <i class="bi bi-calendar-event-fill me-2"></i>Jogos
         </a>
-        <a href="/campeonato_esportivo/public/views/cadastro/cadastro_estatistica.php" class="menu-link flex-shrink-0">
+        <a href="/public/views/cadastro/cadastro_estatistica.php" class="menu-link flex-shrink-0">
             <i class="bi bi-bar-chart-fill me-2"></i>Estatísticas
         </a>
         

@@ -721,7 +721,7 @@ footer {
 <div style="position: relative; z-index: 1; padding: 2rem; height: 90%;">
 <h3>⚽ Futebol</h3>
 <p>Controle completo de partidas, escalações e desempenho.</p>
-<a class="btn-esporte" href="/campeonato_esportivo/public">Entrar</a>
+<a class="btn-esporte" href="/public">Entrar</a>
 </div>
 </div>
 <div class="card" style="opacity:0.5; background: url('images/capa_basquete.jpg') center/cover no-repeat; backdrop-filter: blur(6px);">

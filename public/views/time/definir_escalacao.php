@@ -75,8 +75,8 @@ foreach ($escalacao_existente as $esc) {
                             }
                         }
                         $imagemCaminho = (!empty($jogador['imagem']) && file_exists(__DIR__ . '/../../../public/img/jogadores/' . $jogador['imagem']))
-                            ? "/campeonato_esportivo/public/img/jogadores/{$jogador['imagem']}"
-                            : "/campeonato_esportivo/public/img/perfil_padrao/perfil_padrao.png";
+                            ? "/public/img/jogadores/{$jogador['imagem']}"
+                            : "/public/img/perfil_padrao/perfil_padrao.png";
                     ?>
                     <tr>
                         <td class="text-center" style="width: 60px;">

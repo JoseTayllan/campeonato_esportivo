@@ -2,7 +2,7 @@
 $host = 'localhost';
 $dbname = 'campeonato_esportivo';
 $user = 'root'; 
-$pass = '';
+$pass = '4sus2024!';
 
 // Criar conexão
 $conn = new mysqli($host, $user, $pass, $dbname);

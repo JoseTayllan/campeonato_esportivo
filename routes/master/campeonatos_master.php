@@ -14,7 +14,7 @@ $usuarios = $controllerUsuarios->listarTodos();
 <head>
     <meta charset="UTF-8">
     <title>Dashboard Master</title>
-    <link href="/campeonato_esportivo/assets/css/bootstrap.min.css" rel="stylesheet">
+    <link href="/assets/css/bootstrap.min.css" rel="stylesheet">
 </head>
 <body>
 
@@ -52,6 +52,6 @@ $usuarios = $controllerUsuarios->listarTodos();
     </div>
 </div>
 
-<script src="/campeonato_esportivo/assets/js/bootstrap.bundle.min.js"></script>
+<script src="/assets/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>

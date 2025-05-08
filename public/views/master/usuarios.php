@@ -8,7 +8,7 @@ require_once __DIR__ . '/../../../app/middleware/verifica_sessao.php';
 // Permissão apenas para master
 if ($_SESSION['usuario_tipo'] !== 'Master') {
     $_SESSION['mensagem_erro'] = "Acesso negado.";
-    header("Location: /campeonato_esportivo/public/index.php");
+    header("Location: /public/index.php");
     exit;
 }
 
@@ -48,7 +48,7 @@ include '../cabecalho/header.php';
                             <td><?= date('d/m/Y', strtotime($u['criado_em'])) ?></td>
                             <td>
                                 <a href="#" class="btn btn-sm btn-primary disabled">Editar</a>
-                                <a href="/campeonato_esportivo/routes/master/excluir_usuario.php?id=<?= $u['id'] ?>"
+                                <a href="/routes/master/excluir_usuario.php?id=<?= $u['id'] ?>"
                                     class="btn btn-danger btn-sm"
                                     onclick="return confirm('Tem certeza que deseja excluir este usuário?');">
                                     Excluir

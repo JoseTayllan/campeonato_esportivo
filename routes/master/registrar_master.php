@@ -10,7 +10,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     if (!$nome || !$email || !$senha) {
         $_SESSION['mensagem_erro'] = "Preencha todos os campos.";
-        header('Location: /campeonato_esportivo/public/views/master/cadastro_master.php');
+        header('Location: /public/views/master/cadastro_master.php');
         exit;
     }
 
@@ -20,11 +20,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $resultado = $usuarioController->criarUsuario($nome, $email, $senha, 'Master');
 
     $_SESSION['mensagem_sucesso'] = $resultado;
-    header('Location: /campeonato_esportivo/public/views/login/login.php');
+    header('Location: /public/views/login/login.php');
     exit;
 } else {
     $_SESSION['mensagem_erro'] = "Requisição inválida.";
-    header('Location: /campeonato_esportivo/public/views/login/login.php');
+    header('Location: /public/views/login/login.php');
     exit;
 }
 ?>

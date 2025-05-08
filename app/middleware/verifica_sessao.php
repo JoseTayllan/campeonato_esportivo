@@ -8,7 +8,7 @@ if (session_status() === PHP_SESSION_NONE) {
 // Verifica se o usuário está logado
 if (!isset($_SESSION['usuario_id'])) {
     $_SESSION['mensagem_erro'] = "Você precisa estar logado para acessar.";
-    header("Location: /campeonato_esportivo/public/views/login/login.php");
+    header("Location: /public/views/login/login.php");
     exit();
 }
 
@@ -19,7 +19,7 @@ if (isset($restrito_para) && is_array($restrito_para)) {
 
     if (!in_array($tipo_usuario, $permitidos)) {
         $_SESSION['mensagem_erro'] = "Acesso negado para seu perfil.";
-        header("Location: /campeonato_esportivo/public/index.php");
+        header("Location: /public/index.php");
         exit();
     }
 }

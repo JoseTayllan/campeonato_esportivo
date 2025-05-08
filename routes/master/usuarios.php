@@ -4,7 +4,7 @@ require_once __DIR__ . '/../../config/database.php';
 require_once __DIR__ . '/../../app/controllers/UsuariosController.php';
 
 if (!isset($_SESSION['usuario_tipo']) || $_SESSION['usuario_tipo'] !== 'master') {
-    header("Location: /campeonato_esportivo/public/index.php");
+    header("Location: /public/index.php");
     exit;
 }
 

@@ -73,9 +73,9 @@ if (!$jogador) {
             <div class="mb-3">
                 <label class="form-label">Imagem Atual</label><br>
                 <?php if (!empty($jogador['imagem'])): ?>
-                    <img src="/campeonato_esportivo/public/img/jogadores/<?= $jogador['imagem'] ?>" width="100" alt="Imagem atual">
+                    <img src="/public/img/jogadores/<?= $jogador['imagem'] ?>" width="100" alt="Imagem atual">
                 <?php else: ?>
-                    <img src="/campeonato_esportivo/public/img/perfil_padrao/perfil_padrao.png" width="100" alt="Imagem padrão">
+                    <img src="/public/img/perfil_padrao/perfil_padrao.png" width="100" alt="Imagem padrão">
                 <?php endif; ?>
             </div>
 

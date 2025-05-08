@@ -64,7 +64,7 @@ if (!isset($_SERVER['HTTP_REFERER']) || empty($_SERVER['HTTP_REFERER'])) {
                     <?php endif; ?>
 
                     <!-- 🔴 Formulário de Desvincular -->
-                    <form method="POST" action="/campeonato_esportivo/routes/patrocinador/patrocinador_dashboard.php" class="text-end mt-3">
+                    <form method="POST" action="/routes/patrocinador/patrocinador_dashboard.php" class="text-end mt-3">
                         <input type="hidden" name="desvincular_time" value="1">
                         <input type="hidden" name="time_id" value="<?= $info['time']['id'] ?>">
                         <button type="submit" class="btn btn-outline-danger btn-sm">
@@ -89,7 +89,7 @@ if (!isset($_SERVER['HTTP_REFERER']) || empty($_SERVER['HTTP_REFERER'])) {
                     <?php if (!empty($info['logo'])): ?>
                         <div class="text-center mt-4">
                             <h6 class="text-secondary mb-2">Banner do Patrocinador</h6>
-                            <img src="/campeonato_esportivo/<?= $info['logo'] ?>"
+                            <img src="/<?= $info['logo'] ?>"
                                  class="img-fluid rounded shadow-sm"
                                  style="max-width: 150%; height: auto; max-height: 150px; object-fit: contain;"
                                  alt="Banner do Patrocinador">

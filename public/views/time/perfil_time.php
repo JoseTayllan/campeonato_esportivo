@@ -53,9 +53,9 @@ $patrocinadores = $controller->buscarPatrocinadoresDoTime($time['id']);
             <tr>
                 <td>
                     <?php if (!empty($j['imagem'])): ?>
-                        <img src="/campeonato_esportivo/public/img/jogadores/<?= $j['imagem'] ?>" alt="Imagem do jogador" style="width: 50px; height: 50px; object-fit: cover; border-radius: 50%;">
+                        <img src="/public/img/jogadores/<?= $j['imagem'] ?>" alt="Imagem do jogador" style="width: 50px; height: 50px; object-fit: cover; border-radius: 50%;">
                     <?php else: ?>
-                        <img src="/campeonato_esportivo/public/img/perfil_padrao/perfil_padrao.png" alt="Imagem padrão" style="width: 50px; height: 50px; object-fit: cover; border-radius: 50%;">
+                        <img src="/public/img/perfil_padrao/perfil_padrao.png" alt="Imagem padrão" style="width: 50px; height: 50px; object-fit: cover; border-radius: 50%;">
                     <?php endif; ?>
                 </td>
                 <td><?= htmlspecialchars($j['nome']) ?></td>
@@ -63,7 +63,7 @@ $patrocinadores = $controller->buscarPatrocinadoresDoTime($time['id']);
                 <td><?= (int) $j['idade'] ?></td>
                 <td><?= htmlspecialchars($j['nacionalidade']) ?></td>
                 <td>
-                    <a href="/campeonato_esportivo/routes/public/jogador.php?id=<?= $j['id'] ?>" class="btn btn-primary btn-sm">Ver Perfil</a>
+                    <a href="/routes/public/jogador.php?id=<?= $j['id'] ?>" class="btn btn-primary btn-sm">Ver Perfil</a>
                 </td>
             </tr>
         <?php endwhile; ?>
@@ -78,7 +78,7 @@ $patrocinadores = $controller->buscarPatrocinadoresDoTime($time['id']);
                 <?php foreach ($patrocinadores as $p): ?>
                     <div class="bg-white border rounded shadow-sm p-2 d-flex align-items-center justify-content-center" style="width: 140px; height: 100px;">
                         <?php if (!empty($p['logo'])): ?>
-                            <img src="/campeonato_esportivo/<?= $p['logo'] ?>" alt="<?= htmlspecialchars($p['nome_empresa']) ?>" style="max-width: 100%; max-height: 100%; object-fit: contain;">
+                            <img src="/<?= $p['logo'] ?>" alt="<?= htmlspecialchars($p['nome_empresa']) ?>" style="max-width: 100%; max-height: 100%; object-fit: contain;">
                         <?php else: ?>
                             <small class="text-muted">Sem logo</small>
                         <?php endif; ?>

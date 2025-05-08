@@ -17,7 +17,7 @@ if ($usuario_id) {
     $res = $verifica->get_result();
 
     if ($res->num_rows > 0) {
-        header("Location: /campeonato_esportivo/routes/patrocinador/patrocinador_dashboard.php");
+        header("Location: /routes/patrocinador/patrocinador_dashboard.php");
         exit;
     }
 }

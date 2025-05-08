@@ -7,7 +7,7 @@ if (!isset($_SERVER['HTTP_REFERER']) || empty($_SERVER['HTTP_REFERER'])) {
           </div>";
     exit();
 }
-$base_url = '/campeonato_esportivo/public/';
+$base_url = '/public/';
 ?>
 <?php
 include_once __DIR__ . '/../../includes/assinatura_sec.php';
@@ -58,7 +58,7 @@ include_once __DIR__ . '/../../includes/assinatura_sec.php';
                                 <?php endif; ?>
                             </div>
                             <div>
-                                <a href="/campeonato_esportivo/public/views/time/definir_escalacao.php?partida_id=<?= $jogo['id'] ?>" class="btn btn-primary">
+                                <a href="/public/views/time/definir_escalacao.php?partida_id=<?= $jogo['id'] ?>" class="btn btn-primary">
                                     Definir Escalação
                                 </a>
                             </div>

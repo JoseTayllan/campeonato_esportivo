@@ -103,7 +103,7 @@ if (!$patrocinador) {
     echo '<div class="alert alert-warning text-center shadow mb-4">';
     echo '<h5>Você ainda não cadastrou sua empresa patrocinadora.</h5>';
     echo '<p>Para acessar suas funcionalidades, é necessário cadastrar sua empresa abaixo:</p>';
-    echo '<a href="/campeonato_esportivo/public/views/patrocinador/cadastro_patrocinador.php" class="btn btn-primary mt-3">';
+    echo '<a href="/public/views/patrocinador/cadastro_patrocinador.php" class="btn btn-primary mt-3">';
     echo '<i class="bi bi-building-add me-1"></i> Cadastrar Agora';
     echo '</a>';
     echo '</div>';

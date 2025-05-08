@@ -79,7 +79,7 @@
         <!-- Topo -->
         <div style="display: flex; align-items: center; justify-content: space-between;">
             <?php if (!empty($jogador['escudo'])): ?>
-                <img src="/campeonato_esportivo/public/<?= $jogador['escudo'] ?>" class="escudo" alt="Escudo do time">
+                <img src="/public/<?= $jogador['escudo'] ?>" class="escudo" alt="Escudo do time">
             <?php endif; ?>
 
             <div style="flex-grow: 1; text-align: center;">
@@ -88,7 +88,7 @@
             </div>
 
             <?php if (!empty($jogador['imagem'])): ?>
-                <img src="/campeonato_esportivo/public/img/jogadores/<?= $jogador['imagem'] ?>" class="imagem-jogador" alt="Foto do jogador">
+                <img src="/public/img/jogadores/<?= $jogador['imagem'] ?>" class="imagem-jogador" alt="Foto do jogador">
             <?php endif; ?>
         </div>
 

@@ -109,9 +109,9 @@ if (!$time):
                     <tr>
                         <td class="text-center" style="width: 60px;">
                             <?php if (!empty($jogador['imagem']) && file_exists(__DIR__ . '/../../../public/img/jogadores/' . $jogador['imagem'])): ?>
-                                <img src="/campeonato_esportivo/public/img/jogadores/<?= $jogador['imagem'] ?>" class="rounded-circle" style="width: 50px; height: 50px; object-fit: cover;">
+                                <img src="/public/img/jogadores/<?= $jogador['imagem'] ?>" class="rounded-circle" style="width: 50px; height: 50px; object-fit: cover;">
                             <?php else: ?>
-                                <img src="/campeonato_esportivo/public/img/perfil_padrao/perfil_padrao.png" class="rounded-circle" style="width: 50px; height: 50px; object-fit: cover;">
+                                <img src="/public/img/perfil_padrao/perfil_padrao.png" class="rounded-circle" style="width: 50px; height: 50px; object-fit: cover;">
                             <?php endif; ?>
                         </td>
                         <td><?= htmlspecialchars($jogador['nome']) ?></td>
@@ -137,7 +137,7 @@ if (!empty($patrocinadores)):
             <?php foreach ($patrocinadores as $patro): ?>
                 <div class="border rounded p-2 text-center" style="width: 100px; height: 100px; display: flex; align-items: center; justify-content: center;">
                     <?php if (!empty($patro['logo'])): ?>
-                        <img src="/campeonato_esportivo/<?= $patro['logo'] ?>" alt="Logo patrocinador" class="img-fluid" style="max-height: 80px; object-fit: contain;">
+                        <img src="/<?= $patro['logo'] ?>" alt="Logo patrocinador" class="img-fluid" style="max-height: 80px; object-fit: contain;">
                     <?php else: ?>
                         <span class="text-muted small">Sem logo</span>
                     <?php endif; ?>

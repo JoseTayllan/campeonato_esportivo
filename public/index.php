@@ -13,20 +13,20 @@ include_once __DIR__ . '/includes/header_index.php';
     <h2 class="mb-4">Bem-vindo ao Sistema de Campeonatos Esportivos</h2>
 
     <div class="mb-4 d-flex flex-wrap gap-2">
-        <a href="/campeonato_esportivo/routes/public/placar_publico.php" class="btn btn-outline-success">
+        <a href="/routes/public/placar_publico.php" class="btn btn-outline-success">
             📻 Ver Placar Ao Vivo
         </a>
-        <a href="/campeonato_esportivo/routes/login.php" class="btn btn-outline-dark">
+        <a href="/routes/login.php" class="btn btn-outline-dark">
             🔐 Acessar Sistema
         </a>
         <?php
         $tipo = $_SESSION['usuario']['tipo_assinatura'] ?? null;
         if ($tipo === 'admin' || $tipo === 'completo') {
-            $link = '/campeonato_esportivo/public/views/dashboard/dashboard_administrador.php';
+            $link = '/public/views/dashboard/dashboard_administrador.php';
         } elseif ($tipo === 'time') {
-            $link = '/campeonato_esportivo/public/views/dashboard/dashboard_time.php';
+            $link = '/public/views/dashboard/dashboard_time.php';
         } elseif ($tipo === 'olheiro') {
-            $link = '/campeonato_esportivo/public/views/dashboard/dashboard_olheiro.php';
+            $link = '/public/views/dashboard/dashboard_olheiro.php';
         } else {
             $link = null;
         }
@@ -52,7 +52,7 @@ include_once __DIR__ . '/includes/header_index.php';
                                 Temporada: <?= htmlspecialchars($camp['temporada']) ?><br>
                                 Formato: <?= htmlspecialchars($camp['formato']) ?>
                             </p>
-                            <a href="/campeonato_esportivo/routes/public/campeonato_publico.php?id=<?= $camp['id'] ?>" class="btn btn-sm btn-outline-primary">
+                            <a href="/routes/public/campeonato_publico.php?id=<?= $camp['id'] ?>" class="btn btn-sm btn-outline-primary">
                                 Ver Campeonato
                             </a>
                         </div>

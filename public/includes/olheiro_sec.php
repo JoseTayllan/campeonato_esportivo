@@ -12,8 +12,8 @@ if (session_status() === PHP_SESSION_NONE) {
     <title>Gerenciamento de Campeonatos</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
-    <link href="/campeonato_esportivo/public/assets/css/global.css" rel="stylesheet">
-    <link href="/campeonato_esportivo/public/assets/css/admin.css" rel="stylesheet">
+    <link href="/public/assets/css/global.css" rel="stylesheet">
+    <link href="/public/assets/css/admin.css" rel="stylesheet">
 
 
 </head>
@@ -48,7 +48,7 @@ if (session_status() === PHP_SESSION_NONE) {
     <div class="container-fluid py-2 border-bottom shadow-sm menu-container">
         <div class="d-flex flex-row flex-nowrap justify-content-center menu-scroll px-2 gap-2">
 
-            <a href="/campeonato_esportivo/public/views/avaliacao/avaliar_jogador.php" class="menu-link menu-separador px-4 flex-shrink-0">
+            <a href="/public/views/avaliacao/avaliar_jogador.php" class="menu-link menu-separador px-4 flex-shrink-0">
                 <i class="bi bi-clipboard2-check me-2"></i>Avaliar Jogador
             </a>
             <a href="../avaliacao/visualizar_avaliacoes.php" class="menu-link menu-separador px-4 flex-shrink-0">
