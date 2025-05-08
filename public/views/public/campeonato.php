@@ -1,6 +1,6 @@
 <?php include __DIR__ . '../../../includes/index_sec.php'; ?>
 
-<div class="container mt-4">
+<div class="container mt-4 container-campeonato">
     <h2><?= htmlspecialchars($dados['campeonato']['nome']) ?></h2>
 
     <a href="/campeonato_esportivo/routes/public/ranking_campeonato.php?campeonato_id=<?= $dados['campeonato']['id'] ?>" 

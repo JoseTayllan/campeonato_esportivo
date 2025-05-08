@@ -4,7 +4,7 @@
   --background-color: #fff;    /* Azul Claro Fosco – fundo da página */
   --accent-color: #B78F32;        /* Dourado Mostarda – botões e destaques */
   --primary-text: #fff;   
-  --secondary-text: #f6bc33;     /* Creme Neutro – títulos e texto principal */
+  --secondary-text: #000;     /* Creme Neutro – títulos e texto principal */
   --badge-bg: #9B6035;     
   --card-bg: rgb(46, 88, 74);       /* Marrom Terra – badges e parte inferior do escudo */
 }
@@ -157,4 +157,7 @@ header, footer {
   height: 160px;
   object-fit: cover;
   border-bottom: 1px solid var(--primary-color);
+}
+.container-campeonato {
+  color: var(--secondary-text); /* ou uma cor fixa, ex: #1C4B6C */
 }
