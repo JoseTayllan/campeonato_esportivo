@@ -1,31 +1,4 @@
-<?php
-// Proteger contra acesso direto
-if (!isset($_SERVER['HTTP_REFERER']) || empty($_SERVER['HTTP_REFERER'])) {
-    echo "<div style='text-align:center; padding:20px; font-family:sans-serif;'>
-            <h2 style='color:red;'>Erro: Acesso direto não permitido!</h2>
-            <p>Utilize o sistema normalmente para acessar esta página.</p>
-          </div>";
-    exit();
-}
-require_once __DIR__ . '/../../../config/database.php';
-require_once __DIR__ . '/../../../app/controllers/TeamController.php';
-require_once __DIR__ . '/../../../app/middleware/verifica_sessao.php';
-require_once __DIR__ . '/../../../app/middleware/verifica_assinatura.php';
-
-permite_acesso(['time', 'completo']);
-
-$controller = new TeamController($conn);
-$jogador_id = $_GET['id'] ?? null;
-
-$jogador = $controller->buscarJogador($jogador_id);
-
-if (!$jogador) {
-    $_SESSION['mensagem_erro'] = "Jogador não encontrado.";
-    header("Location: dashboard_time.php");
-    exit();
-}
-?>
-
+<?php if (!isset($jogador)) { die('Acesso direto não permitido.'); } ?>
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
@@ -38,7 +11,7 @@ if (!$jogador) {
     <div class="card p-4 shadow">
         <h2 class="mb-4">Editar Jogador</h2>
 
-        <form action="../../../routes/time/jogador.php" method="POST" enctype="multipart/form-data">
+        <form action="/campeonato_esportivo/routes/time/jogador.php" method="POST" enctype="multipart/form-data">
             <input type="hidden" name="editar_jogador" value="1">
             <input type="hidden" name="jogador_id" value="<?= $jogador['id'] ?>">
 
@@ -54,7 +27,7 @@ if (!$jogador) {
                     <option value="Goleiro" <?= ($jogador['posicao'] === 'Goleiro') ? 'selected' : '' ?>>Goleiro</option>
                     <option value="Zagueiro" <?= ($jogador['posicao'] === 'Zagueiro') ? 'selected' : '' ?>>Zagueiro</option>
                     <option value="Lateral" <?= ($jogador['posicao'] === 'Lateral') ? 'selected' : '' ?>>Lateral</option>
-                    <option value="volante" <?= ($jogador['posicao'] === 'volante') ? 'selected' : '' ?>>Volante</option>
+                    <option value="Volante" <?= ($jogador['posicao'] === 'Volante') ? 'selected' : '' ?>>Volante</option>
                     <option value="Meia" <?= ($jogador['posicao'] === 'Meia') ? 'selected' : '' ?>>Meia</option>
                     <option value="Atacante" <?= ($jogador['posicao'] === 'Atacante') ? 'selected' : '' ?>>Atacante</option>
                 </select>

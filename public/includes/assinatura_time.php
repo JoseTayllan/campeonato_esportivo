@@ -11,8 +11,8 @@ if (session_status() === PHP_SESSION_NONE) {
     <title>Gerenciamento de Campeonatos</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
-    <link href="../../assets/css/global.css" rel="stylesheet">
-    <link href="../../assets/css/admin.css" rel="stylesheet">
+    <link href="../../public/assets/css/global.css" rel="stylesheet">
+    <link href="../../public/assets/css/admin.css" rel="stylesheet">
 </head>
 <body>
 
@@ -43,7 +43,7 @@ if (session_status() === PHP_SESSION_NONE) {
 <!-- Menu Horizontal Administrativo -->
 <div class="container-fluid py-2 border-bottom shadow-sm menu-container">
     <div class="d-flex flex-row flex-nowrap justify-content-center menu-scroll px-2 gap-2">
-        <a href="../../../routes/time/agenda_time.php" class="menu-link menu-separador flex-shrink-0">
+        <a href="/campeonato_esportivo/routes/time/agenda_time.php" class="menu-link menu-separador flex-shrink-0">
             <i class="bi bi-calendar-event-fill me-2"></i> Ver Agenda de Jogos
         </a>
     

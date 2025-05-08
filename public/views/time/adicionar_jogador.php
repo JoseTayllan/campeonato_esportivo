@@ -1,29 +1,4 @@
-<?php
-// Proteger contra acesso direto
-if (!isset($_SERVER['HTTP_REFERER']) || empty($_SERVER['HTTP_REFERER'])) {
-    echo "<div style='text-align:center; padding:20px; font-family:sans-serif;'>
-            <h2 style='color:red;'>Erro: Acesso direto não permitido!</h2>
-            <p>Utilize o sistema normalmente para acessar esta página.</p>
-          </div>";
-    exit();
-}
-require_once __DIR__ . '/../../../config/database.php';
-require_once __DIR__ . '/../../../app/controllers/TeamController.php';
-require_once __DIR__ . '/../../../app/middleware/verifica_sessao.php';
-require_once __DIR__ . '/../../../app/middleware/verifica_assinatura.php';
-
-permite_acesso(['time', 'completo']);
-
-$controller = new TeamController($conn);
-$admin_id = $_SESSION['usuario_id'];
-
-$stmt = $conn->prepare("SELECT id FROM times WHERE admin_id = ?");
-$stmt->bind_param("i", $admin_id);
-$stmt->execute();
-$result = $stmt->get_result();
-$time = $result->fetch_assoc();
-?>
-
+<?php if (!isset($time_id)) { die('Acesso direto não permitido.'); } ?>
 <!DOCTYPE html>
 <html lang="pt-br">
 
@@ -37,8 +12,8 @@ $time = $result->fetch_assoc();
     <div class="container py-5">
         <div class="card p-4 shadow">
             <h2 class="mb-4">Adicionar Jogador</h2>
-            <form action="../../.." method="POST" enctype="multipart/form-data">
-                <input type="hidden" name="time_id" value="<?= $time['id'] ?>">
+            <form action="/campeonato_esportivo/routes/time/jogador.php" method="POST" enctype="multipart/form-data">
+                <input type="hidden" name="time_id" value="<?= $time_id ?>">
 
                 <div class="mb-3">
                     <label>Nome do Jogador</label>
@@ -68,7 +43,6 @@ $time = $result->fetch_assoc();
                     <input type="text" name="nacionalidade" class="form-control" required>
                 </div>
 
-                <!-- 🔽 CAMPO DE UPLOAD DE IMAGEM -->
                 <div class="mb-3">
                     <label>Imagem do Jogador</label>
                     <input type="file" name="imagem" class="form-control" accept="image/*">
@@ -77,9 +51,7 @@ $time = $result->fetch_assoc();
                 <button type="submit" class="btn btn-success">Salvar</button>
                 <a href="dashboard_time.php" class="btn btn-secondary">Voltar</a>
             </form>
-
         </div>
     </div>
 </body>
-
 </html>

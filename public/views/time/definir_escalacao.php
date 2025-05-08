@@ -1,41 +1,4 @@
-<?php
-// Proteger contra acesso direto
-if (!isset($_SERVER['HTTP_REFERER']) || empty($_SERVER['HTTP_REFERER'])) {
-    echo "<div style='text-align:center; padding:20px; font-family:sans-serif;'>
-            <h2 style='color:red;'>Erro: Acesso direto não permitido!</h2>
-            <p>Utilize o sistema normalmente para acessar esta página.</p>
-          </div>";
-    exit();
-}
-require_once __DIR__ . '/../../../config/database.php';
-require_once __DIR__ . '/../../../app/controllers/escalacaoController.php';
-require_once __DIR__ . '/../../../app/middleware/verifica_time_logado.php';
-
-if (session_status() === PHP_SESSION_NONE) {
-    session_start();
-}
-
-$partida_id = $_GET['partida_id'] ?? null;
-$time_id = $_SESSION['time_id'] ?? null;
-
-if (!$partida_id || !$time_id) {
-    echo "<div class='alert alert-danger'>Partida ou time não definidos corretamente.</div>";
-    exit;
-}
-
-$controller = new EscalacaoController($conn);
-$jogadores = $controller->obterJogadoresTime($time_id);
-$escalacao_existente = $controller->buscarEscalacaoDaPartida($partida_id);
-
-$capitao_id = null;
-foreach ($escalacao_existente as $esc) {
-    if ($esc['capitao'] == 1) {
-        $capitao_id = $esc['jogador_id'];
-        break;
-    }
-}
-?>
-
+<?php if (!isset($jogadores, $partida_id)) { die('Acesso direto não permitido.'); } ?>
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
@@ -47,7 +10,7 @@ foreach ($escalacao_existente as $esc) {
 <div class="container mt-4">
     <h2>Definir Escalação</h2>
 
-    <form action="../../../routes/time/escalacao.php" method="post">
+    <form action="/campeonato_esportivo/routes/time/escalacao.php" method="post">
         <input type="hidden" name="partida_id" value="<?= $partida_id ?>">
 
         <table class="table table-bordered text-center align-middle">
@@ -63,18 +26,9 @@ foreach ($escalacao_existente as $esc) {
                 <?php foreach ($jogadores as $index => $jogador): ?>
                     <?php
                         $id = $jogador['id'];
-                        $titular_checked = '';
-                        $capitao_checked = '';
-
-                        if (!empty($escalacao_existente) && isset($escalacao_existente[$id])) {
-                            if ($escalacao_existente[$id]['titular'] == 1) {
-                                $titular_checked = 'checked';
-                            }
-                            if ($escalacao_existente[$id]['capitao'] == 1) {
-                                $capitao_checked = 'checked';
-                            }
-                        }
-                        $imagemCaminho = (!empty($jogador['imagem']) && file_exists(__DIR__ . '/../../../public/img/jogadores/' . $jogador['imagem']))
+                        $titular_checked = isset($escalacao_existente[$id]) && $escalacao_existente[$id]['titular'] == 1 ? 'checked' : '';
+                        $capitao_checked = isset($escalacao_existente[$id]) && $escalacao_existente[$id]['capitao'] == 1 ? 'checked' : '';
+                        $imagemCaminho = (!empty($jogador['imagem']))
                             ? "/campeonato_esportivo/public/img/jogadores/{$jogador['imagem']}"
                             : "/campeonato_esportivo/public/img/perfil_padrao/perfil_padrao.png";
                     ?>
@@ -98,7 +52,7 @@ foreach ($escalacao_existente as $esc) {
         </table>
 
         <div class="d-flex justify-content-between">
-            <a href="../../../routes/time/agenda_time.php" class="btn btn-secondary">Cancelar</a>
+            <a href="/campeonato_esportivo/routes/time/agenda_time.php" class="btn btn-secondary">Cancelar</a>
             <button type="submit" class="btn btn-success">Salvar Escalação</button>
         </div>
     </form>

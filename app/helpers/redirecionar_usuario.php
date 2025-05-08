@@ -10,7 +10,7 @@ function redirecionarUsuario($usuario) {
 
     // Se for plano Time, redireciona direto
     if ($assinatura === 'time') {
-        header("Location: ../public/views/time/dashboard_time.php");
+        header("Location: ../routes/time/dashboard_time.php");
         exit;
     }
 

@@ -1,20 +1,3 @@
-<?php
-require_once __DIR__ . '/../../../config/database.php';
-require_once __DIR__ . '/../../../app/controllers/TeamController.php';
-
-$controller = new TeamController($conn);
-$codigo = $_GET['codigo'] ?? '';
-
-$time = $controller->buscarTimePublico($codigo);
-
-if (!$time) {
-    echo "<div class='container mt-5'><div class='alert alert-danger'>Time não encontrado.</div></div>";
-    exit;
-}
-
-$jogadores = $controller->listarElencoPublico($time['id']);
-$patrocinadores = $controller->buscarPatrocinadoresDoTime($time['id']);
-?>
 
 <!DOCTYPE html>
 <html lang="pt-br">
@@ -49,7 +32,7 @@ $patrocinadores = $controller->buscarPatrocinadoresDoTime($time['id']);
             </tr>
         </thead>
         <tbody>
-        <?php while ($j = $jogadores->fetch_assoc()): ?>
+        <?php foreach ($jogadores as $j): ?>
             <tr>
                 <td>
                     <?php if (!empty($j['imagem'])): ?>
@@ -66,7 +49,7 @@ $patrocinadores = $controller->buscarPatrocinadoresDoTime($time['id']);
                     <a href="/campeonato_esportivo/routes/public/jogador.php?id=<?= $j['id'] ?>" class="btn btn-primary btn-sm">Ver Perfil</a>
                 </td>
             </tr>
-        <?php endwhile; ?>
+        <?php endforeach; ?>
         </tbody>
     </table>
 
@@ -87,7 +70,7 @@ $patrocinadores = $controller->buscarPatrocinadoresDoTime($time['id']);
             </div>
         </div>
     </div>
-<?php endif; ?>
+    <?php endif; ?>
 
 </div>
 </body>

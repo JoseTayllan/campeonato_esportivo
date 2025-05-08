@@ -1,6 +1,6 @@
 <?php
-require_once __DIR__ . '/../../config/database.php';
-require_once __DIR__ . '/../../app/controllers/TeamController.php';
+
+require_once __DIR__ . '/../../app/controllers/time_contro/TeamController.php';
 
 session_start();
 
@@ -34,7 +34,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $_SESSION['mensagem_erro'] = "Erro ao editar jogador.";
         }
 
-        header("Location: ../../public/views/time/dashboard_time.php");
+        header("Location: /campeonato_esportivo/routes/time/dashboard_time.php");
         exit();
     }
 
@@ -62,6 +62,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $_SESSION['mensagem_erro'] = "Erro ao adicionar jogador.";
     }
 
-    header("Location: ../../public/views/time/dashboard_time.php");
+    header("Location: /campeonato_esportivo/routes/time/dashboard_time.php");
     exit();
 }
