@@ -1,137 +1,60 @@
-<?php
-// Proteger contra acesso direto
-if (!isset($_SERVER['HTTP_REFERER']) || empty($_SERVER['HTTP_REFERER'])) {
-    echo "<div style='text-align:center; padding:20px; font-family:sans-serif;'>
-            <h2 style='color:red;'>Erro: Acesso direto não permitido!</h2>
-            <p>Utilize o sistema normalmente para acessar esta página.</p>
-          </div>";
-    exit();
-}
-session_start();
-$restrito_para = ['Administrador', 'Organizador'];
-require_once __DIR__ . '/../../../app/middleware/verifica_sessao.php';
-require_once __DIR__ . '/../../../config/database.php';
-?>
+<?php include_once __DIR__ . '/../../includes/admin_sec.php'; ?>
+<link href="../../../assets/css/bootstrap.min.css" rel="stylesheet">
 
+<div class="container mt-5">
+    <h2 class="mb-4 text-center">Cadastro de Campeonato</h2>
 
-<?php include_once '../../includes/admin_sec.php'; ?>
-<!DOCTYPE html>
-<html lang="pt-br">
+    <?php if (!empty($_SESSION['mensagem_sucesso'])): ?>
+        <div class="alert alert-success"><?= $_SESSION['mensagem_sucesso']; unset($_SESSION['mensagem_sucesso']); ?></div>
+    <?php endif; ?>
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Cadastro de Campeonato</title>
-    <link href="../../../assets/css/bootstrap.min.css" rel="stylesheet">
-</head>
+    <?php if (!empty($_SESSION['mensagem_erro'])): ?>
+        <div class="alert alert-danger"><?= $_SESSION['mensagem_erro']; unset($_SESSION['mensagem_erro']); ?></div>
+    <?php endif; ?>
 
-<body>
+    <form method="POST" action="../../../routes/adms/championships.php">
+        <div class="mb-3">
+            <label class="form-label">Nome do Campeonato</label>
+            <input type="text" name="nome" class="form-control" required>
+        </div>
 
-    <div class="container mt-4">
-        <h2 class="mb-4">Cadastro de Campeonato</h2>
+        <div class="mb-3">
+            <label class="form-label">Descrição</label>
+            <textarea name="descricao" class="form-control" rows="3"></textarea>
+        </div>
 
-        <?php include '../partials/mensagens.php'; ?>
+        <div class="mb-3">
+            <label class="form-label">Temporada</label>
+            <input type="number" name="temporada" class="form-control" value="<?= date('Y') ?>" required>
+        </div>
 
-        <form action="../../../routes/adms/championships.php" method="POST">
+        <div class="mb-3">
+            <label class="form-label">Formato</label>
+            <select name="formato" class="form-control" required>
+                <option value="Pontos Corridos">Pontos Corridos</option>
+                <option value="Mata-Mata">Mata-Mata</option>
+                <option value="Fase de Grupos">Fase de Grupos</option>
+            </select>
+        </div>
 
-            <!-- DADOS DO CAMPEONATO -->
-            <div class="mb-3">
-                <label class="form-label">Nome do Campeonato</label>
-                <input type="text" class="form-control" name="nome" required>
-            </div>
-
-            <div class="mb-3">
-                <label class="form-label">Descrição</label>
-                <textarea class="form-control" name="descricao" required></textarea>
-            </div>
-
-            <div class="mb-3">
-                <label class="form-label">Temporada</label>
-                <input type="number" class="form-control" name="temporada" min="1900" max="2100" required>
-            </div>
-
-            <div class="mb-3">
-                <label class="form-label">Formato</label>
-                <select class="form-control" name="formato" required>
-                    <option value="">Selecione o formato</option>
-                    <option value="Pontos Corridos">Pontos Corridos</option>
-                    <option value="Mata-Mata">Mata-Mata</option>
-                    <option value="Fase de Grupos">Fase de Grupos</option>
-                </select>
-            </div>
-
-            <div class="mb-3">
+        <div class="mb-3">
                 <label class="form-label">Regulamento</label>
                 <textarea class="form-control" name="regulamento" required></textarea>
             </div>
 
-            <!-- TIMES PARTICIPANTES -->
-            <div class="mb-4">
-                <label class="form-label">Times Participantes</label>
-                <div class="border rounded p-3" style="max-height: 200px; overflow-y: auto;">
-                    <?php
-                    $queryTimes = "SELECT id, nome FROM times ORDER BY nome ASC";
-                    $resultTimes = $conn->query($queryTimes);
-                    while ($time = $resultTimes->fetch_assoc()) {
-                        echo "
-                    <div class='form-check'>
-                        <input class='form-check-input' type='checkbox' name='times[]' value='{$time['id']}' id='time_{$time['id']}'>
-                        <label class='form-check-label' for='time_{$time['id']}'>
-                            {$time['nome']}
-                        </label>
-                    </div>";
-                    }
-                    ?>
-                </div>
-            </div>
 
-            <!-- AVISO SOBRE FASES E RODADAS -->
-            <hr class="my-4">
-            <div class="alert alert-info">
-                <strong>Atenção:</strong> Após cadastrar o campeonato, acesse a tela de <strong>edição</strong> para configurar as <strong>fases e rodadas</strong>.
-            </div>
-
-            <!-- BOTÃO FINAL -->
-            <div class="mb-5">
-                <button type="submit" class="btn btn-primary">Cadastrar Campeonato</button>
-            </div>
-        </form>
-    </div>
-
-    <?php include '../cabecalho/footer.php'; ?>
-    <script src="../../../assets/js/bootstrap.bundle.min.js"></script>
-
-    <script>
-        function adicionarRodada() {
-            const container = document.getElementById("rodadas-container");
-            const nova = document.createElement("div");
-            nova.className = "row align-items-end mb-3 rodada-item";
-            nova.innerHTML = `
-        <div class="col-md-2">
-            <input type="number" class="form-control" name="rodada_numero[]" min="1" required>
+      
+        <div class="text-center">
+            <button type="submit" class="btn btn-primary">Cadastrar Campeonato</button>
         </div>
-        <div class="col-md-4">
-            <select class="form-control" name="rodada_tipo[]" required>
-                <option value="Ida">Ida</option>
-                <option value="Volta">Volta</option>
-            </select>
-        </div>
-        <div class="col-md-5">
-            <input type="text" class="form-control" name="rodada_desc[]" placeholder="Ex: Rodada Extra">
-        </div>
-        <div class="col-md-1 text-end">
-            <button type="button" class="btn btn-danger btn-sm" onclick="removerRodada(this)">X</button>
-        </div>
-    `;
-            container.appendChild(nova);
-        }
+    </form>
+</div>
 
-        function removerRodada(botao) {
-            const bloco = botao.closest(".rodada-item");
-            if (bloco) bloco.remove();
-        }
-    </script>
 
-</body>
+<div class="mt-auto">
+<div class="mt-5"></div>
+<?php include __DIR__ . '../../cabecalho/footer.php'; ?>
+<script src="../../../assets/js/bootstrap.bundle.min.js"></script>
 
-</html>
+         
+        

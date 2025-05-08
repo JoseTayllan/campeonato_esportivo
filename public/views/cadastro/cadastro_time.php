@@ -1,44 +1,18 @@
-<?php 
-// Proteger contra acesso direto
-if (!isset($_SERVER['HTTP_REFERER']) || empty($_SERVER['HTTP_REFERER'])) {
-    echo "<div style='text-align:center; padding:20px; font-family:sans-serif;'>
-            <h2 style='color:red;'>Erro: Acesso direto não permitido!</h2>
-            <p>Utilize o sistema normalmente para acessar esta página.</p>
-          </div>";
-    exit();
-}
-session_start();
-$restrito_para = ['Administrador', 'Organizador'];
-require_once __DIR__ . '/../../../app/middleware/verifica_sessao.php';
-require_once __DIR__ . '/../../../config/database.php'; // Conexão com o banco
-?>
+<?php include_once __DIR__ . '/../../includes/admin_sec.php'; ?>
+<link href="../../../assets/css/bootstrap.min.css" rel="stylesheet">
+<div class="container mt-5">
+    <h2 class="text-center mb-4">Cadastro de Time</h2>
 
-<?php include_once '../../includes/admin_sec.php'; ?>
+    <?php if (!empty($_SESSION['mensagem_sucesso'])): ?>
+        <div class="alert alert-success"><?= $_SESSION['mensagem_sucesso']; unset($_SESSION['mensagem_sucesso']); ?></div>
+    <?php endif; ?>
 
-<!DOCTYPE html>
-<html lang="pt-br">
+    <?php if (!empty($_SESSION['mensagem_erro'])): ?>
+        <div class="alert alert-danger"><?= $_SESSION['mensagem_erro']; unset($_SESSION['mensagem_erro']); ?></div>
+    <?php endif; ?>
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Cadastro de Time</title>
-    <link href="../../../assets/css/bootstrap.min.css" rel="stylesheet">
-</head>
-
-<body>
-
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-
-    <div class="container mt-4">
-        <h2 class="mb-4">Cadastro de Time</h2>
-
-        <?php include '../partials/mensagens.php'; ?>
-
-        <form action="../../../routes/time/team.php" method="POST" enctype="multipart/form-data">
-            <!-- 🔥 Campo escondido para enviar o ID do admin -->
-            <input type="hidden" name="admin_id" value="<?= $_SESSION['usuario_id']; ?>">
-
-            <div class="mb-3">
+    <form method="POST" action="/campeonato_esportivo/routes/time/team.php" enctype="multipart/form-data">
+    <div class="mb-3">
                 <label for="nome" class="form-label">Nome do Time</label>
                 <input type="text" class="form-control" name="nome" placeholder="Ex: Estrela FC" required>
             </div>
@@ -59,14 +33,18 @@ require_once __DIR__ . '/../../../config/database.php'; // Conexão com o banco
                 <input type="text" class="form-control" name="estadio" placeholder="Ex: Arena Central">
             </div>
 
-            <button type="submit" class="btn btn-primary">Cadastrar</button>
-        </form>
-    </div>
+        <div class="text-center">
+            <button type="submit" class="btn btn-primary">Cadastrar Time</button>
+        </div>
+    </form>
+</div>
 
-    <div class="row mt-4">
-        <?php include '../cabecalho/footer.php'; ?>
-    </div>
-    <script src="../../../assets/js/bootstrap.bundle.min.js"></script>
-</body>
 
-</html>
+<div class="mt-auto">
+<div class="mt-5"></div>
+<?php include __DIR__ . '../../cabecalho/footer.php'; ?>
+<script src="../../../assets/js/bootstrap.bundle.min.js"></script>
+
+
+
+   

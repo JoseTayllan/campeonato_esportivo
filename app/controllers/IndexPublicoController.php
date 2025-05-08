@@ -17,5 +17,12 @@ class IndexPublicoController {
         $result = $this->conn->query($sql);
         return $result->fetch_all(MYSQLI_ASSOC);
     }
+    public function listarArtes()
+    {
+        $dir     = __DIR__ . '/../../public/assets/img/artes';
+        $arquivos = glob($dir . '/*.{jpg,jpeg,png,gif}', GLOB_BRACE) ?: [];
+        // retornar apenas o nome do arquivo para usar na view
+        return array_map('basename', $arquivos);
+    }
     
 }

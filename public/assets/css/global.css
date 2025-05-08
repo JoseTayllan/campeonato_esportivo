@@ -1,11 +1,80 @@
 :root {
-    --primary-color: #245383eb;
-    --primary-text: #ffffff;
-    --secondary-text: #bbbbbb;
-    --accent-color: #0d6efd;
-    --background-color: #f8f9fa;
-  }
-  
+  --primary-color: rgb(13, 27, 175);  
+  --secondary-color: #774621;     /* Azul Marinho – header, borda do escudo, rodapé */
+  --background-color: #fff;    /* Azul Claro Fosco – fundo da página */
+  --accent-color: #B78F32;        /* Dourado Mostarda – botões e destaques */
+  --primary-text: #fff;   
+  --secondary-text: #f6bc33;     /* Creme Neutro – títulos e texto principal */
+  --badge-bg: #9B6035;     
+  --card-bg: rgb(46, 88, 74);       /* Marrom Terra – badges e parte inferior do escudo */
+}
+.card {
+  background-color: #fff;        /* Creme Neutro */
+  border: 1px solid #B78F32;        /* Dourado Mostarda */
+  border-radius: 8px;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+  color: #1C4B6C;  
+  transition: transform 0.25s ease, box-shadow 0.25s ease;                 /* Azul Marinho para o texto */
+}
+.card:hover,
+.card:active,
+.card:focus-within {
+    transform: translateY(-6px);
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.15);
+}
+
+.card .card-title {
+  font-weight: bold;
+  font-size: 1.1rem;
+  color: #0e8029;
+}
+.btn-outline-primary {
+  background-color: rgb(29, 52, 180);  /* Verde escuro */
+  color: #F3E9CF;
+  border: none;
+}
+
+.btn-outline-primary:hover {
+  background-color: #163d54; /* tom mais escuro no hover */
+  color: #fff;
+}
+body {
+  background-color: var(--background-color);
+  font-family: Arial, sans-serif;
+  color: var(--primary-text);
+}
+
+a {
+  color: var(--primary-color);
+  text-decoration: none;
+}
+
+header, footer {
+  background-color: var(--primary-color);
+  color: var(--primary-text);
+}
+
+.btn-primary {
+  background-color: var(--accent-color);
+  border-color: var(--accent-color);
+  color: var(--primary-text);
+  font-weight: bold;
+}
+
+.btn-primary:hover {
+  background-color: #a37b2c;
+  border-color: #a37b2c;
+  color: #fff;
+}
+
+.badge.bg-secondary {
+  background-color: var(--badge-bg) !important;
+  color: #fff;
+}
+
+/* Seu CSS existente continua aqui... */
+
+
   body {
     background-color: var(--background-color);
     font-family: Arial, sans-serif;
@@ -47,3 +116,45 @@
     border-right: 1px solid #444 !important;
   }
   
+  .carousel-inner img {
+    height: 420px; /* ajuste conforme sua arte */
+    object-fit: cover;
+    border-radius: 10px;
+}
+.btn-outline-primary {
+  color: #fff;           /* Dourado Mostarda */
+  border-color: #B78F32;
+}
+
+.btn-outline-primary:hover {
+  background-color: #f9bf35;
+  color: #fff;
+}
+
+
+.text-dourado {
+  color: #B78F32 !important; /* Dourado Mostarda */
+}
+
+.text-marrom {
+  color: #9B6035 !important; /* Marrom Terra */
+}
+
+.text-creme {
+  color: #F3E9CF !important; /* Creme Neutro */
+}
+
+.text-azul {
+  color: #1C4B6C !important; /* Azul Marinho */
+}
+.text-verde {
+  color: #0e8029 !important; /* Verde escuro */
+}
+
+
+
+.card-img-top {
+  height: 160px;
+  object-fit: cover;
+  border-bottom: 1px solid var(--primary-color);
+}

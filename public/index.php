@@ -10,7 +10,28 @@ include_once __DIR__ . '/includes/header_index.php';
 ?>
 
 <div class="container mt-4">
-    <h2 class="mb-4">Bem-vindo ao Sistema de Campeonatos Esportivos</h2>
+    <!-- Carrossel de imagens -->
+    <div id="carrossel-artes" class="carousel slide mb-4" data-bs-ride="carousel" data-bs-interval="4000">
+        <div class="carousel-inner rounded shadow-sm">
+            <div class="carousel-item active">
+                <img src="/campeonato_esportivo/assets/img/carrossel1.jpg" class="d-block w-100" alt="Arte 1">
+            </div>
+            <div class="carousel-item">
+                <img src="/campeonato_esportivo/assets/img/carrossel2.jpg" class="d-block w-100" alt="Arte 2">
+            </div>
+            <div class="carousel-item">
+                <img src="/campeonato_esportivo/assets/img/carrossel3.jpg" class="d-block w-100" alt="Arte 3">
+            </div>
+        </div>
+        <button class="carousel-control-prev" type="button" data-bs-target="#carrossel-artes" data-bs-slide="prev">
+            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+        </button>
+        <button class="carousel-control-next" type="button" data-bs-target="#carrossel-artes" data-bs-slide="next">
+            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+        </button>
+    </div>
+
+    <h2 class="mb-4 text-verde">Bem-vindo ao Sistema de Campeonatos Esportivos</h2>
 
     <div class="mb-4 d-flex flex-wrap gap-2">
         <a href="/campeonato_esportivo/routes/public/placar_publico.php" class="btn btn-outline-success">
@@ -22,7 +43,7 @@ include_once __DIR__ . '/includes/header_index.php';
         <?php
         $tipo = $_SESSION['usuario']['tipo_assinatura'] ?? null;
         if ($tipo === 'admin' || $tipo === 'completo') {
-            $link = '/campeonato_esportivo/public/views/dashboard/dashboard_administrador.php';
+            $link = '/campeonato_esportivo/routes/admin_visual/dashboard_administrador.php';
         } elseif ($tipo === 'time') {
             $link = '/campeonato_esportivo/public/views/dashboard/dashboard_time.php';
         } elseif ($tipo === 'olheiro') {
@@ -38,7 +59,7 @@ include_once __DIR__ . '/includes/header_index.php';
         <?php endif; ?>
     </div>
 
-    <h4>Campeonatos em Andamento</h4>
+    <h4 class="text-verde mt-4">Campeonatos em Andamento</h4>
     <?php if (empty($campeonatosPorEsporte)): ?>
         <div class="alert alert-info">Nenhum campeonato em andamento.</div>
     <?php else: ?>
@@ -63,9 +84,7 @@ include_once __DIR__ . '/includes/header_index.php';
     <?php endif; ?>
 </div>
 
-</html>
-<div class="mt-auto">
-<div class="mt-5"></div>
-<?php include 'views/cabecalho/footer.php'; ?>
-<script src="../assets/js/bootstrap.bundle.min.js"></script>
+<div class="mt-auto mt-5">
+    <?php include 'views/cabecalho/footer.php'; ?>
+    <script src="../assets/js/bootstrap.bundle.min.js"></script>
 </div>
