@@ -17,7 +17,7 @@ if (session_status() === PHP_SESSION_NONE) {
 <body>
 
 <!-- Navbar -->
-<nav class="navbar navbar-expand-lg shadow-sm">
+<nav class="navbar navbar-expand-lg shadow-sm" style="background-color: var(--primary-color);">
     <div class="container">
     <a class="navbar-brand d-flex align-items-center" href="/campeonato_esportivo/public">
                 <img src="/campeonato_esportivo/assets/img/logo_raiz.png" alt="Raiz de Craque" class="logo-navbar me-2">
@@ -31,7 +31,7 @@ if (session_status() === PHP_SESSION_NONE) {
         <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
             <?php if (isset($_SESSION['usuario_nome'])): ?>
                 <span class="navbar-text me-3 fw-semibold">
-                    <i class="bi bi-person-circle me-1"></i>Olá, <?= htmlspecialchars($_SESSION['usuario_nome']) ?>
+                    <i class="bi bi-person-circle me-1 color-wite"></i>Olá, <?= htmlspecialchars($_SESSION['usuario_nome']) ?>
                 </span>
                 <a href="../../../routes/logout.php" class="btn btn-outline-light btn-sm">
                     <i class="bi bi-box-arrow-right me-1"></i>Sair
@@ -42,8 +42,8 @@ if (session_status() === PHP_SESSION_NONE) {
 </nav>
 
 <!-- Menu Horizontal Administrativo -->
-<div class="container-fluid py-2 border-bottom shadow-sm menu-container">
-    <div class="d-flex flex-row flex-nowrap justify-content-center menu-scroll px-2 gap-2">
+<div class="container-fluid py-2 border-bottom shadow-sm menu-container"style="background-color: var(--primary-color);">
+    <div class="d-flex flex-row flex-nowrap  menu-scroll px-2 gap-2">
         <a href="/campeonato_esportivo/routes/time/agenda_time.php" class="menu-link menu-separador flex-shrink-0">
             <i class="bi bi-calendar-event-fill me-2"></i> Ver Agenda de Jogos
         </a>
