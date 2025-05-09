@@ -81,7 +81,7 @@ class RankingPorCampeonato {
             JOIN partidas p ON ep.partida_id = p.id
             WHERE p.campeonato_id = ?
               AND p.status = 'finalizada'
-              AND (ep.defesas > 0 OR ep.penaltis_defendidos > 0 OR ep.clean_sheets > 0)
+              AND j.posicao = 'Goleiro'
             GROUP BY ep.jogador_id
             ORDER BY total_defesas DESC, total_clean_sheets DESC
             LIMIT 10
@@ -91,6 +91,7 @@ class RankingPorCampeonato {
         $stmt->execute();
         return $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
     }
+    
     
     
 }

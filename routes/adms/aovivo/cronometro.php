@@ -1,6 +1,6 @@
 <?php 
 session_start();
-require_once __DIR__ . '/../../config/database.php';
+require_once __DIR__ . '/../../../config/database.php';
 
 $partida_id = $_POST['partida_id'] ?? null;
 $status = $_POST['status'] ?? null;

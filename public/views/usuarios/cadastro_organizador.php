@@ -9,7 +9,7 @@ if (!isset($_SERVER['HTTP_REFERER']) || empty($_SERVER['HTTP_REFERER'])) {
 } 
 include __DIR__ . '../../../includes/admin_sec.php'; ?>
 
-<div class="container mt-4">
+<div class="container mt-4 container-campeonato">
     <h2 class="mb-4">Cadastro de Organizador</h2>
     <?php include __DIR__ . '/../partials/mensagens.php'; ?>
 

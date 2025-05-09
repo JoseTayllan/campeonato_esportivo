@@ -1,0 +1,67 @@
+.pagina-jogador {
+    background-color: #fff;
+    color: #111;
+    font-family: 'Courier New', monospace;
+    margin: 0;
+    padding: 0;
+}
+
+.pagina-jogador .container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    padding: 20px;
+}
+
+.pagina-jogador .bloco {
+    border: 1px solid #ccc;
+    padding: 20px;
+    max-width: 800px;
+    width: 100%;
+    background-color: #f9f9f9;
+    border-radius: 8px;
+}
+
+.pagina-jogador .linha {
+    border-top: 1px solid #bbb;
+    margin: 20px 0;
+}
+
+.pagina-jogador .titulo {
+    font-weight: bold;
+    color: #000;
+}
+
+.pagina-jogador .estatistica strong {
+    color: #d00;
+}
+
+.pagina-jogador .tabela {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.pagina-jogador .tabela th,
+.pagina-jogador .tabela td {
+    padding: 4px 8px;
+    border-bottom: 1px solid #ccc;
+    text-align: left;
+}
+
+.pagina-jogador .tabela th {
+    color: #444;
+}
+
+.pagina-jogador .escudo {
+    height: 40px;
+    vertical-align: middle;
+    margin-right: 8px;
+}
+
+.pagina-jogador .imagem-jogador {
+    height: 40px;
+    vertical-align: middle;
+    border-radius: 4px;
+    margin-left: 8px;
+}

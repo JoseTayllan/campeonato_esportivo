@@ -15,7 +15,7 @@ if ($_SESSION['usuario_tipo'] !== 'Master') {
 $userController = new UsuarioController($conn);
 $usuarios = $userController->listarTodos();
 
-include '../cabecalho/header.php';
+ require_once __DIR__ . '/../../includes/header_index.php'; ?>
 ?>
 
 <div class="container mt-4">

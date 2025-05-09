@@ -1,13 +1,16 @@
 <?php
 
-class PartidaAoVivoController {
+class PartidaAoVivoController
+{
     private $conn;
 
-    public function __construct($db) {
+    public function __construct($db)
+    {
         $this->conn = $db;
     }
 
-    public function buscarDadosDaPartida($partida_id) {
+    public function buscarDadosDaPartida($partida_id)
+    {
         $stmt = $this->conn->prepare("
             SELECT p.*, t1.nome AS nome_casa, t2.nome AS nome_fora
             FROM partidas p
@@ -21,7 +24,8 @@ class PartidaAoVivoController {
         return $res->fetch_assoc();
     }
 
-    public function listarEventos($partida_id) {
+    public function listarEventos($partida_id)
+    {
         $stmt = $this->conn->prepare("
             SELECT * FROM eventos_partida
             WHERE partida_id = ?
@@ -32,7 +36,8 @@ class PartidaAoVivoController {
         return $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
     }
 
-    public function listarJogadoresDaPartida($time_casa, $time_fora) {
+    public function listarJogadoresDaPartida($time_casa, $time_fora)
+    {
         $stmt = $this->conn->prepare("
             SELECT j.id, j.nome, j.posicao, t.nome AS time_nome, t.id AS time_id
             FROM jogadores j
@@ -43,9 +48,10 @@ class PartidaAoVivoController {
         $stmt->execute();
         return $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
     }
-    
 
-    private function registrarResultadoTime($time_id, $pontos, $gols_pro, $gols_contra) {
+
+    private function registrarResultadoTime($time_id, $pontos, $gols_pro, $gols_contra)
+    {
         $this->conn->query("
             UPDATE times_campeonatos
             SET pontos = pontos + $pontos,
@@ -56,7 +62,8 @@ class PartidaAoVivoController {
         ");
     }
 
-    public function finalizarPartida($partida_id) {
+    public function finalizarPartida($partida_id)
+    {
         $stmt = $this->conn->prepare("UPDATE partidas SET status = 'finalizada' WHERE id = ?");
         $stmt->bind_param("i", $partida_id);
         $stmt->execute();
@@ -114,19 +121,24 @@ class PartidaAoVivoController {
 
         $goleiros = [];
 
-        $stmt = $this->conn->prepare("SELECT id FROM jogadores WHERE time_id = ? AND posicao = 'Goleiro' LIMIT 1");
-
-        $stmt->bind_param("i", $t1);
-        $stmt->execute();
-        $res1 = $stmt->get_result()->fetch_assoc();
+        // Goleiro do time da casa
+        $stmt1 = $this->conn->prepare("SELECT id FROM jogadores WHERE time_id = ? AND posicao = 'Goleiro' LIMIT 1");
+        $stmt1->bind_param("i", $t1);
+        $stmt1->execute();
+        $res1 = $stmt1->get_result()->fetch_assoc();
         if ($res1) $goleiros[] = ['id' => $res1['id'], 'gols_sofridos' => $g2];
+        $stmt1->close();
 
-        $stmt->bind_param("i", $t2);
-        $stmt->execute();
-        $res2 = $stmt->get_result()->fetch_assoc();
+        // Goleiro do time visitante
+        $stmt2 = $this->conn->prepare("SELECT id FROM jogadores WHERE time_id = ? AND posicao = 'Goleiro' LIMIT 1");
+        $stmt2->bind_param("i", $t2);
+        $stmt2->execute();
+        $res2 = $stmt2->get_result()->fetch_assoc();
         if ($res2) $goleiros[] = ['id' => $res2['id'], 'gols_sofridos' => $g1];
+        $stmt2->close();
 
-        $stmt->close();
+
+ 
 
         foreach ($goleiros as $g) {
             $clean_sheet = ($g['gols_sofridos'] == 0) ? 1 : 0;
@@ -138,7 +150,9 @@ class PartidaAoVivoController {
         }
     }
 
-    private function atualizarClassificacao($time_id, $campeonato_id, $pontos, $vitorias, $empates, $derrotas, $gols_pro, $gols_contra) {
+
+    private function atualizarClassificacao($time_id, $campeonato_id, $pontos, $vitorias, $empates, $derrotas, $gols_pro, $gols_contra)
+    {
         $this->conn->query("
             UPDATE times_campeonatos
             SET pontos = pontos + $pontos,

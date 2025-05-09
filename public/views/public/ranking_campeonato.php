@@ -1,6 +1,8 @@
 <?php include __DIR__ . '../../../includes/index_sec.php'; ?>
+<link rel="stylesheet" href="/campeonato_esportivo/public/assets/css/ranking.css">
 
-<div class="container mt-4">
+
+<div class="container mt-4 container-campeonato">
     <h2 class="mb-4">📊 Ranking do Campeonato</h2>
 
     <!-- Artilheiros -->
@@ -10,9 +12,9 @@
         <tbody>
             <?php foreach ($dados['artilheiros'] as $a): ?>
                 <tr>
-                    <td><?= htmlspecialchars($a['nome']) ?></td>
-                    <td><?= htmlspecialchars($a['time']) ?></td>
-                    <td><?= $a['gols'] ?></td>
+                    <td data-label="Jogador"><?= htmlspecialchars($a['nome']) ?></td>
+                    <td data-label="Time"><?= htmlspecialchars($a['time']) ?></td>
+                    <td data-label="Gols"><?= $a['gols'] ?></td>
                 </tr>
             <?php endforeach; ?>
         </tbody>
@@ -25,10 +27,10 @@
         <tbody>
             <?php foreach ($dados['cartoes'] as $c): ?>
                 <tr>
-                    <td><?= htmlspecialchars($c['nome']) ?></td>
-                    <td><?= htmlspecialchars($c['time']) ?></td>
-                    <td><?= $c['amarelos'] ?? 0 ?></td>
-                    <td><?= $c['vermelhos'] ?? 0 ?></td>
+                    <td data-label="Jogador"><?= htmlspecialchars($c['nome']) ?></td>
+                    <td data-label="Time"><?= htmlspecialchars($c['time']) ?></td>
+                    <td data-label="Amarelos"><?= $c['amarelos'] ?? 0 ?></td>
+                    <td data-label="Vermelhos"><?= $c['vermelhos'] ?? 0 ?></td>
                 </tr>
             <?php endforeach; ?>
         </tbody>
@@ -41,44 +43,43 @@
         <tbody>
             <?php foreach ($dados['vitorias'] as $t): ?>
                 <tr>
-                    <td><?= htmlspecialchars($t['nome']) ?></td>
-                    <td><?= $t['vitorias'] ?></td>
+                    <td data-label="Time"><?= htmlspecialchars($t['nome']) ?></td>
+                    <td data-label="Vitórias"><?= $t['vitorias'] ?></td>
                 </tr>
             <?php endforeach; ?>
         </tbody>
     </table>
-<!-- Goleiros Destaque -->
-<h4>🧤 Goleiros em Destaque</h4>
-<table class="table table-striped">
-    <thead>
-        <tr>
-            <th>Goleiro</th>
-            <th>Time</th>
-            <th>Defesas</th>
-            <th>Gols Sofridos</th>
-            <th>Pênaltis Defendidos</th>
-            <th>Clean Sheets</th>
-        </tr>
-    </thead>
-    <tbody>
-        <?php foreach ($dados['goleiros'] as $g): ?>
-            <tr>
-                <td><?= htmlspecialchars($g['nome']) ?></td>
-                <td><?= htmlspecialchars($g['time']) ?></td>
-                <td><?= $g['total_defesas'] ?? 0 ?></td>
-                <td><?= $g['total_gols_sofridos'] ?? 0 ?></td>
-                <td><?= $g['total_penaltis_defendidos'] ?? 0 ?></td>
-                <td><?= $g['total_clean_sheets'] ?? 0 ?></td>
-            </tr>
-        <?php endforeach; ?>
-    </tbody>
-</table>
 
-    
+    <!-- Goleiros Destaque -->
+    <h4>🧤 Goleiros em Destaque</h4>
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>Goleiro</th>
+                <th>Time</th>
+                <th>Defesas</th>
+                <th>Gols Sofridos</th>
+                <th>Pênaltis Defendidos</th>
+                <th>Clean Sheets</th>
+            </tr>
+        </thead>
+        <tbody>
+            <?php foreach ($dados['goleiros'] as $g): ?>
+                <tr>
+                    <td data-label="Goleiro"><?= htmlspecialchars($g['nome']) ?></td>
+                    <td data-label="Time"><?= htmlspecialchars($g['time']) ?></td>
+                    <td data-label="Defesas"><?= $g['total_defesas'] ?? 0 ?></td>
+                    <td data-label="Gols Sofridos"><?= $g['total_gols_sofridos'] ?? 0 ?></td>
+                    <td data-label="Pênaltis Defendidos"><?= $g['total_penaltis_defendidos'] ?? 0 ?></td>
+                    <td data-label="Clean Sheets"><?= $g['total_clean_sheets'] ?? 0 ?></td>
+                </tr>
+            <?php endforeach; ?>
+        </tbody>
+    </table>
 </div>
 
 <div class="mt-auto">
-<div class="mt-5"></div>
-<?php require_once __DIR__ . '/../cabecalho/footer.php'; ?>
-<script src="../../../assets/js/bootstrap.bundle.min.js"></script>
+    <div class="mt-5"></div>
+    <?php require_once __DIR__ . '/../cabecalho/footer.php'; ?>
+    <script src="/campeonato_esportivo/assets/js/bootstrap.bundle.min.js"></script>
 </div>

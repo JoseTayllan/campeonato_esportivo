@@ -1,7 +1,7 @@
 <?php 
 session_start();
 require_once __DIR__ . '/../../../config/database.php';
-include '../cabecalho/header.php';
+include __DIR__ . '../../../includes/index_login.php'; 
 ?>
 
 <!DOCTYPE html>
@@ -14,7 +14,7 @@ include '../cabecalho/header.php';
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
     <style>
         body {
-            background: linear-gradient(to bottom, #0d0d0d, #f8f9fa);
+            background: linear-gradient(to bottom,rgb(13, 27, 175), #f8f9fa);
             min-height: 100vh;
             display: flex;
             flex-direction: column;

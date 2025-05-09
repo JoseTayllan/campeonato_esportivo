@@ -19,9 +19,10 @@ if (session_status() === PHP_SESSION_NONE) {
 <!-- Navbar -->
 <nav class="navbar navbar-expand-lg shadow-sm">
     <div class="container">
-        <a class="navbar-brand d-flex align-items-center" href="/campeonato_esportivo/public/index.php">
-            <i class="bi bi-house-door-fill me-2"></i> Início
-        </a>
+    <a class="navbar-brand d-flex align-items-center" href="/campeonato_esportivo/public">
+                <img src="/campeonato_esportivo/assets/img/logo_raiz.png" alt="Raiz de Craque" class="logo-navbar me-2">
+                <span class="fw-bold text-creme">Raiz de Craque</span>
+            </a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
             aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>

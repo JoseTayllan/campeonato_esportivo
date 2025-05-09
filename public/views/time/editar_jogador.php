@@ -1,4 +1,5 @@
 <?php if (!isset($jogador)) { die('Acesso direto não permitido.'); } ?>
+<?php require_once __DIR__ . '/../../includes/assinatura_sec.php'; ?>
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>

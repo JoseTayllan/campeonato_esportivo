@@ -19,7 +19,7 @@ $totalTimes = ($resultTimes->fetch_assoc())['total'] ?? 0;
 $totalJogadores = ($resultJogadores->fetch_assoc())['total'] ?? 0;
 $totalUsuarios = ($resultUsuarios->fetch_assoc())['total'] ?? 0;
 
-include '../cabecalho/header.php';
+ require_once __DIR__ . '/../../includes/header_index.php'; ?>
 ?>
 
 <div class="container mt-4">

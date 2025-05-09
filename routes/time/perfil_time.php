@@ -14,4 +14,4 @@ if (!$time) {
 $jogadores = $controller->listarElencoPublico($time['id']);
 $patrocinadores = $controller->buscarPatrocinadoresDoTime($time['id']);
 
-require_once __DIR__ . '/../../../public/views/time/perfil_time.php';
+require_once __DIR__ . '/../../public/views/time/perfil_time.php';

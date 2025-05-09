@@ -57,7 +57,7 @@
                 <?php if (!empty($time['escudo'])): ?>
                     <div class="mt-3">
                         <strong>Escudo atual:</strong><br>
-                        <img src="/campeonato_esportivo/<?= $time['escudo'] ?>" width="100" alt="Escudo do time">
+                        <img src="/campeonato_esportivo/public/<?= $time['escudo'] ?>" width="100" alt="Escudo do time">
                     </div>
                 <?php endif; ?>
             </div>
@@ -121,6 +121,6 @@
 </div>
 
 <?php require_once __DIR__ . '/../cabecalho/footer.php'; ?>
-<script src="../../../assets/js/bootstrap.bundle.min.js"></script>
+<script src="/campeonato_esportivo/assets/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>

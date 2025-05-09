@@ -1,4 +1,4 @@
-
+<?php include __DIR__ . '../../../includes/index_sec.php'; ?>
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
@@ -14,7 +14,8 @@
             <p><strong>Cidade:</strong> <?= htmlspecialchars($time['cidade']) ?></p>
             <p><strong>Estádio:</strong> <?= htmlspecialchars($time['estadio']) ?></p>
             <?php if (!empty($time['escudo'])): ?>
-                <img src="../../<?= $time['escudo'] ?>" width="120" alt="Escudo do time">
+                <img src="/campeonato_esportivo/public/<?= $time['escudo'] ?>" width="120" alt="Escudo do time">
+
             <?php endif; ?>
         </div>
     </div>
@@ -75,3 +76,8 @@
 </div>
 </body>
 </html>
+<div class="mt-auto">
+<div class="mt-5"></div>
+<?php require_once __DIR__ . '/../cabecalho/footer.php'; ?>
+<script src="../../../assets/js/bootstrap.bundle.min.js"></script>
+</div>

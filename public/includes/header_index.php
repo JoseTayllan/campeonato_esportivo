@@ -21,8 +21,9 @@ if (session_status() === PHP_SESSION_NONE) {
     <!-- Navbar -->
     <nav class="navbar navbar-expand-lg shadow-sm">
         <div class="container">
-            <a class="navbar-brand d-flex align-items-center" href="/campeonato_esportivo/public/index.php">
-                <i class="bi bi-house-door-fill me-2"></i> Início
+            <a class="navbar-brand d-flex align-items-center" href="/campeonato_esportivo/">
+                <img src="/campeonato_esportivo/assets/img/logo_raiz.png" alt="Raiz de Craque" class="logo-navbar me-2">
+                <span class="fw-bold text-creme">Raiz de Craque</span>
             </a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
                 aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
@@ -45,6 +46,8 @@ if (session_status() === PHP_SESSION_NONE) {
                         $link = '/campeonato_esportivo/routes/admin_visual/dashboard_administrador.php';
                     } elseif ($tipo_assinatura === 'time') {
                         $link = '/campeonato_esportivo/public/views/dashboard/dashboard_time.php';
+                    }elseif ($tipo_assinatura === 'completo' && $tipo_usuario === 'Patrocinador') {
+                        $link = '/campeonato_esportivo/routes/patrocinador/patrocinador_dashboard.php';
                     } else {
                         $link = null;
                     }
@@ -69,11 +72,11 @@ if (session_status() === PHP_SESSION_NONE) {
     </nav>
 
     <!-- Menu Horizontal Administrativo -->
-<div class="container-fluid py-2 border-bottom shadow-sm menu-container">
-    <div class="d-flex flex-row flex-nowrap justify-content-center menu-scroll px-2 gap-2">
-    
+    <div class="container-fluid py-2 border-bottom shadow-sm menu-container">
+        <div class="d-flex flex-row flex-nowrap justify-content-center menu-scroll px-2 gap-2">
+
             <a href="/campeonato_esportivo/public/views/campeonatos/tabela_classificacao.php" class="menu-link menu-separador flex-shrink-0">
                 <i class="bi bi-trophy me-2"></i>Classificação
             </a>
+        </div>
     </div>
-</div>

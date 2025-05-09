@@ -1,6 +1,6 @@
 <?php 
 date_default_timezone_set('America/Sao_Paulo');
-require_once __DIR__ . '/../cabecalho/header.php'; 
+include __DIR__ . '../../../includes/index_sec.php'; 
 ?>
 
 <div class="container mt-4">

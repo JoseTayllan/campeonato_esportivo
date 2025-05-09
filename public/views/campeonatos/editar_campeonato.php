@@ -7,9 +7,11 @@ if (!isset($_SERVER['HTTP_REFERER']) || empty($_SERVER['HTTP_REFERER'])) {
           </div>";
     exit();
 } 
-include __DIR__ . '../../../includes/admin_sec.php';?>
+include __DIR__ . '../../../includes/admin_sec.php';?>   
+<link rel="stylesheet" href="/campeonato_esportivo/public/assets/css/admin.css">
 
-<div class="container mt-4">
+
+<div class="container mt-4 container-campeonato">
     <h2>Editar Campeonato</h2>
 
     <form action="/campeonato_esportivo/routes/adms/campeonatos_atualizar.php" method="POST">
@@ -60,7 +62,7 @@ include __DIR__ . '../../../includes/admin_sec.php';?>
     </form>
 
     <!-- Times vinculados -->
-    <hr class="my-4">
+    <hr class="section-box">
     <h4>Times do Campeonato</h4>
 
     <ul class="list-group mb-3">
@@ -96,184 +98,139 @@ include __DIR__ . '../../../includes/admin_sec.php';?>
 
 
     <!-- Rodadas -->
-    <hr class="my-4">
+    <hr class="section-box">
     <h4>Rodadas do Campeonato</h4>
 
-    <ul class="list-group mb-3">
-        <?php foreach ($model->listarRodadas($campeonato['id']) as $rodada): ?>
-            <li class="list-group-item">
-                <div class="d-flex justify-content-between align-items-center">
+    <div class="row gy-4">
+    <?php foreach ($model->listarRodadas($campeonato['id']) as $rodada): ?>
+        <div class="col-12">
+            <div class="card shadow-sm">
+                <div class="card-header bg-light d-flex justify-content-between align-items-center">
                     <div>
                         <strong>Rodada <?= $rodada['numero'] ?></strong> - <?= htmlspecialchars($rodada['tipo']) ?><br>
-                        <?= htmlspecialchars($rodada['descricao']) ?>
+                        <small class="text-muted"><?= htmlspecialchars($rodada['descricao']) ?></small>
                     </div>
-                    <a href="/campeonato_esportivo/routes/adms/excluir_rodada.php?id=<?= $rodada['id'] ?>&campeonato_id=<?= $campeonato['id'] ?>" class="btn btn-sm btn-danger">Excluir</a>
+                    <a href="/campeonato_esportivo/routes/adms/excluir_rodada.php?id=<?= $rodada['id'] ?>&campeonato_id=<?= $campeonato['id'] ?>" class="btn btn-sm btn-outline-danger">Excluir</a>
                 </div>
 
-                <!-- Lista de jogos da rodada -->
-                <?php $partidas = $model->listarPartidasPorRodada($rodada['id']); ?>
-                <?php if ($partidas): ?>
-                    <ul class="mt-2">
+                <div class="card-body">
+                    <?php $partidas = $model->listarPartidasPorRodada($rodada['id']); ?>
+                    <?php if ($partidas): ?>
                         <?php foreach ($partidas as $jogo): ?>
-                            <li>
-                                <form method="POST" action="/campeonato_esportivo/routes/adms/editar_partida.php" class="row g-2 align-items-center">
-                                    <input type="hidden" name="partida_id" value="<?= $jogo['id'] ?>">
-                                    <input type="hidden" name="campeonato_id" value="<?= $campeonato['id'] ?>">
+                            <form method="POST" action="/campeonato_esportivo/routes/adms/editar_partida.php" class="row g-2 align-items-end mb-3">
+                                <input type="hidden" name="partida_id" value="<?= $jogo['id'] ?>">
+                                <input type="hidden" name="campeonato_id" value="<?= $campeonato['id'] ?>">
 
-                                    <div class="col-md-3">
-                                        <label>Fase</label>
-                                        <select name="fase_id" class="form-select" required>
-                                            <?php foreach ($model->listarFasesDoCampeonato($campeonato['id']) as $fase): ?>
-                                                <option value="<?= $fase['id'] ?>" <?= ($jogo['fase_id'] ?? '') == $fase['id'] ? 'selected' : '' ?>>
-                                                    <?= htmlspecialchars($fase['nome']) ?>
-                                                </option>
-                                            <?php endforeach; ?>
-                                        </select>
+                                <div class="col-md-2">
+                                    <label class="form-label">Fase</label>
+                                    <select name="fase_id" class="form-select form-select-sm" required>
+                                        <?php foreach ($model->listarFasesDoCampeonato($campeonato['id']) as $fase): ?>
+                                            <option value="<?= $fase['id'] ?>" <?= ($jogo['fase_id'] ?? '') == $fase['id'] ? 'selected' : '' ?>>
+                                                <?= htmlspecialchars($fase['nome']) ?>
+                                            </option>
+                                        <?php endforeach; ?>
+                                    </select>
+                                </div>
 
-                                    </div>
+                                <div class="col-md-2">
+                                    <label class="form-label">Casa</label>
+                                    <select name="time_casa" class="form-select form-select-sm" required>
+                                        <option value="">Selecione</option>
+                                        <?php foreach ($model->listarTimesPorCampeonato($campeonato['id']) as $time): ?>
+                                            <option value="<?= $time['id'] ?>" <?= $jogo['id_time_casa'] == $time['id'] ? 'selected' : '' ?>>
+                                                <?= htmlspecialchars($time['nome']) ?>
+                                            </option>
+                                        <?php endforeach; ?>
+                                    </select>
+                                </div>
 
+                                <div class="col-md-2">
+                                    <label class="form-label">Visitante</label>
+                                    <select name="time_fora" class="form-select form-select-sm" required>
+                                        <option value="">Selecione</option>
+                                        <?php foreach ($model->listarTimesPorCampeonato($campeonato['id']) as $time): ?>
+                                            <option value="<?= $time['id'] ?>" <?= $jogo['id_time_fora'] == $time['id'] ? 'selected' : '' ?>>
+                                                <?= htmlspecialchars($time['nome']) ?>
+                                            </option>
+                                        <?php endforeach; ?>
+                                    </select>
+                                </div>
 
-                                    <div class="col-md-2">
-                                        <select name="time_casa" class="form-select" required>
-                                            <option value="">Time da Casa</option>
-                                            <?php foreach ($model->listarTimesPorCampeonato($campeonato['id']) as $time): ?>
-                                                <option value="<?= $time['id'] ?>" <?= $jogo['id_time_casa'] == $time['id'] ? 'selected' : '' ?>>
-                                                    <?= htmlspecialchars($time['nome']) ?>
-                                                </option>
-                                            <?php endforeach; ?>
-                                        </select>
-                                    </div>
+                                <div class="col-md-2">
+                                    <label class="form-label">Data</label>
+                                    <input type="date" name="data" value="<?= $jogo['data'] ?>" class="form-control form-control-sm" required>
+                                </div>
 
-                                    <div class="col-md-2">
-                                        <select name="time_fora" class="form-select" required>
-                                            <option value="">Time Visitante</option>
-                                            <?php foreach ($model->listarTimesPorCampeonato($campeonato['id']) as $time): ?>
-                                                <option value="<?= $time['id'] ?>" <?= $jogo['id_time_fora'] == $time['id'] ? 'selected' : '' ?>>
-                                                    <?= htmlspecialchars($time['nome']) ?>
-                                                </option>
-                                            <?php endforeach; ?>
-                                        </select>
-                                    </div>
+                                <div class="col-md-2">
+                                    <label class="form-label">Hora</label>
+                                    <input type="time" name="horario" value="<?= $jogo['horario'] ?>" class="form-control form-control-sm" required>
+                                </div>
 
-                                    <div class="col-md-2">
-                                        <input type="date" name="data" value="<?= $jogo['data'] ?>" class="form-control" required>
-                                    </div>
+                                <div class="col-md-2">
+                                    <label class="form-label">Local</label>
+                                    <input type="text" name="local" value="<?= htmlspecialchars($jogo['local'] ?? '') ?>" class="form-control form-control-sm" placeholder="Local" required>
+                                </div>
 
-                                    <div class="col-md-2">
-                                        <input type="time" name="horario" value="<?= $jogo['horario'] ?>" class="form-control" required>
-                                    </div>
-
-                                    <div class="col-md-2">
-                                        <input type="text" name="local" value="<?= htmlspecialchars($jogo['local'] ?? '') ?>" class="form-control" placeholder="Local" required>
-                                    </div>
-
-
-
-                                    <div class="col-md-2 d-flex gap-2">
-                                        <button class="btn btn-sm btn-success w-100">Salvar</button>
-                                        <a href="/campeonato_esportivo/routes/adms/excluir_partida.php?id=<?= $jogo['id'] ?>&campeonato_id=<?= $campeonato['id'] ?>" class="btn btn-sm btn-outline-danger">X</a>
-                                    </div>
-
-                                </form>
-                            </li>
-
+                                <div class="col-md-2 d-flex gap-2 mt-2">
+                                    <button class="btn btn-sm btn-success w-100">Salvar</button>
+                                    <a href="/campeonato_esportivo/routes/adms/excluir_partida.php?id=<?= $jogo['id'] ?>&campeonato_id=<?= $campeonato['id'] ?>" class="btn btn-sm btn-outline-danger">X</a>
+                                </div>
+                            </form>
                         <?php endforeach; ?>
-                    </ul>
-                <?php else: ?>
-                    <p class="text-muted small mt-2">Nenhum jogo cadastrado ainda.</p>
-                <?php endif; ?>
+                    <?php else: ?>
+                        <p class="text-muted small">Nenhum jogo cadastrado.</p>
+                    <?php endif; ?>
 
-                <!-- Formulário para adicionar nova partida -->
-                <form method="POST" action="/campeonato_esportivo/routes/adms/adicionar_partida.php" class="row g-2 mt-2">
-                    <input type="hidden" name="rodada_id" value="<?= $rodada['id'] ?>">
-                    <input type="hidden" name="campeonato_id" value="<?= $campeonato['id'] ?>">
+                    <!-- Novo jogo -->
+                    <form method="POST" action="/campeonato_esportivo/routes/adms/adicionar_partida.php" class="row g-2 align-items-end">
+                        <input type="hidden" name="rodada_id" value="<?= $rodada['id'] ?>">
+                        <input type="hidden" name="campeonato_id" value="<?= $campeonato['id'] ?>">
 
-                    <div class="col-md-3">
-                        <select name="time_casa" class="form-select" required>
-                            <option value="">Time da Casa</option>
-                            <?php foreach ($model->listarTimesPorCampeonato($campeonato['id']) as $time): ?>
-                                <option value="<?= $time['id'] ?>"><?= htmlspecialchars($time['nome']) ?></option>
-                            <?php endforeach; ?>
-                        </select>
-                    </div>
+                        <div class="col-md-2">
+                            <label class="form-label">Casa</label>
+                            <select name="time_casa" class="form-select form-select-sm" required>
+                                <option value="">Time da Casa</option>
+                                <?php foreach ($model->listarTimesPorCampeonato($campeonato['id']) as $time): ?>
+                                    <option value="<?= $time['id'] ?>"><?= htmlspecialchars($time['nome']) ?></option>
+                                <?php endforeach; ?>
+                            </select>
+                        </div>
 
-                    <div class="col-md-3">
-                        <select name="time_fora" class="form-select" required>
-                            <option value="">Time Visitante</option>
-                            <?php foreach ($model->listarTimesPorCampeonato($campeonato['id']) as $time): ?>
-                                <option value="<?= $time['id'] ?>"><?= htmlspecialchars($time['nome']) ?></option>
-                            <?php endforeach; ?>
-                        </select>
-                    </div>
+                        <div class="col-md-2">
+                            <label class="form-label">Visitante</label>
+                            <select name="time_fora" class="form-select form-select-sm" required>
+                                <option value="">Time Visitante</option>
+                                <?php foreach ($model->listarTimesPorCampeonato($campeonato['id']) as $time): ?>
+                                    <option value="<?= $time['id'] ?>"><?= htmlspecialchars($time['nome']) ?></option>
+                                <?php endforeach; ?>
+                            </select>
+                        </div>
 
-                    <div class="col-md-2">
-                        <input type="date" name="data" class="form-control" required>
-                    </div>
+                        <div class="col-md-2">
+                            <label class="form-label">Data</label>
+                            <input type="date" name="data" class="form-control form-control-sm" required>
+                        </div>
 
-                    <div class="col-md-2">
-                        <input type="time" name="horario" class="form-control" required>
-                    </div>
-                    <div class="col-md-2">
-                        <input type="text" name="local" class="form-control" placeholder="Local" required>
-                    </div>
+                        <div class="col-md-2">
+                            <label class="form-label">Hora</label>
+                            <input type="time" name="horario" class="form-control form-control-sm" required>
+                        </div>
 
+                        <div class="col-md-2">
+                            <label class="form-label">Local</label>
+                            <input type="text" name="local" class="form-control form-control-sm" required>
+                        </div>
 
-                    <div class="col-md-2">
-                        <button class="btn btn-sm btn-primary w-100">+ Jogo</button>
-                    </div>
-                </form>
-            </li>
-        <?php endforeach; ?>
-    </ul>
-
-
-    <h5>Nova Rodada</h5>
-    <form method="POST" action="/campeonato_esportivo/routes/adms/adicionar_rodada.php" class="row g-3">
-        <input type="hidden" name="campeonato_id" value="<?= $campeonato['id'] ?>">
-
-        <div class="col-md-2">
-            <label>Nº</label>
-            <input type="number" name="numero" class="form-control" required>
+                        <div class="col-md-2 d-flex align-items-end">
+                            <button class="btn btn-sm btn-primary w-100">+ Jogo</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
         </div>
+    <?php endforeach; ?>
+</div>
 
-        <div class="col-md-2">
-            <label>Tipo</label>
-            <select name="tipo" class="form-select" required>
-                <option value="Ida">Ida</option>
-                <option value="Volta">Volta</option>
-            </select>
-        </div>
-
-        <div class="col-md-3">
-            <label>Fase</label>
-            <select name="fase_id" class="form-select" required>
-                <?php foreach ($model->listarFasesDoCampeonato($campeonato['id']) as $fase): ?>
-
-
-                    <option value="<?= $fase['id'] ?>"><?= htmlspecialchars($fase['nome']) ?></option>
-                <?php endforeach; ?>
-            </select>
-        </div>
-
-
-        <div class="col-md-3">
-            <label>Descrição</label>
-            <input type="text" name="descricao" class="form-control">
-        </div>
-
-        <div class="col-md-1">
-            <label>Data</label>
-            <input type="date" name="data" class="form-control" required>
-        </div>
-
-        <div class="col-md-1">
-            <label>Hora</label>
-            <input type="time" name="hora" class="form-control" required>
-        </div>
-
-        <div class="col-12">
-            <button class="btn btn-success">Adicionar Rodada</button>
-        </div>
     </form>
 
 <?php include __DIR__ . '/../cabecalho/footer.php'; ?>

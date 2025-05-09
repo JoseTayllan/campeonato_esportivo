@@ -1,5 +1,5 @@
 <?php
-require_once __DIR__ . '/../../config/database.php';
+require_once __DIR__ . '/../../../config/database.php';
 
 $partida_id = $_POST['partida_id'] ?? null;
 $tempo_atual = $_POST['tempo_atual'] ?? null;

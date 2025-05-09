@@ -1,8 +1,8 @@
 <?php if (!isset($partidas)) { die('Acesso direto não permitido.'); } ?>
-<?php $base_url = '/campeonato_esportivo/'; ?>
+<?php $base_url = '/campeonato_esportivo/public/'; ?>
 <?php include_once __DIR__ . '/../../includes/assinatura_sec.php'; ?>
 
-<div class="container mt-4">
+<div class="container mt-4 container-campeonato">
     <h2>Agenda de Jogos</h2>
 
     <?php if (empty($partidas)): ?>

@@ -1,4 +1,5 @@
 <?php if (!isset($jogadores, $partida_id)) { die('Acesso direto não permitido.'); } ?>
+<?php include_once __DIR__ . '/../../includes/assinatura_sec.php'; ?>
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>

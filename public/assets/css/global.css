@@ -8,6 +8,12 @@
   --badge-bg: #9B6035;     
   --card-bg: rgb(46, 88, 74);       /* Marrom Terra – badges e parte inferior do escudo */
 }
+
+.logo-navbar {
+  height: 70px;
+  max-height: 80px;
+  object-fit: contain;
+}
 .card {
   background-color: #fff;        /* Creme Neutro */
   border: 1px solid #B78F32;        /* Dourado Mostarda */
@@ -90,6 +96,7 @@ header, footer {
     white-space: nowrap;
     scrollbar-width: none;
     -ms-overflow-style: none;
+    padding-left: 0.75rem;
   }
   .menu-scroll::-webkit-scrollbar {
     display: none;
@@ -102,6 +109,7 @@ header, footer {
     display: flex;
     align-items: center;
     padding: 0.75rem 1.5rem;
+    border: 2px solid var(--accent-color); /* borda dourada */
     text-decoration: none;
     transition: background 0.3s, color 0.3s;
     user-select: none;
@@ -161,3 +169,19 @@ header, footer {
 .container-campeonato {
   color: var(--secondary-text); /* ou uma cor fixa, ex: #1C4B6C */
 }
+
+
+.carousel-inner img {
+  width: 100%;
+  height: auto; /* Mantém proporção natural */
+  max-height: 420px; /* Altura limite */
+  object-fit: contain; /* Evita distorção e corte */
+  image-rendering: auto;
+  border-radius: 10px;
+  display: block;
+  margin: 0 auto;
+}
+
+
+
+
