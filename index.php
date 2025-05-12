@@ -756,9 +756,10 @@ footer {
 <div class="card">
 <h3>👥 Perfis de acesso</h3>
 <ul>
-<li>Organizador: controle geral</li>
-<li>Técnico: escalações e estatísticas</li>
-<li>Clube/Escola: múltiplos técnicos e categorias</li>
+<li>Administrador: controle geral.</li>
+<li>Time Essencial/Técnic: escalações e estatística.</li>
+<li>Olheiro: analise estatística.</li>
+<li>Patrocinador: destaque visual.</li>
 </ul>
 </div>
 </div>
@@ -767,27 +768,38 @@ footer {
 <h2 id="planos">💼 Planos</h2>
 <div class="grid">
 <div class="card">
-<h3>Organizador – R$29/mês</h3>
+<h3>Administrador – R$49/mês</h3>
 <ul>
-<li>Gestão completa de campeonatos</li>
-<li>Permissões avançadas</li>
-<li>Estatísticas globais</li>
+<li>Campeonatos ilimitados, cadastro de organizadores.</li>
+<li>Gestão completa de campeonatos.</li>
+<li>Permissões avançadas.</li>
+<li>Estatísticas globais.</li>
 </ul>
 </div>
 <div class="card">
-<h3>Técnico – R$14/mês</h3>
+<h3>Time Essencial/Técnico – R$14/mês</h3>
 <ul>
-<li>Controle de elenco e escalações</li>
-<li>Acompanhamento de jogos</li>
-<li>Estatísticas individuais</li>
+<li>Gerenciar 1 time.</li>
+<li>Controle de elenco e escalações.</li>
+<li>Acompanhamento de jogos.</li>
+<li>Estatísticas individuais.</li>
 </ul>
 </div>
 <div class="card">
-<h3>Clube/Escola – R$59/mês</h3>
+<h3>Olheiro – R$9/mês</h3>
 <ul>
-<li>Multi-técnico e categorias</li>
-<li>Gestão unificada do clube</li>
-<li>Suporte a torneios internos</li>
+<li>Avaliação de futuros talentos.</li>
+<li>Analise estátistica.</li>
+<li>Relatórios de desempenho.</li>
+<li>Acesso a relatorios exclusivos.</li>
+</ul>
+</div>
+<div class="card">
+<h3>Patrocinador – R$29/mês</h3>
+<ul>
+<li>Destaque visual + acesso aos relatórios.</li>
+<li>Pagina de exibição dedicada junto ao seu Time.</li>
+<li></li>
 </ul>
 </div>
 </div>
@@ -845,7 +857,7 @@ document.querySelectorAll('a[href^="#"]').forEach(link => {
             gap: 2rem;
         
 .nav-links { margin-left: 2rem; }
-}
+        }
 
         .menu-toggle {
             display: none !important;
