@@ -25,7 +25,6 @@
                     <button class="btn btn-success">Criar Time</button>
                 </form>
             </div>
-            <?php exit; ?>
         <?php endif; ?>
 
         <?php $time = $dados['time']; ?>
@@ -57,7 +56,8 @@
                 <?php if (!empty($time['escudo'])): ?>
                     <div class="mt-3">
                         <strong>Escudo atual:</strong><br>
-                        <img src="/campeonato_esportivo/public/<?= $time['escudo'] ?>" width="100" alt="Escudo do time">
+                        <img src="/campeonato_esportivo/<?= $time['escudo'] ?>" width="100" alt="Escudo do time">
+                        
                     </div>
                 <?php endif; ?>
             </div>

@@ -1,3 +1,4 @@
+<?php require_once __DIR__ . '/../../includes/index_login.php'; ?>
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
@@ -15,7 +16,7 @@
             <div class="alert alert-danger"><?= htmlspecialchars($_GET['erro']) ?></div>
         <?php endif; ?>
 
-        <form action="../../../routes/registrar/registrar_usuario.php" method="POST">
+        <form action="../../../routes/registrar/registrar_usuario.php" method="POST">       
             <input type="hidden" name="tipo" value="Administrador">
             <input type="hidden" name="tipo_assinatura" value="time">
 
@@ -39,6 +40,7 @@
         </form>
     </div>
 </div>
-
+<?php include '../cabecalho/footer.php'; ?>
+<script src="campeonato_esportivo/assets/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>

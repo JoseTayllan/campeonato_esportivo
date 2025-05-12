@@ -54,7 +54,7 @@ if (session_status() === PHP_SESSION_NONE) {
                     <span class="navbar-text me-3 fw-semibold">
                         <i class="bi bi-person-circle me-1"></i>Olá, <?= htmlspecialchars($_SESSION['usuario_nome']) ?>
                     </span>
-                    <a href="../../../routes/logout.php" class="btn btn-outline-light btn-sm">
+                    <a href="/campeonato_esportivo/public/views/login/login.php" class="btn btn-outline-light btn-sm">
                         <i class="bi bi-box-arrow-right me-1"></i>Sair
                     </a>
                 <?php endif; ?>

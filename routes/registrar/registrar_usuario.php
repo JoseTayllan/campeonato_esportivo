@@ -34,6 +34,6 @@ $_SESSION['usuario'] = [
     'tipo_assinatura' => $tipo_assinatura
 ];
 
-header("Location: ../../public/views/time/dashboard_time.php");
+header("Location: ../../public/views/login/login.php");
 exit();
 ?>

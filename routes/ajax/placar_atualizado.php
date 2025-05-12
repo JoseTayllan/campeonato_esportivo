@@ -32,8 +32,14 @@ while ($p = $res->fetch_assoc()) {
     $escudoForaPath = __DIR__ . '/../../public/img/times/' . $escudoFora;
     $p['escudo_fora'] = (!empty($escudoFora) && file_exists($escudoForaPath)) ? $escudoFora : 'escudo_padrao.png';
 
-    // Eventos da partida
-    $stmt = $conn->prepare("SELECT tipo_evento, minuto, descricao FROM eventos_partida WHERE partida_id = ? ORDER BY minuto ASC");
+    // Eventos da partida, incluindo nome do jogador
+    $stmt = $conn->prepare("
+        SELECT ep.tipo_evento, ep.minuto, ep.descricao, j.nome AS nome_jogador
+        FROM eventos_partida ep
+        LEFT JOIN jogadores j ON ep.jogador_id = j.id
+        WHERE ep.partida_id = ?
+        ORDER BY ep.minuto ASC
+    ");
     $stmt->bind_param("i", $p['id']);
     $stmt->execute();
     $eventos = $stmt->get_result()->fetch_all(MYSQLI_ASSOC);

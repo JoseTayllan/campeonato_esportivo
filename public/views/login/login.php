@@ -76,6 +76,6 @@ include __DIR__ . '../../../includes/index_login.php';
 </div>
 
 <?php include '../cabecalho/footer.php'; ?>
-<script src="../../../assets/js/bootstrap.bundle.min.js"></script>
+<script src="campeonato_esportivo/assets/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
