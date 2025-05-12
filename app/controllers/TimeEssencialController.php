@@ -1,5 +1,5 @@
 <?php 
-require_once __DIR__ . '/../models/TimeEssencial.php';
+require_once __DIR__ . '/../Models/TimeEssencial.php';
 require_once __DIR__ . '/../middleware/verifica_sessao.php';
 require_once __DIR__ . '/../middleware/verifica_assinatura.php';
 permite_acesso(['time', 'completo']);

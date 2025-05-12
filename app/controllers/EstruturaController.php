@@ -1,5 +1,5 @@
 <?php
-require_once __DIR__ . '/../models/Campeonato.php';
+require_once __DIR__ . '/../Models/Campeonato.php';
 
 class EstruturaController {
     private $model;

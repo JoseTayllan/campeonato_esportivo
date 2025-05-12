@@ -1,6 +1,6 @@
 <?php
 
-require_once __DIR__ . '/../models/RankingPorCampeonato.php';
+require_once __DIR__ . '/../Models/RankingPorCampeonato.php';
 
 class RankingCampeonatoController {
     private $model;
