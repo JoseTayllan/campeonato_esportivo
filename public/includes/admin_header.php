@@ -17,7 +17,7 @@ if (session_status() === PHP_SESSION_NONE) {
 <body>
 
 <!-- Navbar -->
-<nav class="navbar navbar-expand-lg shadow-sm">
+<nav class="navbar navbar-expand-lg shadow-sm" style="background-color: var(--primary-color);">
     <div class="container">
     <a class="navbar-brand d-flex align-items-center" href="/campeonato_esportivo/public">
                 <img src="/campeonato_esportivo/assets/img/logo_raiz.png" alt="Raiz de Craque" class="logo-navbar me-2">
@@ -43,7 +43,7 @@ if (session_status() === PHP_SESSION_NONE) {
 </nav>
 
 <!-- Menu Horizontal Administrativo -->
-<div class="container-fluid py-2 border-bottom shadow-sm menu-container">
+<div class="container-fluid py-2 border-bottom shadow-sm menu-container" style="background-color: var(--primary-color);">
     <div class="d-flex flex-row flex-nowrap justify-content-center menu-scroll px-2 gap-2">
         <a href="/campeonato_esportivo/routes/adms/meus_campeonatos.php" class="menu-link menu-separador flex-shrink-0">
             <i class="bi bi-flag-fill me-2"></i>Campeonato

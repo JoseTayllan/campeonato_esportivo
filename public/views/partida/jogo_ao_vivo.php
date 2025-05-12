@@ -1,5 +1,7 @@
 
 <?php require_once __DIR__ . '../../../includes/admin_sec.php'; ?>
+<body>
+<main>
 <div class="container-fluid p-4">
     <h2 class="mb-3">⚽ Partida Ao Vivo: <?= $partida['nome_casa'] ?> x <?= $partida['nome_fora'] ?></h2>
     <?php if ($partida['cronometro_status'] === 'rodando'): ?>
@@ -182,3 +184,6 @@ function destacarAcrescimo() {
 
 atualizarCronometro();
 </script>
+</main>
+<?php include __DIR__ . '/../cabecalho/footer.php'; ?>
+</body>

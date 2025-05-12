@@ -1,6 +1,8 @@
 
 <?php require_once __DIR__ . '/../../includes/assinatura_patrocinador_sec.php'; ?>
 
+<body>
+<main>
 <div class="container py-5">
     <div class="card p-4 shadow">
         <h4 class="mb-4">Alterar Banner de Divulgação</h4>
@@ -21,3 +23,7 @@
         </form>
     </div>
 </div>
+</main>
+
+<?php include __DIR__ . '/../cabecalho/footer.php'; ?>
+</body>

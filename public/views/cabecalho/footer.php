@@ -1,27 +1,78 @@
-<footer style="background-color: var(--primary-color); color: var(--primary-text);" class="pt-4">
-
+<footer style="background-color: #0c1dc4; color: #ffffff;" class="pt-3 pb-2">
     <div class="container">
-        <div class="row">
-            <div class="col-md-4 mb-3">
-                <h5>Sobre Nós</h5>
-                <p>Somos a plataforma líder em gerenciamento esportivo, oferecendo soluções para clubes, atletas e torneios.</p>
+        <div class="row footer-content gy-2 gx-3">
+            <div class="col-12 col-md-4 text-start">
+                <h6 class="mb-1">Sobre Nós</h6>
+                <p class="mb-0">Somos a plataforma líder em gerenciamento esportivo, oferecendo soluções para clubes, atletas e torneios.</p>
             </div>
-            <div class="col-md-4 mb-3">
-                <h5>Contato</h5>
-                <p><i class="bi bi-geo-alt-fill"></i> Rua dos Campeões, 123 - São Paulo, SP</p>
-                <p><i class="bi bi-envelope-fill"></i> contato@sportmanager.com</p>
-                <p><i class="bi bi-telephone-fill"></i> +55 11 99999-9999</p>
+            <div class="col-12 col-md-4 text-start">
+                <h6 class="mb-1">Contato</h6>
+                <p class="mb-0"><i class="bi bi-geo-alt-fill me-1"></i> Rua dos Campeões, 123 - São Paulo, SP</p>
+                <p class="mb-0"><i class="bi bi-envelope-fill me-1"></i> contato@sportmanager.com</p>
+                <p class="mb-0"><i class="bi bi-telephone-fill me-1"></i> +55 11 99999-9999</p>
             </div>
-            <div class="col-md-4 mb-3">
-                <h5>Redes Sociais</h5>
-                <a href="#" class="text-light me-3"><i class="bi bi-facebook"></i></a>
-                <a href="#" class="text-light me-3"><i class="bi bi-instagram"></i></a>
-                <a href="#" class="text-light me-3"><i class="bi bi-twitter"></i></a>
+            <div class="col-12 col-md-4 text-start">
+                <h6 class="mb-1">Redes Sociais</h6>
+                <a href="#" class="text-light me-2"><i class="bi bi-facebook"></i></a>
+                <a href="#" class="text-light me-2"><i class="bi bi-instagram"></i></a>
+                <a href="#" class="text-light me-2"><i class="bi bi-twitter"></i></a>
                 <a href="#" class="text-light"><i class="bi bi-youtube"></i></a>
             </div>
         </div>
-        <div class="text-center py-3 border-top mt-3">
-            <p class="mb-0">&copy; 2025 Sport Manager - Todos os direitos reservados.</p>
-        </div>
+
+        <div class="text-center border-top pt-2 mt-2">
+            <small class="text-white d-inline-flex align-items-center gap-2">
+             <img src="/campeonato_esportivo/public/img/logo/LogoAT.png" alt="Logo Thaydion IA" width="40">
+                &copy; 2025 <strong>Thaydion IA</strong> - Todos os direitos reservados.
+            </small>
+</div>
+
     </div>
+
+    <style>
+        html, body {
+            height: 100%;
+            margin: 0;
+        }
+
+        body {
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        main {
+            flex: 1;
+        }
+
+        @media (max-width: 576px) {
+            footer {
+                padding-top: 0.5rem !important;
+                padding-bottom: 0.5rem !important;
+            }
+
+            .footer-content h6 {
+                font-size: 0.8rem;
+                margin-bottom: 0.2rem;
+            }
+
+            .footer-content p {
+                font-size: 0.7rem;
+                margin-bottom: 0.3rem;
+            }
+
+            .footer-content i.bi {
+                font-size: 0.85rem;
+            }
+
+            .footer-content a.text-light {
+                font-size: 0.9rem;
+                margin-right: 0.4rem;
+            }
+
+            footer small {
+                font-size: 0.7rem;
+            }
+        }
+    </style>
 </footer>

@@ -8,7 +8,7 @@
             <!-- Topo -->
             <div style="display: flex; align-items: center; justify-content: space-between;">
                 <?php if (!empty($jogador['escudo'])): ?>
-                    <img src="/campeonato_esportivo/public/<?= $jogador['escudo'] ?>" class="escudo" alt="Escudo do time">
+                    <img src="/campeonato_esportivo/<?= $jogador['escudo'] ?>" class="escudo" alt="Escudo do time">
                 <?php endif; ?>
 
                 <div style="flex-grow: 1; text-align: center;">

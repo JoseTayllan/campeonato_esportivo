@@ -82,12 +82,10 @@ require_once __DIR__ . '/../../../config/database.php';
                             <label for="tipo" class="form-label">Tipo de Usuário</label>
                             <select class="form-control" name="tipo" required>
                                 <option value="">Selecione um tipo</option>
-                                <option value="Administrador">Administrador</option>
                                 <option value="Organizador">Organizador</option>
                                 <option value="Treinador">Treinador</option>
                                 <option value="Jogador">Jogador</option>
                                 <option value="Olheiro">Olheiro</option>
-                                <option value="Patrocinador">Patrocinador</option>
                             </select>
                         </div>
 

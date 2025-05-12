@@ -14,6 +14,22 @@ if ($campeonatoSelecionado) {
     $dados['campeonatos'] = $controller->carregarDados(0)['campeonatos'];
 }
 ?>
+<style>
+@media (max-width: 768px) {
+  table {
+    width: 100% !important;
+    max-width: 100% !important;
+    table-layout: auto !important;
+  }
+
+  table th,
+  table td {
+    font-size: 0.85rem !important;
+    padding: 0.4rem !important;
+    word-break: break-word !important;
+  }
+}
+</style>
 <body class="d-flex flex-column min-vh-100">
 <div class="container mt-4">
 
@@ -37,7 +53,7 @@ if ($campeonatoSelecionado) {
                 <div class="card-body">
                     <?php if (!empty($fase['rodadas'])): ?>
                         <ul class="list-group">
-                            <?php foreach ($fase['rodadas'] as $rodada): ?>
+                            <?php foreach ($dados['fases'] as $fase): ?>
                                 <li class="list-group-item">
                                     <strong>Rodada <?= $rodada['numero'] ?>:</strong> <?= htmlspecialchars($rodada['tipo']) ?>
                                     <?php if (!empty($rodada['descricao'])): ?>
@@ -93,26 +109,31 @@ if ($campeonatoSelecionado) {
 
     <?php if (!empty($dados['classificacao'])): ?>
         <hr>
-        <h4 class="text-success mt-4">🏆 Tabela de Classificação</h4>
-        <div class="table-responsive mb-5">
-            <table class="table table-striped table-bordered text-center">
-                <thead class="table-dark">
+        <h4 class="text-success mt-4" style="font-size: 2rem;">🏆 Tabela de Classificação</h4>
+        <div class="mb-5">
+            <table class="table table-striped table-bordered text-center w-100" style="font-size: 1rem;">
+                <thead class="table-dark text-nowrap">
                     <tr>
                         <th>Time</th>
-                        <th>Jogos</th>
-                        <th>Vitórias</th>
-                        <th>Empates</th>
-                        <th>Derrotas</th>
-                        <th>Gols Pró</th>
-                        <th>Gols Contra</th>
-                        <th>Saldo de Gols</th>
-                        <th>Pontos</th>
+                        <th>J</th>
+                        <th>V</th>
+                        <th>E</th>
+                        <th>D</th>
+                        <th>GP</th>
+                        <th>GC</th>
+                        <th>SG</th>
+                        <th>Pts</th>
                     </tr>
                 </thead>
                 <tbody>
                     <?php foreach ($dados['classificacao'] as $time): ?>
                         <tr>
-                            <td><?= htmlspecialchars($time['nome']) ?></td>
+                            <td class="d-flex align-items-center gap-2">
+                                <?php if (!empty($time['escudo'])): ?>
+                                    <img src="/campeonato_esportivo/<?= $time['escudo'] ?>" alt="Escudo" width="28">
+                                <?php endif; ?>
+                                <span><?= htmlspecialchars($time['nome']) ?></span>
+                            </td>
                             <td><?= $time['jogos'] ?></td>
                             <td><?= $time['vitorias'] ?></td>
                             <td><?= $time['empates'] ?></td>
@@ -130,9 +151,8 @@ if ($campeonatoSelecionado) {
 
 </div>
 </body>
-<!-- Footer com margem automática no topo para colar no final -->
-<div class="mt-auto">
 
+<div class="mt-auto">
     <?php include __DIR__ . '/../cabecalho/footer.php'; ?>
 </div>
 

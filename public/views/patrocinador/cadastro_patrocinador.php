@@ -1,12 +1,14 @@
-<!DOCTYPE html>
+<!DOCTYPE html> 
 <html lang="pt-br">
 <head>
     <meta charset="UTF-8">
     <title>Cadastrar Patrocinador</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
 </head>
-<body class="bg-light">
-<div class="container py-5">
+<body class="bg-light d-flex flex-column min-vh-100">
+<main>
+
+<div class="container py-5 flex-grow-1">
     <div class="card p-4 shadow">
         <h3 class="mb-4">Cadastrar Dados da Empresa Patrocinadora</h3>
 

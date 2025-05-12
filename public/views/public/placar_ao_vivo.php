@@ -3,6 +3,8 @@ date_default_timezone_set('America/Sao_Paulo');
 include __DIR__ . '../../../includes/index_sec.php'; 
 ?>
 
+<body>
+<main>
 <div class="container mt-4">
     <h2>Partidas em Andamento</h2>
     <div id="placar-container" class="row"></div>
@@ -176,5 +178,7 @@ function montarTabelaEscalacao(time) {
 carregarPlacarAoVivo();
 setInterval(carregarPlacarAoVivo, 10000);
 </script>
-
+</main>
 <?php require_once __DIR__ . '/../cabecalho/footer.php'; ?>
+</body>
+

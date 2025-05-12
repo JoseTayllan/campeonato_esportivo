@@ -14,7 +14,7 @@
             <p><strong>Cidade:</strong> <?= htmlspecialchars($time['cidade']) ?></p>
             <p><strong>Estádio:</strong> <?= htmlspecialchars($time['estadio']) ?></p>
             <?php if (!empty($time['escudo'])): ?>
-                <img src="/campeonato_esportivo/public/<?= $time['escudo'] ?>" width="120" alt="Escudo do time">
+                <img src="/campeonato_esportivo/<?= $time['escudo'] ?>" width="120" alt="Escudo do time">
 
             <?php endif; ?>
         </div>

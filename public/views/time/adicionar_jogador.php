@@ -9,7 +9,9 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
 </head>
 
-<body class="bg-light">
+<body class="bg-light d-flex flex-column min-vh-100">
+
+<main class="flex-grow-1">
     <div class="container py-5">
         <div class="card p-4 shadow">
             <h2 class="mb-4">Adicionar Jogador</h2>
@@ -24,13 +26,13 @@
                 <div class="mb-3">
                     <label class="form-label">Posição</label>
                     <select name="posicao" class="form-select" required>
-                      <option value="">Selecione a posição</option>
-                      <option value="Goleiro">Goleiro</option>
-                      <option value="Zagueiro">Zagueiro</option>
-                      <option value="Lateral">Lateral</option>
-                      <option value="Volante">Volante</option>
-                      <option value="Meia">Meia</option>
-                      <option value="Atacante">Atacante</option>
+                        <option value="">Selecione a posição</option>
+                        <option value="Goleiro">Goleiro</option>
+                        <option value="Zagueiro">Zagueiro</option>
+                        <option value="Lateral">Lateral</option>
+                        <option value="Volante">Volante</option>
+                        <option value="Meia">Meia</option>
+                        <option value="Atacante">Atacante</option>
                     </select>
                 </div>
 
@@ -48,11 +50,16 @@
                     <label>Imagem do Jogador</label>
                     <input type="file" name="imagem" class="form-control" accept="image/*">
                 </div>
-                
-                <button type="submit" class="btn btn-success">Salvar</button>
-                <a href="dashboard_time.php" class="btn btn-secondary">Voltar</a>
+
+                <div class="mt-4 mb-5">
+                    <button type="submit" class="btn btn-success">Salvar</button>
+                    <a href="dashboard_time.php" class="btn btn-secondary">Voltar</a>
+                </div>
             </form>
         </div>
     </div>
+</main>
+
+<?php include __DIR__ . '/../cabecalho/footer.php'; ?>
 </body>
 </html>

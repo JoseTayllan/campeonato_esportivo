@@ -35,7 +35,7 @@
             <?php foreach ($dados['times'] as $time): ?>
                 <div class="col text-center">
                     <div class="border rounded p-2 h-100 bg-light">
-                        <img src="/campeonato_esportivo/public/<?= $time['escudo'] ?? 'img/perfil_padrao/perfil_padrao.png' ?>" 
+                        <img src="/campeonato_esportivo/<?= $time['escudo'] ?? 'img/perfil_padrao/perfil_padrao.png' ?>" 
                              alt="Escudo <?= $time['nome'] ?>" width="60" class="mb-2">
                         <div class="fw-semibold"><?= htmlspecialchars($time['nome']) ?></div>
                         <?php if (!empty($time['codigo_publico'])): ?>

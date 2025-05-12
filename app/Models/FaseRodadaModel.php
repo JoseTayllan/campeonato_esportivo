@@ -18,25 +18,25 @@ class FaseRodadaModel
 
     public function buscarFasesERodadas($campeonato_id) {
         $fases = [];
-    
+
         $query = "SELECT id, nome, ordem FROM fases_campeonato WHERE campeonato_id = ? ORDER BY ordem ASC";
         $stmt = $this->conn->prepare($query);
         $stmt->bind_param("i", $campeonato_id);
         $stmt->execute();
         $resultFases = $stmt->get_result();
-    
+
         while ($fase = $resultFases->fetch_assoc()) {
             $fase['rodadas'] = [];
-    
+
             $queryRodadas = "SELECT id, numero, tipo, descricao FROM rodadas WHERE fase_id = ? ORDER BY numero ASC";
             $stmtRodada = $this->conn->prepare($queryRodadas);
             $stmtRodada->bind_param("i", $fase['id']);
             $stmtRodada->execute();
             $resultRodadas = $stmtRodada->get_result();
-    
+
             while ($rodada = $resultRodadas->fetch_assoc()) {
                 $rodada['partidas'] = [];
-    
+
                 $queryPartidas = "
                     SELECT 
                         t1.nome AS time_casa,
@@ -59,31 +59,27 @@ class FaseRodadaModel
                 $stmtPartida->bind_param("i", $rodada['id']);
                 $stmtPartida->execute();
                 $resultPartidas = $stmtPartida->get_result();
-    
+
                 while ($partida = $resultPartidas->fetch_assoc()) {
                     $rodada['partidas'][] = $partida;
                 }
-    
-                // Só adiciona a rodada se tiver partidas
+
                 if (count($rodada['partidas']) > 0) {
                     $fase['rodadas'][] = $rodada;
                 }
             }
-    
-            // Só adiciona a fase se tiver rodadas
+
             if (count($fase['rodadas']) > 0) {
                 $fases[] = $fase;
             }
         }
-    
+
         return $fases;
     }
-    
-
 
     public function classificacaoTimes($campeonato_id)
     {
-        $sql = "SELECT t.id, t.nome
+        $sql = "SELECT t.id, t.nome, t.escudo
                 FROM times t
                 JOIN times_campeonatos tc ON tc.time_id = t.id
                 WHERE tc.campeonato_id = ?

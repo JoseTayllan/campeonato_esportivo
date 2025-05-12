@@ -1,7 +1,8 @@
 <?php include_once __DIR__ . '/../../includes/admin_header.php'; ?>
 
-
-<div class="container-fluid mt-5 px-3 px-md-5">
+<body>
+<main>
+ <div class="container-fluid mt-5 px-3 px-md-5">
     <h2 class="text-center mb-4 container-campeonato">Painel Administrativo</h2>
 
     <div class="row mb-4 ">
@@ -77,5 +78,7 @@
     <?php endforeach; ?>
 </div>
 
-
+</main>
 <?php include __DIR__ . '../../cabecalho/footer.php'; ?>
+<body>
+

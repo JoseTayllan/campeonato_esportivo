@@ -1,15 +1,14 @@
 <?php
+session_start();
 require_once __DIR__ . '/../config/database.php';
-require_once __DIR__ . '/../app/controllers/UserController.php';
+require_once __DIR__ . '/../app/controllers/UserController.php'; // esse é o que provavelmente está faltando
 
-session_start(); // Iniciar sessão para armazenar mensagens
-
-$usuarioController = new UsuarioController($conn);
+$usuarioController = new UsuarioController($conn); // instância aqui!
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if (isset($_POST['nome'], $_POST['email'], $_POST['senha'], $_POST['tipo'])) {
         $resultado = $usuarioController->criarUsuario($_POST['nome'], $_POST['email'], $_POST['senha'], $_POST['tipo']);
-        
+
         if (strpos($resultado, 'sucesso') !== false) {
             $_SESSION['mensagem_sucesso'] = "Usuário cadastrado com sucesso!";
             header("Location: ../public/views/login/login.php");
