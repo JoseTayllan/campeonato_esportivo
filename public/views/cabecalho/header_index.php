@@ -52,7 +52,7 @@ session_start()
             if ($tipo === 'admin' || $tipo === 'completo') {
                 $link = '/campeonato_esportivo/routes/admin_visual/dashboard_administrador.php';
             } elseif ($tipo === 'time') {
-                $link = '/campeonato_esportivo/public/views/dashboard/dashboard_time.php';
+                $link = '/campeonato_esportivo/routes/time/dashboard_time.php';
             }
         ?>
         <?php if ($link): ?>

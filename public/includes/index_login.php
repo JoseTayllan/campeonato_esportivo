@@ -45,7 +45,7 @@ if (session_status() === PHP_SESSION_NONE) {
                     } elseif ($tipo_assinatura === 'completo' && $tipo_usuario === 'Administrador') {
                         $link = '/campeonato_esportivo/routes/admin_visual/dashboard_administrador.php';
                     } elseif ($tipo_assinatura === 'time') {
-                        $link = '/campeonato_esportivo/public/views/dashboard/dashboard_time.php';
+                        $link = '/campeonato_esportivo/routes/time/dashboard_time.php';
                     }elseif ($tipo_assinatura === 'completo' && $tipo_usuario === 'Patrocinador') {
                         $link = '/campeonato_esportivo/routes/patrocinador/patrocinador_dashboard.php';
                     } else {

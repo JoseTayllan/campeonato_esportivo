@@ -1,17 +1,42 @@
 <?php include __DIR__ . '../../../includes/index_sec.php'; ?>
 <link rel="stylesheet" href="/campeonato_esportivo/public/assets/css/jogador.css">
+<style>
+@media (max-width: 768px) {
+    .escudo, .imagem-jogador {
+        width: 50px !important;
+    }
+    .tabela td, .tabela th {
+        font-size: 12px;
+        padding: 6px;
+    }
+    .titulo {
+        font-size: 18px;
+    }
+    .bloco {
+        padding: 15px;
+    }
+    .pagina-jogador .container {
+        padding: 0 10px;
+    }
+    .pagina-jogador table {
+        display: block;
+        overflow-x: auto;
+        width: 100%;
+    }
+}
+</style>
 
 <div class="pagina-jogador">
     <div class="container">
         <div class="bloco">
 
             <!-- Topo -->
-            <div style="display: flex; align-items: center; justify-content: space-between;">
+            <div class="d-flex flex-wrap align-items-center justify-content-between">
                 <?php if (!empty($jogador['escudo'])): ?>
                     <img src="/campeonato_esportivo/<?= $jogador['escudo'] ?>" class="escudo" alt="Escudo do time">
                 <?php endif; ?>
 
-                <div style="flex-grow: 1; text-align: center;">
+                <div class="text-center flex-grow-1">
                     <div class="titulo"><?= htmlspecialchars($jogador['nome'] ?? '') ?></div>
                     <div><?= htmlspecialchars($jogador['posicao'] ?? '') ?> • <?= htmlspecialchars($jogador['nacionalidade'] ?? '') ?></div>
                 </div>
@@ -25,7 +50,7 @@
 
             <!-- Estatísticas -->
             <div class="titulo">Estatísticas (temporada atual)</div>
-            <table class="tabela">
+            <table class="tabela table table-striped">
                 <?php if (($jogador['posicao'] ?? '') === 'Goleiro'): ?>
                     <tr>
                         <td>Defesas:</td>
@@ -71,32 +96,34 @@
 
             <!-- Histórico -->
             <div class="titulo">Histórico de Partidas</div>
-            <table class="tabela">
-                <thead>
-                    <tr>
-                        <th>Data</th>
-                        <th>Adversário</th>
-                        <th>Placar</th>
-                        <th>Desempenho</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <?php foreach ($historico as $partida): ?>
+            <div class="table-responsive">
+                <table class="tabela table table-hover">
+                    <thead>
                         <tr>
-                            <td><?= date('d/m/Y', strtotime($partida['data'])) ?></td>
-                            <td><?= htmlspecialchars($partida['adversario']) ?></td>
-                            <td><?= htmlspecialchars($partida['resultado']) ?></td>
-                            <td>
-                                <?php if (($jogador['posicao'] ?? '') === 'Goleiro'): ?>
-                                    Defesas: <?= $partida['defesas'] ?? 0 ?> / Gols Sofridos: <?= $partida['gols_sofridos'] ?? 0 ?>
-                                <?php else: ?>
-                                    <?= $partida['gols'] ?? 0 ?> G / <?= $partida['assistencias'] ?? 0 ?> A / <?= number_format($partida['nota'] ?? 0, 1) ?>
-                                <?php endif; ?>
-                            </td>
+                            <th>Data</th>
+                            <th>Adversário</th>
+                            <th>Placar</th>
+                            <th>Desempenho</th>
                         </tr>
-                    <?php endforeach; ?>
-                </tbody>
-            </table>
+                    </thead>
+                    <tbody>
+                        <?php foreach ($historico as $partida): ?>
+                            <tr>
+                                <td><?= date('d/m/Y', strtotime($partida['data'])) ?></td>
+                                <td><?= htmlspecialchars($partida['adversario']) ?></td>
+                                <td><?= htmlspecialchars($partida['resultado']) ?></td>
+                                <td>
+                                    <?php if (($jogador['posicao'] ?? '') === 'Goleiro'): ?>
+                                        Defesas: <?= $partida['defesas'] ?? 0 ?> / Gols Sofridos: <?= $partida['gols_sofridos'] ?? 0 ?>
+                                    <?php else: ?>
+                                        <?= $partida['gols'] ?? 0 ?> G / <?= $partida['assistencias'] ?? 0 ?> A / <?= number_format($partida['nota'] ?? 0, 1) ?>
+                                    <?php endif; ?>
+                                </td>
+                            </tr>
+                        <?php endforeach; ?>
+                    </tbody>
+                </table>
+            </div>
 
         </div>
     </div>
@@ -104,5 +131,5 @@
 <div class="mt-auto">
 <div class="mt-5"></div>
 <?php require_once __DIR__ . '/../cabecalho/footer.php'; ?>
-<script src="../../../assets/js/bootstrap.bundle.min.js"></script>
+<script src="/campeonato_esportivo/assets/js/bootstrap.bundle.min.js"></script>
 </div>
