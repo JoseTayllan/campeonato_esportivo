@@ -7,7 +7,7 @@
        class="btn btn-outline-primary btn-sm mb-3">
        🥇 Ver Ranking do Campeonato
     </a>
-    <a href="/campeonato_esportivo/public/views/campeonatos/visualizar_fases_rodadas.php?campeonato_id=<?= $dados['campeonato']['id'] ?>"
+ <a href="/campeonato_esportivo/public/views/campeonatos/visualizar_fases_rodadas.php?campeonato_id=<?= $dados['campeonato']['id'] ?>"
    class="btn btn-outline-success btn-sm mb-3 ms-2">
     📋 Ver Estrutura do Campeonato
 </a>

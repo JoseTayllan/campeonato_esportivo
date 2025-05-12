@@ -53,7 +53,7 @@ if ($campeonatoSelecionado) {
                 <div class="card-body">
                     <?php if (!empty($fase['rodadas'])): ?>
                         <ul class="list-group">
-                            <?php foreach ($dados['fases'] as $fase): ?>
+                            <?php foreach ($fase['rodadas'] as $rodada): ?>
                                 <li class="list-group-item">
                                     <strong>Rodada <?= $rodada['numero'] ?>:</strong> <?= htmlspecialchars($rodada['tipo']) ?>
                                     <?php if (!empty($rodada['descricao'])): ?>
