@@ -7,14 +7,14 @@
             </div>
             <div class="col-12 col-md-4 text-start">
                 <h6 class="mb-1">Contato</h6>
-                <p class="mb-0"><i class="bi bi-geo-alt-fill me-1"></i> Rua dos Campeões, 123 - São Paulo, SP</p>
-                <p class="mb-0"><i class="bi bi-envelope-fill me-1"></i> contato@sportmanager.com</p>
-                <p class="mb-0"><i class="bi bi-telephone-fill me-1"></i> +55 11 99999-9999</p>
+                <p class="mb-0"><i class="bi bi-geo-alt-fill me-1"></i> Rua Brasil, 435 - Senador Canedo, GO</p>
+                <p class="mb-0"><i class="bi bi-envelope-fill me-1"></i> thaydion.ia@gmail.com</p>
+                <p class="mb-0"><i class="bi bi-telephone-fill me-1"></i> +55 62 99403-5584</p>
             </div>
             <div class="col-12 col-md-4 text-start">
                 <h6 class="mb-1">Redes Sociais</h6>
                 <a href="#" class="text-light me-2"><i class="bi bi-facebook"></i></a>
-                <a href="#" class="text-light me-2"><i class="bi bi-instagram"></i></a>
+                <a href="https://www.instagram.com/thaydion.ia" class="text-light me-2"><i class="bi bi-instagram"></i></a>
                 <a href="#" class="text-light me-2"><i class="bi bi-twitter"></i></a>
                 <a href="#" class="text-light"><i class="bi bi-youtube"></i></a>
             </div>

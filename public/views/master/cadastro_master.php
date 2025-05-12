@@ -1,6 +1,6 @@
 <?php 
 session_start();
-include __DIR__ . '/../cabecalho/header.php'; 
+
  require_once __DIR__ . '/../../includes/header_index.php'; ?>
 ?>
 

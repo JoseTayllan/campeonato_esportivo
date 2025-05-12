@@ -1,9 +1,8 @@
 <?php 
 session_start();
-require_once __DIR__ . '/../../../config/database.php';
 ?>
 
-<?php include '../cabecalho/header.php'; ?>
+<?php include_once __DIR__ . '/../../includes/index_login.php'; ?>
 
 <!DOCTYPE html>
 <html lang="pt-br">
@@ -14,34 +13,29 @@ require_once __DIR__ . '/../../../config/database.php';
     <link href="../../../assets/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
     <style>
-
         body {
-            background: linear-gradient(to bottom, #0d0d0d, #f8f9fa);
+            background: linear-gradient(to bottom, rgb(13, 27, 175), #f8f9fa);
             min-height: 100vh;
             display: flex;
             flex-direction: column;
         }
-        
-        body {
-            background-color: #f8f9fa;
+
+        .login-container {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 2rem 1rem;
         }
 
-        .card-cadastro {
+        .card-login {
             border: none;
             border-radius: 12px;
             overflow: hidden;
         }
 
-        .card-header {
-            background-color: #0d0d0d;
-            color: #fff;
-        }
-
-        .btn-login-voltar {
-            position: fixed;
-            bottom: 20px;
-            right: 20px;
-            z-index: 999;
+        .card-login .card-header {
+            background-color: #1a1a1a;
         }
 
         .form-label {
@@ -54,8 +48,8 @@ require_once __DIR__ . '/../../../config/database.php';
 <div class="container mt-5 mb-5"> <!-- mb-5 aqui evita que cole no footer -->
     <div class="row justify-content-center">
         <div class="col-md-6">
-            <div class="card card-cadastro shadow">
-                <div class="card-header text-center">
+            <div class="card card-login shadow-lg">
+                <div class="card-header text-white text-center">
                     <h4><i class="bi bi-person-plus-fill me-2"></i>Cadastro de Usuário</h4>
                 </div>
                 <div class="card-body bg-white">
