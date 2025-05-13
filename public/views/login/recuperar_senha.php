@@ -102,7 +102,7 @@ function verificarForcaSenha() {
     if (/[0-9]/.test(senha)) forca += 1;
     if (/[^A-Za-z0-9]/.test(senha)) forca += 1;
 
-    const cores = ['bg-danger', 'bg-warning', 'bg-success'];
+    const cores = ['bg-danger', 'bg-warning', 'bg-success']; 
     barra.classList.remove(...cores);
 
     if (forca <= 2) {

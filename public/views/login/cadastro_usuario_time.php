@@ -34,6 +34,11 @@
         .form-label {
             font-weight: 500;
         }
+
+        .senha-ajuda {
+            font-size: 0.85rem;
+            color: #666;
+        }
     </style>
 </head>
 <body class="d-flex flex-column min-vh-100 bg-light">
@@ -63,7 +68,17 @@
 
                 <div class="mb-3">
                     <label class="form-label">Senha</label>
-                    <input type="password" name="senha" class="form-control" required>
+                    <input type="password" name="senha" id="senha" class="form-control" required oninput="verificarForcaSenha()">
+                    <div class="senha-ajuda">Mínimo 6 caracteres, com letras e números.</div>
+                    <div class="progress mt-2">
+                        <div id="barra-forca" class="progress-bar" role="progressbar" style="width: 0%"></div>
+                    </div>
+                    <small id="forca-texto" class="text-muted"></small>
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label">Confirmar Senha</label>
+                    <input type="password" name="confirmar_senha" class="form-control" required>
                 </div>
 
                 <button class="btn btn-dark w-100 mb-2">Cadastrar</button>
@@ -75,5 +90,37 @@
 
 <?php include '../cabecalho/footer.php'; ?>
 <script src="/campeonato_esportivo/assets/js/bootstrap.bundle.min.js"></script>
+
+<script>
+function verificarForcaSenha() {
+    const senha = document.getElementById('senha').value;
+    const barra = document.getElementById('barra-forca');
+    const texto = document.getElementById('forca-texto');
+
+    let forca = 0;
+    if (senha.length >= 6) forca += 1;
+    if (/[A-Z]/.test(senha)) forca += 1;
+    if (/[a-z]/.test(senha)) forca += 1;
+    if (/[0-9]/.test(senha)) forca += 1;
+    if (/[^A-Za-z0-9]/.test(senha)) forca += 1;
+
+    const cores = ['bg-danger', 'bg-warning', 'bg-success'];
+    barra.classList.remove(...cores);
+
+    if (forca <= 2) {
+        barra.classList.add('bg-danger');
+        barra.style.width = '33%';
+        texto.innerText = 'Senha fraca';
+    } else if (forca <= 4) {
+        barra.classList.add('bg-warning');
+        barra.style.width = '66%';
+        texto.innerText = 'Senha média';
+    } else {
+        barra.classList.add('bg-success');
+        barra.style.width = '100%';
+        texto.innerText = 'Senha forte';
+    }
+}
+</script>
 </body>
 </html>

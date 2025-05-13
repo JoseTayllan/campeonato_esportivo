@@ -79,6 +79,8 @@
 </div>
 
 </main>
+<div class="mt-5">
 <?php include __DIR__ . '../../cabecalho/footer.php'; ?>
+</div>
 <body>
 

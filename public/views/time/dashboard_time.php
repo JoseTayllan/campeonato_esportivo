@@ -1,4 +1,45 @@
 <?php require_once __DIR__ . '/../../includes/assinatura_time.php'; ?>
+
+<?php
+// Proteger contra acesso direto
+if (!isset($_SERVER['HTTP_REFERER']) || empty($_SERVER['HTTP_REFERER'])) {
+    echo "<div style='text-align:center; padding:20px; font-family:sans-serif;'>
+            <h2 style='color:red;'>Erro: Acesso direto não permitido!</h2>
+            <p>Utilize o sistema normalmente para acessar esta página.</p>
+          </div>";
+    exit();
+}
+require_once __DIR__ . '/../../../app/middleware/verifica_sessao.php';
+require_once __DIR__ . '/../../../app/middleware/verifica_assinatura.php';
+require_once __DIR__ . '/../../../config/database.php';
+permite_acesso(['time', 'completo']);
+
+$controller = new TeamController($conn);
+$admin_id = $_SESSION['usuario_id'];
+
+$stmt = $conn->prepare("SELECT * FROM times WHERE admin_id = ?");
+$stmt->bind_param("i", $admin_id);
+$stmt->execute();
+$resultado = $stmt->get_result();
+$time = $resultado->fetch_assoc();
+
+if (!$time):
+?>
+    <div class="container py-5">
+        <div class="alert alert-warning shadow mb-4">Você ainda não cadastrou um time.</div>
+        <div class="card p-4 shadow">
+            <h4>Cadastro do Meu Time</h4>
+            <form action="/campeonato_esportivo/routes/time/team.php" method="POST" enctype="multipart/form-data">
+                <input type="hidden" name="criar_time" value="1">
+                <div class="mb-3"><label>Nome do Time</label><input type="text" name="nome" class="form-control" required></div>
+                <div class="mb-3"><label>Cidade</label><input type="text" name="cidade" class="form-control" required></div>
+                <div class="mb-3"><label>Estádio</label><input type="text" name="estadio" class="form-control" required></div>
+                <div class="mb-3"><label>Escudo</label><input type="file" name="escudo" class="form-control"></div>
+                <button class="btn btn-success">Criar Time</button>
+            </form>
+        </div>
+    </div>
+<?php exit(); endif; ?>
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
