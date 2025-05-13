@@ -8,25 +8,71 @@ if (!isset($_SERVER['HTTP_REFERER']) || empty($_SERVER['HTTP_REFERER'])) {
     exit();
 } 
 session_start();
+
 $restrito_para = ['Organizador'];
+
 require_once __DIR__ . '/../../../app/middleware/verifica_sessao.php';
 require_once __DIR__ . '/../../../config/database.php';
 
-$queryCampeonatos = "SELECT COUNT(*) AS total FROM campeonatos";
-$queryTimes = "SELECT COUNT(*) AS total FROM times";
-$queryJogadores = "SELECT COUNT(*) AS total FROM jogadores";
+$organizador_id = $_SESSION['usuario_id'];
 
-$resultCampeonatos = $conn->query($queryCampeonatos);
-$resultTimes = $conn->query($queryTimes);
-$resultJogadores = $conn->query($queryJogadores);
+$stmtTotal = $conn->prepare("
+    SELECT COUNT(*) AS total FROM campeonatos 
+    WHERE criado_por = (
+        SELECT criado_por FROM usuarios WHERE id = ?
+    )
+");
+$stmtTotal->bind_param("i", $organizador_id);
+$stmtTotal->execute();
+$resTotal = $stmtTotal->get_result();
+$totalCampeonatos = ($resTotal->fetch_assoc())['total'] ?? 0;
 
-$totalCampeonatos = ($resultCampeonatos->fetch_assoc())['total'] ?? 0;
-$totalTimes = ($resultTimes->fetch_assoc())['total'] ?? 0;
-$totalJogadores = ($resultJogadores->fetch_assoc())['total'] ?? 0;
+
+// TOTAL DE TIMES
+$stmtTimes = $conn->prepare("
+    SELECT COUNT(*) AS total 
+    FROM times 
+    WHERE id IN (
+        SELECT time_id FROM times_campeonatos 
+        WHERE campeonato_id IN (
+            SELECT id FROM campeonatos 
+            WHERE criado_por = (
+                SELECT criado_por FROM usuarios WHERE id = ?
+            )
+        )
+    )
+");
+$stmtTimes->bind_param("i", $organizador_id);
+$stmtTimes->execute();
+$resTimes = $stmtTimes->get_result();
+$totalTimes = ($resTimes->fetch_assoc())['total'] ?? 0;
+
+// TOTAL DE JOGADORES
+$stmtJogadores = $conn->prepare("
+    SELECT COUNT(*) AS total 
+    FROM jogadores 
+    WHERE time_id IN (
+        SELECT id FROM times 
+        WHERE id IN (
+            SELECT time_id FROM times_campeonatos 
+            WHERE campeonato_id IN (
+                SELECT id FROM campeonatos 
+                WHERE criado_por = (
+                    SELECT criado_por FROM usuarios WHERE id = ?
+                )
+            )
+        )
+    )
+");
+$stmtJogadores->bind_param("i", $organizador_id);
+$stmtJogadores->execute();
+$resJogadores = $stmtJogadores->get_result();
+$totalJogadores = ($resJogadores->fetch_assoc())['total'] ?? 0;
+
+
 ?>
 
-<?php include '../cabecalho/header.php'; ?>
-<?php include '../cabecalho/tabela.php'; ?>
+<?php include_once __DIR__ . '/../../includes/admin_org.php'; ?>
 
 <!DOCTYPE html>
 <html lang="pt-br">
@@ -63,17 +109,6 @@ $totalJogadores = ($resultJogadores->fetch_assoc())['total'] ?? 0;
         </div>
     </div>
 </div>
-
-<!-- Ações rápidas (mesma paleta escura) -->
-<div class="row text-center mb-5">
-   
-    <div class="col-md-4 mb-3">
-        <a href="../campeonatos/visualizar_fases_rodadas.php" class="btn btn-dark w-100 py-2">
-            <i class="bi bi-diagram-3 me-1"></i> Fases e Rodadas
-        </a>
-    </div>
-</div>
-
 
     <!-- Tabela de campeonatos -->
     <div class="row mt-5">
