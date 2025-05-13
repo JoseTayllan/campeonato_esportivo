@@ -44,6 +44,9 @@ if (isset($_SESSION['usuario_id'])) {
                     <span class="navbar-text me-3 fw-semibold" style="color: var(--primary-text);">
                         <i class="bi bi-person-circle me-1"></i>Olá, <?= htmlspecialchars($_SESSION['usuario_nome']) ?>
                     </span>
+                    <a href="/campeonato_esportivo/public/views/patrocinador/perfil.php" class="btn btn-outline-light btn-sm me-2">
+                        <i class="bi bi-person-circle me-1"></i> Editar Perfil
+                    </a>
                     <a href="/campeonato_esportivo/routes/logout.php" class="btn btn-outline-light btn-sm">
                         <i class="bi bi-box-arrow-right me-1"></i>Sair
                     </a>
@@ -67,6 +70,5 @@ if (isset($_SESSION['usuario_id'])) {
                     <i class="bi bi-image me-2"></i> Atualizar Banner
                 </a>
             <?php endif; ?>
-
         </div>
     </div>

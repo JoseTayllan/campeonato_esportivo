@@ -1,4 +1,5 @@
 <?php 
+require_once __DIR__ . '/../../config/database.php';
 class User {
     private $conn;
 
@@ -44,7 +45,28 @@ class User {
         $result = $this->conn->query($sql);
         return $result->fetch_all(MYSQLI_ASSOC);
     }
+   
+    public function atualizarPerfil($id, $nome, $email, $senha = null) {
+    if (!empty($senha)) {
+        $senhaHash = password_hash($senha, PASSWORD_DEFAULT);
+        $sql = "UPDATE usuarios SET nome = ?, email = ?, senha = ? WHERE id = ?";
+        $stmt = $this->conn->prepare($sql);
+        $stmt->bind_param("sssi", $nome, $email, $senhaHash, $id);
+    } else {
+        $sql = "UPDATE usuarios SET nome = ?, email = ? WHERE id = ?";
+        $stmt = $this->conn->prepare($sql);
+        $stmt->bind_param("ssi", $nome, $email, $id);
+    }
 
+    return $stmt->execute();
+}
+
+    public function buscarPorId($id) {
+        $stmt = $this->conn->prepare("SELECT * FROM usuarios WHERE id = ?");
+        $stmt->bind_param("i", $id);
+        $stmt->execute();
+        return $stmt->get_result()->fetch_assoc();
+    }
  
 }
 ?>

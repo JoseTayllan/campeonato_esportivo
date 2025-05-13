@@ -34,33 +34,35 @@ if (isset($_SESSION['usuario_id'])) {
 <nav class="navbar navbar-expand-lg shadow-sm" style="background-color: var(--primary-color);">
     <div class="container">
         <a class="navbar-brand d-flex align-items-center" href="/campeonato_esportivo/public">
-                <img src="/campeonato_esportivo/assets/img/logo_raiz.png" alt="Raiz de Craque" class="logo-navbar me-2">
-                <span class="fw-bold text-creme">Raiz de Craque</span>
-            </a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+            <img src="/campeonato_esportivo/assets/img/logo_raiz.png" alt="Raiz de Craque" class="logo-navbar me-2">
+            <span class="fw-bold text-creme">Raiz de Craque</span>
+        </a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
                 aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
+            <span class="navbar-toggler-icon"></span>
+        </button>
 
-            <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
-                <?php if (isset($_SESSION['usuario_nome'])): ?>
-                    <span class="navbar-text me-3 fw-semibold">
-                        <i class="bi bi-person-circle me-1"></i>Olá, <?= htmlspecialchars($_SESSION['usuario_nome']) ?>
-                    </span>
-                    <?php
-                    $tipo_assinatura = $_SESSION['usuario']['tipo_assinatura'] ?? null;
-                    $tipo_usuario = $_SESSION['usuario']['tipo'] ?? null;
+        <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
+            <?php if (isset($_SESSION['usuario_nome'])): ?>
+                <span class="navbar-text me-3 fw-semibold">
+                    <i class="bi bi-person-circle me-1"></i>Olá, <?= htmlspecialchars($_SESSION['usuario_nome']) ?>
+                </span>
+                <?php
+                $tipo_assinatura = $_SESSION['usuario']['tipo_assinatura'] ?? null;
+                $tipo_usuario = $_SESSION['usuario']['tipo'] ?? null;
 
-                    if ($tipo_assinatura === 'completo' && $tipo_usuario === 'Patrocinador') {
-                        $link = '/campeonato_esportivo/routes/patrocinador/patrocinador_dashboard.php';
-                    }
-                    ?>
+                if ($tipo_assinatura === 'completo' && $tipo_usuario === 'Patrocinador') {
+                    $link = '/campeonato_esportivo/routes/patrocinador/patrocinador_dashboard.php';
+                }
+                ?>
 
-                    <?php if ($link): ?>
-                        <a href="<?= $link ?>" class="btn btn-outline-warning btn-sm me-2">
-                            <i class="bi bi-arrow-left-circle me-1"></i> Painel
-                        </a>
-                    <?php endif; ?>
+                <?php if ($link): ?>
+                    <a href="<?= $link ?>" class="btn btn-outline-warning btn-sm me-2">
+                        <i class="bi bi-arrow-left-circle me-1"></i> Painel
+                    </a>
+                <?php endif; ?>
+
+
                 <a href="/campeonato_esportivo/routes/logout.php" class="btn btn-outline-light btn-sm">
                     <i class="bi bi-box-arrow-right me-1"></i>Sair
                 </a>
@@ -72,7 +74,7 @@ if (isset($_SESSION['usuario_id'])) {
 <!-- Menu Horizontal -->
 <div class="container-fluid py-2 border-bottom shadow-sm menu-container" style="background-color: var(--primary-color);">
     <div class="d-flex flex-row flex-nowrap menu-scroll px-2 gap-2">
-    <?php if ($mostrarCadastrarEmpresa): ?>
+        <?php if ($mostrarCadastrarEmpresa): ?>
             <a href="/campeonato_esportivo/routes/patrocinador/patrocinador_dashboard.php?acao=cadastrar" class="menu-link flex-shrink-0">
                 <i class="bi bi-building-add me-2"></i> Cadastrar Empresa
             </a>
@@ -84,6 +86,5 @@ if (isset($_SESSION['usuario_id'])) {
                 <i class="bi bi-image me-2"></i> Atualizar Banner
             </a>
         <?php endif; ?>
-
     </div>
 </div>

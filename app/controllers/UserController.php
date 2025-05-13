@@ -1,5 +1,5 @@
 <?php
-require_once __DIR__ . '/../../config/database.php';
+
 require_once __DIR__ . '/../Models/Usuario.php';
 
 class UsuarioController {
@@ -18,6 +18,14 @@ class UsuarioController {
     }
     public function listarTodos() {
         return $this->usuarioModel->listarTodos();
+    }
+
+    public function atualizarPerfil($id, $nome, $email, $senha = null) {
+        return $this->usuarioModel->atualizarPerfil($id, $nome, $email, $senha);
+    }
+
+    public function buscarUsuarioPorId($id) {
+        return $this->usuarioModel->buscarPorId($id);
     }
     
 }

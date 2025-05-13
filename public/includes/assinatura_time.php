@@ -33,6 +33,9 @@ if (session_status() === PHP_SESSION_NONE) {
                 <span class="navbar-text me-3 fw-semibold">
                     <i class="bi bi-person-circle me-1 color-wite"></i>Olá, <?= htmlspecialchars($_SESSION['usuario_nome']) ?>
                 </span>
+                <a href="/campeonato_esportivo/public/views/time/perfil.php" class="btn btn-outline-light btn-sm me-2">
+                    <i class="bi bi-person-circle me-1"></i> Editar Perfil
+                </a>
                 <a href="/campeonato_esportivo/public/views/login/login.php" class="btn btn-outline-light btn-sm">
                     <i class="bi bi-box-arrow-right me-1"></i>Sair
                 </a>

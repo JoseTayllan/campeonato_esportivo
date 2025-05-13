@@ -57,6 +57,10 @@ if (session_status() === PHP_SESSION_NONE) {
                             <i class="bi bi-arrow-left-circle me-1"></i> Painel
                         </a>
                     <?php endif; ?>
+                    <a href="/campeonato_esportivo/public/views/usuarios/editar_perfil_ogranizador.php" class="btn btn-outline-light btn-sm me-2">
+                        <i class="bi bi-person-circle me-1"></i> Editar Perfil
+                    </a>
+
                     <a href="/campeonato_esportivo/routes/logout.php" class="btn btn-outline-light btn-sm">
                         <i class="bi bi-box-arrow-right me-1"></i>Sair
                     </a>
