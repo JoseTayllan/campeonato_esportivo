@@ -112,6 +112,11 @@ $totalJogadores = ($resJogadores->fetch_assoc())['total'] ?? 0;
                 <p class="mb-0"><i class="bi bi-person-fill me-1"></i>Jogadores Ativos</p>
             </div>
         </div>
+        <div class="col-12 col-md-auto d-grid">
+            <a href="/campeonato_esportivo/routes/adms/aovivo/gerenciar_partidas.php" class="btn btn-outline-primary">
+                <i class="bi bi-gear-fill"></i> Gerenciar Partidas
+            </a>
+        </div>
     </div>
 
     <div class="row mt-5">

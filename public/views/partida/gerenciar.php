@@ -1,4 +1,3 @@
-
 <?php 
 // Proteger contra acesso direto
 if (!isset($_SERVER['HTTP_REFERER']) || empty($_SERVER['HTTP_REFERER'])) {
@@ -8,12 +7,17 @@ if (!isset($_SERVER['HTTP_REFERER']) || empty($_SERVER['HTTP_REFERER'])) {
           </div>";
     exit();
 }
-require_once __DIR__ . '../../../includes/admin_sec.php'; ?>  
-
-
+require_once __DIR__ . '../../../includes/admin_sec.php'; 
+?>  
 
 <div class="container mt-4 mb-5">
     <h2 class="mb-4">Gerenciar Partidas</h2>
+
+    <?php if (empty($partidas)): ?>
+        <div class="alert alert-info text-center">
+            Nenhuma partida disponível para você gerenciar no momento.
+        </div>
+    <?php endif; ?>
 
     <div class="row g-4">
         <?php foreach ($partidas as $p): ?>
@@ -21,10 +25,10 @@ require_once __DIR__ . '../../../includes/admin_sec.php'; ?>
                 <div class="card shadow-sm border-0">
                     <div class="card-body">
                         <h5 class="card-title mb-2">
-                            <?= $p['nome_casa'] ?> <span class="text-muted">x</span> <?= $p['nome_fora'] ?>
+                            <?= htmlspecialchars($p['nome_casa']) ?> <span class="text-muted">x</span> <?= htmlspecialchars($p['nome_fora']) ?>
                         </h5>
-                        <p class="mb-1"><strong>Data:</strong> <?= date('d/m/Y', strtotime($p['data'])) ?> às <?= $p['horario'] ?></p>
-                        <p class="mb-2"><strong>Status:</strong> <span class="text-capitalize"><?= $p['status'] ?></span></p>
+                        <p class="mb-1"><strong>Data:</strong> <?= date('d/m/Y', strtotime($p['data'])) ?> às <?= htmlspecialchars($p['horario']) ?></p>
+                        <p class="mb-2"><strong>Status:</strong> <span class="text-capitalize"><?= htmlspecialchars($p['status']) ?></span></p>
 
                         <form method="post" class="d-flex gap-2 flex-wrap align-items-center">
                             <input type="hidden" name="partida_id" value="<?= $p['id'] ?>">
@@ -50,8 +54,7 @@ require_once __DIR__ . '../../../includes/admin_sec.php'; ?>
 </div>
 
 <div class="mt-auto">
-<div class="mt-5"></div>
-<?php require_once __DIR__ . '/../cabecalho/footer.php'; ?>
-<script src="../../../assets/js/bootstrap.bundle.min.js"></script>
+    <div class="mt-5"></div>
+    <?php require_once __DIR__ . '/../cabecalho/footer.php'; ?>
+    <script src="../../../assets/js/bootstrap.bundle.min.js"></script>
 </div>
-
