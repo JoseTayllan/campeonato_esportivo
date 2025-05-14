@@ -39,6 +39,7 @@ class FaseRodadaModel
 
                 $queryPartidas = "
                     SELECT 
+                        p.id AS partida_id,
                         t1.nome AS time_casa,
                         t1.escudo AS escudo_time_casa,
                         t2.nome AS time_fora,
@@ -48,7 +49,8 @@ class FaseRodadaModel
                         p.local,
                         p.placar_casa,
                         p.placar_fora,
-                        p.status
+                        p.status,
+                        p.link_transmissao
                     FROM partidas p
                     JOIN times t1 ON t1.id = p.time_casa
                     JOIN times t2 ON t2.id = p.time_fora
