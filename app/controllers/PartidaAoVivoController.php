@@ -165,4 +165,12 @@ class PartidaAoVivoController
             WHERE time_id = $time_id AND campeonato_id = $campeonato_id
         ");
     }
+
+    public function salvarLinkTransmissao($partida_id, $link)
+{
+    $stmt = $this->conn->prepare("UPDATE partidas SET link_transmissao = ? WHERE id = ?");
+    $stmt->bind_param("si", $link, $partida_id);
+    $stmt->execute();
+    $stmt->close();
+}
 }

@@ -4,13 +4,14 @@ header('Content-Type: application/json');
 
 $sql = "
     SELECT 
-        p.id, p.data, p.horario, p.local,
-        p.placar_casa, p.placar_fora,
-        p.time_casa, p.time_fora,
-        p.inicio_partida, p.tempo_acumulado, p.acrescimos, p.cronometro_status,
-        p.tempo_atual,
-        t1.nome AS nome_casa, t1.escudo AS escudo_casa,
-        t2.nome AS nome_fora, t2.escudo AS escudo_fora
+    p.id, p.data, p.horario, p.local,
+    p.placar_casa, p.placar_fora,
+    p.time_casa, p.time_fora,
+    p.inicio_partida, p.tempo_acumulado, p.acrescimos, p.cronometro_status,
+    p.tempo_atual, p.link_transmissao,
+    t1.nome AS nome_casa, t1.escudo AS escudo_casa,
+    t2.nome AS nome_fora, t2.escudo AS escudo_fora
+
     FROM partidas p
     JOIN times t1 ON p.time_casa = t1.id
     JOIN times t2 ON p.time_fora = t2.id
