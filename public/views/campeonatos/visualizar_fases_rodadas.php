@@ -64,33 +64,39 @@ if ($campeonatoSelecionado) {
                                         <ul class="mt-3">
                                             <?php foreach ($rodada['partidas'] as $partida): ?>
                                                 <li class="list-group-item">
-                                                    <div class="d-flex justify-content-between align-items-center flex-wrap text-center">
-                                                        <div class="d-flex align-items-center">
-                                                            <?php if (!empty($partida['escudo_time_casa'])): ?>
-                                                                <img src="/campeonato_esportivo/public/<?= $partida['escudo_time_casa'] ?>" alt="Escudo <?= $partida['time_casa'] ?>" width="40" class="me-2">
-                                                            <?php endif; ?>
-                                                            <strong><?= htmlspecialchars($partida['time_casa']) ?></strong>
-                                                        </div>
+    <div class="d-flex justify-content-between align-items-center text-center flex-wrap">
 
-                                                        <div class="fw-bold fs-4 text-primary">
-                                                            <?= is_numeric($partida['placar_casa']) ? $partida['placar_casa'] : '-' ?>
-                                                            <span class="mx-2">x</span>
-                                                            <?= is_numeric($partida['placar_fora']) ? $partida['placar_fora'] : '-' ?>
-                                                        </div>
+        <!-- Time Casa -->
+        <div class="d-flex flex-column align-items-center w-25">
+            <?php if (!empty($partida['escudo_time_casa'])): ?>
+                <img src="/campeonato_esportivo/<?= $partida['escudo_time_casa'] ?>" alt="Escudo <?= $partida['time_casa'] ?>" width="48">
+            <?php endif; ?>
+            <small class="fw-bold"><?= htmlspecialchars($partida['time_casa']) ?></small>
+        </div>
 
-                                                        <div class="d-flex align-items-center">
-                                                            <strong><?= htmlspecialchars($partida['time_fora']) ?></strong>
-                                                            <?php if (!empty($partida['escudo_time_fora'])): ?>
-                                                                <img src="/campeonato_esportivo/public/<?= $partida['escudo_time_fora'] ?>" alt="Escudo <?= $partida['time_fora'] ?>" width="40" class="ms-2">
-                                                            <?php endif; ?>
-                                                        </div>
-                                                    </div>
+        <!-- Placar -->
+        <div class="fw-bold fs-4 text-primary w-25">
+            <?= is_numeric($partida['placar_casa']) ? $partida['placar_casa'] : '-' ?>
+            <span class="mx-2">x</span>
+            <?= is_numeric($partida['placar_fora']) ? $partida['placar_fora'] : '-' ?>
+        </div>
 
-                                                    <div class="small text-muted mt-2 text-center">
-                                                        <?= $partida['data'] ?> às <?= substr($partida['horario'], 0, 5) ?> — 
-                                                        <em><?= htmlspecialchars($partida['local']) ?></em>
-                                                    </div>
-                                                </li>
+        <!-- Time Fora -->
+        <div class="d-flex flex-column align-items-center w-25">
+            <?php if (!empty($partida['escudo_time_fora'])): ?>
+                <img src="/campeonato_esportivo/<?= $partida['escudo_time_fora'] ?>" alt="Escudo <?= $partida['time_fora'] ?>" width="48">
+            <?php endif; ?>
+            <small class="fw-bold"><?= htmlspecialchars($partida['time_fora']) ?></small>
+        </div>
+
+    </div>
+
+    <div class="small text-muted mt-2 text-center">
+        <?= $partida['data'] ?> às <?= substr($partida['horario'], 0, 5) ?> —
+        <em><?= htmlspecialchars($partida['local']) ?></em>
+    </div>
+</li>
+
                                             <?php endforeach; ?>
                                         </ul>
                                     <?php else: ?>
@@ -108,6 +114,13 @@ if ($campeonatoSelecionado) {
     <?php endif; ?>
 
     <?php if (!empty($dados['classificacao'])): ?>
+        <?php
+        usort($dados['classificacao'], function($a, $b) {
+            return $b['pontos'] <=> $a['pontos']
+                ?: $b['saldo'] <=> $a['saldo']
+                ?: $b['gols_pro'] <=> $a['gols_pro'];
+        });
+        ?>
         <hr>
         <h4 class="text-success mt-4" style="font-size: 2rem;">🏆 Tabela de Classificação</h4>
         <div class="mb-5">

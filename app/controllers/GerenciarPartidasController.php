@@ -23,9 +23,10 @@ class GerenciarPartidasController {
 
     public function alterarStatus($partida_id, $status) {
         if ($status === 'em_andamento') {
-            $stmt = $this->conn->prepare("UPDATE partidas SET status = ?, inicio_partida = NOW() WHERE id = ?");
+           date_default_timezone_set('America/Sao_Paulo'); // garante timezone correto no NOW()
+           $stmt = $this->conn->prepare("UPDATE partidas SET status = ?, inicio_partida = NOW(), cronometro_status = 'rodando' WHERE id = ?");
         } else {
-            $stmt = $this->conn->prepare("UPDATE partidas SET status = ? WHERE id = ?");
+           $stmt = $this->conn->prepare("UPDATE partidas SET status = ? WHERE id = ?");
         }
         $stmt->bind_param("si", $status, $partida_id);
         $stmt->execute();

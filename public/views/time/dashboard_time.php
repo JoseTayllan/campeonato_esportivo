@@ -1,7 +1,6 @@
 <?php require_once __DIR__ . '/../../includes/assinatura_time.php'; ?>
 
 <?php
-// Proteger contra acesso direto
 if (!isset($_SERVER['HTTP_REFERER']) || empty($_SERVER['HTTP_REFERER'])) {
     echo "<div style='text-align:center; padding:20px; font-family:sans-serif;'>
             <h2 style='color:red;'>Erro: Acesso direto não permitido!</h2>
@@ -25,50 +24,51 @@ $time = $resultado->fetch_assoc();
 
 if (!$time):
 ?>
-    <div class="container py-5">
-        <div class="alert alert-warning shadow mb-4">Você ainda não cadastrou um time.</div>
-        <div class="card p-4 shadow">
-            <h4>Cadastro do Meu Time</h4>
-            <form action="/campeonato_esportivo/routes/time/team.php" method="POST" enctype="multipart/form-data">
-                <input type="hidden" name="criar_time" value="1">
-                <div class="mb-3"><label>Nome do Time</label><input type="text" name="nome" class="form-control" required></div>
-                <div class="mb-3"><label>Cidade</label><input type="text" name="cidade" class="form-control" required></div>
-                <div class="mb-3"><label>Estádio</label><input type="text" name="estadio" class="form-control" required></div>
-                <div class="mb-3"><label>Escudo</label><input type="file" name="escudo" class="form-control"></div>
-                <button class="btn btn-success">Criar Time</button>
-            </form>
-        </div>
+<div class="container py-5">
+    <div class="alert alert-warning shadow mb-4">Você ainda não cadastrou um time.</div>
+    <div class="card p-4 shadow">
+        <h4>Cadastro do Meu Time</h4>
+        <form action="/campeonato_esportivo/routes/time/team.php" method="POST" enctype="multipart/form-data">
+            <input type="hidden" name="criar_time" value="1">
+            <div class="mb-3"><label>Nome do Time</label><input type="text" name="nome" class="form-control" required></div>
+            <div class="mb-3"><label>Cidade</label><input type="text" name="cidade" class="form-control" required></div>
+            <div class="mb-3"><label>Estádio</label><input type="text" name="estadio" class="form-control" required></div>
+            <div class="mb-3"><label>Escudo</label><input type="file" name="escudo" class="form-control"></div>
+            <button class="btn btn-success">Criar Time</button>
+        </form>
     </div>
+</div>
 <?php exit(); endif; ?>
+
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
     <meta charset="UTF-8">
     <title>Dashboard do Time</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        @media (max-width: 768px) {
+            .table th, .table td {
+                font-size: 0.9rem;
+                padding: 0.4rem;
+            }
+            .img-fluid, .rounded-circle {
+                max-width: 100%;
+                height: auto;
+            }
+        }
+    </style>
 </head>
-<body class="bg-light">
+<body class="bg-light d-flex flex-column min-vh-100">
 
 <div class="container py-5">
     <div class="card shadow p-4">
-        <h2 class="mb-4">Dashboard - Meu Time</h2>
+        <h2 class="mb-4 text-center">Dashboard - Meu Time</h2>
 
         <?php if (!empty($dados['precisa_cadastrar'])): ?>
             <div class="alert alert-warning shadow mb-4">Você ainda não cadastrou um time.</div>
-            <div class="card p-4 shadow">
-                <h4>Cadastro do Meu Time</h4>
-                <form action="/campeonato_esportivo/routes/time/team.php" method="POST" enctype="multipart/form-data">
-                    <input type="hidden" name="criar_time" value="1">
-                    <div class="mb-3"><label>Nome do Time</label><input type="text" name="nome" class="form-control" required></div>
-                    <div class="mb-3"><label>Cidade</label><input type="text" name="cidade" class="form-control" required></div>
-                    <div class="mb-3"><label>Estádio</label><input type="text" name="estadio" class="form-control" required></div>
-                    <div class="mb-3"><label>Escudo</label><input type="file" name="escudo" class="form-control"></div>
-                    <button class="btn btn-success">Criar Time</button>
-                </form>
-            </div>
+            <!-- formulário repetido omitido aqui -->
         <?php endif; ?>
-
-        <?php $time = $dados['time']; ?>
 
         <?php if (!empty($time['codigo_publico'])): ?>
             <div class="alert alert-info mt-3">
@@ -97,8 +97,7 @@ if (!$time):
                 <?php if (!empty($time['escudo'])): ?>
                     <div class="mt-3">
                         <strong>Escudo atual:</strong><br>
-                        <img src="/campeonato_esportivo/<?= $time['escudo'] ?>" width="100" alt="Escudo do time">
-                        
+                        <img src="/campeonato_esportivo/<?= $time['escudo'] ?>" width="100" alt="Escudo do time" class="img-fluid">
                     </div>
                 <?php endif; ?>
             </div>
@@ -108,36 +107,38 @@ if (!$time):
         <hr class="my-4">
         <h4>Elenco</h4>
 
-        <table class="table table-bordered">
-            <thead>
-                <tr>
-                    <th>Imagem</th>
-                    <th>Nome</th>
-                    <th>Posição</th>
-                    <th>Ações</th>
-                </tr>
-            </thead>
-            <tbody>
-                <?php while ($jogador = $dados['jogadores']->fetch_assoc()): ?>
+        <div class="table-responsive">
+            <table class="table table-bordered text-center align-middle text-nowrap">
+                <thead>
                     <tr>
-                        <td class="text-center" style="width: 60px;">
-                            <?php
-                                $imgPath = '/campeonato_esportivo/public/img/jogadores/' . $jogador['imagem'];
-                                $defaultImg = '/campeonato_esportivo/public/img/perfil_padrao/perfil_padrao.png';
-                            ?>
-                            <img src="<?= !empty($jogador['imagem']) && file_exists($_SERVER['DOCUMENT_ROOT'] . $imgPath) ? $imgPath : $defaultImg ?>"
-                                 class="rounded-circle" style="width: 50px; height: 50px; object-fit: cover;">
-                        </td>
-                        <td><?= htmlspecialchars($jogador['nome']) ?></td>
-                        <td><?= htmlspecialchars($jogador['posicao']) ?></td>
-                        <td>
-                            <a href="/campeonato_esportivo/routes/time/editar_jogador.php?id=<?= $jogador['id'] ?>" class="btn btn-sm btn-warning">Editar</a>
-                            <a href="/campeonato_esportivo/routes/time/excluir_jogador.php?id=<?= $jogador['id'] ?>" class="btn btn-sm btn-danger" onclick="return confirm('Tem certeza que deseja excluir este jogador?')">Excluir</a>
-                        </td>
+                        <th>Imagem</th>
+                        <th>Nome</th>
+                        <th>Posição</th>
+                        <th>Ações</th>
                     </tr>
-                <?php endwhile; ?>
-            </tbody>
-        </table>
+                </thead>
+                <tbody>
+                    <?php while ($jogador = $dados['jogadores']->fetch_assoc()): ?>
+                        <tr>
+                            <td style="width: 60px;">
+                                <?php
+                                    $imgPath = '/campeonato_esportivo/public/img/jogadores/' . $jogador['imagem'];
+                                    $defaultImg = '/campeonato_esportivo/public/img/perfil_padrao/perfil_padrao.png';
+                                ?>
+                                <img src="<?= !empty($jogador['imagem']) && file_exists($_SERVER['DOCUMENT_ROOT'] . $imgPath) ? $imgPath : $defaultImg ?>"
+                                     class="rounded-circle" style="width: 50px; height: 50px; object-fit: cover;">
+                            </td>
+                            <td><?= htmlspecialchars($jogador['nome']) ?></td>
+                            <td><?= htmlspecialchars($jogador['posicao']) ?></td>
+                            <td>
+                                <a href="/campeonato_esportivo/routes/time/editar_jogador.php?id=<?= $jogador['id'] ?>" class="btn btn-sm btn-warning">Editar</a>
+                                <a href="/campeonato_esportivo/routes/time/excluir_jogador.php?id=<?= $jogador['id'] ?>" class="btn btn-sm btn-danger" onclick="return confirm('Tem certeza que deseja excluir este jogador?')">Excluir</a>
+                            </td>
+                        </tr>
+                    <?php endwhile; ?>
+                </tbody>
+            </table>
+        </div>
 
         <a href="/campeonato_esportivo/routes/time/adicionar_jogador.php" class="btn btn-success mt-2">Adicionar Jogador</a>
 
@@ -157,7 +158,6 @@ if (!$time):
                 </div>
             </div>
         <?php endif; ?>
-
     </div>
 </div>
 

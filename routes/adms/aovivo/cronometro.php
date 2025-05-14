@@ -1,5 +1,6 @@
 <?php 
 session_start();
+date_default_timezone_set('America/Sao_Paulo'); 
 require_once __DIR__ . '/../../../config/database.php';
 
 $partida_id = $_POST['partida_id'] ?? null;

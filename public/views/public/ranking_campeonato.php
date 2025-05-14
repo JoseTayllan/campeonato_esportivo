@@ -60,7 +60,7 @@
                 <th>Defesas</th>
                 <th>Gols Sofridos</th>
                 <th>Pênaltis Defendidos</th>
-                <th>Clean Sheets</th>
+                <th>Partidas sem Sofrer Gols</th>
             </tr>
         </thead>
         <tbody>

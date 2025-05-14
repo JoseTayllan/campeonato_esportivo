@@ -57,9 +57,10 @@ require_once __DIR__ . '/../../includes/index_sec.php';
 
             $sqlTimes = "SELECT t.id, t.nome, t.escudo FROM times t
                          JOIN times_campeonatos tc ON tc.time_id = t.id
-                         WHERE tc.campeonato_id = {$camp['id']}
-                         ORDER BY t.nome ASC";
+                         WHERE tc.campeonato_id = {$camp['id']}";
             $res = $conn->query($sqlTimes);
+
+            $tabela = [];
 
             while ($time = $res->fetch_assoc()) {
                 $timeId = $time['id'];
@@ -87,20 +88,41 @@ require_once __DIR__ . '/../../includes/index_sec.php';
                 $saldo = $gols_pro - $gols_contra;
                 $pontos = $vitorias * 3 + $empates;
 
+                $tabela[] = [
+                    'nome' => $time['nome'],
+                    'escudo' => $time['escudo'],
+                    'jogos' => $jogos,
+                    'vitorias' => $vitorias,
+                    'empates' => $empates,
+                    'derrotas' => $derrotas,
+                    'gols_pro' => $gols_pro,
+                    'gols_contra' => $gols_contra,
+                    'saldo' => $saldo,
+                    'pontos' => $pontos
+                ];
+            }
+
+            usort($tabela, function($a, $b) {
+                return $b['pontos'] <=> $a['pontos']
+                    ?: $b['saldo'] <=> $a['saldo']
+                    ?: $b['gols_pro'] <=> $a['gols_pro'];
+            });
+
+            foreach ($tabela as $time) {
                 echo "<tr>
                         <td class='d-flex align-items-center gap-2'>";
                 if (!empty($time['escudo'])) {
                     echo "<img src='/campeonato_esportivo/{$time['escudo']}' width='32' class='me-2'>";
                 }
                 echo "<span>{$time['nome']}</span></td>
-                        <td>{$jogos}</td>
-                        <td>{$vitorias}</td>
-                        <td>{$empates}</td>
-                        <td>{$derrotas}</td>
-                        <td>{$gols_pro}</td>
-                        <td>{$gols_contra}</td>
-                        <td>{$saldo}</td>
-                        <td>{$pontos}</td>
+                        <td>{$time['jogos']}</td>
+                        <td>{$time['vitorias']}</td>
+                        <td>{$time['empates']}</td>
+                        <td>{$time['derrotas']}</td>
+                        <td>{$time['gols_pro']}</td>
+                        <td>{$time['gols_contra']}</td>
+                        <td>{$time['saldo']}</td>
+                        <td>{$time['pontos']}</td>
                       </tr>";
             }
 

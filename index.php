@@ -709,7 +709,7 @@ footer {
 <h1>ChampCore</h1>
 <p class="lead">Gerencie campeonatos, estatísticas e equipes com um sistema moderno e acessível.</p>
 <div class="cta">
-<a href="futebol/index.php">Acessar módulo Futebol</a>
+<a href="/campeonato_esportivo/public">Acessar módulo Futebol</a>
 </div>
 <section>
 <h2 id="esportes">📂 Esportes</h2>
