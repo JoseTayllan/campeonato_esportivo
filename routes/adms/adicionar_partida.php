@@ -12,7 +12,7 @@ $horario = $_POST['horario'] ?? null;
 $local = $_POST['local'] ?? '';
 
 if (!$rodada_id || !$time_casa || !$time_fora || !$data || !$horario) {
-    $_SESSION['mensagem_erro'] = "Dados obrigatórios ausentes.";
+    $_SESSION['mensagem_erro'] = "⚠️ Preencha todos os campos obrigatórios para adicionar a partida.";
     header("Location: campeonato_editar.php?id=$campeonato_id");
     exit;
 }
@@ -31,13 +31,24 @@ $res = $stmt->get_result()->fetch_assoc();
 $fase_id = $res['fase_id'] ?? null;
 $campeonato_id = $res['campeonato_id'] ?? $campeonato_id;
 
-// Inserção com os dados corretos
+if (!$fase_id) {
+    $_SESSION['mensagem_erro'] = "Erro ao identificar a fase da rodada.";
+    header("Location: campeonato_editar.php?id=$campeonato_id");
+    exit;
+}
+
+// Inserção
 $stmt = $conn->prepare("
     INSERT INTO partidas (fase_id, campeonato_id, rodada_id, time_casa, time_fora, data, horario, local, status)
     VALUES (?, ?, ?, ?, ?, ?, ?, ?, 'nao_iniciada')
 ");
 $stmt->bind_param("iiiissss", $fase_id, $campeonato_id, $rodada_id, $time_casa, $time_fora, $data, $horario, $local);
-$stmt->execute();
+
+if ($stmt->execute()) {
+    $_SESSION['mensagem_sucesso'] = "✅ Partida adicionada com sucesso!";
+} else {
+    $_SESSION['mensagem_erro'] = "Erro ao adicionar a partida.";
+}
 
 header("Location: campeonato_editar.php?id=$campeonato_id");
 exit;

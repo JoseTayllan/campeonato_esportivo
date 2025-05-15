@@ -12,6 +12,12 @@ $horario = $_POST['horario'] ?? null;
 $local = $_POST['local'] ?? '';
 $fase_id = $_POST['fase_id'] ?? null;
 
+if (!$partida_id || !$campeonato_id || !$time_casa || !$time_fora || !$data || !$horario) {
+    $_SESSION['mensagem_erro'] = "⚠️ Preencha todos os campos obrigatórios para atualizar a partida.";
+    header("Location: campeonato_editar.php?id=$campeonato_id");
+    exit;
+}
+
 $model = new Campeonato($conn);
 
 // Recupera o rodada_id da partida para manter a associação
@@ -22,19 +28,26 @@ $stmt->execute();
 $result = $stmt->get_result()->fetch_assoc();
 $rodada_id = $result['rodada_id'] ?? null;
 
-// Atualiza partida com ou sem fase, mantendo compatibilidade
-if ($rodada_id && $partida_id && $time_casa && $time_fora && $data && $horario) {
-    if ($fase_id) {
-        $queryUpdate = "UPDATE partidas SET fase_id = ?, time_casa = ?, time_fora = ?, data = ?, horario = ?, local = ? WHERE id = ?";
-        $stmtUpdate = $conn->prepare($queryUpdate);
-        $stmtUpdate->bind_param("iiisssi", $fase_id, $time_casa, $time_fora, $data, $horario, $local, $partida_id);
-    } else {
-        $queryUpdate = "UPDATE partidas SET time_casa = ?, time_fora = ?, data = ?, horario = ?, local = ? WHERE id = ?";
-        $stmtUpdate = $conn->prepare($queryUpdate);
-        $stmtUpdate->bind_param("iisssi", $time_casa, $time_fora, $data, $horario, $local, $partida_id);
-    }
+if (!$rodada_id) {
+    $_SESSION['mensagem_erro'] = "Erro ao localizar a rodada da partida.";
+    header("Location: campeonato_editar.php?id=$campeonato_id");
+    exit;
+}
 
-    $stmtUpdate->execute();
+if ($fase_id) {
+    $queryUpdate = "UPDATE partidas SET fase_id = ?, time_casa = ?, time_fora = ?, data = ?, horario = ?, local = ? WHERE id = ?";
+    $stmtUpdate = $conn->prepare($queryUpdate);
+    $stmtUpdate->bind_param("iiisssi", $fase_id, $time_casa, $time_fora, $data, $horario, $local, $partida_id);
+} else {
+    $queryUpdate = "UPDATE partidas SET time_casa = ?, time_fora = ?, data = ?, horario = ?, local = ? WHERE id = ?";
+    $stmtUpdate = $conn->prepare($queryUpdate);
+    $stmtUpdate->bind_param("iisssi", $time_casa, $time_fora, $data, $horario, $local, $partida_id);
+}
+
+if ($stmtUpdate->execute()) {
+    $_SESSION['mensagem_sucesso'] = "✅ Partida atualizada com sucesso!";
+} else {
+    $_SESSION['mensagem_erro'] = "Erro ao atualizar a partida.";
 }
 
 header("Location: campeonato_editar.php?id=$campeonato_id");
