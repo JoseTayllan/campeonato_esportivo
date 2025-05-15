@@ -9,8 +9,8 @@ class ChampionshipController {
         $this->campeonatoModel = new Campeonato($conn);
     }
 
-    public function criarCampeonato($nome, $descricao, $temporada, $formato, $criado_por, $times = []) {
-        $campeonato_id = $this->campeonatoModel->criar($nome, $descricao, $temporada, $formato, $formato, $criado_por);
+    public function criarCampeonato($nome, $descricao, $temporada, $formato, $criado_por, $times = [], $qr_code = null) {
+        $campeonato_id = $this->campeonatoModel->criar($nome, $descricao, $temporada, $formato, $formato, $criado_por, $qr_code);
         
         if ($campeonato_id) {
             // Associa os times se fornecidos
@@ -34,13 +34,13 @@ class ChampionshipController {
     public function listarTimes($campeonato_id) {
         return $this->campeonatoModel->listarTimesPorCampeonato($campeonato_id);
     }
+
     public function listarMeusCampeonatos($usuario_id) {
         return $this->campeonatoModel->listarPorUsuario($usuario_id);
     }
+
     public function listarTodos() {
         return $this->campeonatoModel->listarTodos();
     }
-    
-    
 }
 ?>

@@ -12,7 +12,7 @@
         <div class="alert alert-danger"><?= $_SESSION['mensagem_erro']; unset($_SESSION['mensagem_erro']); ?></div>
     <?php endif; ?>
 
-    <form method="POST" action="../../../routes/adms/championships.php">
+    <form method="POST" action="../../../routes/adms/championships.php" enctype="multipart/form-data">
         <div class="mb-3">
             <label class="form-label">Nome do Campeonato</label>
             <input type="text" name="nome" class="form-control" required>
@@ -38,23 +38,23 @@
         </div>
 
         <div class="mb-3">
-                <label class="form-label">Regulamento</label>
-                <textarea class="form-control" name="regulamento" required></textarea>
-            </div>
+            <label class="form-label">Regulamento</label>
+            <textarea class="form-control" name="regulamento" required></textarea>
+        </div>
 
+        <div class="mb-3">
+            <label class="form-label">QR Code da Localização (opcional)</label>
+            <input type="file" name="qr_code" class="form-control" accept="image/*">
+        </div>
 
-      
         <div class="text-center">
             <button type="submit" class="btn btn-primary">Cadastrar Campeonato</button>
         </div>
     </form>
 </div>
 
-
 <div class="mt-auto">
-<div class="mt-5"></div>
-<?php include __DIR__ . '../../cabecalho/footer.php'; ?>
-<script src="../../../assets/js/bootstrap.bundle.min.js"></script>
-
-         
-        
+    <div class="mt-5"></div>
+    <?php include __DIR__ . '../../cabecalho/footer.php'; ?>
+    <script src="../../../assets/js/bootstrap.bundle.min.js"></script>
+</div>

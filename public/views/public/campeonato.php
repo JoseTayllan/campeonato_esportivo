@@ -7,11 +7,10 @@
        class="btn btn-outline-primary btn-sm mb-3">
        🥇 Ver Ranking do Campeonato
     </a>
- <a href="/campeonato_esportivo/public/views/campeonatos/visualizar_fases_rodadas.php?campeonato_id=<?= $dados['campeonato']['id'] ?>"
-   class="btn btn-outline-success btn-sm mb-3 ms-2">
-    📋 Ver Estrutura do Campeonato
-</a>
-
+    <a href="/campeonato_esportivo/public/views/campeonatos/visualizar_fases_rodadas.php?campeonato_id=<?= $dados['campeonato']['id'] ?>"
+       class="btn btn-outline-success btn-sm mb-3 ms-2">
+       📋 Ver Estrutura do Campeonato
+    </a>
 
     <p>
         Temporada: <?= htmlspecialchars($dados['campeonato']['temporada']) ?> |
@@ -25,6 +24,22 @@
     <p style="text-align: justify;">
         <?= nl2br(htmlspecialchars($dados['campeonato']['descricao'] ?? 'Nenhuma descrição cadastrada ainda.')) ?>
     </p>
+
+<?php if (!empty($dados['campeonato']['qr_code_localizacao'])): ?>
+<div class="card mt-4 mb-4" style="border-left: 5px solid #198754;">
+    <div class="card-body d-flex flex-column flex-md-row align-items-center justify-content-between">
+        <div>
+            <h6 class="text-success fw-bold mb-2">📍 Localização do Evento</h6>
+            <p class="mb-1">Escaneie o QR Code para visualizar o local do campeonato ou <a href="https://maps.google.com/?q=-16.709370,-49.250027" target="_blank">clique aqui</a>.</p>
+        </div>
+        <div class="text-center">
+            <img src="/campeonato_esportivo/<?= htmlspecialchars($dados['campeonato']['qr_code_localizacao']) ?>" style="max-width: 120px;">
+            <div class="small text-muted">QR Code</div>
+        </div>
+    </div>
+</div>
+<?php endif; ?>
+
 
     <h4 class="mt-5">👥 Times Participantes</h4>
 
@@ -51,9 +66,8 @@
     <?php endif; ?>
 </div>
 
-
 <div class="mt-auto">
-<div class="mt-5"></div>
-<?php require_once __DIR__ . '/../cabecalho/footer.php'; ?>
-<script src="../../../assets/js/bootstrap.bundle.min.js"></script>
+    <div class="mt-5"></div>
+    <?php require_once __DIR__ . '/../cabecalho/footer.php'; ?>
+    <script src="../../../assets/js/bootstrap.bundle.min.js"></script>
 </div>

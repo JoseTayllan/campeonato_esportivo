@@ -1,59 +1,79 @@
-<?php
-
-include __DIR__ . '../../../includes/admin_sec.php'; ?>
+<?php include __DIR__ . '../../../includes/admin_sec.php'; ?>
 <link rel="stylesheet" href="/campeonato_esportivo/public/assets/css/admin.css">
 
 <body class="d-flex flex-column min-vh-100">
-    <main class="flex-grow-1">
-        <div class="container mt-4 container-campeonato">
-            <h2>Editar Campeonato</h2>
+<main class="flex-grow-1">
+<div class="container mt-4 container-campeonato">
+    <h2>Editar Campeonato</h2>
 
-            <form action="/campeonato_esportivo/routes/adms/campeonatos_atualizar.php" method="POST">
-                <input type="hidden" name="id" value="<?= $campeonato['id'] ?>">
+    <?php if (!empty($_SESSION['mensagem_sucesso'])): ?>
+        <div class="alert alert-success">
+            <?= $_SESSION['mensagem_sucesso']; unset($_SESSION['mensagem_sucesso']); ?>
+        </div>
+    <?php elseif (!empty($_SESSION['mensagem_erro'])): ?>
+        <div class="alert alert-danger">
+            <?= $_SESSION['mensagem_erro']; unset($_SESSION['mensagem_erro']); ?>
+        </div>
+    <?php endif; ?>
 
-                <div class="mb-3">
-                    <label>Nome</label>
-                    <input type="text" name="nome" class="form-control" value="<?= $campeonato['nome'] ?>" required>
+    <form action="/campeonato_esportivo/routes/adms/campeonatos_atualizar.php" method="POST" enctype="multipart/form-data">
+        <input type="hidden" name="id" value="<?= $campeonato['id'] ?>">
+
+        <div class="mb-3">
+            <label>Nome</label>
+            <input type="text" name="nome" class="form-control" value="<?= $campeonato['nome'] ?>" required>
+        </div>
+
+        <div class="mb-3">
+            <label>Descrição</label>
+            <textarea name="descricao" class="form-control"><?= $campeonato['descricao'] ?></textarea>
+        </div>
+
+        <div class="mb-3">
+            <label>Temporada</label>
+            <input type="text" name="temporada" class="form-control" value="<?= $campeonato['temporada'] ?>" required>
+        </div>
+
+        <div class="mb-3">
+            <label>Formato</label>
+            <select name="formato" class="form-select">
+                <option <?= $campeonato['formato'] == 'Pontos Corridos' ? 'selected' : '' ?>>Pontos Corridos</option>
+                <option <?= $campeonato['formato'] == 'Mata-Mata' ? 'selected' : '' ?>>Mata-Mata</option>
+                <option <?= $campeonato['formato'] == 'Fase de Grupos' ? 'selected' : '' ?>>Fase de Grupos</option>
+            </select>
+        </div>
+
+        <div class="mb-3">
+            <label>Modalidade</label>
+            <select name="modalidade" class="form-select">
+                <option <?= $campeonato['modalidade'] == 'Futebol' ? 'selected' : '' ?>>Futebol</option>
+                <option <?= $campeonato['modalidade'] == 'Futsal' ? 'selected' : '' ?>>Futsal</option>
+                <option <?= $campeonato['modalidade'] == '1x1' ? 'selected' : '' ?>>1x1</option>
+                <option <?= $campeonato['modalidade'] == '2x2' ? 'selected' : '' ?>>2x2</option>
+            </select>
+        </div>
+
+        <div class="mb-3">
+            <label>Status</label>
+            <select name="status" class="form-select">
+                <option value="ativo" <?= $campeonato['status'] === 'ativo' ? 'selected' : '' ?>>Ativo</option>
+                <option value="inativo" <?= $campeonato['status'] === 'inativo' ? 'selected' : '' ?>>Inativo</option>
+            </select>
+        </div>
+
+        <div class="mb-3">
+            <label>QR Code da Localização (opcional)</label>
+            <?php if (!empty($campeonato['qr_code_localizacao'])): ?>
+                <div class="mb-2">
+                    <img src="/campeonato_esportivo/<?= $campeonato['qr_code_localizacao'] ?>" alt="QR atual" style="max-width: 150px;">
+                    <p class="small text-muted">QR atual. Para substituir, envie um novo.</p>
                 </div>
+            <?php endif; ?>
+            <input type="file" name="qr_code" class="form-control" accept="image/*">
+        </div>
 
-                <div class="mb-3">
-                    <label>Descrição</label>
-                    <textarea name="descricao" class="form-control"><?= $campeonato['descricao'] ?></textarea>
-                </div>
-
-                <div class="mb-3">
-                    <label>Temporada</label>
-                    <input type="text" name="temporada" class="form-control" value="<?= $campeonato['temporada'] ?>" required>
-                </div>
-
-                <div class="mb-3">
-                    <label>Formato</label>
-                    <select name="formato" class="form-select">
-                        <option <?= $campeonato['formato'] == 'Pontos Corridos' ? 'selected' : '' ?>>Pontos Corridos</option>
-                        <option <?= $campeonato['formato'] == 'Mata-Mata' ? 'selected' : '' ?>>Mata-Mata</option>
-                        <option <?= $campeonato['formato'] == 'Fase de Grupos' ? 'selected' : '' ?>>Fase de Grupos</option>
-                    </select>
-                </div>
-
-                <div class="mb-3">
-                    <label>Modalidade</label>
-                    <select name="modalidade" class="form-select">
-                        <option <?= $campeonato['modalidade'] == 'Futebol' ? 'selected' : '' ?>>Futebol</option>
-                        <option <?= $campeonato['modalidade'] == 'Futsal' ? 'selected' : '' ?>>Futsal</option>
-                        <option <?= $campeonato['modalidade'] == '1x1' ? 'selected' : '' ?>>1x1</option>
-                        <option <?= $campeonato['modalidade'] == '2x2' ? 'selected' : '' ?>>2x2</option>
-                    </select>
-                </div>
-                <div class="mb-3">
-                    <label>Status</label>
-                    <select name="status" class="form-select">
-                        <option value="ativo" <?= $campeonato['status'] === 'ativo' ? 'selected' : '' ?>>Ativo</option>
-                        <option value="inativo" <?= $campeonato['status'] === 'inativo' ? 'selected' : '' ?>>Inativo</option>
-                    </select>
-                </div>
-
-                <button type="submit" class="btn btn-primary">Salvar Alterações</button>
-            </form>
+        <button type="submit" class="btn btn-primary">Salvar Alterações</button>
+    </form>
 
             <!-- Times vinculados -->
             <hr class="section-box">

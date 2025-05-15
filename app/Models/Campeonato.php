@@ -6,10 +6,11 @@ class Campeonato {
         $this->conn = $db;
     }
 
-    public function criar($nome, $descricao, $temporada, $formato, $modalidade, $criado_por) {
-        $query = "INSERT INTO campeonatos (nome, descricao, temporada, formato, modalidade, criado_por) VALUES (?, ?, ?, ?, ?, ?)";
+    public function criar($nome, $descricao, $temporada, $formato, $modalidade, $criado_por, $qr_code = null) {
+        $query = "INSERT INTO campeonatos (nome, descricao, temporada, formato, modalidade, criado_por, qr_code_localizacao) 
+                  VALUES (?, ?, ?, ?, ?, ?, ?)";
         $stmt = $this->conn->prepare($query);
-        $stmt->bind_param("sssssi", $nome, $descricao, $temporada, $formato, $modalidade, $criado_por);
+        $stmt->bind_param("sssssis", $nome, $descricao, $temporada, $formato, $modalidade, $criado_por, $qr_code);
 
         if ($stmt->execute()) {
             $campeonato_id = $this->conn->insert_id;

@@ -15,14 +15,21 @@ if ($metodo === 'POST') {
     $formato = $_POST['formato'] ?? '';
     $times = $_POST['times'] ?? [];
 
-    // Dados da fase
-    $nome_fase = $_POST['fase_nome'] ?? '';
-    $ordem_fase = $_POST['fase_ordem'] ?? 1;
+    // Upload do QR Code
+    $qrCodePath = null;
+    if (isset($_FILES['qr_code']) && $_FILES['qr_code']['error'] === UPLOAD_ERR_OK) {
+        $ext = pathinfo($_FILES['qr_code']['name'], PATHINFO_EXTENSION);
+        $novoNome = 'qr_code_' . uniqid() . '.' . $ext;
+        $destino = 'public/img/qrcodes/' . $novoNome;
 
-    // Dados das rodadas (arrays vindos do formulário)
-    $numeros = $_POST['rodada_numero'] ?? [];
-    $tipos = $_POST['rodada_tipo'] ?? [];
-    $descricoes = $_POST['rodada_desc'] ?? [];
+        if (!is_dir(__DIR__ . '/../../public/img/qrcodes')) {
+            mkdir(__DIR__ . '/../../public/img/qrcodes', 0777, true);
+        }
+
+        if (move_uploaded_file($_FILES['qr_code']['tmp_name'], __DIR__ . '/../../' . $destino)) {
+            $qrCodePath = $destino;
+        }
+    }
 
     // Verificação mínima
     if (empty($nome) || empty($temporada) || empty($formato)) {
@@ -34,39 +41,35 @@ if ($metodo === 'POST') {
     // Criar campeonato
     $championshipController = new ChampionshipController($conn);
     $criado_por = $_SESSION['usuario_id'] ?? null;
-    $response = json_decode($championshipController->criarCampeonato($nome, $descricao, $temporada, $formato, $criado_por, $times), true);
-    
+    $response = json_decode($championshipController->criarCampeonato(
+        $nome, $descricao, $temporada, $formato, $criado_por, $times, $qrCodePath
+    ), true);
 
     if (!isset($response['erro'])) {
         $campeonato_id = $conn->insert_id;
 
         // Criar fase
         $faseController = new FaseController($conn);
-        $fase_id = $faseController->criarFase($campeonato_id, $nome_fase, $ordem_fase);
+        $fase_id = $faseController->criarFase($campeonato_id, $_POST['fase_nome'] ?? '', $_POST['fase_ordem'] ?? 1);
 
         if ($fase_id) {
             // Criar rodadas
             $rodadaController = new RodadaController($conn);
+            $numeros = $_POST['rodada_numero'] ?? [];
+            $tipos = $_POST['rodada_tipo'] ?? [];
+            $descricoes = $_POST['rodada_desc'] ?? [];
 
             for ($i = 0; $i < count($numeros); $i++) {
                 $numero = isset($numeros[$i]) ? intval($numeros[$i]) : 0;
                 $tipo = isset($tipos[$i]) ? trim($tipos[$i]) : '';
                 $descricao = isset($descricoes[$i]) ? trim($descricoes[$i]) : '';
 
-                if ($descricao === null) {
-                    $descricao = '';
-                }
-
                 if ($fase_id && $numero > 0 && !empty($tipo)) {
                     $rodadaController->criarRodada($fase_id, $numero, $tipo, $descricao);
-                } else {
-                    error_log("Rodada ignorada: dados inválidos -> fase_id=$fase_id, numero=$numero, tipo=$tipo");
                 }
             }
 
             $_SESSION['mensagem_sucesso'] = "Campeonato, fase e rodadas criadas com sucesso!";
-            header('Location: ../../public/views/cadastro/cadastro_campeonato.php');
-            exit;
         } else {
             $_SESSION['mensagem_erro'] = "Campeonato criado, mas erro ao criar a fase.";
         }

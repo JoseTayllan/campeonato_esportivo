@@ -1,6 +1,7 @@
 <?php 
 session_start();
 $restrito_para = ['Administrador', 'Organizador'];
+
 require_once __DIR__ . '/../../config/database.php';
 require_once __DIR__ . '/../../app/Models/Campeonato.php';
 require_once __DIR__ . '/../../app/Models/Fase.php';
@@ -13,7 +14,6 @@ if (!$id) {
     exit;
 }
 
-$model = new Campeonato($conn); 
 $campeonatoModel = new Campeonato($conn);
 $faseModel = new Fase($conn);
 
@@ -26,7 +26,8 @@ if (count($fasesExistentes) === 0) {
     }
 }
 
+// Busca os dados do campeonato, incluindo qr_code_localizacao
 $campeonato = $campeonatoModel->buscarPorId($id);
+$model = $campeonatoModel;
 
 include __DIR__ . '/../../public/views/campeonatos/editar_campeonato.php';
-?>
