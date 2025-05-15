@@ -10,6 +10,7 @@ include_once __DIR__ . '/includes/header_index.php';
 ?>
 
 <div class="container mt-4">
+   <link rel="stylesheet" href="/campeonato_esportivo/public/assets/css/global.css">
     <!-- Carrossel de imagens -->
     <div id="carrossel-artes" class="carousel slide mb-4" data-bs-ride="carousel" data-bs-interval="4000">
         <div class="carousel-inner rounded shadow-sm">
@@ -17,7 +18,7 @@ include_once __DIR__ . '/includes/header_index.php';
                 <img src="/campeonato_esportivo/assets/img/carrosselW.webp" class="d-block w-100" alt="Arte 1"> 
             </div>
             <div class="carousel-item">
-                <img src="/campeonato_esportivo/assets/img/carrossel2.jpg" class="d-block w-100" alt="Arte 2">
+                <img src="/campeonato_esportivo/assets/img/ArteFPMs.png" class="d-block w-100" alt="Arte 2">
             </div>
             <div class="carousel-item">
                 <img src="/campeonato_esportivo/assets/img/carrossel3.jpg" class="d-block w-100" alt="Arte 3">
