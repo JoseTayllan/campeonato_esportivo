@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 
 <html lang="pt-BR">
@@ -724,13 +723,32 @@ footer {
 <a class="btn-esporte" href="/campeonato_esportivo/public">Entrar</a>
 </div>
 </div>
-<div class="card" style="opacity:0.5; background: url('images/capa_basquete.jpg') center/cover no-repeat; backdrop-filter: blur(6px);">
-<h3>🏀 Basquete</h3>
-<p>Em breve</p>
+
+<div class="card" style="position: relative; overflow: hidden; height: 100%; border-radius: 1rem;">
+<img src="assets/img/queimada.jpg" style="position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; z-index: 0; border-radius: 1rem;" alt="Queimada">
+<div style="position: relative; z-index: 1; padding: 2rem; height: 90%; background: rgba(0,0,0,0.5);">
+<h3>🔥 Queimada</h3>
+<p>Organize campeonatos e acompanhe as estatísticas de eliminações.</p>
+<a class="btn-esporte" href="/campeonato_esportivo/public/index.php?modalidade=queimada">Entrar</a>
 </div>
-<div class="card" style="opacity:0.5; background: url('images/capa_volei.jpg') center/cover no-repeat; backdrop-filter: blur(6px);">
+</div>
+
+<div class="card" style="position: relative; overflow: hidden; height: 100%; border-radius: 1rem;">
+<img src="assets/img/natacao.jpg" style="position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; z-index: 0; border-radius: 1rem;" alt="Natação">
+<div style="position: relative; z-index: 1; padding: 2rem; height: 90%; background: rgba(0,0,0,0.5);">
+<h3>🏊 Natação</h3>
+<p>Registre tempos, acompanhe recordes e gerencie provas.</p>
+<a class="btn-esporte" href="/campeonato_esportivo/public/index.php?modalidade=natacao">Entrar</a>
+</div>
+</div>
+
+<div class="card" style="position: relative; overflow: hidden; height: 100%; border-radius: 1rem;">
+<img src="assets/img/volei.jpg" style="position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; z-index: 0; border-radius: 1rem;" alt="Vôlei">
+<div style="position: relative; z-index: 1; padding: 2rem; height: 90%; background: rgba(0,0,0,0.5);">
 <h3>🏐 Vôlei</h3>
-<p>Planejado para fase 2</p>
+<p>Controle de sets, pontuações e estatísticas detalhadas de jogadores.</p>
+<a class="btn-esporte" href="/campeonato_esportivo/public/index.php?modalidade=volei">Entrar</a>
+</div>
 </div>
 </div>
 </section>

@@ -3,8 +3,17 @@ session_start();
 require_once __DIR__ . '/../config/database.php';
 require_once __DIR__ . '/../app/controllers/IndexPublicoController.php';
 
+// Receber a modalidade da URL
+$modalidade = isset($_GET['modalidade']) ? $_GET['modalidade'] : null;
+
 $controller = new IndexPublicoController($conn);
-$campeonatosPorEsporte = $controller->listarCampeonatosPorEsporte();
+$campeonatosPorEsporte = $controller->listarCampeonatosPorEsporte($modalidade);
+
+// Definir título da página baseado na modalidade
+$tituloModalidade = "Campeonatos Esportivos";
+if ($modalidade) {
+    $tituloModalidade = "Campeonatos de " . ucfirst($modalidade);
+}
 
 include_once __DIR__ . '/includes/header_index.php';
 ?>
@@ -32,10 +41,10 @@ include_once __DIR__ . '/includes/header_index.php';
         </button>
     </div>
 
-    <h2 class="mb-4 text-verde">Bem-vindo ao Sistema de Campeonatos Esportivos</h2>
+    <h2 class="mb-4 text-verde"><?= $tituloModalidade ?></h2>
 
     <div class="mb-4 d-flex flex-wrap gap-2">
-        <a href="/campeonato_esportivo/routes/public/placar_publico.php" class="btn btn-outline-success">
+        <a href="/campeonato_esportivo/routes/public/placar_publico.php<?= $modalidade ? "?modalidade=$modalidade" : "" ?>" class="btn btn-outline-success">
             📻 Ver Placar Ao Vivo
         </a>
         <a href="/campeonato_esportivo/routes/login.php" class="btn btn-outline-dark">
@@ -58,11 +67,18 @@ include_once __DIR__ . '/includes/header_index.php';
             👤 Voltar ao Painel
         </a>
         <?php endif; ?>
+        
+        <!-- Botão para voltar à página inicial -->
+        <?php if ($modalidade): ?>
+        <a href="/campeonato_esportivo/public/" class="btn btn-outline-primary">
+            🔙 Todos os Esportes
+        </a>
+        <?php endif; ?>
     </div>
 
     <h4 class="text-verde mt-4">Campeonatos em Andamento</h4>
     <?php if (empty($campeonatosPorEsporte)): ?>
-        <div class="alert alert-info">Nenhum campeonato em andamento.</div>
+        <div class="alert alert-info">Nenhum campeonato de <?= $modalidade ? strtolower($modalidade) : "esporte" ?> em andamento.</div>
     <?php else: ?>
         <div class="row">
             <?php foreach ($campeonatosPorEsporte as $camp): ?>
@@ -72,7 +88,8 @@ include_once __DIR__ . '/includes/header_index.php';
                             <h5 class="card-title"><?= htmlspecialchars($camp['nome']) ?></h5>
                             <p class="card-text">
                                 Temporada: <?= htmlspecialchars($camp['temporada']) ?><br>
-                                Formato: <?= htmlspecialchars($camp['formato']) ?>
+                                Formato: <?= htmlspecialchars($camp['formato']) ?><br>
+                                Modalidade: <?= htmlspecialchars($camp['modalidade']) ?>
                             </p>
                             <a href="/campeonato_esportivo/routes/public/campeonato_publico.php?id=<?= $camp['id'] ?>" class="btn btn-sm btn-outline-primary">
                                 Ver Campeonato

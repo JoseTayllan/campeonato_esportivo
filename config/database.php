@@ -1,4 +1,9 @@
 <?php
+// Evitar carregar a configuração de produção durante os testes
+if (defined('TESTING')) {
+    return;
+}
+
 $host = 'localhost';
 $dbname = 'campeonato_esportivo';
 $user = 'root'; 

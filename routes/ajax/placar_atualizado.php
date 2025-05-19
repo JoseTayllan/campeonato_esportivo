@@ -2,6 +2,9 @@
 require_once __DIR__ . '/../../config/database.php';
 header('Content-Type: application/json');
 
+// Verificar se foi passado um parâmetro de modalidade
+$modalidade = isset($_GET['modalidade']) ? $_GET['modalidade'] : null;
+
 $sql = "
     SELECT 
     p.id, p.data, p.horario, p.local,
@@ -10,14 +13,23 @@ $sql = "
     p.inicio_partida, p.tempo_acumulado, p.acrescimos, p.cronometro_status,
     p.tempo_atual, p.link_transmissao,
     t1.nome AS nome_casa, t1.escudo AS escudo_casa,
-    t2.nome AS nome_fora, t2.escudo AS escudo_fora
+    t2.nome AS nome_fora, t2.escudo AS escudo_fora,
+    c.modalidade
 
     FROM partidas p
     JOIN times t1 ON p.time_casa = t1.id
     JOIN times t2 ON p.time_fora = t2.id
+    JOIN campeonatos c ON p.campeonato_id = c.id
     WHERE p.status = 'em_andamento'
-    ORDER BY p.data, p.horario
 ";
+
+// Adicionar filtro de modalidade se necessário
+if ($modalidade) {
+    $modalidade = $conn->real_escape_string($modalidade);
+    $sql .= " AND c.modalidade = '$modalidade'";
+}
+
+$sql .= " ORDER BY p.data, p.horario";
 
 $res = $conn->query($sql);
 $partidas = [];
