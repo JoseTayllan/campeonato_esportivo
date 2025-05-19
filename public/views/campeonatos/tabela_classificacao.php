@@ -66,7 +66,10 @@ require_once __DIR__ . '/../../includes/index_sec.php';
                 $timeId = $time['id'];
 
                 $partidas = "SELECT * FROM partidas 
-                             WHERE campeonato_id = {$camp['id']} AND (time_casa = $timeId OR time_fora = $timeId)";
+                             WHERE campeonato_id = {$camp['id']} 
+                             AND status IN ('em_andamento', 'finalizada')
+                             AND placar_casa IS NOT NULL AND placar_fora IS NOT NULL
+                             AND (time_casa = $timeId OR time_fora = $timeId)";
                 $resultPartidas = $conn->query($partidas);
 
                 $jogos = $vitorias = $empates = $derrotas = $gols_pro = $gols_contra = 0;

@@ -14,71 +14,145 @@ if ($campeonatoSelecionado) {
     $dados['campeonatos'] = $controller->carregarDados(0)['campeonatos'];
 }
 ?>
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <title>Estrutura do Campeonato</title>
+    <link href="../../../assets/css/bootstrap.min.css" rel="stylesheet">
 <style>
 .partida {
-    display: grid;
-    grid-template-columns: 1fr auto 1fr;
-    align-items: center;
-    gap: 10px;
-    padding: 12px;
-    background-color: #fff;
-    border-radius: 8px;
-    box-shadow: 0 1px 4px rgba(0,0,0,0.1);
-    width: 100%;
-    max-width: 100%;
-    text-align: center;
+  display: grid;
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  max-width: none;
+  max-width: 800px;
+  background-color: #fff;
+  border-radius: 12px;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.1);
+  align-items: stretch;
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  padding: 16px;
+  width: 100%;
+  box-sizing: border-box;
+  margin: 0 auto;
+  
 }
 
 .time-box {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    min-width: 70px;
+  overflow: hidden;
+  height: 100%;
+  justify-content: flex-start;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  flex: 1 1 0;
+  gap: 4px;
+  height: 100%;
+  min-height: 100px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  min-width: 100px;
+  padding: 4px;
 }
 
 .time-box img {
-    width: 60px;
-    height: auto;
+  width: 60px;
+  height: auto;
+  margin-bottom: 6px;
 }
 
 .nome-time {
-    margin-top: 4px;
-    font-size: 0.9rem;
-    font-weight: 500;
-    word-break: break-word;
+  padding: 0 8px;
+  box-sizing: border-box;
+  max-width: 90%;
+  overflow-wrap: break-word;
+  word-break: break-word;
+  margin-top: 8px;
+  display: inline-block;
+  vertical-align: top;
+  margin-top: auto;
+  margin-bottom: 0;
+  min-height: 24px;
+  margin-top: 6px;
+  font-size: 0.9rem;
+  font-weight: 600;
+  text-align: center;
+  white-space: normal;
+  word-break: break-word;
+  max-width: 100%;
+  line-height: 1.2;
 }
 
 .placar-box {
-    font-size: 2rem;
-    font-weight: bold;
-    color: #007bff;
-    white-space: nowrap;
+  font-size: 2rem;
+  font-weight: bold;
+  color: #007bff;
+  white-space: nowrap;
+  text-align: center;
 }
 
-/* Responsivo para telas menores */
+.titulo-tabela {
+  font-size: 1.8rem;
+  white-space: nowrap;
+  text-align: center;
+}
+
 @media (max-width: 576px) {
-    .time-box img {
-        width: 45px;
+  .partida {
+    grid-template-columns: 1fr auto 1fr;
+    padding: 16px;
+    display: grid;
     }
 
-    .placar-box {
-        font-size: 1.5rem;
-    }
+  .time-box img {
+    width: 60px;
+  }
 
-    .nome-time {
-        font-size: 0.8rem;
-    }
+  .nome-time {
+    font-size: 0.8rem;
+  }
 
-    .partida {
-        grid-template-columns: 1fr auto 1fr;
-        gap: 6px;
-    }
+  .placar-box {
+    font-size: 1.6rem;
+  }
+
+  .titulo-tabela {
+    font-size: 1.4rem;
+  }
+}
+
+@media (max-width: 768px) {
+  table {
+    width: 100% !important;
+    table-layout: auto !important;
+  }
+
+  table th,
+  table td {
+    font-size: 0.85rem !important;
+    padding: 0.4rem !important;
+    word-break: break-word !important;
+  }
+
+  footer {
+    width: 100%;
+  }
 }
 </style>
 
+
+</head>
 <body class="d-flex flex-column min-vh-100">
 <div class="container mt-4">
-
     <a href="/campeonato_esportivo/routes/public/campeonato_publico.php?id=<?= (int)$campeonatoSelecionado ?>" class="btn btn-outline-secondary btn-sm mb-4">
         🔙 Voltar para o Campeonato
     </a>
@@ -98,58 +172,49 @@ if ($campeonatoSelecionado) {
                     <?php if (!empty($fase['rodadas'])): ?>
                         <ul class="list-group">
                             <?php foreach ($fase['rodadas'] as $rodada): ?>
-                                <li class="list-group-item">
+                                <li class="list-group-item px-0">
                                     <strong>Rodada <?= $rodada['numero'] ?>:</strong> <?= htmlspecialchars($rodada['tipo']) ?>
-                                    <?php if (!empty($rodada['descricao'])): ?>
-                                        - <?= htmlspecialchars($rodada['descricao']) ?>
-                                    <?php endif; ?>
+                                    <?php if (!empty($rodada['descricao'])): ?> - <?= htmlspecialchars($rodada['descricao']) ?><?php endif; ?>
 
                                     <?php if (!empty($rodada['partidas'])): ?>
                                         <ul class="mt-3">
                                             <?php foreach ($rodada['partidas'] as $partida): ?>
-                                                <li class="list-group-item">
+                                                <li class="list-group-item p-2">
                                                     <div class="partida">
-
-                                                        <!-- Time Casa -->
-                                                        <div class="time-box">
+                                                        <div class="time-box" >
                                                             <?php if (!empty($partida['escudo_time_casa'])): ?>
                                                                 <img src="/campeonato_esportivo/<?= $partida['escudo_time_casa'] ?>" alt="Escudo <?= $partida['time_casa'] ?>">
                                                             <?php endif; ?>
-                                                            <small class="fw-bold"><?= htmlspecialchars($partida['time_casa']) ?></small>
+                                                            <div class="nome-time"><?= htmlspecialchars($partida['time_casa']) ?></div>
                                                         </div>
 
-                                                        <!-- Placar -->
                                                         <div class="placar-box">
-                                                            <?= is_numeric($partida['placar_casa']) ? $partida['placar_casa'] : '-' ?>
-                                                            <span class="mx-2">x</span>
-                                                            <?= is_numeric($partida['placar_fora']) ? $partida['placar_fora'] : '-' ?>
+                                                            <?php if ($partida['status'] === 'finalizada'): ?>
+                                                                <?= $partida['placar_casa'] ?> <span class="mx-2">x</span> <?= $partida['placar_fora'] ?>
+                                                            <?php else: ?>
+                                                                <span class="mx-2">x</span>
+                                                            <?php endif; ?>
                                                         </div>
 
-                                                        <!-- Time Fora -->
                                                         <div class="time-box">
                                                             <?php if (!empty($partida['escudo_time_fora'])): ?>
                                                                 <img src="/campeonato_esportivo/<?= $partida['escudo_time_fora'] ?>" alt="Escudo <?= $partida['time_fora'] ?>">
                                                             <?php endif; ?>
-                                                            <small class="fw-bold"><?= htmlspecialchars($partida['time_fora']) ?></small>
+                                                            <div class="nome-time"><?= htmlspecialchars($partida['time_fora']) ?></div>
                                                         </div>
-
                                                     </div>
 
                                                     <div class="small text-muted mt-2 text-center">
-                                                        <?= $partida['data'] ?> às <?= substr($partida['horario'], 0, 5) ?> —
-                                                        <em><?= htmlspecialchars($partida['local']) ?></em>
+                                                        <?= $partida['data'] ?> às <?= substr($partida['horario'], 0, 5) ?> — <em><?= htmlspecialchars($partida['local']) ?></em>
                                                     </div>
 
                                                     <?php if (!empty($partida['link_transmissao'])): ?>
                                                         <div class="text-center mt-2">
-                                                            <a href="/campeonato_esportivo/routes/public/assistir.php?id=<?= $partida['partida_id'] ?>"
-                                                                target="_blank"
-                                                                class="btn btn-sm btn-outline-danger">
+                                                            <a href="/campeonato_esportivo/routes/public/assistir.php?id=<?= $partida['partida_id'] ?>" target="_blank" class="btn btn-sm btn-outline-danger">
                                                                 ▶️ Assistir Gravação
                                                             </a>
                                                         </div>
                                                     <?php endif; ?>
-
                                                 </li>
                                             <?php endforeach; ?>
                                         </ul>
@@ -176,7 +241,7 @@ if ($campeonatoSelecionado) {
         });
         ?>
         <hr>
-        <h4 class="text-success mt-4" style="font-size: 2rem;">🏆 Tabela de Classificação</h4>
+        <h4 class="text-success mt-4 text-center titulo-tabela">🏆 Tabela de Classificação</h4>
         <div class="mb-5">
             <table class="table table-striped table-bordered text-center w-100" style="font-size: 1rem;">
                 <thead class="table-dark text-nowrap">
@@ -215,12 +280,10 @@ if ($campeonatoSelecionado) {
             </table>
         </div>
     <?php endif; ?>
-
 </div>
-</body>
-
 <div class="mt-auto">
     <?php include __DIR__ . '/../cabecalho/footer.php'; ?>
 </div>
-
 <script src="../../../assets/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
