@@ -78,12 +78,12 @@ Para mais detalhes sobre os testes, consulte a [documentação de testes](tests/
 
 1. Clone o repositório:
 ```bash
-git clone https://github.com/seu-usuario/campeonato_esportivo.git
+git clone https://github.com/JoseTayllan/campeonato_esportivo.git
 ```
 
 2. Importe o banco de dados:
 ```bash
-mysql -u seu_usuario -p < db/Atual/dump_15_tabelas_truncate_fk_ok.sql
+mysql -u usuario_mysql -p < db/Atual/dump_15_tabelas_truncate_fk_ok.sql
 ```
 
 3. Configure o acesso ao banco de dados em `config/database.php`
