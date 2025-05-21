@@ -1,12 +1,29 @@
 <?php
 date_default_timezone_set('America/Sao_Paulo');
 include __DIR__ . '../../../includes/index_sec.php';
+
+// Extrair variáveis do $viewData
+$titulo = $viewData['titulo'] ?? "Partidas em Andamento";
+$modalidade = $viewData['modalidade'] ?? null;
+$partidas = $viewData['partidas'] ?? [];
 ?>
 
 <body>
 <main>
     <div class="container mt-4">
-        <h2>Partidas em Andamento</h2>
+        <h2><?= $titulo ?></h2>
+        
+        <?php if ($modalidade): ?>
+        <div class="mb-3">
+            <a href="/campeonato_esportivo/public/index.php?modalidade=<?= $modalidade ?>" class="btn btn-outline-primary btn-sm">
+                ← Voltar para campeonatos de <?= ucfirst($modalidade) ?>
+            </a>
+            <a href="/campeonato_esportivo/public/index.php" class="btn btn-outline-secondary btn-sm">
+                ← Todos os Esportes
+            </a>
+        </div>
+        <?php endif; ?>
+        
         <div id="placar-container" class="row"></div>
     </div>
 
@@ -17,14 +34,17 @@ include __DIR__ . '../../../includes/index_sec.php';
         };
 
         function carregarPlacarAoVivo() {
-            fetch('/campeonato_esportivo/routes/ajax/placar_atualizado.php')
+            // Buscar dados com o parâmetro de modalidade, se existir
+            const url = '/campeonato_esportivo/routes/ajax/placar_atualizado.php<?= $modalidade ? "?modalidade=$modalidade" : "" ?>';
+            
+            fetch(url)
                 .then(res => res.json())
                 .then(dados => {
                     const container = document.getElementById('placar-container');
                     container.innerHTML = '';
 
                     if (dados.length === 0) {
-                        container.innerHTML = '<div class="alert alert-info">Nenhuma partida em andamento no momento.</div>';
+                        container.innerHTML = '<div class="alert alert-info">Nenhuma partida em andamento no momento<?= $modalidade ? " para " . $modalidade : "" ?>.</div>';
                         return;
                     }
 
@@ -68,6 +88,10 @@ include __DIR__ . '../../../includes/index_sec.php';
                                    </a>
                                </div>`
                             : '';
+                            
+                        const modalidadeBadge = p.modalidade 
+                            ? `<span class="badge bg-primary ms-2">${p.modalidade}</span>` 
+                            : '';
 
                         container.innerHTML += `
 <div class="col-md-6 mb-3">
@@ -82,7 +106,7 @@ include __DIR__ . '../../../includes/index_sec.php';
                     <img src="/campeonato_esportivo/public/img/times/${p.escudo_fora}" width="30">
                 </h5>
                 <small>
-                    ${p.data} ${p.horario} | ${p.local} <br>
+                    ${p.data} ${p.horario} | ${p.local} ${modalidadeBadge}<br>
                     ${statusBadge} ⏱ ${tempoJogo} ${acrescimoBadge} ${tempoVisualBadge}
                 </small>
             </div>

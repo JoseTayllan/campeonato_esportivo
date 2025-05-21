@@ -50,6 +50,9 @@
                     <select name="modalidade" class="form-select">
                         <option <?= $campeonato['modalidade'] == 'Futebol' ? 'selected' : '' ?>>Futebol</option>
                         <option <?= $campeonato['modalidade'] == 'Futsal' ? 'selected' : '' ?>>Futsal</option>
+                        <option <?= $campeonato['modalidade'] == 'Queimada' ? 'selected' : '' ?>>Queimada</option>
+                        <option <?= $campeonato['modalidade'] == 'Natação' ? 'selected' : '' ?>>Natação</option>
+                        <option <?= $campeonato['modalidade'] == 'Vôlei' ? 'selected' : '' ?>>Vôlei</option>
                         <option <?= $campeonato['modalidade'] == '1x1' ? 'selected' : '' ?>>1x1</option>
                         <option <?= $campeonato['modalidade'] == '2x2' ? 'selected' : '' ?>>2x2</option>
                     </select>

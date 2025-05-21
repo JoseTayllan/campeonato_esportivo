@@ -7,13 +7,20 @@ class IndexPublicoController {
         $this->conn = $db;
     }
 
-    public function listarCampeonatosPorEsporte() {
+    public function listarCampeonatosPorEsporte($modalidade = null) {
         $sql = "
-            SELECT id, nome, descricao, temporada, formato
+            SELECT id, nome, descricao, temporada, formato, modalidade
             FROM campeonatos
             WHERE status = 'ativo'
-            ORDER BY nome
         ";
+        
+        if ($modalidade) {
+            $modalidade = $this->conn->real_escape_string($modalidade);
+            $sql .= " AND modalidade = '$modalidade'";
+        }
+        
+        $sql .= " ORDER BY nome";
+        
         $result = $this->conn->query($sql);
         return $result->fetch_all(MYSQLI_ASSOC);
     }
