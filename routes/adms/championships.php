@@ -8,12 +8,20 @@ require_once __DIR__ . '/../../app/controllers/RodadaController.php';
 $metodo = $_SERVER['REQUEST_METHOD'];
 
 if ($metodo === 'POST') {
-    // Dados do campeonato
-    $nome = $_POST['nome'] ?? '';
-    $descricao = $_POST['descricao'] ?? '';
-    $temporada = $_POST['temporada'] ?? '';
-    $formato = $_POST['formato'] ?? '';
-    $times = $_POST['times'] ?? [];
+    $nome       = $_POST['nome'] ?? '';
+    $descricao  = $_POST['descricao'] ?? '';
+    $premiacao  = $_POST['premiacao'] ?? '';
+    $temporada  = $_POST['temporada'] ?? '';
+    $formato    = $_POST['formato'] ?? '';
+    $modalidade = $_POST['modalidade'] ?? '';
+    $times      = $_POST['times'] ?? [];
+
+    $criado_por = isset($_SESSION['usuario_id']) ? intval($_SESSION['usuario_id']) : 0;
+    if ($criado_por <= 0) {
+        $_SESSION['mensagem_erro'] = "Usuário não autenticado. Faça login novamente.";
+        header('Location: ../../public/views/cadastro/cadastro_campeonato.php');
+        exit;
+    }
 
     // Upload do QR Code
     $qrCodePath = null;
@@ -31,29 +39,43 @@ if ($metodo === 'POST') {
         }
     }
 
-    // Verificação mínima
+    // Upload do Banner (Bandeirão)
+    $bannerPath = null;
+    if (isset($_FILES['banner']) && $_FILES['banner']['error'] === UPLOAD_ERR_OK) {
+        $ext = pathinfo($_FILES['banner']['name'], PATHINFO_EXTENSION);
+        $novoNome = 'banner_' . uniqid() . '.' . $ext;
+        $destino = 'public/img/banners/' . $novoNome;
+
+        if (!is_dir(__DIR__ . '/../../public/img/banners')) {
+            mkdir(__DIR__ . '/../../public/img/banners', 0777, true);
+        }
+
+        if (move_uploaded_file($_FILES['banner']['tmp_name'], __DIR__ . '/../../' . $destino)) {
+            $bannerPath = $destino;
+        }
+    }
+
     if (empty($nome) || empty($temporada) || empty($formato)) {
         $_SESSION['mensagem_erro'] = "Campos obrigatórios do campeonato estão faltando.";
         header('Location: ../../public/views/cadastro/cadastro_campeonato.php');
         exit;
     }
 
-    // Criar campeonato
+    // Cria o campeonato
     $championshipController = new ChampionshipController($conn);
-    $criado_por = $_SESSION['usuario_id'] ?? null;
     $response = json_decode($championshipController->criarCampeonato(
-        $nome, $descricao, $temporada, $formato, $criado_por, $times, $qrCodePath
+        $nome, $descricao, $premiacao, $temporada, $formato, $modalidade, $criado_por, $times, $qrCodePath, $bannerPath
     ), true);
 
     if (!isset($response['erro'])) {
         $campeonato_id = $conn->insert_id;
 
-        // Criar fase
+        // Cria a fase inicial
         $faseController = new FaseController($conn);
         $fase_id = $faseController->criarFase($campeonato_id, $_POST['fase_nome'] ?? '', $_POST['fase_ordem'] ?? 1);
 
         if ($fase_id) {
-            // Criar rodadas
+            // Cria as rodadas
             $rodadaController = new RodadaController($conn);
             $numeros = $_POST['rodada_numero'] ?? [];
             $tipos = $_POST['rodada_tipo'] ?? [];

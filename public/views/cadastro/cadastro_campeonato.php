@@ -5,11 +5,13 @@
     <h2 class="mb-4 text-center">Cadastro de Campeonato</h2>
 
     <?php if (!empty($_SESSION['mensagem_sucesso'])): ?>
-        <div class="alert alert-success"><?= $_SESSION['mensagem_sucesso']; unset($_SESSION['mensagem_sucesso']); ?></div>
+        <div class="alert alert-success"><?= $_SESSION['mensagem_sucesso'];
+                                            unset($_SESSION['mensagem_sucesso']); ?></div>
     <?php endif; ?>
 
     <?php if (!empty($_SESSION['mensagem_erro'])): ?>
-        <div class="alert alert-danger"><?= $_SESSION['mensagem_erro']; unset($_SESSION['mensagem_erro']); ?></div>
+        <div class="alert alert-danger"><?= $_SESSION['mensagem_erro'];
+                                        unset($_SESSION['mensagem_erro']); ?></div>
     <?php endif; ?>
 
     <form method="POST" action="../../../routes/adms/championships.php" enctype="multipart/form-data">
@@ -22,6 +24,12 @@
             <label class="form-label">Descrição</label>
             <textarea name="descricao" class="form-control" rows="3"></textarea>
         </div>
+
+        <div class="mb-3">
+    <label>Premiação</label>
+    <textarea name="premiacao" id="premiacao" class="form-control"><?= $campeonato['premiacao'] ?></textarea>
+</div>
+
 
         <div class="mb-3">
             <label class="form-label">Temporada</label>
@@ -47,6 +55,10 @@
             <input type="file" name="qr_code" class="form-control" accept="image/*">
         </div>
 
+        <div class="mb-3">
+            <label class="form-label">Banner do Campeonato (Bandeirão)</label>
+            <input type="file" name="banner" class="form-control" accept="image/*">
+        </div>
         <div class="text-center">
             <button type="submit" class="btn btn-primary">Cadastrar Campeonato</button>
         </div>

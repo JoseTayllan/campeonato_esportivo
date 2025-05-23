@@ -1,6 +1,9 @@
 <?php
 require_once __DIR__ . '/../../../config/database.php';
 require_once __DIR__ . '/../../includes/index_sec.php';
+
+$campeonatosQuery = $conn->query("SELECT id, nome, temporada FROM campeonatos ORDER BY temporada DESC");
+$campeonatoSelecionado = $_GET['campeonato_id'] ?? '';
 ?>
 
 <!DOCTYPE html>
@@ -31,13 +34,26 @@ require_once __DIR__ . '/../../includes/index_sec.php';
 
 <main class="flex-grow-1">
     <div class="container mt-4">
-        <h2 class="mb-4 text-center">Tabelas de Classificação por Campeonato</h2>
+        <h2 class="mb-4 text-center">Tabelas de Classificação</h2>
 
-        <?php
-        $campeonatos = $conn->query("SELECT id, nome, temporada FROM campeonatos ORDER BY temporada DESC");
+        <!-- Select para escolher o campeonato -->
+        <form method="GET" class="mb-4">
+            <label class="form-label fw-bold">Selecione o Campeonato:</label>
+            <select name="campeonato_id" class="form-select" onchange="this.form.submit()">
+                <option value="">Selecione...</option>
+                <?php while ($camp = $campeonatosQuery->fetch_assoc()): ?>
+                    <option value="<?= $camp['id'] ?>" <?= $campeonatoSelecionado == $camp['id'] ? 'selected' : '' ?>>
+                        <?= htmlspecialchars($camp['nome']) ?> - Temporada <?= htmlspecialchars($camp['temporada']) ?>
+                    </option>
+                <?php endwhile; ?>
+            </select>
+        </form>
 
-        while ($camp = $campeonatos->fetch_assoc()) {
-            echo "<h4 class='mt-5 mb-3 text-primary'>🏆 {$camp['nome']} - Temporada {$camp['temporada']}</h4>";
+        <?php if (!empty($campeonatoSelecionado)): ?>
+            <?php
+            $campeonato = $conn->query("SELECT id, nome, temporada FROM campeonatos WHERE id = $campeonatoSelecionado")->fetch_assoc();
+
+            echo "<h4 class='mt-5 mb-3 text-primary'>🏆 {$campeonato['nome']} - Temporada {$campeonato['temporada']}</h4>";
             echo "<div class='mb-4'>
                     <table class='table table-striped table-bordered text-center w-100'>
                         <thead class='table-dark text-nowrap'>
@@ -57,7 +73,7 @@ require_once __DIR__ . '/../../includes/index_sec.php';
 
             $sqlTimes = "SELECT t.id, t.nome, t.escudo FROM times t
                          JOIN times_campeonatos tc ON tc.time_id = t.id
-                         WHERE tc.campeonato_id = {$camp['id']}";
+                         WHERE tc.campeonato_id = {$campeonatoSelecionado}";
             $res = $conn->query($sqlTimes);
 
             $tabela = [];
@@ -66,7 +82,7 @@ require_once __DIR__ . '/../../includes/index_sec.php';
                 $timeId = $time['id'];
 
                 $partidas = "SELECT * FROM partidas 
-                             WHERE campeonato_id = {$camp['id']} 
+                             WHERE campeonato_id = {$campeonatoSelecionado} 
                              AND status IN ('em_andamento', 'finalizada')
                              AND placar_casa IS NOT NULL AND placar_fora IS NOT NULL
                              AND (time_casa = $timeId OR time_fora = $timeId)";
@@ -132,8 +148,10 @@ require_once __DIR__ . '/../../includes/index_sec.php';
             echo "      </tbody>
                     </table>
                   </div>";
-        }
-        ?>
+            ?>
+        <?php else: ?>
+            <div class="alert alert-info">Selecione um campeonato para visualizar a classificação.</div>
+        <?php endif; ?>
     </div>
 </main>
 
