@@ -1,4 +1,5 @@
 <?php
+require_once __DIR__ . '/../../config/database.php';
 class Campeonato
 {
     private $conn;
@@ -263,6 +264,15 @@ class Campeonato
     {
         $sql = "SELECT * FROM campeonatos ORDER BY nome ASC";
         $result = $this->conn->query($sql);
+        return $result->fetch_all(MYSQLI_ASSOC);
+    }
+
+    public function listarCampeonatosAtivos()
+    {
+        $sql = "SELECT * FROM campeonatos WHERE status_finalizado = 0";
+        $stmt = $this->conn->prepare($sql);
+        $stmt->execute();
+        $result = $stmt->get_result();
         return $result->fetch_all(MYSQLI_ASSOC);
     }
 }

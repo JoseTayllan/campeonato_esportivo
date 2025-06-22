@@ -32,10 +32,12 @@ class Admin {
         $q1 = $conn->query("SELECT COUNT(DISTINCT time_id) as total FROM times_campeonatos WHERE campeonato_id IN ($in)");
         $resumo['Times'] = $q1->fetch_assoc()['total'] ?? 0;
 
-        // Contar jogadores dos times associados
-        $q2 = $conn->query("SELECT COUNT(*) as total FROM jogadores WHERE time_id IN (
-            SELECT DISTINCT time_id FROM times_campeonatos WHERE campeonato_id IN ($in)
-        )");
+        // Contar jogadores vinculados a esses times (via jogador_time)
+        $q2 = $conn->query("SELECT COUNT(DISTINCT jt.jogador_id) as total
+                            FROM jogador_time jt
+                            WHERE jt.time_id IN (
+                                SELECT DISTINCT time_id FROM times_campeonatos WHERE campeonato_id IN ($in)
+                            ) AND jt.status = 'ativo'");
         $resumo['Jogadores'] = $q2->fetch_assoc()['total'] ?? 0;
 
         return $resumo;

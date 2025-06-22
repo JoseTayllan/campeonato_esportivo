@@ -8,7 +8,7 @@ $time_id = $_GET['time_id'] ?? null;
 
 if (!$campeonato_id || !$time_id) {
     $_SESSION['mensagem_erro'] = "ID do time ou campeonato não informado.";
-    header("Location: campeonato_editar.php?id=$campeonato_id");
+    header("Location: campeonato_editar_times.php?id=$campeonato_id");
     exit;
 }
 
@@ -20,5 +20,5 @@ if ($model->desvincularTime($campeonato_id, $time_id)) {
     $_SESSION['mensagem_erro'] = "Erro ao remover o time.";
 }
 
-header("Location: campeonato_editar.php?id=$campeonato_id");
+header("Location: campeonato_editar_times.php?id=$campeonato_id");
 exit;

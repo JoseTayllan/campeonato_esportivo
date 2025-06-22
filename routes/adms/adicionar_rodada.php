@@ -15,7 +15,7 @@ $model = new Campeonato($conn);
 
 if (!$campeonato_id || !$fase_id || !$numero || !$tipo || !$data || !$hora) {
     $_SESSION['mensagem_erro'] = "⚠️ Preencha todos os campos obrigatórios para adicionar a rodada.";
-    header("Location: campeonato_editar.php?id=$campeonato_id");
+    header("Location: campeonato_editar_rodadas.php?id=$campeonato_id");
     exit;
 }
 
@@ -27,5 +27,5 @@ if ($adicionada) {
     $_SESSION['mensagem_erro'] = "Erro ao adicionar a rodada.";
 }
 
-header("Location: campeonato_editar.php?id=$campeonato_id");
+header("Location: campeonato_editar_rodadas.php?id=$campeonato_id");
 exit;

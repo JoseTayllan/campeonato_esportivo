@@ -26,10 +26,14 @@ if (session_status() === PHP_SESSION_NONE) {
             <a class="navbar-brand d-flex align-items-center" href="../../index.php">
                 <i class="bi bi-house-door-fill me-2"></i> Início
             </a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
-                aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
+            <nav class="navbar navbar-expand-lg navbar-dark shadow-sm" style="background-color: var(--primary-color);">
+              
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+                    aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+               
+            </nav>
 
             <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
                 <?php if (isset($_SESSION['usuario_nome'])): ?>

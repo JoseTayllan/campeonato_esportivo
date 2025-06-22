@@ -1,6 +1,7 @@
 <?php
 require_once __DIR__ . '/../../config/database.php';
 require_once __DIR__ . '/../../public/includes/header_trasmicao.php'; 
+
 $id = $_GET['id'] ?? null;
 if (!$id) exit('Partida não encontrada.');
 
@@ -18,8 +19,11 @@ $stmt->close();
 
 if (!$partida || empty($partida['link_transmissao'])) exit('Transmissão indisponível.');
 
-$partida['escudo_casa'] = basename(str_replace('public/img/times/', '', $partida['escudo_casa']));
-$partida['escudo_fora'] = basename(str_replace('public/img/times/', '', $partida['escudo_fora']));
+// Correção para evitar erro com valor null
+$partida['escudo_casa'] = basename(str_replace('public/img/times/', '', $partida['escudo_casa'] ?? ''));
+$partida['escudo_fora'] = basename(str_replace('public/img/times/', '', $partida['escudo_fora'] ?? ''));
+
+// Gera embed do YouTube
 $embed = str_replace("watch?v=", "embed/", $partida['link_transmissao']);
 ?>
 <!DOCTYPE html>

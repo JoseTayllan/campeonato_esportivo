@@ -8,7 +8,7 @@ $time_id = $_POST['time_id'] ?? null;
 
 if (!$campeonato_id || !$time_id) {
     $_SESSION['mensagem_erro'] = "ID do time ou campeonato não informado.";
-    header("Location: campeonato_editar.php?id=$campeonato_id");
+   header("Location: campeonato_editar_times.php?id=$campeonato_id");
     exit;
 }
 
@@ -30,5 +30,5 @@ if ($res->num_rows > 0) {
     }
 }
 
-header("Location: campeonato_editar.php?id=$campeonato_id");
+header("Location: campeonato_editar_times.php?id=$campeonato_id");
 exit;

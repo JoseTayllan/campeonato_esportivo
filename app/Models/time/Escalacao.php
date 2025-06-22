@@ -37,12 +37,15 @@ class Escalacao {
         return true;
     }
     public function buscarJogadoresDoTime($time_id) {
-        $stmt = $this->conn->prepare("SELECT * FROM jogadores WHERE time_id = ?");
-        $stmt->bind_param("i", $time_id);
-        $stmt->execute();
-        return $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
-    }
-
+    $sql = "SELECT j.* 
+            FROM jogador_time jt
+            INNER JOIN jogadores j ON jt.jogador_id = j.id
+            WHERE jt.time_id = ? AND jt.status = 'ativo'";
+    $stmt = $this->conn->prepare($sql);
+    $stmt->bind_param("i", $time_id);
+    $stmt->execute();
+    return $stmt->get_result();
+}
     public function buscarEscalacaoPorPartida($partida_id) {
         $stmt = $this->conn->prepare("SELECT * FROM escalacoes WHERE partida_id = ?");
         $stmt->bind_param("i", $partida_id);

@@ -14,7 +14,7 @@ $fase_id = $_POST['fase_id'] ?? null;
 
 if (!$partida_id || !$campeonato_id || !$time_casa || !$time_fora || !$data || !$horario) {
     $_SESSION['mensagem_erro'] = "⚠️ Preencha todos os campos obrigatórios para atualizar a partida.";
-    header("Location: campeonato_editar.php?id=$campeonato_id");
+    header("Location: campeonato_editar_rodadas.php?id=$campeonato_id");
     exit;
 }
 
@@ -30,7 +30,7 @@ $rodada_id = $result['rodada_id'] ?? null;
 
 if (!$rodada_id) {
     $_SESSION['mensagem_erro'] = "Erro ao localizar a rodada da partida.";
-    header("Location: campeonato_editar.php?id=$campeonato_id");
+    header("Location: campeonato_editar_rodadas.php?id=$campeonato_id");
     exit;
 }
 
@@ -50,5 +50,5 @@ if ($stmtUpdate->execute()) {
     $_SESSION['mensagem_erro'] = "Erro ao atualizar a partida.";
 }
 
-header("Location: campeonato_editar.php?id=$campeonato_id");
+header("Location: campeonato_editar_rodadas.php?id=$campeonato_id");
 exit;

@@ -72,6 +72,13 @@ include __DIR__ . '../../../includes/index_login.php';
                             <i class="bi bi-box-arrow-in-right me-2"></i>Entrar
                         </button>
 
+                        <div class="text-center mt-4">
+                            <a href="/campeonato_esportivo/public/views/login/login_jogador.php" class="btn btn-outline-primary">
+                                Sou Jogador
+                            </a>
+                        </div>
+
+
                         <div class="text-center mt-3">
                             <a href="recuperar_senha.php">Esqueci minha senha</a><br>
                         </div>

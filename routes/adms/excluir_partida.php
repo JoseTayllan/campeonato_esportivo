@@ -8,7 +8,7 @@ $campeonato_id = $_GET['campeonato_id'] ?? null;
 
 if (!$partida_id || !$campeonato_id) {
     $_SESSION['mensagem_erro'] = "ID da partida ou do campeonato não informado.";
-    header("Location: campeonato_editar.php?id=$campeonato_id");
+    header("Location: campeonato_editar_rodadas.php?id=$campeonato_id");
     exit;
 }
 
@@ -21,5 +21,5 @@ if ($removido) {
     $_SESSION['mensagem_erro'] = "Erro ao remover a partida.";
 }
 
-header("Location: campeonato_editar.php?id=$campeonato_id");
+header("Location: campeonato_editar_rodadas.php?id=$campeonato_id");
 exit;

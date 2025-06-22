@@ -12,7 +12,13 @@ class RankingPorCampeonato {
         SELECT j.nome, t.nome AS time, SUM(ep.gols) AS gols
         FROM estatisticas_partida ep
         JOIN jogadores j ON ep.jogador_id = j.id
-        JOIN times t ON j.time_id = t.id
+        JOIN (
+            SELECT jogador_id, time_id
+            FROM jogador_time
+            WHERE status = 'ativo'
+            GROUP BY jogador_id
+        ) jt ON jt.jogador_id = j.id
+        JOIN times t ON jt.time_id = t.id
         JOIN partidas p ON ep.partida_id = p.id
         WHERE ep.gols > 0 AND p.campeonato_id = ?
         GROUP BY ep.jogador_id
@@ -25,29 +31,29 @@ class RankingPorCampeonato {
     return $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
 }
 
+public function cartoes($campeonato_id) {
+    $sql = "
+        SELECT j.nome, t.nome AS time,
+               SUM(IFNULL(ep.cartoes_amarelos, 0)) AS amarelos,
+               SUM(IFNULL(ep.cartoes_vermelhos, 0)) AS vermelhos
+        FROM estatisticas_partida ep
+        JOIN jogadores j ON ep.jogador_id = j.id
+        JOIN partidas p ON ep.partida_id = p.id
+        JOIN jogador_time jt ON jt.jogador_id = j.id AND jt.status = 'ativo'
+        JOIN times t ON jt.time_id = t.id
+        WHERE p.campeonato_id = ?
+          AND p.status = 'finalizada'
+          AND (IFNULL(ep.cartoes_amarelos, 0) > 0 OR IFNULL(ep.cartoes_vermelhos, 0) > 0)
+        GROUP BY j.id
+        ORDER BY amarelos DESC, vermelhos DESC
+        LIMIT 10
+    ";
+    $stmt = $this->conn->prepare($sql);
+    $stmt->bind_param("i", $campeonato_id);
+    $stmt->execute();
+    return $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
+}
 
-    public function cartoes($campeonato_id) {
-        $sql = "
-            SELECT j.nome, t.nome AS time,
-                   SUM(IFNULL(ep.cartoes_amarelos, 0)) AS amarelos,
-                   SUM(IFNULL(ep.cartoes_vermelhos, 0)) AS vermelhos
-            FROM estatisticas_partida ep
-            JOIN jogadores j ON ep.jogador_id = j.id
-            JOIN times t ON j.time_id = t.id
-            JOIN partidas p ON ep.partida_id = p.id
-            WHERE p.campeonato_id = ?
-              AND p.status = 'finalizada'
-              AND (IFNULL(ep.cartoes_amarelos, 0) > 0 OR IFNULL(ep.cartoes_vermelhos, 0) > 0)
-            GROUP BY ep.jogador_id
-            ORDER BY amarelos DESC, vermelhos DESC
-            LIMIT 10
-        ";
-        $stmt = $this->conn->prepare($sql);
-        $stmt->bind_param("i", $campeonato_id);
-        $stmt->execute();
-        return $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
-    }
-    
     
 
     public function timesComMaisVitorias($campeonato_id) {
@@ -69,29 +75,31 @@ class RankingPorCampeonato {
         $stmt->execute();
         return $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
     }
-    public function goleiros($campeonato_id) {
-        $sql = "
-            SELECT j.nome, t.nome AS time,
-                   SUM(ep.defesas) AS total_defesas,
-                   SUM(ep.gols_sofridos) AS total_gols_sofridos,
-                   SUM(ep.penaltis_defendidos) AS total_penaltis_defendidos,
-                   SUM(ep.clean_sheets) AS total_clean_sheets
-            FROM estatisticas_partida ep
-            JOIN jogadores j ON ep.jogador_id = j.id
-            JOIN times t ON j.time_id = t.id
-            JOIN partidas p ON ep.partida_id = p.id
-            WHERE p.campeonato_id = ?
-              AND p.status = 'finalizada'
-              AND j.posicao = 'Goleiro'
-            GROUP BY ep.jogador_id
-            ORDER BY total_defesas DESC, total_clean_sheets DESC
-            LIMIT 10
-        ";
-        $stmt = $this->conn->prepare($sql);
-        $stmt->bind_param("i", $campeonato_id);
-        $stmt->execute();
-        return $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
-    }
+public function goleiros($campeonato_id) {
+    $sql = "
+        SELECT j.nome, t.nome AS time,
+               SUM(ep.defesas) AS total_defesas,
+               SUM(ep.gols_sofridos) AS total_gols_sofridos,
+               SUM(ep.penaltis_defendidos) AS total_penaltis_defendidos,
+               SUM(ep.clean_sheets) AS total_clean_sheets
+        FROM estatisticas_partida ep
+        JOIN jogadores j ON ep.jogador_id = j.id
+        JOIN partidas p ON ep.partida_id = p.id
+        JOIN jogador_time jt ON jt.jogador_id = j.id AND jt.status = 'ativo'
+        JOIN times t ON jt.time_id = t.id
+        WHERE p.campeonato_id = ?
+          AND p.status = 'finalizada'
+          AND j.posicao = 'Goleiro'
+        GROUP BY ep.jogador_id
+        ORDER BY total_gols_sofridos ASC, total_clean_sheets DESC, total_defesas DESC
+        LIMIT 10
+    ";
+    $stmt = $this->conn->prepare($sql);
+    $stmt->bind_param("i", $campeonato_id);
+    $stmt->execute();
+    return $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
+}
+
     
     
     

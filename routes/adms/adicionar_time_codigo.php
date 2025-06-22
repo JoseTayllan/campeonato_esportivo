@@ -11,7 +11,7 @@ $campeonato_id = $_POST['campeonato_id'] ?? '';
 
 if (empty($codigo) || empty($campeonato_id)) {
     $_SESSION['mensagem_erro'] = "Código do time ou campeonato não informado.";
-    header("Location: campeonato_editar.php?id=" . $campeonato_id);
+    header("Location: campeonato_editar_times.php?id=$campeonato_id");
     exit;
 }
 
@@ -39,5 +39,5 @@ if ($time) {
     $_SESSION['mensagem_erro'] = "❌ Código inválido. Nenhum time encontrado.";
 }
 
-header("Location: campeonato_editar.php?id=" . $campeonato_id);
+header("Location: campeonato_editar_times.php?id=$campeonato_id");
 exit;

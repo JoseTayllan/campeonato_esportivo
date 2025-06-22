@@ -3,28 +3,30 @@ session_start();
 require_once __DIR__ . '/../config/database.php';
 require_once __DIR__ . '/../app/controllers/IndexPublicoController.php';
 
-// Receber a modalidade da URL
-$modalidade = isset($_GET['modalidade']) ? $_GET['modalidade'] : null;
+// Receber modalidade
+$modalidade = $_GET['modalidade'] ?? null;
 
+// Instanciar controller
 $controller = new IndexPublicoController($conn);
-$campeonatosPorEsporte = $controller->listarCampeonatosPorEsporte($modalidade);
 
-// Definir título da página baseado na modalidade
-$tituloModalidade = "Campeonatos Esportivos";
-if ($modalidade) {
-    $tituloModalidade = "Campeonatos de " . ucfirst($modalidade);
-}
+// Carregar campeonatos
+$campeonatosAtivos = $controller->listarCampeonatosPorEsporte($modalidade);
+$campeonatosFinalizados = $controller->listarCampeonatosFinalizados($modalidade);
+
+// Definir título
+$tituloModalidade = $modalidade ? "Campeonatos de " . ucfirst($modalidade) : "Campeonatos Esportivos";
 
 include_once __DIR__ . '/includes/header_index.php';
 ?>
 
 <div class="container mt-4">
-   <link rel="stylesheet" href="/campeonato_esportivo/public/assets/css/global.css">
-    <!-- Carrossel de imagens -->
+    <link rel="stylesheet" href="/campeonato_esportivo/public/assets/css/global.css">
+
+    <!-- 🔥 Carrossel -->
     <div id="carrossel-artes" class="carousel slide mb-4" data-bs-ride="carousel" data-bs-interval="4000">
         <div class="carousel-inner rounded shadow-sm">
             <div class="carousel-item active">
-                <img src="/campeonato_esportivo/assets/img/carrosselW.webp" class="d-block w-100" alt="Arte 1"> 
+                <img src="/campeonato_esportivo/assets/img/carrosselW.webp" class="d-block w-100" alt="Arte 1">
             </div>
             <div class="carousel-item">
                 <img src="/campeonato_esportivo/assets/img/ArteFPMs.png" class="d-block w-100" alt="Arte 2">
@@ -44,12 +46,11 @@ include_once __DIR__ . '/includes/header_index.php';
     <h2 class="mb-4 text-verde"><?= $tituloModalidade ?></h2>
 
     <div class="mb-4 d-flex flex-wrap gap-2">
-        <a href="/campeonato_esportivo/routes/public/placar_publico.php<?= $modalidade ? "?modalidade=$modalidade" : "" ?>" class="btn btn-outline-success">
-            📻 Ver Placar Ao Vivo
-        </a>
-        <a href="/campeonato_esportivo/routes/login.php" class="btn btn-outline-dark">
-            🔐 Acessar Sistema
-        </a>
+        <a href="/campeonato_esportivo/routes/public/placar_publico.php<?= $modalidade ? "?modalidade=$modalidade" : "" ?>"
+            class="btn btn-outline-success">📻 Ver Placar Ao Vivo</a>
+
+        <a href="/campeonato_esportivo/routes/login.php" class="btn btn-outline-dark">🔐 Acessar Sistema</a>
+
         <?php
         $tipo = $_SESSION['usuario']['tipo_assinatura'] ?? null;
         if ($tipo === 'admin' || $tipo === 'completo') {
@@ -63,25 +64,21 @@ include_once __DIR__ . '/includes/header_index.php';
         }
         if ($link):
         ?>
-        <a href="<?= $link ?>" class="btn btn-outline-warning">
-            👤 Voltar ao Painel
-        </a>
+            <a href="<?= $link ?>" class="btn btn-outline-warning">👤 Voltar ao Painel</a>
         <?php endif; ?>
-        
-        <!-- Botão para voltar à página inicial -->
+
         <?php if ($modalidade): ?>
-        <a href="/campeonato_esportivo/public/" class="btn btn-outline-primary">
-            🔙 Todos os Esportes
-        </a>
+            <a href="/campeonato_esportivo/public/" class="btn btn-outline-primary">🔙 Todos os Esportes</a>
         <?php endif; ?>
     </div>
 
-    <h4 class="text-verde mt-4">Campeonatos em Andamento</h4>
-    <?php if (empty($campeonatosPorEsporte)): ?>
-        <div class="alert alert-info">Nenhum campeonato de <?= $modalidade ? strtolower($modalidade) : "esporte" ?> em andamento.</div>
+    <!-- 🟢 Campeonatos em Andamento -->
+    <h4 class="text-success mt-4">Campeonatos em Andamento</h4>
+    <?php if (empty($campeonatosAtivos)): ?>
+        <div class="alert alert-info">Nenhum campeonato em andamento.</div>
     <?php else: ?>
         <div class="row">
-            <?php foreach ($campeonatosPorEsporte as $camp): ?>
+            <?php foreach ($campeonatosAtivos as $camp): ?>
                 <div class="col-md-4">
                     <div class="card mb-3 shadow-sm">
                         <div class="card-body">
@@ -91,9 +88,31 @@ include_once __DIR__ . '/includes/header_index.php';
                                 Formato: <?= htmlspecialchars($camp['formato']) ?><br>
                                 Modalidade: <?= htmlspecialchars($camp['modalidade']) ?>
                             </p>
-                            <a href="/campeonato_esportivo/routes/public/campeonato_publico.php?id=<?= $camp['id'] ?>" class="btn btn-sm btn-outline-primary">
-                                Ver Campeonato
-                            </a>
+                            <a href="/campeonato_esportivo/routes/public/campeonato_publico.php?id=<?= $camp['id'] ?>"
+                                class="btn btn-sm btn-outline-primary">Ver Campeonato</a>
+                        </div>
+                    </div>
+                </div>
+            <?php endforeach; ?>
+        </div>
+    <?php endif; ?>
+
+    <!-- 🔴 Campeonatos Finalizados -->
+    <?php if (!empty($campeonatosFinalizados)): ?>
+        <h4 class="text-danger mt-5">🏆 Campeonatos Finalizados</h4>
+        <div class="row">
+            <?php foreach ($campeonatosFinalizados as $camp): ?>
+                <div class="col-md-4">
+                    <div class="card mb-3 shadow-sm border-danger">
+                        <div class="card-body">
+                            <h5 class="card-title text-danger"><?= htmlspecialchars($camp['nome']) ?></h5>
+                            <p class="card-text">
+                                Temporada: <?= htmlspecialchars($camp['temporada']) ?><br>
+                                Formato: <?= htmlspecialchars($camp['formato']) ?><br>
+                                Modalidade: <?= htmlspecialchars($camp['modalidade']) ?>
+                            </p>
+                            <a href="/campeonato_esportivo/routes/public/dashboard_campeao.php?campeonato_id=<?= $camp['id'] ?>"
+                                class="btn btn-sm btn-outline-danger">🏆 Ver Campeão</a>
                         </div>
                     </div>
                 </div>

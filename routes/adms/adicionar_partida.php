@@ -13,7 +13,7 @@ $local = $_POST['local'] ?? '';
 
 if (!$rodada_id || !$time_casa || !$time_fora || !$data || !$horario) {
     $_SESSION['mensagem_erro'] = "⚠️ Preencha todos os campos obrigatórios para adicionar a partida.";
-    header("Location: campeonato_editar.php?id=$campeonato_id");
+    header("Location: campeonato_editar_rodadas.php?id=$campeonato_id");
     exit;
 }
 
@@ -33,7 +33,7 @@ $campeonato_id = $res['campeonato_id'] ?? $campeonato_id;
 
 if (!$fase_id) {
     $_SESSION['mensagem_erro'] = "Erro ao identificar a fase da rodada.";
-    header("Location: campeonato_editar.php?id=$campeonato_id");
+    header("Location: campeonato_editar_rodadas.php?id=$campeonato_id");
     exit;
 }
 
@@ -50,5 +50,5 @@ if ($stmt->execute()) {
     $_SESSION['mensagem_erro'] = "Erro ao adicionar a partida.";
 }
 
-header("Location: campeonato_editar.php?id=$campeonato_id");
+header("Location: campeonato_editar_rodadas.php?id=$campeonato_id");
 exit;
