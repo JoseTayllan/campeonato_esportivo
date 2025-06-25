@@ -1,8 +1,8 @@
-CREATE DATABASE  IF NOT EXISTS `projeto_php` /*!40100 DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci */ /*!80016 DEFAULT ENCRYPTION='N' */;
-USE `projeto_php`;
+CREATE DATABASE  IF NOT EXISTS `campeonato_esportivo` /*!40100 DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci */ /*!80016 DEFAULT ENCRYPTION='N' */;
+USE `campeonato_esportivo`;
 -- MySQL dump 10.13  Distrib 8.0.36
 --
--- Host: localhost    Database: projeto_php
+-- Host: localhost    Database: campeonato_esportivo
 -- ------------------------------------------------------
 -- Server version	8.2.0
 

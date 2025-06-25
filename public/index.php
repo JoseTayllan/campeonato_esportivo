@@ -19,18 +19,18 @@ include_once __DIR__ . '/includes/header_index.php';
 ?>
 
 <div class="container mt-4">
-   <link rel="stylesheet" href="/campeonato_esportivo/public/assets/css/global.css">
+   <link rel="stylesheet" href="/assets/css/global.css">
     <!-- Carrossel de imagens -->
     <div id="carrossel-artes" class="carousel slide mb-4" data-bs-ride="carousel" data-bs-interval="4000">
         <div class="carousel-inner rounded shadow-sm">
             <div class="carousel-item active">
-                <img src="/campeonato_esportivo/assets/img/carrosselW.webp" class="d-block w-100" alt="Arte 1"> 
+                <img src="/assets/img/carrosselW.webp" class="d-block w-100" alt="Arte 1"> 
             </div>
             <div class="carousel-item">
-                <img src="/campeonato_esportivo/assets/img/ArteFPMs.png" class="d-block w-100" alt="Arte 2">
+                <img src="/assets/img/ArteFPMs.png" class="d-block w-100" alt="Arte 2">
             </div>
             <div class="carousel-item">
-                <img src="/campeonato_esportivo/assets/img/carrossel3.jpg" class="d-block w-100" alt="Arte 3">
+                <img src="/assets/img/carrossel3.jpg" class="d-block w-100" alt="Arte 3">
             </div>
         </div>
         <button class="carousel-control-prev" type="button" data-bs-target="#carrossel-artes" data-bs-slide="prev">
@@ -44,20 +44,20 @@ include_once __DIR__ . '/includes/header_index.php';
     <h2 class="mb-4 text-verde"><?= $tituloModalidade ?></h2>
 
     <div class="mb-4 d-flex flex-wrap gap-2">
-        <a href="/campeonato_esportivo/routes/public/placar_publico.php<?= $modalidade ? "?modalidade=$modalidade" : "" ?>" class="btn btn-outline-success">
+        <a href="/routes/public/placar_publico.php<?= $modalidade ? "?modalidade=$modalidade" : "" ?>" class="btn btn-outline-success">
             📻 Ver Placar Ao Vivo
         </a>
-        <a href="/campeonato_esportivo/routes/login.php" class="btn btn-outline-dark">
+        <a href="/routes/login.php" class="btn btn-outline-dark">
             🔐 Acessar Sistema
         </a>
         <?php
         $tipo = $_SESSION['usuario']['tipo_assinatura'] ?? null;
         if ($tipo === 'admin' || $tipo === 'completo') {
-            $link = '/campeonato_esportivo/routes/admin_visual/dashboard_administrador.php';
+            $link = '/routes/admin_visual/dashboard_administrador.php';
         } elseif ($tipo === 'time') {
-            $link = '/campeonato_esportivo/routes/time/dashboard_time.php';
+            $link = '/routes/time/dashboard_time.php';
         } elseif ($tipo === 'olheiro') {
-            $link = '/campeonato_esportivo/public/views/dashboard/dashboard_olheiro.php';
+            $link = '/public/views/dashboard/dashboard_olheiro.php';
         } else {
             $link = null;
         }
@@ -70,7 +70,7 @@ include_once __DIR__ . '/includes/header_index.php';
         
         <!-- Botão para voltar à página inicial -->
         <?php if ($modalidade): ?>
-        <a href="/campeonato_esportivo/public/" class="btn btn-outline-primary">
+        <a href="/public/" class="btn btn-outline-primary">
             🔙 Todos os Esportes
         </a>
         <?php endif; ?>
@@ -91,7 +91,7 @@ include_once __DIR__ . '/includes/header_index.php';
                                 Formato: <?= htmlspecialchars($camp['formato']) ?><br>
                                 Modalidade: <?= htmlspecialchars($camp['modalidade']) ?>
                             </p>
-                            <a href="/campeonato_esportivo/routes/public/campeonato_publico.php?id=<?= $camp['id'] ?>" class="btn btn-sm btn-outline-primary">
+                            <a href="/routes/public/campeonato_publico.php?id=<?= $camp['id'] ?>" class="btn btn-sm btn-outline-primary">
                                 Ver Campeonato
                             </a>
                         </div>
@@ -104,5 +104,5 @@ include_once __DIR__ . '/includes/header_index.php';
 
 <div class="mt-auto mt-5">
     <?php include 'views/cabecalho/footer.php'; ?>
-    <script src="../assets/js/bootstrap.bundle.min.js"></script>
+    <script src="/assets/js/bootstrap.bundle.min.js"></script>
 </div>
