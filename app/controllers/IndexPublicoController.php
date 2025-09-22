@@ -7,7 +7,7 @@ class IndexPublicoController
     public function __construct($db)
     {
         $this->conn = $db;
-    }
+    } 
 
     // 🔥 Campeonatos em andamento
     public function listarCampeonatosPorEsporte($modalidade = null)

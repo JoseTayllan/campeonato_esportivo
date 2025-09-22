@@ -1,10 +1,22 @@
 <?php
 session_start();
-require_once __DIR__ . '/../config/database.php';
-require_once __DIR__ . '/../app/controllers/IndexPublicoController.php';
 
-// Receber modalidade
+require_once __DIR__ . '/../config/database.php';
+
+require_once __DIR__ . '/../app/controllers/IndexPublicoController.php';
 $modalidade = $_GET['modalidade'] ?? null;
+
+if ($modalidade) {
+    // normalizar valores amigáveis da URL
+    $map = [
+        "pingpong" => "Ping-Pong",
+        "futebol" => "Futebol",
+        "basquete" => "Basquete",
+        // pode expandir depois
+    ];
+    $modalidade = $map[strtolower($modalidade)] ?? $modalidade;
+}
+
 
 // Instanciar controller
 $controller = new IndexPublicoController($conn);
@@ -88,9 +100,31 @@ include_once __DIR__ . '/includes/header_index.php';
                                 Formato: <?= htmlspecialchars($camp['formato']) ?><br>
                                 Modalidade: <?= htmlspecialchars($camp['modalidade']) ?>
                             </p>
-                            <a href="/campeonato_esportivo/routes/public/campeonato_publico.php?id=<?= $camp['id'] ?>"
-                                class="btn btn-sm btn-outline-primary">Ver Campeonato</a>
+
+                            <?php if ($modalidade === "Ping-Pong"): ?>
+                                <a href="/ping-pong/index.php?r=campeonato_publico&id=<?= $camp['id'] ?>"
+                                    class="btn btn-sm btn-outline-primary">Ver Campeonato</a>
+                            <?php else: ?>
+                                <a href="/campeonato_esportivo/routes/public/campeonato_publico.php?id=<?= $camp['id'] ?>"
+                                    class="btn btn-sm btn-outline-primary">Ver Campeonato</a>
+                            <?php endif; ?>
+
+
+
+                            <?php if ($modalidade === "Ping-Pong"): ?>
+                                <?php if (isset($_SESSION['usuario']) && $_SESSION['usuario']['tipo'] === 'Jogador'): ?>
+                                    <!-- Jogador logado → pode se inscrever -->
+                                    <a href="/ping-pong/index.php?r=inscricao_show&campeonato=<?= $camp['id'] ?>"
+                                        class="btn btn-sm btn-success">Participar</a>
+
+                                <?php else: ?>
+                                    <!-- Visitante → pede cadastro -->
+                                    <a href="/ping-pong/index.php?r=jogadores_cadastro"
+                                        class="btn btn-sm btn-warning">Cadastrar-se</a>
+                                <?php endif; ?>
+                            <?php endif; ?>
                         </div>
+
                     </div>
                 </div>
             <?php endforeach; ?>

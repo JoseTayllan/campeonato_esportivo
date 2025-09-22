@@ -26,12 +26,12 @@ if (session_status() === PHP_SESSION_NONE) {
                 <span class="fw-bold text-creme">Raiz de Craque</span>
             </a>
             <nav class="navbar navbar-expand-lg navbar-dark shadow-sm" style="background-color: var(--primary-color);">
-              
+
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
                     aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
-               
+
             </nav>
 
             <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
@@ -50,9 +50,11 @@ if (session_status() === PHP_SESSION_NONE) {
                         $link = '/campeonato_esportivo/routes/admin_visual/dashboard_administrador.php';
                     } elseif ($tipo_assinatura === 'time') {
                         $link = '/campeonato_esportivo/routes/time/dashboard_time.php';
-                    }elseif ($tipo_assinatura === 'completo' && $tipo_usuario === 'Patrocinador') {
+                    } elseif ($tipo_assinatura === 'completo' && $tipo_usuario === 'Patrocinador') {
                         $link = '/campeonato_esportivo/routes/patrocinador/patrocinador_dashboard.php';
-                    }elseif ($tipo_assinatura === 'completo' && $tipo_usuario === 'Organizador') {$link = '/campeonato_esportivo/public/views/dashboard/dashboard_organizador.php';} else {
+                    } elseif ($tipo_assinatura === 'completo' && $tipo_usuario === 'Organizador') {
+                        $link = '/campeonato_esportivo/public/views/dashboard/dashboard_organizador.php';
+                    } else {
                         $link = null;
                     }
                     ?>
@@ -82,5 +84,9 @@ if (session_status() === PHP_SESSION_NONE) {
             <a href="/campeonato_esportivo/public/views/campeonatos/tabela_classificacao.php" class="menu-link menu-separador flex-shrink-0">
                 <i class="bi bi-trophy me-2"></i>Classificação
             </a>
+            <a href="/campeonato_esportivo/routes/atletas/index.php" class="menu-link menu-separador flex-shrink-0">
+                <i class="bi bi-trophy me-2"></i>Atletas
+            </a>
+            
         </div>
     </div>

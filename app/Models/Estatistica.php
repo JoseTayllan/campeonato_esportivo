@@ -82,18 +82,18 @@ class Estatistica
     }
 
     public function historicoPartidas($jogador_id)
-    {
-        $fatorMaximo = 15; // 🔥 Definido aqui no topo da função
+{
+    $fatorMaximo = 15;
 
-        $query = "SELECT 
+    $query = "SELECT 
                 p.data,
                 p.placar_casa,
                 p.placar_fora,
                 tc.nome AS time_casa,
                 tf.nome AS time_fora,
-                j.time_id AS time_jogador,
+                jt.time_id AS time_jogador,
                 CASE 
-                    WHEN j.time_id = p.time_casa THEN tf.nome
+                    WHEN jt.time_id = p.time_casa THEN tf.nome
                     ELSE tc.nome
                 END AS adversario,
                 SUM(e.gols) AS gols,
@@ -110,44 +110,44 @@ class Estatistica
             FROM estatisticas_partida e
             JOIN partidas p ON e.partida_id = p.id
             JOIN jogadores j ON e.jogador_id = j.id
+            JOIN jogador_time jt ON jt.jogador_id = j.id AND jt.status = 'ativo'
             JOIN times tc ON p.time_casa = tc.id
             JOIN times tf ON p.time_fora = tf.id
             WHERE e.jogador_id = ?
-            GROUP BY p.id
+            GROUP BY p.id, jt.time_id
             ORDER BY p.data DESC";
 
-        $stmt = $this->conn->prepare($query);
-        $stmt->bind_param("i", $jogador_id);
-        $stmt->execute();
-        $result = $stmt->get_result();
+    $stmt = $this->conn->prepare($query);
+    $stmt->bind_param("i", $jogador_id);
+    $stmt->execute();
+    $result = $stmt->get_result();
 
-        $partidas = [];
-        while ($row = $result->fetch_assoc()) {
-            if ($row['time_jogador'] == $row['time_casa']) {
-                $row['resultado'] = "{$row['time_casa']} {$row['placar_casa']} x {$row['placar_fora']} {$row['time_fora']}";
-            } else {
-                $row['resultado'] = "{$row['time_fora']} {$row['placar_fora']} x {$row['placar_casa']} {$row['time_casa']}";
-            }
-
-            $notaBruta =
-                ($row['gols'] * 6) +
-                ($row['assistencias'] * 4) +
-                ($row['finalizacoes'] * 2.5) +
-                ($row['passes_completos'] * 0.2) -
-                ($row['faltas_cometidas'] * 0.2) -
-                ($row['cartoes_amarelos'] * 1.5) -
-                ($row['cartoes_vermelhos'] * 3);
-
-            $nota = min(10, ($notaBruta / $fatorMaximo) * 10);
-            $nota = max(0, round($nota, 1)); // Nunca negativa
-
-            $row['nota'] = $nota;
-            $partidas[] = $row;
+    $partidas = [];
+    while ($row = $result->fetch_assoc()) {
+        if ($row['time_jogador'] == $row['time_casa']) {
+            $row['resultado'] = "{$row['time_casa']} {$row['placar_casa']} x {$row['placar_fora']} {$row['time_fora']}";
+        } else {
+            $row['resultado'] = "{$row['time_fora']} {$row['placar_fora']} x {$row['placar_casa']} {$row['time_casa']}";
         }
 
+        $notaBruta =
+            ($row['gols'] * 6) +
+            ($row['assistencias'] * 4) +
+            ($row['finalizacoes'] * 2.5) +
+            ($row['passes_completos'] * 0.2) -
+            ($row['faltas_cometidas'] * 0.2) -
+            ($row['cartoes_amarelos'] * 1.5) -
+            ($row['cartoes_vermelhos'] * 3);
 
-        return $partidas;
+        $nota = min(10, ($notaBruta / $fatorMaximo) * 10);
+        $nota = max(0, round($nota, 1));
+
+        $row['nota'] = $nota;
+        $partidas[] = $row;
     }
+
+    return $partidas;
+}
 
     public function calcularNotaMediaPorEstatistica($jogador_id)
     {
@@ -294,28 +294,34 @@ public function listarArtilheirosPorCampeonato($campeonato_id, $limite = 5)
         return $result->fetch_assoc();
     }
 
-    public function listarGoleirosMenosVazados($campeonato_id, $limite = 1)
-    {
-        $query = "
+public function listarGoleirosMenosVazados($campeonato_id, $limite = 1)
+{
+    $query = "
         SELECT 
             j.id AS jogador_id,
             j.nome,
-            j.time_id,
+            j.imagem,
+            jt.time_id,
             t.nome AS time,
             SUM(e.gols_sofridos) AS gols_sofridos
         FROM estatisticas_partida e
         JOIN partidas p ON e.partida_id = p.id
         JOIN jogadores j ON j.id = e.jogador_id
-        JOIN times t ON t.id = j.time_id
+        JOIN jogador_time jt ON jt.jogador_id = j.id AND jt.status = 'ativo'
+        JOIN times t ON t.id = jt.time_id
         WHERE p.campeonato_id = ? AND j.posicao = 'goleiro'
         GROUP BY j.id
         ORDER BY gols_sofridos ASC
         LIMIT ?
     ";
 
-        $stmt = $this->conn->prepare($query);
-        $stmt->bind_param("ii", $campeonato_id, $limite);
-        $stmt->execute();
-        return $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
-    }
+    $stmt = $this->conn->prepare($query);
+    $stmt->bind_param("ii", $campeonato_id, $limite);
+    $stmt->execute();
+    return $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
+}
+
+
+
+
 }

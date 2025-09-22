@@ -58,6 +58,10 @@
                         <i class="bi bi-flag"></i> Finalizar Campeonato
                     </a>
                 </div>
+                <a href="/ping-pong/index.php?r=campeonatos" class="btn btn-outline-success">
+                    🏓 Gerenciar Campeonatos de Ping-Pong
+                </a>
+
             </div>
 
             <h3 class="mb-3 container-campeonato">Lista de Campeonatos</h3>

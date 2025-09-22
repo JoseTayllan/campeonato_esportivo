@@ -750,6 +750,14 @@ footer {
 <a class="btn-esporte" href="/campeonato_esportivo/public/index.php?modalidade=volei">Entrar</a>
 </div>
 </div>
+
+<div class="card" style="position: relative; overflow: hidden; height: 100%; border-radius: 1rem;">
+<img src="assets/img/volei.jpg" style="position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; z-index: 0; border-radius: 1rem;" alt="PING-PONG">
+<div style="position: relative; z-index: 1; padding: 2rem; height: 90%; background: rgba(0,0,0,0.5);">
+<h3>🏓 PingPong</h3>
+<p>Controle de sets, pontuações e estatísticas detalhadas de jogadores.</p>
+<a class="btn-esporte" href="/campeonato_esportivo/public/index.php?modalidade=pingpong">Entrar</a>
+</div>
 </div>
 </section>
 <section>

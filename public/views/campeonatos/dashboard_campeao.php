@@ -1,110 +1,132 @@
 <?php include_once __DIR__ . '/../../includes/admin_header.php'; ?>
 
 <style>
-    /* 🔥 Tamanho da logo controlado */
     .escudo-time {
-        max-width: 140px;
-        max-height: 140px;
+        max-width: 120px;
         object-fit: contain;
     }
 </style>
 
 <main class="container mt-5">
     <div class="card shadow-lg">
-        <div class="card-header bg-success text-white">
-            🏆 Dashboard do Campeão — <?= htmlspecialchars($timeCampeao['nome']) ?>
+        <div class="card-header bg-success text-white fw-bold fs-5 d-flex align-items-center">
+            🏆 <span class="ms-2">Dashboard do Campeão — <?= htmlspecialchars($timeCampeao['nome']) ?></span>
         </div>
+
         <div class="card-body">
 
             <div class="row">
-                <!-- Escudo do Time -->
+                <!-- Escudo + Informações -->
                 <div class="col-md-3">
-                    <div class="card mb-3">
-                        <div class="card-body text-center">
-                            <img src="/campeonato_esportivo/<?= $timeCampeao['escudo'] ?? 'assets/img/perfil_padrao/perfil_padrao.png' ?>"
+                    <div class="card mb-3 shadow-sm text-center">
+                        <div class="card-body">
+                            <img src="/campeonato_esportivo/<?= $timeCampeao['escudo'] ?? 'public/assets/img/perfil_padrao/perfil_padrao.png' ?>"
                                 alt="Escudo <?= htmlspecialchars($timeCampeao['nome']) ?>"
-                                class="img-fluid mb-3 escudo-time">
+                                class="escudo-time mb-3 rounded-circle border">
                             <h4 class="card-title"><?= htmlspecialchars($timeCampeao['nome']) ?></h4>
-                            <p><strong>Estádio:</strong> <?= htmlspecialchars($timeCampeao['estadio'] ?? 'Não informado') ?><br>
-                                <strong>Cidade:</strong> <?= htmlspecialchars($timeCampeao['cidade'] ?? 'Não informado') ?>
-                            </p>
+                            <p class="mb-1"><strong>Estádio:</strong><br> <?= htmlspecialchars($timeCampeao['estadio'] ?? 'Não informado') ?></p>
+                            <p><strong>Cidade:</strong><br> <?= htmlspecialchars($timeCampeao['cidade'] ?? 'Não informado') ?></p>
                         </div>
                     </div>
                 </div>
 
-                <!-- Estatísticas do Time -->
+                <!-- Estatísticas -->
                 <div class="col-md-9">
-                    <div class="card mb-3">
-                        <div class="card-header bg-primary text-white">
+                    <div class="card mb-3 shadow-sm">
+                        <div class="card-header bg-primary text-white fw-semibold">
                             📊 Estatísticas do Time Campeão
                         </div>
                         <div class="card-body">
                             <div class="row text-center">
-                                <div class="col">
-                                    <h6>Vitórias</h6>
-                                    <p><?= $estatisticasTime['vitorias'] ?? 0 ?></p>
-                                </div>
-                                <div class="col">
-                                    <h6>Empates</h6>
-                                    <p><?= $estatisticasTime['empates'] ?? 0 ?></p>
-                                </div>
-                                <div class="col">
-                                    <h6>Derrotas</h6>
-                                    <p><?= $estatisticasTime['derrotas'] ?? 0 ?></p>
-                                </div>
-                                <div class="col">
-                                    <h6>Gols Pró</h6>
-                                    <p><?= $estatisticasTime['gols_pro'] ?? 0 ?></p>
-                                </div>
-                                <div class="col">
-                                    <h6>Gols Contra</h6>
-                                    <p><?= $estatisticasTime['gols_contra'] ?? 0 ?></p>
-                                </div>
-                                <div class="col">
-                                    <h6>Saldo</h6>
-                                    <p><?= ($estatisticasTime['gols_pro'] ?? 0) - ($estatisticasTime['gols_contra'] ?? 0) ?></p>
-                                </div>
+                                <?php
+                                $estat = [
+                                    ['label' => 'Vitórias', 'valor' => $estatisticasTime['vitorias'] ?? 0, 'class' => 'success'],
+                                    ['label' => 'Empates', 'valor' => $estatisticasTime['empates'] ?? 0, 'class' => 'secondary'],
+                                    ['label' => 'Derrotas', 'valor' => $estatisticasTime['derrotas'] ?? 0, 'class' => 'danger'],
+                                    ['label' => 'Gols Pró', 'valor' => $estatisticasTime['gols_pro'] ?? 0, 'class' => 'primary'],
+                                    ['label' => 'Gols Contra', 'valor' => $estatisticasTime['gols_contra'] ?? 0, 'class' => 'warning'],
+                                    ['label' => 'Saldo', 'valor' => ($estatisticasTime['gols_pro'] ?? 0) - ($estatisticasTime['gols_contra'] ?? 0), 'class' => 'dark']
+                                ];
+                                foreach ($estat as $e): ?>
+                                    <div class="col-sm-6 col-md-4 col-lg-2 mb-3">
+                                        <div class="border rounded p-2 bg-light">
+                                            <h6 class="text-<?= $e['class'] ?>"><?= $e['label'] ?></h6>
+                                            <p class="fw-bold fs-5"><?= $e['valor'] ?></p>
+                                        </div>
+                                    </div>
+                                <?php endforeach; ?>
                             </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row text-center">
+                <div class="col-md-6 mb-3">
+                    <div class="card h-100 shadow-sm">
+                        <div class="card-header bg-warning fw-semibold">🥇 Artilheiro do Campeonato</div>
+                        <div class="card-body">
+                            <img src="/campeonato_esportivo/public/img/jogadores/<?= $artilheiros[0]['imagem'] ?? 'perfil_padrao.png' ?>"
+                                class="rounded-circle mb-2 border"
+                                style="max-width: 100px; height: 100px; object-fit: cover;">
+                            <h5 class="mb-0"><?= htmlspecialchars($artilheiros[0]['nome']) ?></h5>
+                            <small class="text-muted"><?= htmlspecialchars($artilheiros[0]['time']) ?></small>
+                            <p class="mt-2 mb-0"><strong><?= $artilheiros[0]['gols'] ?></strong> gols</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-6 mb-3">
+                    <div class="card h-100 shadow-sm">
+                        <div class="card-header bg-info text-white fw-semibold">🧤 Melhor Goleiro</div>
+                        <div class="card-body">
+                            <img src="/campeonato_esportivo/public/img/jogadores/<?= $melhorGoleiro['imagem'] ?? 'perfil_padrao.png' ?>"
+                                class="rounded-circle mb-2 border"
+                                style="max-width: 100px; height: 100px; object-fit: cover;">
+                            <h5 class="mb-0"><?= htmlspecialchars($melhorGoleiro['nome']) ?></h5>
+                            <small class="text-muted"><?= htmlspecialchars($melhorGoleiro['time']) ?></small>
+                            <p class="mt-2 mb-0"><strong><?= $melhorGoleiro['defesas'] ?? '?' ?></strong> defesas</p>
                         </div>
                     </div>
                 </div>
             </div>
 
             <!-- Artilheiros -->
-            <div class="card mb-3">
-                <div class="card-header bg-danger text-white">
+            <div class="card mb-3 shadow-sm">
+                <div class="card-header bg-danger text-white fw-semibold">
                     🥅 Artilheiros do Campeonato
                 </div>
                 <div class="card-body">
-                    <table class="table table-bordered">
-                        <thead class="table-light">
-                            <tr>
-                                <th>Jogador</th>
-                                <th>Time</th>
-                                <th>Gols</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <?php foreach ($artilheiros as $artilheiro) : ?>
+                    <div class="table-responsive">
+                        <table class="table table-bordered table-sm align-middle text-center">
+                            <thead class="table-light">
                                 <tr>
-                                    <td><?= htmlspecialchars($artilheiro['nome']) ?></td>
-                                    <td><?= htmlspecialchars($artilheiro['time']) ?></td>
-                                    <td><?= $artilheiro['gols'] ?></td>
+                                    <th>Jogador</th>
+                                    <th>Time</th>
+                                    <th>Gols</th>
                                 </tr>
-                            <?php endforeach; ?>
-                        </tbody>
-                    </table>
+                            </thead>
+                            <tbody>
+                                <?php foreach ($artilheiros as $artilheiro): ?>
+                                    <tr>
+                                        <td><?= htmlspecialchars($artilheiro['nome']) ?></td>
+                                        <td><?= htmlspecialchars($artilheiro['time']) ?></td>
+                                        <td><strong><?= $artilheiro['gols'] ?></strong></td>
+                                    </tr>
+                                <?php endforeach; ?>
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
             </div>
 
-            <!-- Banner ou Imagem do Elenco -->
-            <div class="card">
-                <div class="card-header bg-dark text-white">
+            <!-- Elenco Campeão -->
+            <div class="card shadow-sm">
+                <div class="card-header bg-dark text-white fw-semibold">
                     🖼️ Foto do Elenco Campeão
                 </div>
                 <div class="card-body text-center">
                     <img src="/campeonato_esportivo/public/<?= $timeCampeao['elenco'] ?? 'assets/img/padrao.png' ?>"
-                        class="img-fluid"
+                        class="img-fluid rounded shadow-sm"
                         alt="Elenco do <?= htmlspecialchars($timeCampeao['nome']) ?>">
                 </div>
             </div>

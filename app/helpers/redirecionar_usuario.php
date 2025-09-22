@@ -1,5 +1,6 @@
-<?php 
-function redirecionarUsuario($usuario) {
+<?php
+function redirecionarUsuario($usuario)
+{
     if (!$usuario || !isset($usuario['tipo'])) {
         header("Location: ../public/views/login/login.php");
         exit;
@@ -19,6 +20,16 @@ function redirecionarUsuario($usuario) {
         header("Location: ../routes/patrocinador/patrocinador_dashboard.php");
         exit;
     }
+    // Jogador → pode ser futebol ou ping-pong
+    if ($tipo === 'jogador') {
+        if (isset($usuario['tipo_assinatura']) && $usuario['tipo_assinatura'] === 'pingpong') {
+            header("Location: ../public/index.php?modalidade=pingpong");
+        } else {
+            header("Location: ../routes/jogador/verificar_perfil.php");
+        }
+        exit;
+    }
+
 
     // Demais tipos de usuário
     $rotas = [
@@ -26,8 +37,8 @@ function redirecionarUsuario($usuario) {
         'administrador' => '../routes/admin_visual/dashboard_administrador.php',
         'organizador'   => '../public/views/dashboard/dashboard_organizador.php',
         'treinador'     => '../public/views/dashboard/dashboard_treinador.php',
-        'jogador' => '../routes/jogador/verificar_perfil.php',
-        'olheiro' => '../routes/avaliacao/visualizar_avaliacoes.php'
+        'olheiro' => '../routes/avaliacao/visualizar_avaliacoes.php',
+        'juiz'          => '/ping-pong/index.php?r=juiz_dashboard',
 
     ];
 

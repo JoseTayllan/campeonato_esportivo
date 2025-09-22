@@ -30,4 +30,12 @@ class DashboardCampeaoController {
         $estatistica = new Estatistica($conn);
         return $estatistica->listarArtilheirosPorCampeonato($campeonato_id, $limite);
     }
+
+    public function melhorGoleiro($campeonato_id) {
+    global $conn;
+    $estatistica = new Estatistica($conn);
+    $resultado = $estatistica->listarGoleirosMenosVazados($campeonato_id, 1);
+    return $resultado[0] ?? null;
+}
+
 }
